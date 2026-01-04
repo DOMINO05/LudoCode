@@ -15,7 +15,7 @@ import { AppService } from './app.service';
       useFactory: (configService: ConfigService) => ({
         type: 'postgres',
         url: configService.get('DATABASE_URL'),
-        autoLoadEntities: true,
+        entities: [__dirname + '/**/*.entity{.ts,.js}'],
         synchronize: true, // Be careful with this in production
         ssl: {
             rejectUnauthorized: false,

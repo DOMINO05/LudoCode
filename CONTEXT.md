@@ -1,16 +1,3 @@
-Ez egy kiváló ötlet. Ha egy AI-val (pl. ChatGPT, Claude, GitHub Copilot) akarsz kódoltatni, a **kontextus a minden**. Ha csak az SQL-t látja, nem fogja érteni az üzleti logikát (pl. hogy miért nő az XP vagy hogyan választunk feladatot).
-
-Mivel a legtöbb kódoló AI **angolul** "gondolkodik" a legpontosabban (a technikai dokumentációk nyelve miatt), összeállítottam neked egy **angol nyelvű technikai specifikációt (PRD - Product Requirements Document)**. Ezt másold be a `README.md`-be vagy egy `CONTEXT.md` fájlba, és csatold az SQL mellé.
-
-Ebből a dokumentumból az AI pontosan tudni fogja, mit vársz tőle, anélkül, hogy neked minden egyes függvényt külön el kellene magyaráznod.
-
----
-
-### 📄 Fájl tartalma: `PROJECT_CONTEXT.md`
-
-Másold be ezt a fájlt a projekt gyökerébe, és add oda az AI-nak az `init.sql` fájllal együtt.
-
-```markdown
 # LudoCode - Project Specification & Context
 
 ## 1. Project Overview
