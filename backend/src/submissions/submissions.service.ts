@@ -3,6 +3,7 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { UserSubmission } from '../entities/user-submission.entity';
 import { Question } from '../entities/question.entity';
+import { Profile } from '../entities/profile.entity';
 import { CodeRunnerService } from '../code-runner/code-runner.service';
 
 @Injectable()
@@ -12,6 +13,8 @@ export class SubmissionsService {
     private submissionRepository: Repository<UserSubmission>,
     @InjectRepository(Question)
     private questionRepository: Repository<Question>,
+    @InjectRepository(Profile)
+    private profileRepository: Repository<Profile>,
     private codeRunnerService: CodeRunnerService,
   ) {}
 
@@ -42,16 +45,28 @@ export class SubmissionsService {
       submittedAnswer: submittedCode,
       executionTimeMs: executionTime,
     });
+    
+    await this.submissionRepository.save(submission);
 
-    return this.submissionRepository.save(submission);
+    // Gamification Logic
+    const user = await this.profileRepository.findOne({ where: { id: userId } });
+    if (user) {
+        if (isCorrect) {
+            user.xp += 10;
+            user.globalEloRating += 15;
+        } else {
+            user.hp = Math.max(0, user.hp - 1);
+            user.globalEloRating = Math.max(0, user.globalEloRating - 15);
+        }
+        await this.profileRepository.save(user);
+    }
+
+    return submission;
   }
 
   private async handleCodingSubmission(question: Question, userCode: string): Promise<boolean> {
       const testCases = question.content['test_cases'] || [];
       if (testCases.length === 0) {
-          // If no test cases, assume simple run is enough, but strictly speaking we can't verify correctness without test cases.
-          // For Hello World example, we can check output if we knew what to expect.
-          // For now, if no test cases, we return true if no error.
            const result = await this.codeRunnerService.executeCode(question.language, userCode);
            return result.stderr === '';
       }
@@ -67,7 +82,6 @@ export class SubmissionsService {
                   codeToRun += `\nprint(${funcName}(${input}))`;
               }
           }
-          // Note: Java support requires more complex wrapping logic which is omitted for MVP simplification.
           
           const result = await this.codeRunnerService.executeCode(question.language, codeToRun);
           
