@@ -28,9 +28,9 @@ export class Profile {
   @CreateDateColumn({ name: 'created_at', type: 'timestamptz' })
   createdAt: Date;
 
-  @OneToMany(() => UserSubmission, (submission) => submission.user)
+  @OneToMany(() => UserSubmission, (submission: UserSubmission) => submission.user)
   submissions: UserSubmission[];
 
-  @OneToMany(() => DailyLogin, (login) => login.user)
+  @OneToMany(() => DailyLogin, (login: DailyLogin) => login.user)
   dailyLogins: DailyLogin[];
 }

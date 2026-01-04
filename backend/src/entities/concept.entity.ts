@@ -12,6 +12,6 @@ export class Concept {
   @Column({ type: 'text', nullable: true })
   description: string;
 
-  @ManyToMany(() => Question, (question) => question.concepts)
+  @ManyToMany(() => Question, (question: Question) => question.concepts)
   questions: Question[];
 }

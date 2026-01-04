@@ -52,6 +52,6 @@ export class Question {
   })
   concepts: Concept[];
 
-  @OneToMany(() => UserSubmission, (submission) => submission.question)
+  @OneToMany(() => UserSubmission, (submission: UserSubmission) => submission.question)
   submissions: UserSubmission[];
 }
