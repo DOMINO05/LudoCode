@@ -33,6 +33,27 @@ export class SubmissionsService {
       const result = await this.handleCodingSubmission(question, submittedCode);
       isCorrect = result.isCorrect;
       output = result.output;
+    } else if (question.qType === 'parsons') {
+      const correctOrder = question.content['correct_order'];
+      try {
+          const submittedOrder = JSON.parse(submittedCode);
+          if (Array.isArray(correctOrder) && Array.isArray(submittedOrder)) {
+             isCorrect = JSON.stringify(correctOrder) === JSON.stringify(submittedOrder);
+          }
+      } catch (e) {
+          isCorrect = false;
+      }
+    } else if (question.qType === 'debug') {
+        const buggyCode = question.content['buggy_code'] || '';
+        const errorLocation = question.content['error_location'] || '';
+        const correctCodeBlock = question.content['correct_code'] || '';
+        
+        // Construct expected full code
+        // Replace ONLY the first occurrence? Or all? Usually first/only.
+        const expectedFullCode = buggyCode.replace(errorLocation, correctCodeBlock);
+        
+        // Normalize (trim whitespace)
+        isCorrect = submittedCode.trim() === expectedFullCode.trim();
     } else {
       const correctAnswer = question.content['correct_answer'];
       if (correctAnswer) {

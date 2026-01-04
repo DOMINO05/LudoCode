@@ -28,4 +28,8 @@ export class UsersService {
 
     return this.profilesRepository.save(newProfile);
   }
+
+  async getProfile(userId: string): Promise<Profile> {
+    return this.profilesRepository.findOne({ where: { id: userId } });
+  }
 }
