@@ -27,8 +27,12 @@ export class SubmissionsService {
     let isCorrect = false;
     let executionTime = 0; 
 
+    let output = '';
+
     if (question.qType === 'coding') {
-      isCorrect = await this.handleCodingSubmission(question, submittedCode);
+      const result = await this.handleCodingSubmission(question, submittedCode);
+      isCorrect = result.isCorrect;
+      output = result.output;
     } else {
       const correctAnswer = question.content['correct_answer'];
       if (correctAnswer) {
@@ -61,14 +65,14 @@ export class SubmissionsService {
         await this.profileRepository.save(user);
     }
 
-    return submission;
+    return { ...submission, output };
   }
 
-  private async handleCodingSubmission(question: Question, userCode: string): Promise<boolean> {
+  private async handleCodingSubmission(question: Question, userCode: string): Promise<{ isCorrect: boolean, output: string }> {
       const testCases = question.content['test_cases'] || [];
       if (testCases.length === 0) {
            const result = await this.codeRunnerService.executeCode(question.language, userCode);
-           return result.stderr === '';
+           return { isCorrect: result.stderr === '', output: result.stderr || result.stdout };
       }
 
       for (const testCase of testCases) {
@@ -86,16 +90,16 @@ export class SubmissionsService {
           const result = await this.codeRunnerService.executeCode(question.language, codeToRun);
           
           if (result.stderr) {
-              return false;
+              return { isCorrect: false, output: result.stderr };
           }
 
           const expected = String(testCase.expected_output).replace(/'/g, "").trim();
           const actual = result.stdout.trim().replace(/'/g, "");
           
           if (actual !== expected) {
-              return false;
+              return { isCorrect: false, output: `Expected: ${expected}, Got: ${actual}` };
           }
       }
-      return true;
+      return { isCorrect: true, output: 'All tests passed' };
   }
 }

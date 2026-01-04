@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react'
 import { supabase } from './supabaseClient'
 import AuthPage from './AuthPage'
+import CodingPage from './CodingPage'
 import './App.css'
 
 function App() {
@@ -26,9 +27,14 @@ function App() {
 
   return (
     <div className="App">
-      <h1>Welcome to LudoCode!</h1>
-      <p>Logged in as {session.user.email}</p>
-      <button onClick={() => supabase.auth.signOut()}>Sign Out</button>
+      <header style={{ padding: '10px', display: 'flex', justifyContent: 'space-between', alignItems: 'center', borderBottom: '1px solid #ccc' }}>
+        <h2>LudoCode</h2>
+        <div>
+          <span style={{ marginRight: '10px' }}>{session.user.email}</span>
+          <button onClick={() => supabase.auth.signOut()}>Sign Out</button>
+        </div>
+      </header>
+      <CodingPage session={session} />
     </div>
   )
 }
