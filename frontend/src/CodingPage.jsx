@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { useOutletContext } from 'react-router-dom';
+import { useOutletContext, useNavigate } from 'react-router-dom';
 import Editor from '@monaco-editor/react';
 import { useTheme } from './ThemeContext';
 
@@ -22,6 +22,7 @@ const Modal = ({ children }) => (
 export default function CodingPage() {
   const { session, refreshProfile } = useOutletContext();
   const { isDark } = useTheme();
+  const navigate = useNavigate();
   const [question, setQuestion] = useState(null);
   const [code, setCode] = useState('');
   const [parsonsSolution, setParsonsSolution] = useState([]);
@@ -30,6 +31,7 @@ export default function CodingPage() {
   const [loading, setLoading] = useState(true);
   const [showSuccessModal, setShowSuccessModal] = useState(false);
   const [showHint, setShowHint] = useState(false);
+  const [noQuestions, setNoQuestions] = useState(false);
   
   // Debug specific
   const [debugPhase, setDebugPhase] = useState('identify'); // 'identify' | 'fix'
@@ -44,6 +46,7 @@ export default function CodingPage() {
     setResult(null);
     setShowSuccessModal(false);
     setShowHint(false);
+    setNoQuestions(false);
     try {
       const res = await fetch('http://localhost:3000/questions/next', {
         headers: {
@@ -53,6 +56,7 @@ export default function CodingPage() {
       if (!res.ok) {
           if (res.status === 404) {
               setQuestion(null);
+              setNoQuestions(true);
               return;
           }
           const errorText = await res.text();
@@ -130,7 +134,27 @@ export default function CodingPage() {
   };
 
   if (loading) return <div style={{ padding: '20px' }}>Loading...</div>;
-  if (!question) return <div style={{ padding: '20px' }}>No more questions available!</div>;
+  
+  if (noQuestions) {
+      return (
+          <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', height: '80vh', textAlign: 'center', color: 'var(--text-color)' }}>
+              <div style={{ fontSize: '60px', marginBottom: '20px' }}>🎉</div>
+              <h1 style={{ color: 'var(--success-color)' }}>Gratulálunk!</h1>
+              <p style={{ fontSize: '18px', maxWidth: '600px', marginBottom: '40px' }}>
+                  Jelenleg nincs több feladat a szintednek megfelelően. Térj vissza később vagy próbáld meg a kihívásokat!
+              </p>
+              <button 
+                  onClick={() => navigate('/dashboard')}
+                  className="btn btn-primary"
+                  style={{ padding: '15px 30px', fontSize: '18px' }}
+              >
+                  Vissza a Dashboardra
+              </button>
+          </div>
+      );
+  }
+
+  if (!question) return <div style={{ padding: '20px' }}>No question loaded.</div>;
 
   return (
     <div style={{ display: 'flex', height: 'calc(100vh - 100px)', gap: '20px', boxSizing: 'border-box', overflow: 'hidden', padding: '20px' }}>

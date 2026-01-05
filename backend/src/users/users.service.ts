@@ -55,7 +55,7 @@ export class UsersService {
     }
 
     if (updates.avatar_url) {
-        profile.avatarUrl = updates.avatar_url; // Assuming avatarUrl maps to avatar_url column in entity via naming strategy or manual column name
+        profile.avatarUrl = updates.avatar_url;
     }
 
     return this.profilesRepository.save(profile);
@@ -100,7 +100,7 @@ export class UsersService {
         xp: 'DESC',
       },
       take: 10,
-      select: ['id', 'username', 'xp', 'globalEloRating'], // Select only needed fields (assuming id needed for identifying current user)
+      select: ['id', 'username', 'xp', 'globalEloRating', 'avatarUrl', 'badges'],
     });
   }
 
@@ -173,5 +173,21 @@ export class UsersService {
         activity,
         eloHistory
     };
+  }
+
+  async checkEasterEgg(userId: string, code: string): Promise<{ success: boolean; message?: string }> {
+      if (code.toLowerCase() === 'ludo' || code.toLowerCase() === 'konami') {
+          const profile = await this.profilesRepository.findOne({ where: { id: userId } });
+          if (profile) {
+              if (!profile.badges) profile.badges = [];
+              if (!profile.badges.includes('Hacker')) {
+                  profile.badges.push('Hacker');
+                  await this.profilesRepository.save(profile);
+                  return { success: true, message: 'Hacker Badge Unlocked!' };
+              }
+              return { success: true, message: 'Badge already unlocked.' };
+          }
+      }
+      return { success: false };
   }
 }

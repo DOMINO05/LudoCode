@@ -14,6 +14,9 @@ export default function ProfilePage() {
     const [selectedAvatar, setSelectedAvatar] = useState('');
     const [message, setMessage] = useState(null);
     const [loading, setLoading] = useState(false);
+    
+    // Easter Egg State
+    const [keySequence, setKeySequence] = useState('');
 
     useEffect(() => {
         if (profile) {
@@ -21,6 +24,38 @@ export default function ProfilePage() {
             setSelectedAvatar(profile.avatarUrl || `https://api.dicebear.com/7.x/pixel-art/svg?seed=${profile.username || 'default'}`);
         }
     }, [profile]);
+
+    // Easter Egg Listener
+    useEffect(() => {
+        const handleKeyDown = async (e) => {
+            const newSeq = (keySequence + e.key).slice(-10).toLowerCase(); // Keep last 10 chars
+            setKeySequence(newSeq);
+
+            if (newSeq.includes('ludo') || newSeq.includes('konami')) {
+                // Trigger Easter Egg
+                try {
+                    const res = await fetch('http://localhost:3000/users/easter-egg', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                            'Authorization': `Bearer ${session.access_token}`
+                        },
+                        body: JSON.stringify({ code: newSeq.includes('ludo') ? 'ludo' : 'konami' })
+                    });
+                    const data = await res.json();
+                    if (data.success) {
+                        setMessage({ type: 'success', text: `Easter Egg Found! ${data.message}` });
+                        setKeySequence(''); // Reset
+                    }
+                } catch (err) {
+                    console.error('Easter egg failed', err);
+                }
+            }
+        };
+
+        window.addEventListener('keydown', handleKeyDown);
+        return () => window.removeEventListener('keydown', handleKeyDown);
+    }, [keySequence, session]);
 
     const handleAvatarClick = (seed) => {
         setSelectedAvatar(`https://api.dicebear.com/7.x/pixel-art/svg?seed=${seed}`);
@@ -88,6 +123,26 @@ export default function ProfilePage() {
                         style={{ width: '100%', boxSizing: 'border-box' }}
                     />
                 </div>
+
+                {profile.badges && profile.badges.length > 0 && (
+                    <div style={{ marginBottom: '20px' }}>
+                        <label style={{ display: 'block', marginBottom: '10px', fontSize: '18px' }}>Badges</label>
+                        <div style={{ display: 'flex', gap: '10px' }}>
+                            {profile.badges.map((badge, idx) => (
+                                <span key={idx} style={{ 
+                                    padding: '5px 10px', 
+                                    backgroundColor: 'var(--secondary-color)', 
+                                    color: '#000', 
+                                    borderRadius: '15px',
+                                    fontWeight: 'bold',
+                                    fontSize: '14px'
+                                }}>
+                                    {badge === 'Hacker' ? '💻 Hacker' : badge}
+                                </span>
+                            ))}
+                        </div>
+                    </div>
+                )}
 
                 <div style={{ marginBottom: '20px' }}>
                     <label style={{ display: 'block', marginBottom: '20px', fontSize: '18px' }}>Choose Avatar</label>

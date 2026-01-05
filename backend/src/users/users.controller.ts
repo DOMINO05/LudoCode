@@ -41,4 +41,10 @@ export class UsersController {
   async updateProfile(@Request() req, @Body() body: { username?: string; avatar_url?: string }) {
     return this.usersService.updateProfile(req.user.userId, body);
   }
+
+  @UseGuards(AuthGuard('jwt'))
+  @Post('easter-egg')
+  async easterEgg(@Request() req, @Body() body: { code: string }) {
+    return this.usersService.checkEasterEgg(req.user.userId, body.code);
+  }
 }

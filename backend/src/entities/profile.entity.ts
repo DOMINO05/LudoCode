@@ -25,6 +25,9 @@ export class Profile {
   @Column({ name: 'global_elo_rating', type: 'float', default: 1000.0 })
   globalEloRating: number;
 
+  @Column({ type: 'simple-array', default: '' })
+  badges: string[];
+
   @CreateDateColumn({ name: 'created_at', type: 'timestamptz' })
   createdAt: Date;
 
