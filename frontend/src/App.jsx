@@ -4,6 +4,7 @@ import { supabase } from './supabaseClient'
 import AuthPage from './AuthPage'
 import CodingPage from './CodingPage'
 import Dashboard from './Dashboard'
+import ProfilePage from './ProfilePage'
 import Layout from './Layout'
 import './App.css'
 
@@ -37,6 +38,7 @@ function App() {
         <Route element={<Layout session={session} />}>
           <Route path="/dashboard" element={<Dashboard />} />
           <Route path="/solve" element={<CodingPage />} />
+          <Route path="/profile" element={<ProfilePage />} />
         </Route>
       )}
 

@@ -48,9 +48,16 @@ export default function Layout({ session }) {
         <div style={{ display: 'flex', gap: '20px', alignItems: 'center' }}>
             {profile ? (
                 <>
+                    <div style={{ display: 'flex', alignItems: 'center', gap: '10px', marginRight: '10px' }}>
+                        {profile.avatarUrl && <img src={profile.avatarUrl} alt="Avatar" style={{ width: '30px', height: '30px', borderRadius: '50%', border: '1px solid #fff' }} />}
+                        <span style={{ fontWeight: 'bold' }}>{profile.username || 'User'}</span>
+                    </div>
                     <span>XP: {profile.xp}</span>
                     <span>HP: {'❤️'.repeat(Math.max(0, profile.hp))}</span>
                     <span>ELO: {profile.globalEloRating}</span>
+                    <button onClick={() => navigate('/profile')} style={{ background: '#0070f3', color: 'white', border: 'none', padding: '5px 10px', borderRadius: '4px', cursor: 'pointer' }}>
+                        Edit Profile
+                    </button>
                 </>
             ) : (
                 <span>Loading stats...</span>

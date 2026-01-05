@@ -1,4 +1,4 @@
-import { Controller, Get, Post, Body, UseGuards, Request } from '@nestjs/common';
+import { Controller, Get, Post, Patch, Body, UseGuards, Request } from '@nestjs/common';
 import { AuthGuard } from '@nestjs/passport';
 import { UsersService } from './users.service';
 
@@ -34,5 +34,11 @@ export class UsersController {
   @Get('stats')
   async getUserStats(@Request() req) {
     return this.usersService.getUserStats(req.user.userId);
+  }
+
+  @UseGuards(AuthGuard('jwt'))
+  @Patch('profile')
+  async updateProfile(@Request() req, @Body() body: { username?: string; avatar_url?: string }) {
+    return this.usersService.updateProfile(req.user.userId, body);
   }
 }
