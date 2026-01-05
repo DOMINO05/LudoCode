@@ -50,7 +50,7 @@ const PredictionComponent = ({ question, selectedAnswer, onSelect }) => {
                 </div>
                 
                 <div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
-                    {question.content.options.map((option, idx) => (
+                    {question.content.options && question.content.options.map((option, idx) => (
                         <div
                             key={idx}
                             onClick={() => onSelect(option)}

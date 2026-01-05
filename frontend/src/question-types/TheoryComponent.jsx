@@ -41,7 +41,7 @@ const TheoryComponent = ({ question, selectedAnswer, onSelect }) => {
 
             {/* Options */}
             <div style={{ display: 'grid', gap: '15px', marginTop: 'auto' }}>
-                {question.content.options.map((option, idx) => (
+                {question.content.options && question.content.options.map((option, idx) => (
                     <div
                         key={idx}
                         onClick={() => onSelect(option)}

@@ -185,6 +185,9 @@ export default function CodingPage() {
   // Render Logic
   const renderContent = () => {
       if (!question) return null;
+      if (!question.content) {
+          return <div>Error: Question content missing</div>;
+      }
 
       switch (question.qType) {
           case 'theory':
