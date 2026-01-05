@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useOutletContext, useNavigate } from 'react-router-dom';
+import { LineChart, Line, BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from 'recharts';
 
 const BonusModal = ({ onClose }) => (
   <div style={{
@@ -101,6 +102,79 @@ const Leaderboard = ({ currentUserId }) => {
     );
 };
 
+const ProgressChart = ({ session }) => {
+    const [stats, setStats] = useState(null);
+    const [loading, setLoading] = useState(true);
+
+    useEffect(() => {
+        const fetchStats = async () => {
+            try {
+                const res = await fetch('http://localhost:3000/users/stats', {
+                    headers: {
+                        'Authorization': `Bearer ${session.access_token}`
+                    }
+                });
+                if (res.ok) {
+                    const data = await res.json();
+                    setStats(data);
+                }
+            } catch (err) {
+                console.error("Failed to fetch stats", err);
+            } finally {
+                setLoading(false);
+            }
+        };
+        fetchStats();
+    }, [session]);
+
+    if (loading) return <div>Loading stats...</div>;
+
+    if (!stats || (stats.activity.every(d => d.count === 0))) {
+        return (
+            <div style={{ marginTop: '40px', padding: '20px', textAlign: 'center', color: '#888' }}>
+                <h3>Nincs elég adat a grafikonokhoz.</h3>
+                <p>Oldj meg több feladatot a statisztikákhoz!</p>
+            </div>
+        );
+    }
+
+    return (
+        <div style={{ marginTop: '40px', width: '100%', maxWidth: '900px', display: 'flex', flexDirection: 'column', gap: '40px' }}>
+            {/* ELO Chart */}
+            <div style={{ backgroundColor: '#1e1e1e', borderRadius: '10px', padding: '20px', boxShadow: '0 4px 6px rgba(0,0,0,0.3)' }}>
+                <h3 style={{ textAlign: 'center', color: '#2196f3', marginBottom: '20px' }}>📈 ELO Pontszám Növekedése</h3>
+                <div style={{ height: '300px', width: '100%' }}>
+                    <ResponsiveContainer>
+                        <LineChart data={stats.eloHistory}>
+                            <CartesianGrid strokeDasharray="3 3" stroke="#333" />
+                            <XAxis dataKey="date" stroke="#888" tickFormatter={date => date.substring(5)} />
+                            <YAxis stroke="#888" domain={['auto', 'auto']} />
+                            <Tooltip contentStyle={{ backgroundColor: '#333', border: 'none' }} />
+                            <Line type="monotone" dataKey="elo" stroke="#2196f3" strokeWidth={3} dot={{ r: 4 }} activeDot={{ r: 6 }} />
+                        </LineChart>
+                    </ResponsiveContainer>
+                </div>
+            </div>
+
+            {/* Activity Chart */}
+            <div style={{ backgroundColor: '#1e1e1e', borderRadius: '10px', padding: '20px', boxShadow: '0 4px 6px rgba(0,0,0,0.3)' }}>
+                <h3 style={{ textAlign: 'center', color: '#4caf50', marginBottom: '20px' }}>📊 Napi Megoldott Feladatok</h3>
+                <div style={{ height: '300px', width: '100%' }}>
+                    <ResponsiveContainer>
+                        <BarChart data={stats.activity}>
+                            <CartesianGrid strokeDasharray="3 3" stroke="#333" vertical={false} />
+                            <XAxis dataKey="date" stroke="#888" tickFormatter={date => date.substring(5)} />
+                            <YAxis stroke="#888" allowDecimals={false} />
+                            <Tooltip contentStyle={{ backgroundColor: '#333', border: 'none' }} cursor={{fill: 'rgba(255,255,255,0.05)'}} />
+                            <Bar dataKey="count" fill="#4caf50" radius={[4, 4, 0, 0]} />
+                        </BarChart>
+                    </ResponsiveContainer>
+                </div>
+            </div>
+        </div>
+    );
+};
+
 export default function Dashboard() {
   const { session, profile, refreshProfile } = useOutletContext();
   const navigate = useNavigate();
@@ -163,7 +237,9 @@ export default function Dashboard() {
       >
         START TRAINING
       </button>
-
+      
+      <ProgressChart session={session} />
+      
       <Leaderboard currentUserId={profile.id} />
 
       {showBonus && <BonusModal onClose={() => setShowBonus(false)} />}

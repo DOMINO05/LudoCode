@@ -4,9 +4,10 @@ import { UsersController } from './users.controller';
 import { UsersService } from './users.service';
 import { Profile } from '../entities/profile.entity';
 import { DailyLogin } from '../entities/daily-login.entity';
+import { UserSubmission } from '../entities/user-submission.entity';
 
 @Module({
-  imports: [TypeOrmModule.forFeature([Profile, DailyLogin])],
+  imports: [TypeOrmModule.forFeature([Profile, DailyLogin, UserSubmission])],
   controllers: [UsersController],
   providers: [UsersService],
 })

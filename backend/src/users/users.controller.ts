@@ -29,4 +29,10 @@ export class UsersController {
   async getLeaderboard() {
     return this.usersService.getLeaderboard();
   }
+
+  @UseGuards(AuthGuard('jwt'))
+  @Get('stats')
+  async getUserStats(@Request() req) {
+    return this.usersService.getUserStats(req.user.userId);
+  }
 }
