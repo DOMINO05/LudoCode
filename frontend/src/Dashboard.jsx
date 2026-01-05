@@ -60,8 +60,8 @@ const Leaderboard = ({ currentUserId }) => {
     if (loading) return <div>Loading leaderboard...</div>;
 
     return (
-        <div className="card" style={{ marginTop: '40px', width: '100%', maxWidth: '800px' }}>
-            <h2 style={{ textAlign: 'center', color: 'var(--secondary-color)', marginBottom: '20px', textTransform: 'uppercase', letterSpacing: '2px' }}>🏆 Top Ranglista</h2>
+        <div className="card" style={{ width: '100%' }}>
+            <h3 style={{ textAlign: 'center', color: 'var(--secondary-color)', marginBottom: '20px', textTransform: 'uppercase', letterSpacing: '2px' }}>🏆 Top Ranglista</h3>
             <table style={{ width: '100%', borderCollapse: 'collapse', color: 'var(--text-color)' }}>
                 <thead>
                     <tr style={{ borderBottom: '2px solid var(--card-border)', textAlign: 'left' }}>
@@ -126,26 +126,25 @@ const ProgressChart = ({ session }) => {
 
     if (!stats || (stats.activity.every(d => d.count === 0))) {
         return (
-            <div style={{ marginTop: '40px', padding: '20px', textAlign: 'center', color: '#888' }}>
-                <h3>Nincs elég adat a grafikonokhoz.</h3>
+            <div style={{ padding: '20px', textAlign: 'center', color: '#888' }}>
                 <p>Oldj meg több feladatot a statisztikákhoz!</p>
             </div>
         );
     }
 
     return (
-        <div style={{ marginTop: '40px', width: '100%', maxWidth: '900px', display: 'flex', flexDirection: 'column', gap: '40px' }}>
+        <div style={{ width: '100%', display: 'flex', flexDirection: 'column', gap: '20px' }}>
             {/* ELO Chart */}
             <div className="card">
-                <h3 style={{ textAlign: 'center', color: 'var(--primary-color)', marginBottom: '20px' }}>📈 ELO Pontszám Növekedése</h3>
-                <div style={{ height: '300px', width: '100%' }}>
+                <h4 style={{ textAlign: 'center', color: 'var(--primary-color)', marginBottom: '10px' }}>📈 ELO Növekedés</h4>
+                <div style={{ height: '200px', width: '100%' }}>
                     <ResponsiveContainer>
                         <LineChart data={stats.eloHistory}>
                             <CartesianGrid strokeDasharray="3 3" stroke="var(--card-border)" />
-                            <XAxis dataKey="date" stroke="var(--text-color)" tickFormatter={date => date.substring(5)} />
-                            <YAxis stroke="var(--text-color)" domain={['auto', 'auto']} />
+                            <XAxis dataKey="date" stroke="var(--text-color)" tickFormatter={date => date.substring(5)} fontSize={12} />
+                            <YAxis stroke="var(--text-color)" domain={['auto', 'auto']} fontSize={12} />
                             <Tooltip contentStyle={{ backgroundColor: 'var(--card-bg)', border: '1px solid var(--card-border)', color: 'var(--text-color)' }} />
-                            <Line type="monotone" dataKey="elo" stroke="var(--primary-color)" strokeWidth={3} dot={{ r: 4 }} activeDot={{ r: 6 }} />
+                            <Line type="monotone" dataKey="elo" stroke="var(--primary-color)" strokeWidth={2} dot={{ r: 3 }} activeDot={{ r: 5 }} />
                         </LineChart>
                     </ResponsiveContainer>
                 </div>
@@ -153,13 +152,13 @@ const ProgressChart = ({ session }) => {
 
             {/* Activity Chart */}
             <div className="card">
-                <h3 style={{ textAlign: 'center', color: 'var(--success-color)', marginBottom: '20px' }}>📊 Napi Megoldott Feladatok</h3>
-                <div style={{ height: '300px', width: '100%' }}>
+                <h4 style={{ textAlign: 'center', color: 'var(--success-color)', marginBottom: '10px' }}>📊 Napi Aktivitás</h4>
+                <div style={{ height: '200px', width: '100%' }}>
                     <ResponsiveContainer>
                         <BarChart data={stats.activity}>
                             <CartesianGrid strokeDasharray="3 3" stroke="var(--card-border)" vertical={false} />
-                            <XAxis dataKey="date" stroke="var(--text-color)" tickFormatter={date => date.substring(5)} />
-                            <YAxis stroke="var(--text-color)" allowDecimals={false} />
+                            <XAxis dataKey="date" stroke="var(--text-color)" tickFormatter={date => date.substring(5)} fontSize={12} />
+                            <YAxis stroke="var(--text-color)" allowDecimals={false} fontSize={12} />
                             <Tooltip contentStyle={{ backgroundColor: 'var(--card-bg)', border: '1px solid var(--card-border)', color: 'var(--text-color)' }} cursor={{fill: 'var(--input-bg)'}} />
                             <Bar dataKey="count" fill="var(--success-color)" radius={[4, 4, 0, 0]} />
                         </BarChart>
@@ -202,37 +201,50 @@ export default function Dashboard() {
   if (!profile) return <div>Loading dashboard...</div>;
 
   return (
-    <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', minHeight: '100%', padding: '20px', gap: '30px' }}>
+    <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', minHeight: '100%', padding: '20px', gap: '30px', maxWidth: '1200px', margin: '0 auto' }}>
       <h1>Welcome back, {profile.username || session.user.email}!</h1>
       
-      <div style={{ display: 'flex', gap: '40px', textAlign: 'center', flexWrap: 'wrap', justifyContent: 'center' }}>
-          <div className="card" style={{ minWidth: '150px', borderColor: 'var(--primary-color)' }}>
-              <h2 style={{margin: 0, marginBottom: '10px'}}>Level / ELO</h2>
-              <div style={{ fontSize: '40px', fontWeight: 'bold' }}>{profile.globalEloRating}</div>
+      {/* Stats Cards */}
+      <div style={{ display: 'flex', gap: '20px', textAlign: 'center', flexWrap: 'wrap', justifyContent: 'center' }}>
+          <div className="card" style={{ minWidth: '150px', borderColor: 'var(--primary-color)', padding: '15px' }}>
+              <h3 style={{margin: 0, marginBottom: '5px', fontSize: '16px'}}>Level / ELO</h3>
+              <div style={{ fontSize: '32px', fontWeight: 'bold' }}>{profile.globalEloRating}</div>
           </div>
           
-          <div className="card" style={{ minWidth: '150px', borderColor: 'var(--secondary-color)' }}>
-              <h2 style={{margin: 0, marginBottom: '10px'}}>XP</h2>
-              <div style={{ fontSize: '40px', fontWeight: 'bold' }}>{profile.xp}</div>
+          <div className="card" style={{ minWidth: '150px', borderColor: 'var(--secondary-color)', padding: '15px' }}>
+              <h3 style={{margin: 0, marginBottom: '5px', fontSize: '16px'}}>XP</h3>
+              <div style={{ fontSize: '32px', fontWeight: 'bold' }}>{profile.xp}</div>
           </div>
       </div>
 
-      <button 
-        onClick={() => navigate('/solve')}
-        className="btn btn-primary"
-        style={{ 
-            padding: '20px 40px', 
-            fontSize: '24px', 
-            borderRadius: '50px',
-            boxShadow: 'var(--shadow)'
-        }}
-      >
-        START TRAINING
-      </button>
+      {/* Main Action Cards */}
+      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', gap: '30px', width: '100%' }}>
+          {/* Quick Play */}
+          <div className="card" style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', textAlign: 'center', padding: '40px', cursor: 'pointer', transition: 'transform 0.2s', ':hover': { transform: 'scale(1.02)' } }} onClick={() => navigate('/solve')}>
+              <div style={{ fontSize: '60px', marginBottom: '20px' }}>⚡</div>
+              <h2 style={{ color: 'var(--primary-color)', marginBottom: '10px' }}>Gyors Gyakorlás</h2>
+              <p style={{ marginBottom: '30px', color: 'var(--text-color)', opacity: 0.8 }}>Adaptív feladatok a szintednek megfelelően.</p>
+              <button className="btn btn-primary" style={{ padding: '15px 40px', fontSize: '18px', borderRadius: '50px', width: '100%' }}>
+                  Indítás
+              </button>
+          </div>
+
+          {/* Learning Path */}
+          <div className="card" style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', textAlign: 'center', padding: '40px', cursor: 'pointer' }} onClick={() => navigate('/courses')}>
+              <div style={{ fontSize: '60px', marginBottom: '20px' }}>🗺️</div>
+              <h2 style={{ color: 'var(--secondary-color)', marginBottom: '10px' }}>Tanuló Ösvény</h2>
+              <p style={{ marginBottom: '30px', color: 'var(--text-color)', opacity: 0.8 }}>Haladj lépésről lépésre a témakörökön.</p>
+              <button className="btn btn-secondary" style={{ padding: '15px 40px', fontSize: '18px', borderRadius: '50px', width: '100%' }}>
+                  Kurzusok
+              </button>
+          </div>
+      </div>
       
-      <ProgressChart session={session} />
-      
-      <Leaderboard currentUserId={profile.id} />
+      {/* Lower Section: Charts & Leaderboard */}
+      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(400px, 1fr))', gap: '30px', width: '100%' }}>
+          <ProgressChart session={session} />
+          <Leaderboard currentUserId={profile.id} />
+      </div>
 
       {showBonus && <BonusModal onClose={() => setShowBonus(false)} />}
     </div>
