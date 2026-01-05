@@ -106,6 +106,24 @@ export class SubmissionsService {
                   const input = testCase.input; 
                   codeToRun += `\nprint(${funcName}(${input}))`;
               }
+          } else if (question.language === 'java') {
+              // Wrap method in class if not already present
+              if (!userCode.includes('class ')) {
+                  const match = userCode.match(/(?:public|private|protected)?\s*(?:static\s+)?[\w<>]+\s+(\w+)\s*\(/);
+                  if (match) {
+                      const funcName = match[1];
+                      const input = testCase.input;
+                      codeToRun = `
+public class Main {
+    ${userCode}
+
+    public static void main(String[] args) {
+        Main obj = new Main();
+        System.out.println(obj.${funcName}(${input}));
+    }
+}`;
+                  }
+              }
           }
           
           const result = await this.codeRunnerService.executeCode(question.language, codeToRun);
