@@ -34,7 +34,7 @@ export default function CodingPage() {
 
   // Debug Specific State
   const [debugPhase, setDebugPhase] = useState('identify'); // 'identify' | 'fix'
-  const [debugSelectedLine, setDebugSelectedLine] = useState(null);
+  const [debugSelection, setDebugSelection] = useState(null); // { lineIndex, tokenIndex, text }
 
   // Result & Feedback
   const [result, setResult] = useState(null);
@@ -56,7 +56,7 @@ export default function CodingPage() {
     setParsonsSolution([]);
     setSelectedOption(null);
     setDebugPhase('identify');
-    setDebugSelectedLine(null);
+    setDebugSelection(null);
 
     let url = 'http://localhost:3000/questions/next';
     if (conceptId) {
@@ -112,25 +112,26 @@ export default function CodingPage() {
 
       // Handle Debug Phase A locally first
       if (question.qType === 'debug' && debugPhase === 'identify') {
-          if (debugSelectedLine === null) return;
+          if (!debugSelection) {
+              alert("Kérlek válassz ki egy elemet!");
+              return;
+          }
           
-          const buggyCode = question.content.buggy_code || "";
-          const lines = buggyCode.split('\n');
-          const selectedText = lines[debugSelectedLine].trim();
+          const selectedText = debugSelection.text.trim();
           const errorLocation = question.content.error_location ? question.content.error_location.trim() : "";
 
-          // Simple containment check
+          // Check if selected token matches error location
+          // Removing quotes from selectedText if they are just part of string literal syntax might be needed 
+          // but usually error_location matches the code exactly.
           if (selectedText === errorLocation || (selectedText.length > 0 && errorLocation.includes(selectedText))) {
                // Correct Phase A
                setDebugPhase('fix');
-               // Maybe show a mini toast or visual cue?
-               // Or just transition naturally.
           } else {
               // Incorrect Phase A
                setResult({ 
                    isCorrect: false, 
                    correct_answer: `A hiba itt található:\n${errorLocation}`, 
-                   output: "Nem ez a hibás sor." 
+                   output: "Nem ez a hibás rész." 
                });
                setShowFeedback(true);
           }
@@ -217,8 +218,8 @@ export default function CodingPage() {
                   question={question} 
                   onCodeChange={setCode} 
                   debugPhase={debugPhase}
-                  selectedLineIndex={debugSelectedLine}
-                  onLineSelect={setDebugSelectedLine}
+                  selection={debugSelection}
+                  onSelect={setDebugSelection}
               />;
           case 'coding':
           case 'construction': // Spec calls it ConstructionComponent but maps 'coding' to it? 

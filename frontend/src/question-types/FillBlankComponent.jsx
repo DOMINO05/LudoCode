@@ -14,7 +14,8 @@ const FillBlankComponent = ({ question, onCodeChange }) => {
     const placeholderRegex = /(___|\?\?\?)/g;
 
     useEffect(() => {
-        const rawCode = question.content.initial_code || "";
+        // Fallback to code_snippet if initial_code is missing
+        const rawCode = question.content.initial_code || question.content.code_snippet || "";
         const segments = rawCode.split(placeholderRegex);
         setCodeSegments(segments);
         
