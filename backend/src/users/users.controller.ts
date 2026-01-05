@@ -18,4 +18,10 @@ export class UsersController {
   async getProfile(@Request() req) {
     return this.usersService.getProfile(req.user.userId);
   }
+
+  @UseGuards(AuthGuard('jwt'))
+  @Post('daily-claim')
+  async claimDailyBonus(@Request() req) {
+    return this.usersService.claimDailyBonus(req.user.userId);
+  }
 }
