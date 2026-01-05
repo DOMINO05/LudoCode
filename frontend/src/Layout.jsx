@@ -1,10 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import { Outlet, useNavigate } from 'react-router-dom';
 import { supabase } from './supabaseClient';
+import { useTheme } from './ThemeContext';
 
 export default function Layout({ session }) {
   const [profile, setProfile] = useState(null);
   const navigate = useNavigate();
+  const { isDark, toggleTheme } = useTheme();
 
   useEffect(() => {
     fetchProfile();
@@ -33,10 +35,8 @@ export default function Layout({ session }) {
 
   return (
     <div style={{ display: 'flex', flexDirection: 'column', height: '100vh' }}>
-      <header style={{ 
+      <header className="app-header" style={{ 
           padding: '10px 20px', 
-          background: '#333', 
-          color: 'white', 
           display: 'flex', 
           justifyContent: 'space-between', 
           alignItems: 'center' 
@@ -46,29 +46,38 @@ export default function Layout({ session }) {
         </div>
         
         <div style={{ display: 'flex', gap: '20px', alignItems: 'center' }}>
+            <button 
+                onClick={toggleTheme} 
+                className="btn btn-outline"
+                style={{ fontSize: '18px', padding: '5px 10px', border: 'none' }}
+                title={isDark ? "Switch to Light Mode" : "Switch to Dark Mode"}
+            >
+                {isDark ? '☀️' : '🌙'}
+            </button>
+
             {profile ? (
                 <>
                     <div style={{ display: 'flex', alignItems: 'center', gap: '10px', marginRight: '10px' }}>
-                        {profile.avatarUrl && <img src={profile.avatarUrl} alt="Avatar" style={{ width: '30px', height: '30px', borderRadius: '50%', border: '1px solid #fff' }} />}
+                        {profile.avatarUrl && <img src={profile.avatarUrl} alt="Avatar" style={{ width: '30px', height: '30px', borderRadius: '50%', border: '1px solid var(--text-color)' }} />}
                         <span style={{ fontWeight: 'bold' }}>{profile.username || 'User'}</span>
                     </div>
                     <span>XP: {profile.xp}</span>
                     <span>HP: {'❤️'.repeat(Math.max(0, profile.hp))}</span>
                     <span>ELO: {profile.globalEloRating}</span>
-                    <button onClick={() => navigate('/profile')} style={{ background: '#0070f3', color: 'white', border: 'none', padding: '5px 10px', borderRadius: '4px', cursor: 'pointer' }}>
+                    <button onClick={() => navigate('/profile')} className="btn btn-primary" style={{ padding: '5px 10px' }}>
                         Edit Profile
                     </button>
                 </>
             ) : (
                 <span>Loading stats...</span>
             )}
-            <button onClick={handleLogout} style={{ background: '#d32f2f', color: 'white', border: 'none', padding: '5px 10px', borderRadius: '4px', cursor: 'pointer' }}>
+            <button onClick={handleLogout} className="btn" style={{ backgroundColor: 'var(--error-color)', color: 'white', padding: '5px 10px' }}>
                 Logout
             </button>
         </div>
       </header>
       
-      <main style={{ flex: 1, overflow: 'hidden' }}>
+      <main style={{ flex: 1, overflowY: 'auto', backgroundColor: 'var(--bg-color)', color: 'var(--text-color)' }}>
         <Outlet context={{ session, profile, refreshProfile: fetchProfile }} />
       </main>
     </div>

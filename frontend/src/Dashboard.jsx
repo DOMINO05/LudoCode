@@ -5,28 +5,23 @@ import { LineChart, Line, BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, R
 const BonusModal = ({ onClose }) => (
   <div style={{
     position: 'fixed', top: 0, left: 0, right: 0, bottom: 0,
-    backgroundColor: 'rgba(0,0,0,0.8)', display: 'flex', alignItems: 'center', justifyContent: 'center', zIndex: 1000
+    backgroundColor: 'var(--modal-overlay)', display: 'flex', alignItems: 'center', justifyContent: 'center', zIndex: 1000
   }}>
-    <div style={{
-      backgroundColor: '#1e1e1e', color: '#fff', padding: '40px', borderRadius: '15px',
-      maxWidth: '400px', width: '90%', textAlign: 'center', border: '2px solid #ffd700',
+    <div className="modal-content" style={{
+      padding: '40px', borderRadius: '15px',
+      maxWidth: '400px', width: '90%', textAlign: 'center', border: '2px solid var(--secondary-color)',
       boxShadow: '0 0 20px rgba(255, 215, 0, 0.5)',
       animation: 'popIn 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275)'
     }}>
       <div style={{ fontSize: '60px', marginBottom: '20px' }}>🎁</div>
-      <h2 style={{ color: '#ffd700', marginBottom: '10px', fontSize: '28px' }}>Napi Bónusz!</h2>
+      <h2 style={{ color: 'var(--secondary-color)', marginBottom: '10px', fontSize: '28px' }}>Napi Bónusz!</h2>
       <p style={{ fontSize: '20px', marginBottom: '30px' }}>+50 XP</p>
       <button 
         onClick={onClose}
+        className="btn btn-secondary"
         style={{ 
-          padding: '12px 30px', 
-          backgroundColor: '#ffd700', 
-          color: '#000', 
-          border: 'none', 
           borderRadius: '25px',
-          cursor: 'pointer', 
           fontSize: '16px',
-          fontWeight: 'bold'
         }}
       >
         Király!
@@ -65,11 +60,11 @@ const Leaderboard = ({ currentUserId }) => {
     if (loading) return <div>Loading leaderboard...</div>;
 
     return (
-        <div style={{ marginTop: '40px', width: '100%', maxWidth: '800px', backgroundColor: '#1e1e1e', borderRadius: '10px', padding: '20px', boxShadow: '0 4px 6px rgba(0,0,0,0.3)' }}>
-            <h2 style={{ textAlign: 'center', color: '#ffd700', marginBottom: '20px', textTransform: 'uppercase', letterSpacing: '2px' }}>🏆 Top Ranglista</h2>
-            <table style={{ width: '100%', borderCollapse: 'collapse', color: '#fff' }}>
+        <div className="card" style={{ marginTop: '40px', width: '100%', maxWidth: '800px' }}>
+            <h2 style={{ textAlign: 'center', color: 'var(--secondary-color)', marginBottom: '20px', textTransform: 'uppercase', letterSpacing: '2px' }}>🏆 Top Ranglista</h2>
+            <table style={{ width: '100%', borderCollapse: 'collapse', color: 'var(--text-color)' }}>
                 <thead>
-                    <tr style={{ borderBottom: '2px solid #333', textAlign: 'left' }}>
+                    <tr style={{ borderBottom: '2px solid var(--card-border)', textAlign: 'left' }}>
                         <th style={{ padding: '10px' }}>#</th>
                         <th style={{ padding: '10px' }}>Felhasználó</th>
                         <th style={{ padding: '10px', textAlign: 'right' }}>XP</th>
@@ -81,7 +76,7 @@ const Leaderboard = ({ currentUserId }) => {
                         const isCurrentUser = user.id === currentUserId;
                         return (
                             <tr key={user.id} style={{ 
-                                borderBottom: '1px solid #333', 
+                                borderBottom: '1px solid var(--card-border)', 
                                 backgroundColor: isCurrentUser ? 'rgba(255, 215, 0, 0.1)' : 'transparent',
                                 fontWeight: isCurrentUser ? 'bold' : 'normal'
                             }}>
@@ -91,8 +86,8 @@ const Leaderboard = ({ currentUserId }) => {
                                 <td style={{ padding: '10px' }}>
                                     {user.username || 'Anonymous'} {isCurrentUser && '(Te)'}
                                 </td>
-                                <td style={{ padding: '10px', textAlign: 'right', color: '#4caf50' }}>{user.xp}</td>
-                                <td style={{ padding: '10px', textAlign: 'right', color: '#2196f3' }}>{user.globalEloRating}</td>
+                                <td style={{ padding: '10px', textAlign: 'right', color: 'var(--success-color)' }}>{user.xp}</td>
+                                <td style={{ padding: '10px', textAlign: 'right', color: 'var(--primary-color)' }}>{user.globalEloRating}</td>
                             </tr>
                         );
                     })}
@@ -141,32 +136,32 @@ const ProgressChart = ({ session }) => {
     return (
         <div style={{ marginTop: '40px', width: '100%', maxWidth: '900px', display: 'flex', flexDirection: 'column', gap: '40px' }}>
             {/* ELO Chart */}
-            <div style={{ backgroundColor: '#1e1e1e', borderRadius: '10px', padding: '20px', boxShadow: '0 4px 6px rgba(0,0,0,0.3)' }}>
-                <h3 style={{ textAlign: 'center', color: '#2196f3', marginBottom: '20px' }}>📈 ELO Pontszám Növekedése</h3>
+            <div className="card">
+                <h3 style={{ textAlign: 'center', color: 'var(--primary-color)', marginBottom: '20px' }}>📈 ELO Pontszám Növekedése</h3>
                 <div style={{ height: '300px', width: '100%' }}>
                     <ResponsiveContainer>
                         <LineChart data={stats.eloHistory}>
-                            <CartesianGrid strokeDasharray="3 3" stroke="#333" />
-                            <XAxis dataKey="date" stroke="#888" tickFormatter={date => date.substring(5)} />
-                            <YAxis stroke="#888" domain={['auto', 'auto']} />
-                            <Tooltip contentStyle={{ backgroundColor: '#333', border: 'none' }} />
-                            <Line type="monotone" dataKey="elo" stroke="#2196f3" strokeWidth={3} dot={{ r: 4 }} activeDot={{ r: 6 }} />
+                            <CartesianGrid strokeDasharray="3 3" stroke="var(--card-border)" />
+                            <XAxis dataKey="date" stroke="var(--text-color)" tickFormatter={date => date.substring(5)} />
+                            <YAxis stroke="var(--text-color)" domain={['auto', 'auto']} />
+                            <Tooltip contentStyle={{ backgroundColor: 'var(--card-bg)', border: '1px solid var(--card-border)', color: 'var(--text-color)' }} />
+                            <Line type="monotone" dataKey="elo" stroke="var(--primary-color)" strokeWidth={3} dot={{ r: 4 }} activeDot={{ r: 6 }} />
                         </LineChart>
                     </ResponsiveContainer>
                 </div>
             </div>
 
             {/* Activity Chart */}
-            <div style={{ backgroundColor: '#1e1e1e', borderRadius: '10px', padding: '20px', boxShadow: '0 4px 6px rgba(0,0,0,0.3)' }}>
-                <h3 style={{ textAlign: 'center', color: '#4caf50', marginBottom: '20px' }}>📊 Napi Megoldott Feladatok</h3>
+            <div className="card">
+                <h3 style={{ textAlign: 'center', color: 'var(--success-color)', marginBottom: '20px' }}>📊 Napi Megoldott Feladatok</h3>
                 <div style={{ height: '300px', width: '100%' }}>
                     <ResponsiveContainer>
                         <BarChart data={stats.activity}>
-                            <CartesianGrid strokeDasharray="3 3" stroke="#333" vertical={false} />
-                            <XAxis dataKey="date" stroke="#888" tickFormatter={date => date.substring(5)} />
-                            <YAxis stroke="#888" allowDecimals={false} />
-                            <Tooltip contentStyle={{ backgroundColor: '#333', border: 'none' }} cursor={{fill: 'rgba(255,255,255,0.05)'}} />
-                            <Bar dataKey="count" fill="#4caf50" radius={[4, 4, 0, 0]} />
+                            <CartesianGrid strokeDasharray="3 3" stroke="var(--card-border)" vertical={false} />
+                            <XAxis dataKey="date" stroke="var(--text-color)" tickFormatter={date => date.substring(5)} />
+                            <YAxis stroke="var(--text-color)" allowDecimals={false} />
+                            <Tooltip contentStyle={{ backgroundColor: 'var(--card-bg)', border: '1px solid var(--card-border)', color: 'var(--text-color)' }} cursor={{fill: 'var(--input-bg)'}} />
+                            <Bar dataKey="count" fill="var(--success-color)" radius={[4, 4, 0, 0]} />
                         </BarChart>
                     </ResponsiveContainer>
                 </div>
@@ -211,28 +206,25 @@ export default function Dashboard() {
       <h1>Welcome back, {profile.username || session.user.email}!</h1>
       
       <div style={{ display: 'flex', gap: '40px', textAlign: 'center', flexWrap: 'wrap', justifyContent: 'center' }}>
-          <div style={{ border: '2px solid #0070f3', padding: '20px', borderRadius: '10px', minWidth: '150px' }}>
-              <h2>Level / ELO</h2>
+          <div className="card" style={{ minWidth: '150px', borderColor: 'var(--primary-color)' }}>
+              <h2 style={{margin: 0, marginBottom: '10px'}}>Level / ELO</h2>
               <div style={{ fontSize: '40px', fontWeight: 'bold' }}>{profile.globalEloRating}</div>
           </div>
           
-          <div style={{ border: '2px solid #ff9800', padding: '20px', borderRadius: '10px', minWidth: '150px' }}>
-              <h2>XP</h2>
+          <div className="card" style={{ minWidth: '150px', borderColor: 'var(--secondary-color)' }}>
+              <h2 style={{margin: 0, marginBottom: '10px'}}>XP</h2>
               <div style={{ fontSize: '40px', fontWeight: 'bold' }}>{profile.xp}</div>
           </div>
       </div>
 
       <button 
         onClick={() => navigate('/solve')}
+        className="btn btn-primary"
         style={{ 
             padding: '20px 40px', 
             fontSize: '24px', 
-            background: '#4caf50', 
-            color: 'white', 
-            border: 'none', 
             borderRadius: '50px',
-            cursor: 'pointer',
-            boxShadow: '0 4px 6px rgba(0,0,0,0.1)'
+            boxShadow: 'var(--shadow)'
         }}
       >
         START TRAINING
