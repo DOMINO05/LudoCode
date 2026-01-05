@@ -34,7 +34,7 @@ export default function CodingPage() {
 
   // Debug Specific State
   const [debugPhase, setDebugPhase] = useState('identify'); // 'identify' | 'fix'
-  const [debugSelection, setDebugSelection] = useState(null); // { lineIndex, tokenIndex, text }
+  const [debugSelections, setDebugSelections] = useState([]); // Array of { lineIndex, tokenIndex, text }
 
   // Result & Feedback
   const [result, setResult] = useState(null);
@@ -56,7 +56,7 @@ export default function CodingPage() {
     setParsonsSolution([]);
     setSelectedOption(null);
     setDebugPhase('identify');
-    setDebugSelection(null);
+    setDebugSelections([]);
 
     let url = 'http://localhost:3000/questions/next';
     if (conceptId) {
@@ -112,18 +112,25 @@ export default function CodingPage() {
 
       // Handle Debug Phase A locally first
       if (question.qType === 'debug' && debugPhase === 'identify') {
-          if (!debugSelection) {
-              alert("Kérlek válassz ki egy elemet!");
+          if (debugSelections.length === 0) {
+              alert("Kérlek válassz ki legalább egy elemet!");
               return;
           }
           
-          const selectedText = debugSelection.text.trim();
+          // Construct selected text from tokens, sorting them first to be safe
+          const sortedSelections = [...debugSelections].sort((a, b) => {
+              if (a.lineIndex !== b.lineIndex) return a.lineIndex - b.lineIndex;
+              return a.tokenIndex - b.tokenIndex;
+          });
+          
+          const selectedText = sortedSelections.map(s => s.text).join('');
           const errorLocation = question.content.error_location ? question.content.error_location.trim() : "";
+          
+          // Compare ignoring whitespace to be more forgiving
+          const normalizedSelected = selectedText.replace(/\s+/g, '');
+          const normalizedError = errorLocation.replace(/\s+/g, '');
 
-          // Check if selected token matches error location
-          // Removing quotes from selectedText if they are just part of string literal syntax might be needed 
-          // but usually error_location matches the code exactly.
-          if (selectedText === errorLocation || (selectedText.length > 0 && errorLocation.includes(selectedText))) {
+          if (normalizedSelected === normalizedError || normalizedError.includes(normalizedSelected)) {
                // Correct Phase A
                setDebugPhase('fix');
           } else {
@@ -218,8 +225,8 @@ export default function CodingPage() {
                   question={question} 
                   onCodeChange={setCode} 
                   debugPhase={debugPhase}
-                  selection={debugSelection}
-                  onSelect={setDebugSelection}
+                  selections={debugSelections}
+                  onSelect={setDebugSelections}
               />;
           case 'coding':
           case 'construction': // Spec calls it ConstructionComponent but maps 'coding' to it? 

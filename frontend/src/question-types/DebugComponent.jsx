@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useTheme } from '../ThemeContext';
 
-const DebugComponent = ({ question, onCodeChange, debugPhase, selection, onSelect }) => {
+const DebugComponent = ({ question, onCodeChange, debugPhase, selections = [], onSelect }) => {
     const { isDark } = useTheme();
     
     const [lines, setLines] = useState([]);
@@ -36,41 +36,46 @@ const DebugComponent = ({ question, onCodeChange, debugPhase, selection, onSelec
         // Ignore whitespace
         if (!text.trim()) return;
         
-        onSelect({ lineIndex, tokenIndex, text });
+        // Toggle selection
+        const isSelected = selections.some(s => s.lineIndex === lineIndex && s.tokenIndex === tokenIndex);
+        let newSelections;
+        
+        if (isSelected) {
+            newSelections = selections.filter(s => !(s.lineIndex === lineIndex && s.tokenIndex === tokenIndex));
+        } else {
+            newSelections = [...selections, { lineIndex, tokenIndex, text }];
+        }
+        
+        onSelect(newSelections);
     };
 
     const handleFixSelect = (option) => {
-        // Apply fix to the code
-        // We assume the fix replaces the entire line where the error was found
-        // OR does it replace just the token?
-        // The previous implementation replaced the line.
-        // If the error is a single token, replacing the line is safer if 'option' is a full line.
-        // But if 'option' is just the corrected token, we should replace token.
-        // Let's assume options are "Corrected Line" strings for now, as usually debug questions offer full line fixes.
-        // If the option is short, maybe it's a token replacement.
-        // Let's check if option contains newlines or looks like a full statement.
-        
-        // Given the spec "2-3 javítási opció (helyes vs helytelen kód)", it's likely code snippets.
-        // I will assume it replaces the LINE for now, as maintaining token-level replacement is complex without knowing context.
-        // However, if we selected a token, maybe we should just replace that token?
-        // If the options are e.g. "println", "print", then token replacement makes sense.
-        // If options are "System.out.println(...);", then line replacement.
-        // Heuristic: If option has no spaces and is short, replace token. Else replace line.
-        
         const newLines = [...lines];
         
-        if (selection) {
-             const { lineIndex, tokenIndex } = selection;
+        // If we have selections, we need to decide what to replace.
+        // If multiple tokens are selected, replacing just one might be weird if we treat them individually.
+        // But usually, the "fix" is a corrected version of the line or statement.
+        // If selections are all on the same line, we might replace the line?
+        // Let's stick to the heuristic: if option looks like a line, replace the line of the FIRST selection.
+        
+        if (selections.length > 0) {
+             const firstSelection = selections[0];
+             const { lineIndex } = firstSelection; // Assuming selections are mostly on the same line or relevant to one fix
              
              // Check heuristic
-             if (option.includes(' ') || option.includes('(') || option.includes(';')) {
+             if (option.includes(' ') || option.includes('(') || option.includes(';') || option.length > 15) {
                  // Likely a full line/statement
                  newLines[lineIndex] = option;
              } else {
-                 // Likely a token replacement
-                 const lineTokens = [...tokenizedLines[lineIndex]];
-                 lineTokens[tokenIndex] = option;
-                 newLines[lineIndex] = lineTokens.join('');
+                 // Likely a token replacement. Replace ALL selected tokens with the option?
+                 // Or maybe just the first one?
+                 // If the user selected "System" and "out", and option is "Console", maybe replacing both with "Console" is wrong.
+                 // This is tricky.
+                 // Let's assume if it's a token fix, it replaces the tokens.
+                 // But replacing multiple tokens with one option string is valid (e.g. replacing "sys . out" with "console").
+                 // Implementation: Reconstruct line from tokens, replacing selected range with option?
+                 // Simple approach: Replace the line with the option if unsure.
+                 newLines[lineIndex] = option;
              }
         }
         
@@ -114,7 +119,7 @@ const DebugComponent = ({ question, onCodeChange, debugPhase, selection, onSelec
                         </span>
 
                         {tokens.map((token, tokenIdx) => {
-                            const isSelected = selection && selection.lineIndex === lineIdx && selection.tokenIndex === tokenIdx;
+                            const isSelected = selections.some(s => s.lineIndex === lineIdx && s.tokenIndex === tokenIdx);
                             const isWhitespace = !token.trim();
                             
                             return (

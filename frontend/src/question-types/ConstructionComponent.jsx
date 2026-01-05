@@ -15,10 +15,21 @@ const ConstructionComponent = ({ question, onCodeChange }) => {
 
     useEffect(() => {
         // Initialize based on question content
-        // Assuming question.content.blocks contains the code snippets to construct from
-        if (question.content.blocks) {
+        if (question.content.blocks && question.content.blocks.length > 0) {
             setAvailableBlocks([...question.content.blocks]); 
             setConstructedBlocks([]);
+        } else if (question.content.initial_code) {
+             // Fallback: Generate blocks from initial_code (split by lines)
+             const lines = question.content.initial_code.split('\n').filter(line => line.trim() !== '');
+             const generatedBlocks = lines.map((line, idx) => ({ id: idx, text: line }));
+             // Shuffle them? Maybe not shuffled initially if it's construction, usually construction starts empty.
+             // But if we generate them, they are available.
+             // Let's shuffle them to make it a task.
+             setAvailableBlocks(generatedBlocks.sort(() => Math.random() - 0.5));
+             setConstructedBlocks([]);
+        } else {
+             setAvailableBlocks([]);
+             setConstructedBlocks([]);
         }
         
         // Initial code for hardcore mode
