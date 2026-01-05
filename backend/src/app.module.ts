@@ -7,6 +7,7 @@ import { AuthModule } from './auth/auth.module';
 import { UsersModule } from './users/users.module';
 import { SubmissionsModule } from './submissions/submissions.module';
 import { QuestionsModule } from './questions/questions.module';
+import { CoursesModule } from './courses/courses.module';
 import { DebugMiddleware } from './debug.middleware';
 
 @Module({
@@ -32,6 +33,7 @@ import { DebugMiddleware } from './debug.middleware';
     UsersModule,
     SubmissionsModule,
     QuestionsModule,
+    CoursesModule,
   ],
   controllers: [AppController],
   providers: [AppService],

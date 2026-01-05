@@ -93,10 +93,10 @@ export default function CodingPage() {
       const errorLocation = question.content.error_location.trim();
       
       if (selectedText.trim() === errorLocation || (selectedText.trim().length > 0 && errorLocation.includes(selectedText.trim()))) {
-          alert('Correct! Now fix the bug.');
+          setResult({ output: 'Correct! Now fix the bug.', isCorrect: true, isDebugCheck: true });
           setDebugPhase('fix');
       } else {
-          alert(`Incorrect. The bug is at: "${errorLocation}". Now fix it.`);
+          setResult({ output: `Incorrect. The bug is at: "${errorLocation}". Now fix it.`, isCorrect: false, isDebugCheck: true });
           setDebugPhase('fix');
       }
   };
@@ -331,7 +331,7 @@ export default function CodingPage() {
             <div style={{ padding: '15px', overflowY: 'auto', fontFamily: 'monospace', fontSize: '13px', color: isDark ? '#fff' : '#000', height: '100%' }}>
               {!result && <span style={{ opacity: 0.6 }}>Waiting for submission...</span>}
               
-              {result && !result.isCorrect && (
+              {result && !result.isCorrect && !result.isDebugCheck && (
                  <div style={{ marginBottom: '10px', color: 'var(--error-color)' }}>
                    <strong>Sajnos nem jó. -1 HP, -15 ELO</strong>
                  </div>
