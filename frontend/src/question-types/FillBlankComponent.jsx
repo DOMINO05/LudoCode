@@ -11,7 +11,8 @@ const FillBlankComponent = ({ question, onCodeChange }) => {
     const [codeSegments, setCodeSegments] = useState([]);
     const [blanks, setBlanks] = useState([]); // Array of filled values, null if empty
     const [wordBank, setWordBank] = useState([]);
-    const placeholderRegex = /(___|\?\?\?)/g;
+    // Update regex to include {{BLANK}}
+    const placeholderRegex = /(___|\?\?\?|\{\{BLANK\}\})/g;
 
     useEffect(() => {
         // Fallback to code_snippet if initial_code is missing
@@ -39,6 +40,9 @@ const FillBlankComponent = ({ question, onCodeChange }) => {
         
         codeSegments.forEach(segment => {
             if (segment.match(placeholderRegex)) {
+                // If the blank was {{BLANK}}, we should probably replace it with something simpler in the constructed code
+                // or just use the filled value.
+                // If blank is not filled, what to send? "___" is fine as placeholder.
                 constructedCode += blanks[blankIndex] || "___";
                 blankIndex++;
             } else {

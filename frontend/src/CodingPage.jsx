@@ -227,6 +227,7 @@ export default function CodingPage() {
                   debugPhase={debugPhase}
                   selections={debugSelections}
                   onSelect={setDebugSelections}
+                  checkResult={result}
               />;
           case 'coding':
           case 'construction': // Spec calls it ConstructionComponent but maps 'coding' to it? 

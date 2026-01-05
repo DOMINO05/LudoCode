@@ -1,12 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import { useTheme } from '../ThemeContext';
 
-const DebugComponent = ({ question, onCodeChange, debugPhase, selections = [], onSelect }) => {
+const DebugComponent = ({ question, onCodeChange, debugPhase, selections = [], onSelect, checkResult }) => {
     const { isDark } = useTheme();
     
     const [lines, setLines] = useState([]);
     const [fixOptions, setFixOptions] = useState([]);
     const [tokenizedLines, setTokenizedLines] = useState([]);
+    const [errorTokens, setErrorTokens] = useState([]); // Array of {lineIndex, tokenIndex}
 
     useEffect(() => {
         let codeLines = [];
@@ -18,18 +19,55 @@ const DebugComponent = ({ question, onCodeChange, debugPhase, selections = [], o
         
         // Tokenize lines
         const tokenized = codeLines.map(line => {
-             // Split by strings, words, non-word chars, keeping whitespace
-             // This regex captures:
-             // 1. Strings: "..." or '...'
-             // 2. Words: alphanumeric + underscore
-             // 3. Non-whitespace non-word chars: punctuation
-             // 4. Whitespace
              const regex = /(".*?"|'.*?'|[a-zA-Z0-9_]+|[^\s\w]|\s+)/g;
              return line.match(regex) || [];
         });
         setTokenizedLines(tokenized);
         
     }, [question]);
+
+    // Calculate actual error tokens when checkResult (failure) is present
+    useEffect(() => {
+        if (checkResult && !checkResult.isCorrect && question.content.error_location) {
+            const errorLoc = question.content.error_location.replace(/\s+/g, '');
+            const foundTokens = [];
+            
+            // Flatten tokens for easier searching
+            const allTokens = [];
+            tokenizedLines.forEach((tokens, lIdx) => {
+                tokens.forEach((text, tIdx) => {
+                    if (text.trim()) { // Ignore whitespace tokens for matching
+                        allTokens.push({ lineIndex: lIdx, tokenIndex: tIdx, text });
+                    }
+                });
+            });
+
+            // Find subsequence that matches errorLoc
+            // This is a simplified search: finding contiguous sequence of non-whitespace tokens
+            // whose combined text equals errorLoc (ignoring whitespace).
+            for (let i = 0; i < allTokens.length; i++) {
+                let currentStr = "";
+                for (let j = i; j < allTokens.length; j++) {
+                    currentStr += allTokens[j].text;
+                    if (currentStr === errorLoc) {
+                        // Found match
+                        for (let k = i; k <= j; k++) {
+                            foundTokens.push({ 
+                                lineIndex: allTokens[k].lineIndex, 
+                                tokenIndex: allTokens[k].tokenIndex 
+                            });
+                        }
+                        break;
+                    }
+                    if (currentStr.length > errorLoc.length) break;
+                }
+                if (foundTokens.length > 0) break;
+            }
+            setErrorTokens(foundTokens);
+        } else {
+            setErrorTokens([]);
+        }
+    }, [checkResult, question, tokenizedLines]);
 
     const handleTokenClick = (lineIndex, tokenIndex, text) => {
         if (debugPhase !== 'identify') return;
@@ -120,23 +158,49 @@ const DebugComponent = ({ question, onCodeChange, debugPhase, selections = [], o
 
                         {tokens.map((token, tokenIdx) => {
                             const isSelected = selections.some(s => s.lineIndex === lineIdx && s.tokenIndex === tokenIdx);
+                            const isActualError = errorTokens.some(t => t.lineIndex === lineIdx && t.tokenIndex === tokenIdx);
                             const isWhitespace = !token.trim();
                             
+                            // Determine visuals
+                            let backgroundColor = 'transparent';
+                            let borderColor = 'transparent';
+                            let color = 'inherit';
+                            
+                            if (checkResult && !checkResult.isCorrect) {
+                                // Incorrect State
+                                if (isActualError) {
+                                    backgroundColor = 'rgba(231, 76, 60, 0.3)'; // Redish
+                                    borderColor = 'var(--error-color)';
+                                } else if (isSelected) {
+                                    backgroundColor = 'rgba(46, 204, 113, 0.3)'; // Greenish (User selected valid code)
+                                    borderColor = 'var(--success-color)';
+                                }
+                            } else {
+                                // Normal / Correct State
+                                if (isSelected) {
+                                    backgroundColor = 'rgba(var(--primary-rgb), 0.3)';
+                                    borderColor = 'var(--primary-color)';
+                                    if (debugPhase === 'fix') {
+                                        color = 'var(--error-color)'; // Highlight error in fix phase
+                                    }
+                                }
+                            }
+
                             return (
                                 <span 
                                     key={tokenIdx}
                                     onClick={() => handleTokenClick(lineIdx, tokenIdx, token)}
                                     style={{
                                         cursor: (debugPhase === 'identify' && !isWhitespace) ? 'pointer' : 'default',
-                                        backgroundColor: isSelected ? 'rgba(var(--primary-rgb), 0.3)' : 'transparent',
-                                        border: isSelected ? '1px solid var(--primary-color)' : '1px solid transparent',
+                                        backgroundColor,
+                                        border: `1px solid ${borderColor}`,
                                         borderRadius: '4px',
                                         padding: '0 2px',
                                         margin: '0 1px',
                                         whiteSpace: 'pre',
-                                        transition: 'background-color 0.1s',
-                                        color: (debugPhase === 'fix' && isSelected) ? 'var(--error-color)' : 'inherit',
-                                        fontWeight: isSelected ? 'bold' : 'normal'
+                                        transition: 'all 0.1s',
+                                        color: color,
+                                        fontWeight: isSelected || isActualError ? 'bold' : 'normal'
                                     }}
                                 >
                                     {token}
