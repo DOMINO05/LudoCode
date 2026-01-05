@@ -186,6 +186,11 @@ export default function CodingPage() {
       if (result && result.isCorrect) {
           fetchNextQuestion();
       } else {
+          // If incorrect, check if we should transition Debug phase
+          if (question.qType === 'debug' && debugPhase === 'identify') {
+              // User failed identification, move to fix phase automatically
+              setDebugPhase('fix');
+          }
           setShowFeedback(false);
       }
   };

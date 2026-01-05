@@ -11,8 +11,8 @@ const FillBlankComponent = ({ question, onCodeChange }) => {
     const [codeSegments, setCodeSegments] = useState([]);
     const [blanks, setBlanks] = useState([]); // Array of filled values, null if empty
     const [wordBank, setWordBank] = useState([]);
-    // Update regex to include {{BLANK}}
-    const placeholderRegex = /(___|\?\?\?|\{\{BLANK\}\})/g;
+    // Update regex to include {{BLANK}} with optional whitespace
+    const placeholderRegex = /(___|\?\?\?|\{\{\s*BLANK\s*\}\})/g;
 
     useEffect(() => {
         // Fallback to code_snippet if initial_code is missing
