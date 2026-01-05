@@ -1,41 +1,44 @@
-import React, { useState, useEffect, useRef } from 'react';
-import { useOutletContext, useNavigate } from 'react-router-dom';
-import Editor from '@monaco-editor/react';
+import React, { useState, useEffect } from 'react';
+import { useOutletContext, useNavigate, useSearchParams } from 'react-router-dom';
 import { useTheme } from './ThemeContext';
 
-// Simple Modal Component
-const Modal = ({ children }) => (
-  <div className="modal-overlay" style={{
-    position: 'fixed', top: 0, left: 0, right: 0, bottom: 0,
-    display: 'flex', alignItems: 'center', justifyContent: 'center', zIndex: 1000
-  }}>
-    <div className="modal-content" style={{
-      padding: '30px', borderRadius: '10px',
-      maxWidth: '500px', width: '90%', textAlign: 'center',
-      boxShadow: 'var(--shadow)'
-    }}>
-      {children}
-    </div>
-  </div>
-);
+// Import New Question Components
+import TheoryComponent from './question-types/TheoryComponent';
+import PredictionComponent from './question-types/PredictionComponent';
+import FillBlankComponent from './question-types/FillBlankComponent';
+import ParsonsComponent from './question-types/ParsonsComponent';
+import DebugComponent from './question-types/DebugComponent';
+import ConstructionComponent from './question-types/ConstructionComponent';
+import FeedbackSheet from './FeedbackSheet';
+
+// Fallback for types not yet fully implemented or standard 'coding'
+import Editor from '@monaco-editor/react';
 
 export default function CodingPage() {
   const { session, refreshProfile } = useOutletContext();
   const { isDark } = useTheme();
   const navigate = useNavigate();
+  const [searchParams] = useSearchParams();
+  const conceptId = searchParams.get('conceptId');
+
+  // State
   const [question, setQuestion] = useState(null);
-  const [code, setCode] = useState('');
-  const [parsonsSolution, setParsonsSolution] = useState([]);
-  const [parsonsAvailable, setParsonsAvailable] = useState([]);
-  const [result, setResult] = useState(null);
   const [loading, setLoading] = useState(true);
-  const [showSuccessModal, setShowSuccessModal] = useState(false);
-  const [showHint, setShowHint] = useState(false);
   const [noQuestions, setNoQuestions] = useState(false);
-  
-  // Debug specific
+  const [isCourseFinished, setIsCourseFinished] = useState(false);
+
+  // Answers State
+  const [code, setCode] = useState(''); // For Coding, FillBlank, Debug, Construction
+  const [parsonsSolution, setParsonsSolution] = useState([]); // For Parsons
+  const [selectedOption, setSelectedOption] = useState(null); // For Theory, Prediction
+
+  // Debug Specific State
   const [debugPhase, setDebugPhase] = useState('identify'); // 'identify' | 'fix'
-  const editorRef = useRef(null);
+  const [debugSelectedLine, setDebugSelectedLine] = useState(null);
+
+  // Result & Feedback
+  const [result, setResult] = useState(null);
+  const [showFeedback, setShowFeedback] = useState(false);
 
   useEffect(() => {
     fetchNextQuestion();
@@ -44,15 +47,27 @@ export default function CodingPage() {
   const fetchNextQuestion = async () => {
     setLoading(true);
     setResult(null);
-    setShowSuccessModal(false);
-    setShowHint(false);
+    setShowFeedback(false);
     setNoQuestions(false);
+    setIsCourseFinished(false);
+    
+    // Reset answer states
+    setCode('');
+    setParsonsSolution([]);
+    setSelectedOption(null);
+    setDebugPhase('identify');
+    setDebugSelectedLine(null);
+
+    let url = 'http://localhost:3000/questions/next';
+    if (conceptId) {
+        url = `http://localhost:3000/courses/${conceptId}/next-question`;
+    }
+
     try {
-      const res = await fetch('http://localhost:3000/questions/next', {
-        headers: {
-          'Authorization': `Bearer ${session.access_token}`
-        }
+      const res = await fetch(url, {
+        headers: { 'Authorization': `Bearer ${session.access_token}` }
       });
+      
       if (!res.ok) {
           if (res.status === 404) {
               setQuestion(null);
@@ -62,20 +77,28 @@ export default function CodingPage() {
           const errorText = await res.text();
           throw new Error(`Failed to fetch question: ${res.status} ${res.statusText} - ${errorText}`);
       }
-      const data = await res.json();
+      
+      const text = await res.text();
+      if (!text) {
+          if (conceptId) {
+              setIsCourseFinished(true);
+          } else {
+              setNoQuestions(true); 
+          }
+          setQuestion(null);
+          return;
+      }
+
+      const data = JSON.parse(text);
       setQuestion(data);
-      // Initialize code/answer
+      
+      // Initial Setup
       if (data.qType === 'debug') {
-          setCode(data.content.buggy_code || '');
-          setDebugPhase('identify');
-      } else {
-          setCode(data.content.initial_code || '');
+          // Debug initial setup if needed
+      } else if (data.content.initial_code) {
+          setCode(data.content.initial_code);
       }
       
-      if (data.qType === 'parsons' && data.content.blocks) {
-          setParsonsAvailable([...data.content.blocks].sort(() => Math.random() - 0.5));
-          setParsonsSolution([]);
-      }
     } catch (err) {
       console.error(err);
       alert('Could not load question. ' + err.message);
@@ -84,294 +107,244 @@ export default function CodingPage() {
     }
   };
 
-  const handleDebugCheck = () => {
-      if (!editorRef.current) return;
-      const selection = editorRef.current.getSelection();
-      const model = editorRef.current.getModel();
-      const selectedText = model.getValueInRange(selection);
-      
-      const errorLocation = question.content.error_location.trim();
-      
-      if (selectedText.trim() === errorLocation || (selectedText.trim().length > 0 && errorLocation.includes(selectedText.trim()))) {
-          setResult({ output: 'Correct! Now fix the bug.', isCorrect: true, isDebugCheck: true });
-          setDebugPhase('fix');
+  const handleCheck = async () => {
+      if (!question) return;
+
+      // Handle Debug Phase A locally first
+      if (question.qType === 'debug' && debugPhase === 'identify') {
+          if (debugSelectedLine === null) return;
+          
+          const buggyCode = question.content.buggy_code || "";
+          const lines = buggyCode.split('\n');
+          const selectedText = lines[debugSelectedLine].trim();
+          const errorLocation = question.content.error_location ? question.content.error_location.trim() : "";
+
+          // Simple containment check
+          if (selectedText === errorLocation || (selectedText.length > 0 && errorLocation.includes(selectedText))) {
+               // Correct Phase A
+               setDebugPhase('fix');
+               // Maybe show a mini toast or visual cue?
+               // Or just transition naturally.
+          } else {
+              // Incorrect Phase A
+               setResult({ 
+                   isCorrect: false, 
+                   correct_answer: `A hiba itt található:\n${errorLocation}`, 
+                   output: "Nem ez a hibás sor." 
+               });
+               setShowFeedback(true);
+          }
+          return;
+      }
+
+      // Prepare Submission
+      let submissionData = null;
+      if (question.qType === 'theory' || question.qType === 'predict_output') {
+          submissionData = selectedOption;
+      } else if (question.qType === 'parsons') {
+          submissionData = JSON.stringify(parsonsSolution.map(b => b.id));
       } else {
-          setResult({ output: `Incorrect. The bug is at: "${errorLocation}". Now fix it.`, isCorrect: false, isDebugCheck: true });
-          setDebugPhase('fix');
+          // Coding, FillBlank, Construction, Debug (Fix Phase)
+          submissionData = code;
+      }
+
+      if (submissionData === null || submissionData === '' || (Array.isArray(submissionData) && submissionData.length === 0)) {
+          alert("Please provide an answer first.");
+          return;
+      }
+
+      try {
+        const res = await fetch(`http://localhost:3000/questions/${question.id}/submit`, {
+            method: 'POST',
+            headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${session.access_token}`
+            },
+            body: JSON.stringify({ code: submissionData })
+        });
+        const data = await res.json();
+        setResult(data);
+        setShowFeedback(true);
+        
+        refreshProfile();
+
+      } catch (err) {
+        console.error(err);
+        alert('Submission failed');
       }
   };
 
-  const handleSubmit = async () => {
-    if (!question) return;
-    
-    let submissionData = code;
-    if (question.qType === 'parsons') {
-        submissionData = JSON.stringify(parsonsSolution.map(b => b.id));
-    }
-
-    try {
-      const res = await fetch(`http://localhost:3000/questions/${question.id}/submit`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          'Authorization': `Bearer ${session.access_token}`
-        },
-        body: JSON.stringify({ code: submissionData })
-      });
-      const data = await res.json();
-      setResult(data);
-      
-      // Update profile regardless of result to sync HP/XP/ELO
-      refreshProfile();
-
-      if (data.isCorrect) {
-          setShowSuccessModal(true);
+  const handleNext = () => {
+      if (result && result.isCorrect) {
+          fetchNextQuestion();
+      } else {
+          setShowFeedback(false);
       }
-    } catch (err) {
-      console.error(err);
-      alert('Submission failed');
-    }
   };
 
-  if (loading) return <div style={{ padding: '20px' }}>Loading...</div>;
-  
+  // Render Logic
+  const renderContent = () => {
+      if (!question) return null;
+
+      switch (question.qType) {
+          case 'theory':
+              return <TheoryComponent 
+                  question={question} 
+                  selectedAnswer={selectedOption} 
+                  onSelect={setSelectedOption} 
+              />;
+          case 'predict_output':
+              return <PredictionComponent 
+                  question={question} 
+                  selectedAnswer={selectedOption} 
+                  onSelect={setSelectedOption} 
+              />;
+          case 'fill_in_blank':
+              return <FillBlankComponent 
+                  question={question} 
+                  onCodeChange={setCode} 
+              />;
+          case 'parsons':
+              return <ParsonsComponent 
+                  question={question} 
+                  onSolutionChange={setParsonsSolution} 
+              />;
+          case 'debug':
+              return <DebugComponent 
+                  question={question} 
+                  onCodeChange={setCode} 
+                  debugPhase={debugPhase}
+                  selectedLineIndex={debugSelectedLine}
+                  onLineSelect={setDebugSelectedLine}
+              />;
+          case 'coding':
+          case 'construction': // Spec calls it ConstructionComponent but maps 'coding' to it? 
+          // Spec says: "coding -> <ConstructionComponent /> (Ez speciális...)"
+              return <ConstructionComponent 
+                  question={question} 
+                  onCodeChange={setCode} 
+              />;
+          default:
+              // Fallback to basic editor if type unknown
+               return (
+                  <div style={{ padding: '20px', display: 'flex', flexDirection: 'column', height: '100%' }}>
+                      <h2>{question.title}</h2>
+                      <p>{question.description}</p>
+                      <div style={{ flex: 1, border: '1px solid var(--card-border)', marginTop: '20px' }}>
+                        <Editor
+                            height="100%"
+                            defaultLanguage={question.language || 'python'}
+                            value={code}
+                            onChange={(val) => setCode(val)}
+                            theme={isDark ? "vs-dark" : "light"}
+                        />
+                      </div>
+                  </div>
+              );
+      }
+  };
+
+  if (loading) return <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100vh' }}>Loading...</div>;
+
+  if (isCourseFinished) {
+      return (
+          <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', height: '100vh', textAlign: 'center', color: 'var(--text-color)' }}>
+              <div style={{ fontSize: '60px', marginBottom: '20px' }}>🎓</div>
+              <h1 style={{ color: 'var(--success-color)' }}>Témakör Teljesítve!</h1>
+              <p style={{ fontSize: '18px', maxWidth: '600px', marginBottom: '40px' }}>
+                  Sikeresen megoldottad az összes feladatot ebben a témakörben.
+              </p>
+              <button onClick={() => navigate('/courses')} className="btn btn-primary" style={{ padding: '15px 30px', fontSize: '18px' }}>
+                  Vissza a Tanuló Ösvényre
+              </button>
+          </div>
+      );
+  }
+
   if (noQuestions) {
       return (
-          <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', height: '80vh', textAlign: 'center', color: 'var(--text-color)' }}>
+          <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', height: '100vh', textAlign: 'center', color: 'var(--text-color)' }}>
               <div style={{ fontSize: '60px', marginBottom: '20px' }}>🎉</div>
               <h1 style={{ color: 'var(--success-color)' }}>Gratulálunk!</h1>
               <p style={{ fontSize: '18px', maxWidth: '600px', marginBottom: '40px' }}>
-                  Jelenleg nincs több feladat a szintednek megfelelően. Térj vissza később vagy próbáld meg a kihívásokat!
+                  Jelenleg nincs több feladat a szintednek megfelelően.
               </p>
-              <button 
-                  onClick={() => navigate('/dashboard')}
-                  className="btn btn-primary"
-                  style={{ padding: '15px 30px', fontSize: '18px' }}
-              >
+              <button onClick={() => navigate('/dashboard')} className="btn btn-primary" style={{ padding: '15px 30px', fontSize: '18px' }}>
                   Vissza a Dashboardra
               </button>
           </div>
       );
   }
 
-  if (!question) return <div style={{ padding: '20px' }}>No question loaded.</div>;
-
   return (
-    <div style={{ display: 'flex', height: 'calc(100vh - 100px)', gap: '20px', boxSizing: 'border-box', overflow: 'hidden', padding: '20px' }}>
-      {/* Left Panel: Task Description */}
-      <div className="card" style={{ 
-        flex: '0 0 35%', 
+    <div style={{ 
         display: 'flex', 
         flexDirection: 'column',
+        height: '100%', 
         overflow: 'hidden',
-        padding: '0' // Override padding for internal scroll
+        position: 'relative',
+        backgroundColor: 'var(--bg-color)',
+        color: 'var(--text-color)'
+    }}>
+      
+      {/* Main Content Area - Scrollable */}
+      <div style={{ 
+          flex: 1, 
+          overflowY: 'auto', 
+          paddingBottom: '80px', // Space for footer
+          maxWidth: '800px',
+          width: '100%',
+          margin: '0 auto',
       }}>
-        <div style={{ padding: '20px', overflowY: 'auto', flex: 1 }}>
-          <h2 style={{ marginTop: 0 }}>{question.title}</h2>
-          
-          <div style={{ display: 'flex', gap: '10px', marginBottom: '15px', fontSize: '0.9em' }}>
-            <span style={{ background: 'var(--input-bg)', padding: '2px 8px', borderRadius: '4px', border: '1px solid var(--input-border)' }}>{question.difficultyRating}</span>
-            <span style={{ background: 'var(--primary-color)', padding: '2px 8px', borderRadius: '4px', color: '#fff' }}>10 XP</span>
-            <span style={{ background: 'var(--input-bg)', padding: '2px 8px', borderRadius: '4px', border: '1px solid var(--input-border)' }}>{question.qType}</span>
-            <span style={{ background: 'var(--input-bg)', padding: '2px 8px', borderRadius: '4px', border: '1px solid var(--input-border)' }}>{question.language}</span>
-          </div>
-
-          <div style={{ marginBottom: '20px', lineHeight: '1.6' }}>
-            <p>{question.description}</p>
-          </div>
-
-          {question.content.code_snippet && (
-            <div style={{ marginBottom: '20px', background: isDark ? '#2d2d2d' : '#f0f0f0', color: isDark ? '#ccc' : '#333', padding: '10px', borderRadius: '5px', fontFamily: 'monospace', overflowX: 'auto' }}>
-                <pre style={{ margin: 0 }}>{question.content.code_snippet}</pre>
-            </div>
-          )}
-
-          {question.content.options && (
-            <div style={{ marginBottom: '20px' }}>
-                <h3>Select Answer:</h3>
-                {question.content.options.map((option, idx) => (
-                    <div key={idx} style={{ marginBottom: '10px', background: 'var(--input-bg)', padding: '10px', borderRadius: '4px', border: '1px solid var(--input-border)' }}>
-                        <label style={{ display: 'flex', alignItems: 'center', cursor: 'pointer' }}>
-                            <input 
-                                type="radio" 
-                                name="answer" 
-                                value={option} 
-                                checked={code === option} 
-                                onChange={(e) => setCode(e.target.value)} 
-                                style={{ marginRight: '10px' }}
-                            />
-                            <span>{option}</span>
-                        </label>
-                    </div>
-                ))}
-            </div>
-          )}
-
-          {question.qType === 'parsons' && (
-            <div style={{ marginBottom: '20px' }}>
-                <h3>Your Solution:</h3>
-                <div style={{ minHeight: '50px', border: '1px dashed var(--input-border)', padding: '10px', marginBottom: '20px', borderRadius: '4px', background: 'var(--input-bg)' }}>
-                    {parsonsSolution.map((block, idx) => (
-                        <div 
-                            key={block.id} 
-                            onClick={() => {
-                                setParsonsSolution(prev => prev.filter((_, i) => i !== idx));
-                                setParsonsAvailable(prev => [...prev, block]);
-                            }}
-                            style={{ background: 'var(--card-bg)', border: '1px solid var(--card-border)', padding: '8px', marginBottom: '5px', cursor: 'pointer', borderRadius: '4px' }}
-                        >
-                            {block.text}
-                        </div>
-                    ))}
-                    {parsonsSolution.length === 0 && <span style={{color: 'var(--text-color)', opacity: 0.7, fontStyle: 'italic'}}>Click blocks to add them here</span>}
-                </div>
-
-                <h3>Available Blocks:</h3>
-                <div style={{ minHeight: '50px', border: '1px solid var(--input-border)', padding: '10px', borderRadius: '4px', background: 'var(--input-bg)' }}>
-                    {parsonsAvailable.map((block, idx) => (
-                        <div 
-                            key={block.id} 
-                            onClick={() => {
-                                setParsonsAvailable(prev => prev.filter((_, i) => i !== idx));
-                                setParsonsSolution(prev => [...prev, block]);
-                            }}
-                            style={{ background: 'var(--primary-color)', color: '#fff', padding: '8px', marginBottom: '5px', cursor: 'pointer', borderRadius: '4px' }}
-                        >
-                            {block.text}
-                        </div>
-                    ))}
-                </div>
-            </div>
-          )}
-
-          {question.hint && (
-            <div style={{ marginTop: '20px' }}>
-              <button 
-                onClick={() => setShowHint(!showHint)} 
-                className="btn btn-outline"
-                style={{ fontSize: '14px', padding: '5px 10px' }}
-              >
-                {showHint ? 'Hide Hint' : 'Show Hint'}
-              </button>
-              {showHint && (
-                <div style={{ marginTop: '10px', padding: '10px', background: 'var(--input-bg)', borderRadius: '4px', borderLeft: '3px solid var(--primary-color)' }}>
-                  {question.hint}
-                </div>
-              )}
-            </div>
-          )}
-        </div>
+          {renderContent()}
       </div>
 
-      {/* Right Panel: Editor & Output */}
-      <div style={{ flex: 1, display: 'flex', flexDirection: 'column', gap: '20px' }}>
-        
-        {/* Editor Area */}
-        <div style={{ flex: 2, display: 'flex', flexDirection: 'column', borderRadius: '8px', overflow: 'hidden', border: '1px solid var(--card-border)' }}>
-            {(question.qType === 'coding' || question.qType === 'fill_in_blank' || question.qType === 'debug') ? (
-                <Editor
-                height="100%"
-                defaultLanguage={question.language === 'python' ? 'python' : 'java'}
-                value={code}
-                onChange={(value) => setCode(value)}
-                onMount={(editor) => { editorRef.current = editor; }}
-                theme={isDark ? "vs-dark" : "light"}
-                options={{
-                    minimap: { enabled: false },
-                    scrollBeyondLastLine: false,
-                    fontSize: 14,
-                    padding: { top: 20 },
-                    readOnly: question.qType === 'debug' && debugPhase === 'identify'
+      {/* Footer */}
+      <div style={{
+          position: 'fixed',
+          bottom: 0,
+          left: 0,
+          right: 0,
+          padding: '20px',
+          borderTop: '1px solid var(--card-border)',
+          backgroundColor: isDark ? '#1e1e1e' : '#fff',
+          display: 'flex',
+          justifyContent: 'center',
+          zIndex: 100
+      }}>
+          <div style={{ maxWidth: '800px', width: '100%' }}>
+            <button 
+                onClick={handleCheck}
+                disabled={showFeedback && result?.isCorrect} // Disable if already correct and showing feedback (waiting for next)
+                style={{
+                    width: '100%',
+                    padding: '16px',
+                    borderRadius: '16px',
+                    border: 'none',
+                    backgroundColor: 'var(--success-color)', // Or primary
+                    color: '#fff',
+                    fontSize: '1.2rem',
+                    fontWeight: 'bold',
+                    textTransform: 'uppercase',
+                    letterSpacing: '1px',
+                    cursor: 'pointer',
+                    boxShadow: '0 4px 6px rgba(0,0,0,0.1)',
+                    transition: 'transform 0.1s',
                 }}
-                />
-            ) : (
-                <div style={{ flex: 1, display: 'flex', alignItems: 'center', justifyContent: 'center', background: 'var(--card-bg)', color: 'var(--text-color)' }}>
-                    {question.qType === 'parsons' ? 
-                        <p>Arrange blocks in the left panel.</p> : 
-                        <p>Select an option from the left panel.</p>
-                    }
-                </div>
-            )}
-        </div>
-
-        {/* Controls & Console Output */}
-        <div style={{ flex: 1, display: 'flex', flexDirection: 'column', gap: '10px' }}>
-          
-          <div style={{ display: 'flex', justifyContent: 'flex-end' }}>
-             {question.qType === 'debug' && debugPhase === 'identify' ? (
-                <button 
-                  onClick={handleDebugCheck} 
-                  className="btn btn-secondary"
-                  style={{ fontSize: '14px' }}>
-                    Identify Bug
-                </button>
-            ) : (
-                <button 
-                  onClick={handleSubmit} 
-                  className="btn btn-primary"
-                  style={{ fontSize: '14px' }}>
-                    Run & Submit
-                </button>
-            )}
+                onMouseDown={(e) => e.target.style.transform = 'scale(0.98)'}
+                onMouseUp={(e) => e.target.style.transform = 'scale(1)'}
+            >
+                ELLENŐRZÉS
+            </button>
           </div>
-
-          {/* Console Output Box */}
-          <div style={{ 
-            flex: 1, 
-            backgroundColor: isDark ? '#1e1e1e' : '#f5f5f5', 
-            borderRadius: '8px', 
-            border: result && !result.isCorrect ? '1px solid var(--error-color)' : '1px solid var(--card-border)',
-            display: 'flex',
-            flexDirection: 'column',
-            overflow: 'hidden'
-          }}>
-            <div style={{ padding: '8px 15px', background: isDark ? '#252526' : '#e0e0e0', borderBottom: '1px solid var(--card-border)', fontSize: '12px', color: isDark ? '#ccc' : '#333', fontWeight: 'bold' }}>
-              CONSOLE OUTPUT
-            </div>
-            <div style={{ padding: '15px', overflowY: 'auto', fontFamily: 'monospace', fontSize: '13px', color: isDark ? '#fff' : '#000', height: '100%' }}>
-              {!result && <span style={{ opacity: 0.6 }}>Waiting for submission...</span>}
-              
-              {result && !result.isCorrect && !result.isDebugCheck && (
-                 <div style={{ marginBottom: '10px', color: 'var(--error-color)' }}>
-                   <strong>Sajnos nem jó. -1 HP, -15 ELO</strong>
-                 </div>
-              )}
-
-              {result && result.compile_message && (
-                 <div style={{ color: 'var(--error-color)', whiteSpace: 'pre-wrap' }}>
-                   {result.compile_message}
-                 </div>
-              )}
-
-              {result && result.output && (
-                <pre style={{ margin: 0, whiteSpace: 'pre-wrap', color: result.isCorrect ? 'var(--success-color)' : (isDark ? '#ce9178' : '#d32f2f') }}>
-                  {result.output}
-                </pre>
-              )}
-            </div>
-          </div>
-        </div>
-
       </div>
 
-      {/* Success Modal */}
-      {showSuccessModal && (
-        <Modal>
-          <div style={{ fontSize: '48px', marginBottom: '20px' }}>🎉</div>
-          <h2 style={{ color: 'var(--success-color)', marginBottom: '10px' }}>Helyes válasz!</h2>
-          <div style={{ fontSize: '18px', marginBottom: '20px', color: 'var(--text-color)' }}>
-            <p>+10 XP</p>
-            <p>+15 ELO</p>
-          </div>
-          <button 
-            onClick={fetchNextQuestion}
-            className="btn btn-primary"
-            style={{ fontSize: '16px' }}
-          >
-            Következő feladat
-          </button>
-        </Modal>
-      )}
+      {/* Feedback Bottom Sheet */}
+      <FeedbackSheet 
+          result={result} 
+          isVisible={showFeedback} 
+          onNext={handleNext} 
+      />
     </div>
   );
 }

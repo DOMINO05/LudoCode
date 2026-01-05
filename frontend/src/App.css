@@ -16,6 +16,9 @@
   --modal-bg: #fff;
   --input-bg: #fff;
   --input-border: #ccc;
+  
+  /* Breakpoints */
+  --mobile-breakpoint: 768px;
 }
 
 [data-theme='dark'] {
@@ -63,6 +66,9 @@ body {
   cursor: pointer;
   font-weight: bold;
   transition: opacity 0.2s, transform 0.1s;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .btn:hover {
@@ -100,6 +106,27 @@ input[type="text"] {
   color: var(--header-text);
   border-bottom: 1px solid var(--card-border);
   transition: background-color 0.3s;
+  padding: 10px 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.header-right {
+  display: flex;
+  gap: 20px;
+  align-items: center;
+}
+
+.user-info {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.user-stats {
+  display: flex;
+  gap: 15px;
 }
 
 /* Modal */
@@ -115,4 +142,40 @@ input[type="text"] {
 a {
   color: var(--primary-color);
   text-decoration: none;
+}
+
+/* Responsive Utilities */
+@media (max-width: 768px) {
+  .app-header {
+    padding: 10px;
+  }
+  
+  .header-right {
+    gap: 10px;
+  }
+
+  .user-stats {
+    display: none; /* Hide detailed stats on mobile header */
+  }
+
+  .user-info span {
+    display: none; /* Hide username text on mobile */
+  }
+  
+  .card {
+    padding: 15px;
+  }
+}
+
+/* Grid Layouts */
+.grid-responsive {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 30px;
+}
+
+@media (max-width: 480px) {
+  .grid-responsive {
+    grid-template-columns: 1fr;
+  }
 }

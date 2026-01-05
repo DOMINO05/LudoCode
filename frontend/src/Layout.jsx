@@ -35,17 +35,12 @@ export default function Layout({ session }) {
 
   return (
     <div style={{ display: 'flex', flexDirection: 'column', height: '100vh' }}>
-      <header className="app-header" style={{ 
-          padding: '10px 20px', 
-          display: 'flex', 
-          justifyContent: 'space-between', 
-          alignItems: 'center' 
-      }}>
+      <header className="app-header">
         <div style={{ fontWeight: 'bold', fontSize: '20px', cursor: 'pointer' }} onClick={() => navigate('/dashboard')}>
             LudoCode
         </div>
         
-        <div style={{ display: 'flex', gap: '20px', alignItems: 'center' }}>
+        <div className="header-right">
             <button 
                 onClick={toggleTheme} 
                 className="btn btn-outline"
@@ -57,19 +52,18 @@ export default function Layout({ session }) {
 
             {profile ? (
                 <>
-                    <div style={{ display: 'flex', alignItems: 'center', gap: '10px', marginRight: '10px' }}>
+                    <div className="user-info" onClick={() => navigate('/profile')} style={{ cursor: 'pointer' }}>
                         {profile.avatarUrl && <img src={profile.avatarUrl} alt="Avatar" style={{ width: '30px', height: '30px', borderRadius: '50%', border: '1px solid var(--text-color)' }} />}
                         <span style={{ fontWeight: 'bold' }}>{profile.username || 'User'}</span>
                     </div>
-                    <span>XP: {profile.xp}</span>
-                    <span>HP: {'❤️'.repeat(Math.max(0, profile.hp))}</span>
-                    <span>ELO: {profile.globalEloRating}</span>
-                    <button onClick={() => navigate('/profile')} className="btn btn-primary" style={{ padding: '5px 10px' }}>
-                        Edit Profile
-                    </button>
+                    <div className="user-stats">
+                        <span>XP: {profile.xp}</span>
+                        <span>HP: {'❤️'.repeat(Math.max(0, profile.hp))}</span>
+                        <span>ELO: {profile.globalEloRating}</span>
+                    </div>
                 </>
             ) : (
-                <span>Loading stats...</span>
+                <span>Loading...</span>
             )}
             <button onClick={handleLogout} className="btn" style={{ backgroundColor: 'var(--error-color)', color: 'white', padding: '5px 10px' }}>
                 Logout

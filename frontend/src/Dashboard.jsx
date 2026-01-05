@@ -60,39 +60,41 @@ const Leaderboard = ({ currentUserId }) => {
     if (loading) return <div>Loading leaderboard...</div>;
 
     return (
-        <div className="card" style={{ width: '100%' }}>
+        <div className="card" style={{ width: '100%', overflow: 'hidden', minWidth: 0 }}>
             <h3 style={{ textAlign: 'center', color: 'var(--secondary-color)', marginBottom: '20px', textTransform: 'uppercase', letterSpacing: '2px' }}>🏆 Top Ranglista</h3>
-            <table style={{ width: '100%', borderCollapse: 'collapse', color: 'var(--text-color)' }}>
-                <thead>
-                    <tr style={{ borderBottom: '2px solid var(--card-border)', textAlign: 'left' }}>
-                        <th style={{ padding: '10px' }}>#</th>
-                        <th style={{ padding: '10px' }}>Felhasználó</th>
-                        <th style={{ padding: '10px', textAlign: 'right' }}>XP</th>
-                        <th style={{ padding: '10px', textAlign: 'right' }}>ELO</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {users.map((user, index) => {
-                        const isCurrentUser = user.id === currentUserId;
-                        return (
-                            <tr key={user.id} style={{ 
-                                borderBottom: '1px solid var(--card-border)', 
-                                backgroundColor: isCurrentUser ? 'rgba(255, 215, 0, 0.1)' : 'transparent',
-                                fontWeight: isCurrentUser ? 'bold' : 'normal'
-                            }}>
-                                <td style={{ padding: '10px' }}>
-                                    {index + 1 === 1 ? '🥇' : index + 1 === 2 ? '🥈' : index + 1 === 3 ? '🥉' : index + 1}
-                                </td>
-                                <td style={{ padding: '10px' }}>
-                                    {user.username || 'Anonymous'} {isCurrentUser && '(Te)'}
-                                </td>
-                                <td style={{ padding: '10px', textAlign: 'right', color: 'var(--success-color)' }}>{user.xp}</td>
-                                <td style={{ padding: '10px', textAlign: 'right', color: 'var(--primary-color)' }}>{user.globalEloRating}</td>
-                            </tr>
-                        );
-                    })}
-                </tbody>
-            </table>
+            <div style={{ overflowX: 'auto', width: '100%' }}>
+                <table style={{ width: '100%', borderCollapse: 'collapse', color: 'var(--text-color)', minWidth: '300px' }}>
+                    <thead>
+                        <tr style={{ borderBottom: '2px solid var(--card-border)', textAlign: 'left' }}>
+                            <th style={{ padding: '10px', whiteSpace: 'nowrap' }}>#</th>
+                            <th style={{ padding: '10px', whiteSpace: 'nowrap' }}>Felhasználó</th>
+                            <th style={{ padding: '10px', textAlign: 'right', whiteSpace: 'nowrap' }}>XP</th>
+                            <th style={{ padding: '10px', textAlign: 'right', whiteSpace: 'nowrap' }}>ELO</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {users.map((user, index) => {
+                            const isCurrentUser = user.id === currentUserId;
+                            return (
+                                <tr key={user.id} style={{ 
+                                    borderBottom: '1px solid var(--card-border)', 
+                                    backgroundColor: isCurrentUser ? 'rgba(255, 215, 0, 0.1)' : 'transparent',
+                                    fontWeight: isCurrentUser ? 'bold' : 'normal'
+                                }}>
+                                    <td style={{ padding: '10px', whiteSpace: 'nowrap' }}>
+                                        {index + 1 === 1 ? '🥇' : index + 1 === 2 ? '🥈' : index + 1 === 3 ? '🥉' : index + 1}
+                                    </td>
+                                    <td style={{ padding: '10px', whiteSpace: 'nowrap' }}>
+                                        {user.username || 'Anonymous'} {isCurrentUser && '(Te)'}
+                                    </td>
+                                    <td style={{ padding: '10px', textAlign: 'right', color: 'var(--success-color)', whiteSpace: 'nowrap' }}>{user.xp}</td>
+                                    <td style={{ padding: '10px', textAlign: 'right', color: 'var(--primary-color)', whiteSpace: 'nowrap' }}>{user.globalEloRating}</td>
+                                </tr>
+                            );
+                        })}
+                    </tbody>
+                </table>
+            </div>
         </div>
     );
 };
@@ -133,7 +135,7 @@ const ProgressChart = ({ session }) => {
     }
 
     return (
-        <div style={{ width: '100%', display: 'flex', flexDirection: 'column', gap: '20px' }}>
+        <div style={{ width: '100%', display: 'flex', flexDirection: 'column', gap: '20px', minWidth: 0 }}>
             {/* ELO Chart */}
             <div className="card">
                 <h4 style={{ textAlign: 'center', color: 'var(--primary-color)', marginBottom: '10px' }}>📈 ELO Növekedés</h4>
@@ -201,27 +203,27 @@ export default function Dashboard() {
   if (!profile) return <div>Loading dashboard...</div>;
 
   return (
-    <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', minHeight: '100%', padding: '20px', gap: '30px', maxWidth: '1200px', margin: '0 auto' }}>
-      <h1>Welcome back, {profile.username || session.user.email}!</h1>
+    <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', minHeight: '100%', padding: '20px', gap: '30px', maxWidth: '1200px', margin: '0 auto', width: '100%', boxSizing: 'border-box' }}>
+      <h1 style={{ fontSize: 'clamp(24px, 5vw, 48px)', textAlign: 'center', margin: '0 0 20px 0' }}>Welcome back, {profile.username || session.user.email}!</h1>
       
       {/* Stats Cards */}
-      <div style={{ display: 'flex', gap: '20px', textAlign: 'center', flexWrap: 'wrap', justifyContent: 'center' }}>
-          <div className="card" style={{ minWidth: '150px', borderColor: 'var(--primary-color)', padding: '15px' }}>
+      <div style={{ display: 'flex', gap: '20px', textAlign: 'center', flexWrap: 'wrap', justifyContent: 'center', width: '100%' }}>
+          <div className="card" style={{ flex: '1 1 150px', minWidth: '150px', borderColor: 'var(--primary-color)', padding: '15px' }}>
               <h3 style={{margin: 0, marginBottom: '5px', fontSize: '16px'}}>Level / ELO</h3>
               <div style={{ fontSize: '32px', fontWeight: 'bold' }}>{profile.globalEloRating}</div>
           </div>
           
-          <div className="card" style={{ minWidth: '150px', borderColor: 'var(--secondary-color)', padding: '15px' }}>
+          <div className="card" style={{ flex: '1 1 150px', minWidth: '150px', borderColor: 'var(--secondary-color)', padding: '15px' }}>
               <h3 style={{margin: 0, marginBottom: '5px', fontSize: '16px'}}>XP</h3>
               <div style={{ fontSize: '32px', fontWeight: 'bold' }}>{profile.xp}</div>
           </div>
       </div>
 
       {/* Main Action Cards */}
-      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', gap: '30px', width: '100%' }}>
+      <div className="grid-responsive" style={{ width: '100%' }}>
           {/* Quick Play */}
-          <div className="card" style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', textAlign: 'center', padding: '40px', cursor: 'pointer', transition: 'transform 0.2s', ':hover': { transform: 'scale(1.02)' } }} onClick={() => navigate('/solve')}>
-              <div style={{ fontSize: '60px', marginBottom: '20px' }}>⚡</div>
+          <div className="card" style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', textAlign: 'center', padding: '30px', cursor: 'pointer', transition: 'transform 0.2s' }} onClick={() => navigate('/solve')}>
+              <div style={{ fontSize: 'clamp(40px, 8vw, 60px)', marginBottom: '20px' }}>⚡</div>
               <h2 style={{ color: 'var(--primary-color)', marginBottom: '10px' }}>Gyors Gyakorlás</h2>
               <p style={{ marginBottom: '30px', color: 'var(--text-color)', opacity: 0.8 }}>Adaptív feladatok a szintednek megfelelően.</p>
               <button className="btn btn-primary" style={{ padding: '15px 40px', fontSize: '18px', borderRadius: '50px', width: '100%' }}>
@@ -230,8 +232,8 @@ export default function Dashboard() {
           </div>
 
           {/* Learning Path */}
-          <div className="card" style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', textAlign: 'center', padding: '40px', cursor: 'pointer' }} onClick={() => navigate('/courses')}>
-              <div style={{ fontSize: '60px', marginBottom: '20px' }}>🗺️</div>
+          <div className="card" style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', textAlign: 'center', padding: '30px', cursor: 'pointer' }} onClick={() => navigate('/courses')}>
+              <div style={{ fontSize: 'clamp(40px, 8vw, 60px)', marginBottom: '20px' }}>🗺️</div>
               <h2 style={{ color: 'var(--secondary-color)', marginBottom: '10px' }}>Tanuló Ösvény</h2>
               <p style={{ marginBottom: '30px', color: 'var(--text-color)', opacity: 0.8 }}>Haladj lépésről lépésre a témakörökön.</p>
               <button className="btn btn-secondary" style={{ padding: '15px 40px', fontSize: '18px', borderRadius: '50px', width: '100%' }}>
@@ -241,7 +243,7 @@ export default function Dashboard() {
       </div>
       
       {/* Lower Section: Charts & Leaderboard */}
-      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(400px, 1fr))', gap: '30px', width: '100%' }}>
+      <div className="grid-responsive" style={{ width: '100%' }}>
           <ProgressChart session={session} />
           <Leaderboard currentUserId={profile.id} />
       </div>

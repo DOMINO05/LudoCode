@@ -31,49 +31,89 @@ export default function CoursesPage() {
     if (loading) return <div style={{padding: '20px', color: 'var(--text-color)'}}>Loading courses...</div>;
 
     return (
-        <div style={{ padding: '20px', maxWidth: '1000px', margin: '0 auto', color: 'var(--text-color)' }}>
-            <h1 style={{ textAlign: 'center', marginBottom: '40px' }}>Tanuló Ösvény</h1>
+        <div style={{ 
+            padding: '20px', 
+            maxWidth: '1200px', 
+            margin: '0 auto', 
+            color: 'var(--text-color)',
+            width: '100%',
+            boxSizing: 'border-box'
+        }}>
+            <h1 style={{ textAlign: 'center', marginBottom: '30px', textTransform: 'uppercase', letterSpacing: '2px', color: 'var(--primary-color)', fontSize: 'clamp(24px, 5vw, 36px)' }}>Tanuló Ösvény</h1>
             
-            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(300px, 1fr))', gap: '20px' }}>
-                {progress.map((concept) => (
-                    <div key={concept.id} className="card" style={{ 
-                        opacity: concept.is_locked ? 0.6 : 1,
-                        position: 'relative'
-                    }}>
-                        {concept.is_locked && (
-                            <div style={{ position: 'absolute', top: 10, right: 10, fontSize: '24px' }}>🔒</div>
-                        )}
-                        <h2>{concept.name}</h2>
-                        <p>{concept.description}</p>
-                        
-                        <div style={{ margin: '20px 0', background: 'var(--input-bg)', height: '10px', borderRadius: '5px', overflow: 'hidden' }}>
-                            <div style={{ 
-                                width: `${concept.percentage}%`, 
-                                height: '100%', 
-                                background: 'var(--success-color)',
-                                transition: 'width 0.5s'
-                            }}></div>
-                        </div>
-                        <p style={{ textAlign: 'right', fontSize: '14px' }}>{concept.completed_questions} / {concept.total_questions} ({concept.percentage}%)</p>
+            <div className="grid-responsive">
+                {progress.map((concept) => {
+                    const isCompleted = concept.percentage === 100;
+                    const isLocked = concept.is_locked;
+                    const isActive = !isLocked && !isCompleted;
 
-                        <button 
-                            disabled={concept.is_locked}
-                            className="btn btn-primary"
-                            style={{ width: '100%', marginTop: '10px' }}
-                            onClick={() => {
-                                // Navigate to solve specific concept
-                                // We need a way to tell CodingPage to load from concept.
-                                // Maybe navigate to `/solve?conceptId=...`
-                                // But currently CodingPage fetches `next`. 
-                                // I will implement navigation later or just alert for now as this task is about Dashboard split.
-                                // Or better: navigate('/solve/course/' + concept.id)
-                                alert("Course solving UI coming soon! (Backend ready)");
-                            }}
+                    // Color logic
+                    let bgColor = 'var(--card-bg)';
+                    let borderColor = 'var(--card-border)';
+                    let icon = '📖';
+
+                    if (isCompleted) {
+                        borderColor = 'gold';
+                        icon = '🏆';
+                    } else if (isLocked) {
+                        borderColor = 'var(--card-border)';
+                        bgColor = 'rgba(0,0,0,0.2)'; // Darker
+                        icon = '🔒';
+                    } else {
+                        borderColor = 'var(--primary-color)';
+                        icon = '🚀';
+                    }
+                    
+                    return (
+                        <div key={concept.id} className="card" style={{ 
+                            border: `2px solid ${borderColor}`,
+                            opacity: isLocked ? 0.6 : 1,
+                            backgroundColor: bgColor,
+                            padding: '30px',
+                            display: 'flex',
+                            flexDirection: 'column',
+                            alignItems: 'center',
+                            textAlign: 'center',
+                            cursor: isLocked ? 'not-allowed' : 'pointer',
+                            position: 'relative',
+                            transition: 'transform 0.2s',
+                            boxShadow: isActive ? `0 0 15px ${borderColor}` : 'var(--shadow)',
+                            height: '100%',
+                            boxSizing: 'border-box'
+                        }}
+                        onClick={() => {
+                            if (!isLocked) {
+                                navigate(`/solve?conceptId=${concept.id}`);
+                            }
+                        }}
+                        onMouseEnter={(e) => { if(!isLocked) e.currentTarget.style.transform = 'scale(1.03)'; }}
+                        onMouseLeave={(e) => { if(!isLocked) e.currentTarget.style.transform = 'scale(1)'; }}
                         >
-                            {concept.percentage === 100 ? 'Review' : 'Continue'}
-                        </button>
-                    </div>
-                ))}
+                            <div style={{ fontSize: '50px', marginBottom: '15px' }}>{icon}</div>
+                            <h2 style={{ margin: '0 0 10px 0', color: isLocked ? 'gray' : (isCompleted ? '#ffd700' : 'var(--text-color)') }}>{concept.name}</h2>
+                            <p style={{ margin: '0 0 20px 0', fontSize: '14px', opacity: 0.8, flex: 1 }}>{concept.description}</p>
+                            
+                            <div style={{ width: '100%', height: '8px', background: 'var(--input-bg)', borderRadius: '4px', overflow: 'hidden', marginBottom: '10px' }}>
+                                <div style={{ 
+                                    width: `${concept.percentage}%`, 
+                                    height: '100%', 
+                                    background: isCompleted ? '#ffd700' : 'var(--success-color)',
+                                    transition: 'width 0.5s'
+                                }}></div>
+                            </div>
+                            
+                            <span style={{ fontSize: '12px', fontWeight: 'bold' }}>
+                                {concept.completed_questions} / {concept.total_questions}
+                            </span>
+
+                            {!isLocked && (
+                                <button className="btn btn-primary" style={{ marginTop: '20px', borderRadius: '20px', padding: '8px 25px', width: '100%' }}>
+                                    {isCompleted ? 'Gyakorlás' : 'Indítás'}
+                                </button>
+                            )}
+                        </div>
+                    );
+                })}
             </div>
         </div>
     );
