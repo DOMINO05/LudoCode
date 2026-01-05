@@ -24,4 +24,9 @@ export class UsersController {
   async claimDailyBonus(@Request() req) {
     return this.usersService.claimDailyBonus(req.user.userId);
   }
+
+  @Get('leaderboard')
+  async getLeaderboard() {
+    return this.usersService.getLeaderboard();
+  }
 }

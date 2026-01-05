@@ -68,4 +68,14 @@ export class UsersService {
 
     return { claimed: true, bonus: 50 };
   }
+
+  async getLeaderboard(): Promise<Profile[]> {
+    return this.profilesRepository.find({
+      order: {
+        xp: 'DESC',
+      },
+      take: 10,
+      select: ['id', 'username', 'xp', 'globalEloRating'], // Select only needed fields (assuming id needed for identifying current user)
+    });
+  }
 }
