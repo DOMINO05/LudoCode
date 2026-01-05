@@ -8,6 +8,7 @@ const DebugComponent = ({ question, onCodeChange, debugPhase, selections = [], o
     const [fixOptions, setFixOptions] = useState([]);
     const [tokenizedLines, setTokenizedLines] = useState([]);
     const [errorTokens, setErrorTokens] = useState([]); // Array of {lineIndex, tokenIndex}
+    const [selectedOption, setSelectedOption] = useState(null);
 
     useEffect(() => {
         let codeLines = [];
@@ -16,6 +17,7 @@ const DebugComponent = ({ question, onCodeChange, debugPhase, selections = [], o
             setLines(codeLines);
         }
         setFixOptions(question.content.options || []);
+        setSelectedOption(null);
         
         // Tokenize lines
         const tokenized = codeLines.map(line => {
@@ -88,35 +90,32 @@ const DebugComponent = ({ question, onCodeChange, debugPhase, selections = [], o
     };
 
     const handleFixSelect = (option) => {
-        const newLines = [...lines];
+        setSelectedOption(option);
         
-        // If we have selections, we need to decide what to replace.
-        // If multiple tokens are selected, replacing just one might be weird if we treat them individually.
-        // But usually, the "fix" is a corrected version of the line or statement.
-        // If selections are all on the same line, we might replace the line?
-        // Let's stick to the heuristic: if option looks like a line, replace the line of the FIRST selection.
+        // Logic to preview the fix in the code display
+        const newLines = [...lines];
         
         if (selections.length > 0) {
              const firstSelection = selections[0];
-             const { lineIndex } = firstSelection; // Assuming selections are mostly on the same line or relevant to one fix
+             const { lineIndex } = firstSelection; 
              
-             // Check heuristic
-             if (option.includes(' ') || option.includes('(') || option.includes(';') || option.length > 15) {
-                 // Likely a full line/statement
-                 newLines[lineIndex] = option;
-             } else {
-                 // Likely a token replacement. Replace ALL selected tokens with the option?
-                 // Or maybe just the first one?
-                 // If the user selected "System" and "out", and option is "Console", maybe replacing both with "Console" is wrong.
-                 // This is tricky.
-                 // Let's assume if it's a token fix, it replaces the tokens.
-                 // But replacing multiple tokens with one option string is valid (e.g. replacing "sys . out" with "console").
-                 // Implementation: Reconstruct line from tokens, replacing selected range with option?
-                 // Simple approach: Replace the line with the option if unsure.
-                 newLines[lineIndex] = option;
-             }
+             // Heuristic: If option looks like a full line, replace the line.
+             // Otherwise, assume it replaces the selected token(s). But for simplicity and based on schema options, 
+             // options seem to be full lines or full statements.
+             // We'll replace the entire line for now to be safe and consistent with schema options.
+             newLines[lineIndex] = option;
         }
         
+        // Update local lines to show the fix immediately
+        setLines(newLines);
+        
+        // Re-tokenize lines to reflect changes
+        const tokenized = newLines.map(line => {
+             const regex = /(".*?"|'.*?'|[a-zA-Z0-9_]+|[^\s\w]|\s+)/g;
+             return line.match(regex) || [];
+        });
+        setTokenizedLines(tokenized);
+
         const newCode = newLines.join('\n');
         onCodeChange(newCode); 
     };
@@ -234,10 +233,11 @@ const DebugComponent = ({ question, onCodeChange, debugPhase, selections = [], o
                                         padding: '15px',
                                         borderRadius: '12px',
                                         background: 'var(--card-bg)',
-                                        border: '1px solid var(--card-border)',
+                                        border: selectedOption === option ? '2px solid var(--primary-color)' : '1px solid var(--card-border)',
                                         cursor: 'pointer',
                                         fontFamily: 'monospace',
-                                        fontSize: '0.95rem'
+                                        fontSize: '0.95rem',
+                                        boxShadow: selectedOption === option ? '0 0 0 2px rgba(var(--primary-rgb), 0.2)' : 'none'
                                     }}
                                 >
                                     {option}

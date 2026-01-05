@@ -315,44 +315,44 @@ BEGIN
   -- PYTHON (Debug)
   INSERT INTO public.questions (title, description, hint, q_type, difficulty_rating, language, content) VALUES 
   ('Python Behúzás', 'Miért nem fut a kód?', 'A print a cikluson kívül van logikailag.', 'debug', 850, 'python', 
-  '{"buggy_code": "for i in range(5):\nprint(i)", "error_location": "print(i)", "correct_code": "    print(i)", "explanation": "Pythonban kötelező a behúzás (indentation) a ciklus törzséhez."}') RETURNING id INTO q_id; INSERT INTO public.question_concepts VALUES (q_id, c_basics);
+  '{"buggy_code": "for i in range(5):\nprint(i)", "error_location": "print(i)", "correct_code": "    print(i)", "options": ["    print(i)", "print(i)", "print i"], "explanation": "Pythonban kötelező a behúzás (indentation) a ciklus törzséhez."}') RETURNING id INTO q_id; INSERT INTO public.question_concepts VALUES (q_id, c_basics);
 
   INSERT INTO public.questions (title, description, hint, q_type, difficulty_rating, language, content) VALUES 
   ('Python Típus hiba', 'Nem lehet összeadni őket.', 'Szám és szöveg.', 'debug', 1000, 'python', 
-  '{"buggy_code": "age = 20\nmsg = ''Kor: '' + age", "error_location": "''Kor: '' + age", "correct_code": "''Kor: '' + str(age)", "explanation": "Az int-et stringgé kell konvertálni (castolni) konkatenálás előtt."}') RETURNING id INTO q_id; INSERT INTO public.question_concepts VALUES (q_id, c_basics);
+  '{"buggy_code": "age = 20\nmsg = ''Kor: '' + age", "error_location": "''Kor: '' + age", "correct_code": "''Kor: '' + str(age)", "options": ["''Kor: '' + str(age)", "''Kor: '' + int(age)", "''Kor: '' + age"], "explanation": "Az int-et stringgé kell konvertálni (castolni) konkatenálás előtt."}') RETURNING id INTO q_id; INSERT INTO public.question_concepts VALUES (q_id, c_basics);
 
   INSERT INTO public.questions (title, description, hint, q_type, difficulty_rating, language, content) VALUES 
   ('Python Kettőspont', 'Mi hiányzik a sor végéről?', 'Szintaktikai hiba.', 'debug', 900, 'python', 
-  '{"buggy_code": "if x > 10\n  print(''Big'')", "error_location": "if x > 10", "correct_code": "if x > 10:", "explanation": "Az if, for, while, def sorok végére kötelező a kettőspont."}') RETURNING id INTO q_id; INSERT INTO public.question_concepts VALUES (q_id, c_logic);
+  '{"buggy_code": "if x > 10\n  print(''Big'')", "error_location": "if x > 10", "correct_code": "if x > 10:", "options": ["if x > 10:", "if (x > 10)", "if x > 10 then"], "explanation": "Az if, for, while, def sorok végére kötelező a kettőspont."}') RETURNING id INTO q_id; INSERT INTO public.question_concepts VALUES (q_id, c_logic);
 
   INSERT INTO public.questions (title, description, hint, q_type, difficulty_rating, language, content) VALUES 
   ('Python Index', 'Túlindexelés hiba.', 'A lista rövidebb.', 'debug', 1100, 'python', 
-  '{"buggy_code": "lst = [1, 2, 3]\nprint(lst[3])", "error_location": "lst[3]", "correct_code": "lst[2]", "explanation": "A 3 elemű lista indexei: 0, 1, 2. A 3-as index már a 4. elem lenne."}') RETURNING id INTO q_id; INSERT INTO public.question_concepts VALUES (q_id, c_arrays);
+  '{"buggy_code": "lst = [1, 2, 3]\nprint(lst[3])", "error_location": "lst[3]", "correct_code": "lst[2]", "options": ["lst[2]", "lst[3]", "lst[0]"], "explanation": "A 3 elemű lista indexei: 0, 1, 2. A 3-as index már a 4. elem lenne."}') RETURNING id INTO q_id; INSERT INTO public.question_concepts VALUES (q_id, c_arrays);
 
   INSERT INTO public.questions (title, description, hint, q_type, difficulty_rating, language, content) VALUES 
   ('Python Egyenlőség', 'Értékadás vs Összehasonlítás.', 'Az if feltételbe logikai vizsgálat kell.', 'debug', 1200, 'python', 
-  '{"buggy_code": "if x = 5:\n  print(''Five'')", "error_location": "x = 5", "correct_code": "x == 5", "explanation": "Az egyenlőség vizsgálat jele a ==, az egy darab = jel értékadást jelent."}') RETURNING id INTO q_id; INSERT INTO public.question_concepts VALUES (q_id, c_logic);
+  '{"buggy_code": "if x = 5:\n  print(''Five'')", "error_location": "x = 5", "correct_code": "x == 5", "options": ["x == 5", "x = 5", "x.equals(5)"], "explanation": "Az egyenlőség vizsgálat jele a ==, az egy darab = jel értékadást jelent."}') RETURNING id INTO q_id; INSERT INTO public.question_concepts VALUES (q_id, c_logic);
 
   -- JAVA (Debug)
   INSERT INTO public.questions (title, description, hint, q_type, difficulty_rating, language, content) VALUES 
   ('Java Pontosvessző', 'Hol a hiba?', 'Minden utasítás lezárása.', 'debug', 800, 'java', 
-  '{"buggy_code": "int x = 10\nSystem.out.println(x);", "error_location": "int x = 10", "correct_code": "int x = 10;", "explanation": "Java-ban kötelező a pontosvessző a sor végén."}') RETURNING id INTO q_id; INSERT INTO public.question_concepts VALUES (q_id, c_basics);
+  '{"buggy_code": "int x = 10\nSystem.out.println(x);", "error_location": "int x = 10", "correct_code": "int x = 10;", "options": ["int x = 10;", "int x = 10", "var x = 10"], "explanation": "Java-ban kötelező a pontosvessző a sor végén."}') RETURNING id INTO q_id; INSERT INTO public.question_concepts VALUES (q_id, c_basics);
 
   INSERT INTO public.questions (title, description, hint, q_type, difficulty_rating, language, content) VALUES 
   ('Java Kis/Nagybetű', 'Nem találja a szimbólumot.', 'A rendszer osztály nagybetűs.', 'debug', 900, 'java', 
-  '{"buggy_code": "system.out.println(''Hi'');", "error_location": "system", "correct_code": "System", "explanation": "Java case-sensitive. Az osztály neve System (nagy S)."}') RETURNING id INTO q_id; INSERT INTO public.question_concepts VALUES (q_id, c_basics);
+  '{"buggy_code": "system.out.println(''Hi'');", "error_location": "system", "correct_code": "System", "options": ["System", "system", "sys"], "explanation": "Java case-sensitive. Az osztály neve System (nagy S)."}') RETURNING id INTO q_id; INSERT INTO public.question_concepts VALUES (q_id, c_basics);
 
   INSERT INTO public.questions (title, description, hint, q_type, difficulty_rating, language, content) VALUES 
   ('Java Végtelen Loop', 'Mi a hiba a while-ban?', 'Értékadás feltétel helyett.', 'debug', 1100, 'java', 
-  '{"buggy_code": "while (x = 0) {\n  break;\n}", "error_location": "x = 0", "correct_code": "x == 0", "explanation": "A feltételben összehasonlítás (==) kell, nem értékadás (=)."}') RETURNING id INTO q_id; INSERT INTO public.question_concepts VALUES (q_id, c_loops);
+  '{"buggy_code": "while (x = 0) {\n  break;\n}", "error_location": "x = 0", "correct_code": "x == 0", "options": ["x == 0", "x = 0", "x.equals(0)"], "explanation": "A feltételben összehasonlítás (==) kell, nem értékadás (=)."}') RETURNING id INTO q_id; INSERT INTO public.question_concepts VALUES (q_id, c_loops);
 
   INSERT INTO public.questions (title, description, hint, q_type, difficulty_rating, language, content) VALUES 
   ('Java Tömb Init', 'Hogyan adsz meg értékeket?', 'Kapcsos zárójel kell.', 'debug', 1000, 'java', 
-  '{"buggy_code": "int[] arr = [1, 2, 3];", "error_location": "[1, 2, 3]", "correct_code": "{1, 2, 3}", "explanation": "Java-ban tömb literálhoz kapcsos zárójelet {} használunk, nem szögleteset."}') RETURNING id INTO q_id; INSERT INTO public.question_concepts VALUES (q_id, c_arrays);
+  '{"buggy_code": "int[] arr = [1, 2, 3];", "error_location": "[1, 2, 3]", "correct_code": "{1, 2, 3}", "options": ["{1, 2, 3}", "[1, 2, 3]", "(1, 2, 3)"], "explanation": "Java-ban tömb literálhoz kapcsos zárójelet {} használunk, nem szögleteset."}') RETURNING id INTO q_id; INSERT INTO public.question_concepts VALUES (q_id, c_arrays);
 
   INSERT INTO public.questions (title, description, hint, q_type, difficulty_rating, language, content) VALUES 
   ('Java Main Args', 'Hiányzik a paraméter.', 'A main metódusnak kell argumentum.', 'debug', 950, 'java', 
-  '{"buggy_code": "public static void main() {\n}", "error_location": "main()", "correct_code": "main(String[] args)", "explanation": "A szabványos main metódus vár egy String tömböt paraméterként."}') RETURNING id INTO q_id; INSERT INTO public.question_concepts VALUES (q_id, c_functions);
+  '{"buggy_code": "public static void main() {\n}", "error_location": "main()", "correct_code": "main(String[] args)", "options": ["main(String[] args)", "main()", "Main(String args)"], "explanation": "A szabványos main metódus vár egy String tömböt paraméterként."}') RETURNING id INTO q_id; INSERT INTO public.question_concepts VALUES (q_id, c_functions);
 
   ------------------------------------------------------------------------------------
   -- 6. TÍPUS: KÓDÍRÁS (Coding Challenge) - 10 db

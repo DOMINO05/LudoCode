@@ -40,9 +40,6 @@ const FillBlankComponent = ({ question, onCodeChange }) => {
         
         codeSegments.forEach(segment => {
             if (segment.match(placeholderRegex)) {
-                // If the blank was {{BLANK}}, we should probably replace it with something simpler in the constructed code
-                // or just use the filled value.
-                // If blank is not filled, what to send? "___" is fine as placeholder.
                 constructedCode += blanks[blankIndex] || "___";
                 blankIndex++;
             } else {
@@ -50,7 +47,24 @@ const FillBlankComponent = ({ question, onCodeChange }) => {
             }
         });
         
-        onCodeChange(constructedCode);
+        // Check if we should submit the full code or just the blank values.
+        // Based on schema.sql, correct_answer is often just the word (e.g., "def").
+        // So we should likely submit the filled values joined by comma or just the single value.
+        // Assuming single blank for now as per schema examples.
+        const filledValues = blanks.filter(b => b !== null);
+        if (filledValues.length === 1) {
+             onCodeChange(filledValues[0]);
+        } else if (filledValues.length > 1) {
+             // If multiple blanks, join them? Or send full code?
+             // If correct_answer is "def, len", then join.
+             // If correct_answer is full code, then constructedCode.
+             // Usually, simplistic backends check for the specific word.
+             // Let's try sending comma-separated values for multiple blanks.
+             onCodeChange(filledValues.join(','));
+        } else {
+             // No blanks filled yet
+             onCodeChange('');
+        }
     }, [blanks, codeSegments, onCodeChange]);
 
 
