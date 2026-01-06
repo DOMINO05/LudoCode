@@ -15,22 +15,30 @@ const ConstructionComponent = ({ question, onCodeChange }) => {
 
     useEffect(() => {
         // Initialize based on question content
-        if (question.content.blocks && question.content.blocks.length > 0) {
-            setAvailableBlocks([...question.content.blocks]); 
-            setConstructedBlocks([]);
-        } else if (question.content.initial_code) {
-             // Fallback: Generate blocks from initial_code (split by lines)
-             const lines = question.content.initial_code.split('\n').filter(line => line.trim() !== '');
-             const generatedBlocks = lines.map((line, idx) => ({ id: idx, text: line }));
-             // Shuffle them? Maybe not shuffled initially if it's construction, usually construction starts empty.
-             // But if we generate them, they are available.
-             // Let's shuffle them to make it a task.
-             setAvailableBlocks(generatedBlocks.sort(() => Math.random() - 0.5));
-             setConstructedBlocks([]);
-        } else {
-             setAvailableBlocks([]);
-             setConstructedBlocks([]);
+        let initBlocks = [];
+        let availBlocks = [];
+
+        // 1. Setup Constructed Blocks from Initial Code
+        if (question.content.initial_code) {
+             const lines = question.content.initial_code.split('\n').filter(line => line !== ''); // Keep empty lines? Maybe filter trim for blocks.
+             // Actually keeping whitespace structure is good for initial code.
+             // But blocks usually trim. Let's keep lines that have content.
+             const validLines = lines.filter(l => l.length > 0); 
+             initBlocks = validLines.map((line, idx) => ({ id: `init-${idx}`, text: line }));
         }
+
+        // 2. Setup Available Blocks from Scaffolding or Blocks
+        if (question.content.scaffolding_blocks && question.content.scaffolding_blocks.length > 0) {
+             availBlocks = question.content.scaffolding_blocks.map((text, idx) => ({ id: `scaffold-${idx}`, text }));
+             // Shuffle scaffolding blocks
+             availBlocks.sort(() => Math.random() - 0.5);
+        } else if (question.content.blocks && question.content.blocks.length > 0) {
+             availBlocks = [...question.content.blocks];
+             availBlocks.sort(() => Math.random() - 0.5);
+        }
+        
+        setConstructedBlocks(initBlocks);
+        setAvailableBlocks(availBlocks);
         
         // Initial code for hardcore mode
         setEditorValue(question.content.initial_code || '');

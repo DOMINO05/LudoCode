@@ -92,18 +92,48 @@ const DebugComponent = ({ question, onCodeChange, debugPhase, selections = [], o
     const handleFixSelect = (option) => {
         setSelectedOption(option);
         
-        // Logic to preview the fix in the code display
+        if (selections.length === 0) return;
+
         const newLines = [...lines];
         
-        if (selections.length > 0) {
-             const firstSelection = selections[0];
-             const { lineIndex } = firstSelection; 
+        // Heuristic: If option looks like a full line/statement, replace the line.
+        // Otherwise, replace the selected token(s).
+        // Removed parens check because it caused partial replacements (like function signatures) to trigger full line replacement.
+        const isFullLine = option.includes(';') || option.includes('{') || option.trim().endsWith(':') || option.includes(' = ');
+        
+        if (isFullLine) {
+             // Replace line(s) involved in selection
+             const uniqueLines = [...new Set(selections.map(s => s.lineIndex))];
+             uniqueLines.forEach(lineIndex => {
+                 newLines[lineIndex] = option;
+             });
+        } else {
+             // Token replacement
+             const selectionsByLine = {};
+             selections.forEach(s => {
+                if (!selectionsByLine[s.lineIndex]) selectionsByLine[s.lineIndex] = [];
+                selectionsByLine[s.lineIndex].push(s.tokenIndex);
+             });
              
-             // Heuristic: If option looks like a full line, replace the line.
-             // Otherwise, assume it replaces the selected token(s). But for simplicity and based on schema options, 
-             // options seem to be full lines or full statements.
-             // We'll replace the entire line for now to be safe and consistent with schema options.
-             newLines[lineIndex] = option;
+             Object.keys(selectionsByLine).forEach(lIdx => {
+                const lineIndex = parseInt(lIdx);
+                const tokenIndices = selectionsByLine[lineIndex].sort((a, b) => a - b);
+                
+                // Use current tokens to reconstruct
+                // Note: tokenizedLines is state, derived from 'lines' (which comes from buggy_code initially)
+                // If we edit, we update lines and re-tokenize.
+                const currentTokens = [...tokenizedLines[lineIndex]];
+                
+                // Replace first selected token with option
+                if (tokenIndices.length > 0) {
+                    currentTokens[tokenIndices[0]] = option;
+                    // Clear other selected tokens (effectively merging them)
+                    for (let i = 1; i < tokenIndices.length; i++) {
+                        currentTokens[tokenIndices[i]] = "";
+                    }
+                    newLines[lineIndex] = currentTokens.join("");
+                }
+             });
         }
         
         // Update local lines to show the fix immediately
