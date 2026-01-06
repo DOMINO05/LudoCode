@@ -14,6 +14,8 @@ import FeedbackSheet from './FeedbackSheet';
 // Fallback for types not yet fully implemented or standard 'coding'
 import Editor from '@monaco-editor/react';
 
+const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:3000';
+
 export default function CodingPage() {
   const { session, refreshProfile } = useOutletContext();
   const { isDark } = useTheme();
@@ -58,9 +60,9 @@ export default function CodingPage() {
     setDebugPhase('identify');
     setDebugSelections([]);
 
-    let url = 'http://localhost:3000/questions/next';
+    let url = `${API_URL}/questions/next`;
     if (conceptId) {
-        url = `http://localhost:3000/courses/${conceptId}/next-question`;
+        url = `${API_URL}/courses/${conceptId}/next-question`;
     }
 
     try {
@@ -162,7 +164,7 @@ export default function CodingPage() {
       }
 
       try {
-        const res = await fetch(`http://localhost:3000/questions/${question.id}/submit`, {
+        const res = await fetch(`${API_URL}/questions/${question.id}/submit`, {
             method: 'POST',
             headers: {
             'Content-Type': 'application/json',

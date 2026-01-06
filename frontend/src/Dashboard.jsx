@@ -2,6 +2,8 @@ import React, { useEffect, useState } from 'react';
 import { useOutletContext, useNavigate } from 'react-router-dom';
 import { LineChart, Line, BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from 'recharts';
 
+const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:3000';
+
 const BonusModal = ({ onClose }) => (
   <div style={{
     position: 'fixed', top: 0, left: 0, right: 0, bottom: 0,
@@ -43,7 +45,7 @@ const Leaderboard = ({ currentUserId }) => {
     useEffect(() => {
         const fetchLeaderboard = async () => {
             try {
-                const res = await fetch('http://localhost:3000/users/leaderboard');
+                const res = await fetch(`${API_URL}/users/leaderboard`);
                 if (res.ok) {
                     const data = await res.json();
                     setUsers(data);
@@ -106,7 +108,7 @@ const ProgressChart = ({ session }) => {
     useEffect(() => {
         const fetchStats = async () => {
             try {
-                const res = await fetch('http://localhost:3000/users/stats', {
+                const res = await fetch(`${API_URL}/users/stats`, {
                     headers: {
                         'Authorization': `Bearer ${session.access_token}`
                     }
@@ -179,7 +181,7 @@ export default function Dashboard() {
   useEffect(() => {
     const claimDailyBonus = async () => {
       try {
-        const res = await fetch('http://localhost:3000/users/daily-claim', {
+        const res = await fetch(`${API_URL}/users/daily-claim`, {
           method: 'POST',
           headers: {
             'Authorization': `Bearer ${session.access_token}`

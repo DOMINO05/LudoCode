@@ -3,6 +3,8 @@ import { Outlet, useNavigate } from 'react-router-dom';
 import { supabase } from './supabaseClient';
 import { useTheme } from './ThemeContext';
 
+const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:3000';
+
 export default function Layout({ session }) {
   const [profile, setProfile] = useState(null);
   const navigate = useNavigate();
@@ -14,7 +16,7 @@ export default function Layout({ session }) {
 
   const fetchProfile = async () => {
     try {
-        const res = await fetch('http://localhost:3000/users/profile', {
+        const res = await fetch(`${API_URL}/users/profile`, {
             headers: {
                 'Authorization': `Bearer ${session.access_token}`
             }

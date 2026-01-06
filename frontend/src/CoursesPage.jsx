@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import { useOutletContext, useNavigate } from 'react-router-dom';
 
+const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:3000';
+
 export default function CoursesPage() {
     const { session } = useOutletContext();
     const [progress, setProgress] = useState([]);
@@ -10,7 +12,7 @@ export default function CoursesPage() {
     useEffect(() => {
         const fetchProgress = async () => {
             try {
-                const res = await fetch('http://localhost:3000/courses/progress', {
+                const res = await fetch(`${API_URL}/courses/progress`, {
                     headers: {
                         'Authorization': `Bearer ${session.access_token}`
                     }

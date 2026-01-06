@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { useOutletContext, useNavigate } from 'react-router-dom';
 
+const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:3000';
+
 const AVATAR_SEEDS = [
     'Felix', 'Aneka', 'Zoe', 'Midnight', 'Bear', 'Tiger', 'Leo', 'Max', 'Luna', 'Shadow', 
     'Simba', 'Milo', 'Oreo', 'Coco', 'Bella', 'Charlie', 'Lucy', 'Daisy', 'Lola', 'Jasper'
@@ -34,7 +36,7 @@ export default function ProfilePage() {
             if (newSeq.includes('ludo') || newSeq.includes('konami')) {
                 // Trigger Easter Egg
                 try {
-                    const res = await fetch('http://localhost:3000/users/easter-egg', {
+                    const res = await fetch(`${API_URL}/users/easter-egg`, {
                         method: 'POST',
                         headers: {
                             'Content-Type': 'application/json',
@@ -65,7 +67,7 @@ export default function ProfilePage() {
         setLoading(true);
         setMessage(null);
         try {
-            const res = await fetch('http://localhost:3000/users/profile', {
+            const res = await fetch(`${API_URL}/users/profile`, {
                 method: 'PATCH',
                 headers: {
                     'Content-Type': 'application/json',
