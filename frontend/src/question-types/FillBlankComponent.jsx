@@ -2,10 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useTheme } from '../ThemeContext';
 
 const FillBlankComponent = ({ question, onCodeChange }) => {
-    const { isDark } = useTheme();
-    
     // We expect question.content.initial_code to contain blanks like "___" or "???"
-    // And question.content.options to be the word bank.
     
     // Parse the code into tokens to manage state
     const [codeSegments, setCodeSegments] = useState([]);
@@ -25,8 +22,6 @@ const FillBlankComponent = ({ question, onCodeChange }) => {
         setBlanks(new Array(matches.length).fill(null));
         
         // Initialize word bank
-        // If options are provided, use them. If not, we might need to infer? 
-        // Assuming options are provided in content.options
         setWordBank(question.content.options || []);
         
     }, [question]);
@@ -49,40 +44,26 @@ const FillBlankComponent = ({ question, onCodeChange }) => {
         
         // Check if we should submit the full code or just the blank values.
         // Based on schema.sql, correct_answer is often just the word (e.g., "def").
-        // So we should likely submit the filled values joined by comma or just the single value.
-        // Assuming single blank for now as per schema examples.
         const filledValues = blanks.filter(b => b !== null);
         if (filledValues.length === 1) {
              onCodeChange(filledValues[0]);
         } else if (filledValues.length > 1) {
-             // If multiple blanks, join them? Or send full code?
-             // If correct_answer is "def, len", then join.
-             // If correct_answer is full code, then constructedCode.
-             // Usually, simplistic backends check for the specific word.
-             // Let's try sending comma-separated values for multiple blanks.
              onCodeChange(filledValues.join(','));
         } else {
-             // No blanks filled yet
              onCodeChange('');
         }
     }, [blanks, codeSegments, onCodeChange]);
 
 
     const handleBankClick = (word) => {
-        // Find first empty blank
         const firstEmptyIndex = blanks.findIndex(b => b === null);
         if (firstEmptyIndex !== -1) {
             const newBlanks = [...blanks];
             newBlanks[firstEmptyIndex] = word;
             setBlanks(newBlanks);
             
-            // Remove from bank (or decrease count if duplicates allowed? Assuming unique use for now)
-            // But usually in these apps, if you use a word, it disappears from bank.
-            setWordBank(prev => prev.filter(w => w !== word)); 
-            // Note: This simple filter removes all instances. 
-            // If we have duplicate words in bank, we should remove by index.
-            // Let's refine this to remove just one instance.
-             const indexToRemove = wordBank.indexOf(word);
+            // Remove from bank (just filtering out one instance logic, simplistic for now)
+            const indexToRemove = wordBank.indexOf(word);
              if (indexToRemove > -1) {
                  const newBank = [...wordBank];
                  newBank.splice(indexToRemove, 1);
@@ -104,95 +85,54 @@ const FillBlankComponent = ({ question, onCodeChange }) => {
     };
 
     return (
-        <div style={{ display: 'flex', flexDirection: 'column', height: '100%', gap: '20px', padding: '20px' }}>
+        <div className="w-full fade-in flex flex-col h-full">
              {/* Question Description */}
-             <div style={{ fontSize: '1.2rem', fontWeight: '500', marginBottom: '10px' }}>
+             <h2 className="text-xl font-bold mb-6 text-slate-800 dark:text-slate-100">
                 {question.description}
-            </div>
+            </h2>
 
             {/* Code Display Area */}
-            <div style={{
-                flex: '1',
-                borderRadius: '12px',
-                border: '1px solid var(--card-border)',
-                padding: '20px',
-                fontFamily: 'monospace',
-                whiteSpace: 'pre-wrap',
-                lineHeight: '2',
-                fontSize: '1.1rem',
-                backgroundColor: isDark ? '#1e1e1e' : '#f5f5f5',
-                color: isDark ? '#d4d4d4' : '#333',
-                overflowY: 'auto'
-            }}>
-                {codeSegments.map((segment, idx) => {
-                    if (segment.match(placeholderRegex)) {
-                        // Determine which blank index this corresponds to
-                        // We can count how many blanks appeared before this segment index
-                        // But actually, we map segments. 
-                        // The segments array alternates: [text, blank, text, blank, text]
-                        // So blank index is roughly idx / 2
-                        const blankIndex = Math.floor(idx / 2);
-                        const filledWord = blanks[blankIndex];
-                        
-                        return (
-                            <span 
-                                key={idx}
-                                onClick={() => handleBlankClick(blankIndex, filledWord)}
-                                style={{
-                                    display: 'inline-block',
-                                    minWidth: '60px',
-                                    padding: '2px 8px',
-                                    margin: '0 4px',
-                                    borderRadius: '4px',
-                                    backgroundColor: filledWord ? 'var(--primary-color)' : (isDark ? '#3c3c3c' : '#e0e0e0'),
-                                    color: filledWord ? '#fff' : 'transparent',
-                                    borderBottom: '2px solid var(--text-secondary)',
-                                    cursor: filledWord ? 'pointer' : 'default',
-                                    textAlign: 'center'
-                                }}
-                            >
-                                {filledWord || "?"}
-                            </span>
-                        );
-                    } else {
-                        return <span key={idx}>{segment}</span>;
-                    }
-                })}
+            <div className="bg-white dark:bg-slate-800 border-2 border-slate-200 dark:border-slate-700 p-6 rounded-2xl shadow-sm mb-8 text-lg w-full">
+                <code className="code-font text-slate-700 dark:text-slate-300 leading-loose">
+                    {codeSegments.map((segment, idx) => {
+                        if (segment.match(placeholderRegex)) {
+                            const blankIndex = Math.floor(idx / 2);
+                            const filledWord = blanks[blankIndex];
+                            
+                            return (
+                                <span 
+                                    key={idx}
+                                    onClick={() => handleBlankClick(blankIndex, filledWord)}
+                                    className={`inline-block border-b-4 rounded px-3 py-1 min-w-[80px] text-center font-bold transition-all cursor-pointer select-none mx-1 ${
+                                        filledWord 
+                                            ? 'text-slate-800 dark:text-slate-900 bg-blue-100 dark:bg-blue-300 border-blue-300 dark:border-blue-500' 
+                                            : 'text-slate-400 dark:text-slate-500 bg-slate-200 dark:bg-slate-700 border-slate-300 dark:border-slate-600 animate-pulse'
+                                    }`}
+                                >
+                                    {filledWord || "???"}
+                                </span>
+                            );
+                        } else {
+                            // Render text segments, maybe highlighting keywords manually if needed?
+                            // For now simple text. We could wrap keywords in spans if we had a lexer.
+                            // Just preserving newlines and spaces.
+                            return <span key={idx} style={{whiteSpace: 'pre-wrap'}}>{segment}</span>;
+                        }
+                    })}
+                </code>
             </div>
 
             {/* Word Bank */}
-            <div style={{ flex: '0 0 auto' }}>
-                <div style={{
-                    fontSize: '0.9rem',
-                    fontWeight: 'bold',
-                    textTransform: 'uppercase',
-                    color: 'var(--text-secondary)',
-                    marginBottom: '10px',
-                    letterSpacing: '1px'
-                }}>
-                    Word Bank
-                </div>
-                <div style={{ display: 'flex', flexWrap: 'wrap', gap: '10px' }}>
-                    {wordBank.map((word, idx) => (
-                        <button
-                            key={idx}
-                            onClick={() => handleBankClick(word)}
-                            style={{
-                                padding: '10px 20px',
-                                borderRadius: '20px',
-                                border: '1px solid var(--card-border)',
-                                background: 'var(--card-bg)',
-                                cursor: 'pointer',
-                                fontSize: '1rem',
-                                fontFamily: 'monospace',
-                                boxShadow: '0 2px 4px rgba(0,0,0,0.1)',
-                                transition: 'transform 0.1s'
-                            }}
-                        >
-                            {word}
-                        </button>
-                    ))}
-                </div>
+            <div className="flex flex-wrap justify-center gap-3 w-full">
+                {wordBank.map((word, idx) => (
+                    <button
+                        key={idx}
+                        onClick={() => handleBankClick(word)}
+                        className="chip option-chip bg-white dark:bg-slate-800 border border-slate-300 dark:border-slate-600 border-b-4 px-6 py-3 rounded-2xl font-bold text-slate-700 dark:text-slate-300 active:scale-95 transition-transform hover:bg-slate-50 dark:hover:bg-slate-700"
+                    >
+                        {word}
+                    </button>
+                ))}
             </div>
         </div>
     );

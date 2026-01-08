@@ -6,76 +6,70 @@ const PredictionComponent = ({ question, selectedAnswer, onSelect }) => {
     const { isDark } = useTheme();
 
     return (
-        <div style={{ display: 'flex', flexDirection: 'column', height: '100%', gap: '20px', padding: '20px' }}>
-            {/* Question Description */}
-            <div style={{ fontSize: '1.2rem', fontWeight: '500', marginBottom: '10px' }}>
+        <div className="w-full fade-in flex flex-col h-full">
+            {/* Question Text */}
+            <h2 className="text-xl font-bold mb-4 text-slate-800 dark:text-slate-100">
                 {question.description || "What will be the output of this code?"}
-            </div>
+            </h2>
 
-            {/* Read-Only Code Editor */}
-            <div style={{
-                flex: '1',
-                borderRadius: '12px',
-                overflow: 'hidden',
-                border: '1px solid var(--card-border)',
-                minHeight: '200px'
-            }}>
-                <Editor
-                    height="100%"
-                    defaultLanguage={question.language === 'python' ? 'python' : 'java'}
-                    value={question.content.code_snippet || question.content.initial_code}
-                    theme={isDark ? "vs-dark" : "light"}
-                    options={{
-                        readOnly: true,
-                        minimap: { enabled: false },
-                        scrollBeyondLastLine: false,
-                        fontSize: 14,
-                        padding: { top: 20 },
-                        domReadOnly: true
-                    }}
-                />
-            </div>
-
-            {/* Console / Options Area */}
-            <div style={{ flex: '0 0 auto' }}>
-                <div style={{
-                    fontSize: '0.9rem',
-                    fontWeight: 'bold',
-                    textTransform: 'uppercase',
-                    color: 'var(--text-secondary)',
-                    marginBottom: '10px',
-                    letterSpacing: '1px'
-                }}>
-                    Terminal Output
+            {/* Code Block */}
+            <div className="bg-slate-800 dark:bg-slate-900 rounded-2xl p-5 mb-6 shadow-lg border-2 border-slate-700 dark:border-slate-600 shrink-0">
+                {/* Window Dots */}
+                <div className="flex gap-1.5 mb-3">
+                    <div className="w-3 h-3 rounded-full bg-red-500"></div>
+                    <div className="w-3 h-3 rounded-full bg-yellow-500"></div>
+                    <div className="w-3 h-3 rounded-full bg-green-500"></div>
                 </div>
                 
-                <div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
-                    {question.content.options && question.content.options.map((option, idx) => (
-                        <div
-                            key={idx}
-                            onClick={() => onSelect(option)}
-                            style={{
-                                display: 'flex',
-                                alignItems: 'center',
-                                padding: '15px 20px',
-                                borderRadius: '12px',
-                                background: 'var(--card-bg)',
-                                border: selectedAnswer === option ? '2px solid var(--primary-color)' : '1px solid var(--card-border)',
-                                cursor: 'pointer',
-                                transition: 'all 0.2s'
-                            }}
-                        >
-                            <div style={{
-                                width: '20px',
-                                height: '20px',
-                                borderRadius: '50%',
-                                border: selectedAnswer === option ? '6px solid var(--primary-color)' : '2px solid var(--text-secondary)',
-                                marginRight: '15px',
-                                boxSizing: 'border-box'
-                            }} />
-                            <span style={{ fontFamily: 'monospace', fontSize: '1rem' }}>{option}</span>
-                        </div>
-                    ))}
+                <div style={{ height: '200px' }}>
+                    <Editor
+                        height="100%"
+                        defaultLanguage={question.language === 'python' ? 'python' : 'java'}
+                        value={question.content.code_snippet || question.content.initial_code}
+                        theme="vs-dark"
+                        options={{
+                            readOnly: true,
+                            minimap: { enabled: false },
+                            scrollBeyondLastLine: false,
+                            fontSize: 16,
+                            fontFamily: "'Fira Code', monospace",
+                            padding: { top: 10 },
+                            domReadOnly: true,
+                            lineNumbers: 'off',
+                            folding: false,
+                            contextmenu: false,
+                            renderLineHighlight: 'none',
+                            hideCursorInOverviewRuler: true,
+                            overviewRulerLanes: 0
+                        }}
+                    />
+                </div>
+            </div>
+
+            {/* Options */}
+            <div className="w-full">
+                <h3 className="text-sm font-bold text-slate-400 uppercase tracking-wider mb-2">Válassz kimenetet:</h3>
+                <div className="grid grid-cols-1 gap-3">
+                    {question.content.options && question.content.options.map((option, idx) => {
+                        const isSelected = selectedAnswer === option;
+                        return (
+                            <button
+                                key={idx}
+                                onClick={() => onSelect(option)}
+                                className={`option-card p-4 rounded-xl border-2 shadow-sm transition-all duration-200 group text-left ${
+                                    isSelected
+                                        ? 'bg-blue-50 dark:bg-blue-900/30 border-blue-500 dark:border-blue-400 shadow-md transform scale-[1.02]'
+                                        : 'bg-slate-100 dark:bg-slate-800 border-slate-200 dark:border-slate-700 hover:border-slate-400 dark:hover:border-slate-500 hover:bg-slate-200 dark:hover:bg-slate-700'
+                                }`}
+                            >
+                                <span className={`code-font text-lg font-bold tracking-widest ${
+                                    isSelected ? 'text-blue-800 dark:text-blue-100' : 'text-slate-700 dark:text-slate-300'
+                                }`}>
+                                    {option}
+                                </span>
+                            </button>
+                        );
+                    })}
                 </div>
             </div>
         </div>

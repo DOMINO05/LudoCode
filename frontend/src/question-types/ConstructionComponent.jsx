@@ -20,9 +20,7 @@ const ConstructionComponent = ({ question, onCodeChange }) => {
 
         // 1. Setup Constructed Blocks from Initial Code
         if (question.content.initial_code) {
-             const lines = question.content.initial_code.split('\n').filter(line => line !== ''); // Keep empty lines? Maybe filter trim for blocks.
-             // Actually keeping whitespace structure is good for initial code.
-             // But blocks usually trim. Let's keep lines that have content.
+             const lines = question.content.initial_code.split('\n').filter(line => line !== ''); 
              const validLines = lines.filter(l => l.length > 0); 
              initBlocks = validLines.map((line, idx) => ({ id: `init-${idx}`, text: line }));
         }
@@ -53,11 +51,9 @@ const ConstructionComponent = ({ question, onCodeChange }) => {
         
         // Reset state on toggle as per spec ("No need to sync")
         if (newMode) {
-             // Switching to Hardcore
              setEditorValue(question.content.initial_code || '');
              onCodeChange(question.content.initial_code || '');
         } else {
-            // Switching to Normal
             setConstructedBlocks([]);
             if (question.content.blocks) {
                 setAvailableBlocks([...question.content.blocks]);
@@ -69,28 +65,27 @@ const ConstructionComponent = ({ question, onCodeChange }) => {
     // Normal Mode Handlers
     const handleAddBlock = (block) => {
         setConstructedBlocks(prev => [...prev, block]);
-        // Do we remove from available? Spec says "Like FillBlank". 
-        // FillBlank returns to bank. 
-        // Let's assume we remove from available.
-        setAvailableBlocks(prev => prev.filter(b => b.id !== block.id)); // Assuming blocks have unique IDs
+        // Do NOT remove from available (Reusable blocks?) Or remove? 
+        // tasks.html behavior implies "addToken" doesn't remove from bank? 
+        // "addToken(btn, token)" -> clone. Bank stays.
+        // My previous logic removed it.
+        // If bank stays, user can reuse tokens (like brackets).
+        // I will keep bank intact to match "Word Bank" behavior usually allowing repeats or not?
+        // tasks.html example loop over array.
+        // Actually, construction tasks usually allow using blocks once or multiple times?
+        // Scaffolding suggests usage once? Or basic tokens like `{` multiple?
+        // Let's assume reusable for now, as tasks.html implies static bank.
         
         // Update parent with constructed code
-        // We need to join the blocks text
         const currentBlocks = [...constructedBlocks, block];
-        const code = currentBlocks.map(b => b.text).join(''); // Join without separator or with newline?
-        // Usually code construction implies lines or parts. 
-        // If blocks are full lines, join with \n. If snippets, maybe empty string.
-        // Let's assume \n for now if it looks like lines, or check context.
-        // For simplicity, let's join with \n for now as most construction tasks are line-based.
-        // Or better: Use the raw text. 
         onCodeChange(currentBlocks.map(b => b.text).join('\n')); 
     };
 
-    const handleRemoveBlock = (block) => {
-        setConstructedBlocks(prev => prev.filter(b => b.id !== block.id));
-        setAvailableBlocks(prev => [...prev, block]);
-        
-        const currentBlocks = constructedBlocks.filter(b => b.id !== block.id);
+    const handleRemoveBlock = (index) => {
+        // Remove by index
+        const currentBlocks = [...constructedBlocks];
+        currentBlocks.splice(index, 1);
+        setConstructedBlocks(currentBlocks);
         onCodeChange(currentBlocks.map(b => b.text).join('\n'));
     };
     
@@ -101,29 +96,20 @@ const ConstructionComponent = ({ question, onCodeChange }) => {
     };
 
     return (
-        <div style={{ display: 'flex', flexDirection: 'column', height: '100%', gap: '20px', padding: '20px', position: 'relative' }}>
-            
-            {/* Header with Toggle */}
-            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start' }}>
-                <div style={{ fontSize: '1.2rem', fontWeight: '500', marginBottom: '10px', paddingRight: '40px' }}>
-                    {question.description}
+        <div className="w-full fade-in flex flex-col h-full">
+            <div className="flex justify-between items-start mb-4">
+                <div>
+                    <h2 className="text-xl font-bold text-slate-800 dark:text-slate-100">
+                        {question.description}
+                    </h2>
                 </div>
-                
                 <button 
-                    onClick={handleToggleMode}
-                    style={{
-                        background: 'none',
-                        border: 'none',
-                        cursor: 'pointer',
-                        fontSize: '24px',
-                        padding: '10px',
-                        borderRadius: '50%',
-                        backgroundColor: isHardcore ? 'var(--primary-color)' : 'var(--card-bg)',
-                        color: isHardcore ? '#fff' : 'var(--text-color)',
-                        boxShadow: '0 2px 5px rgba(0,0,0,0.2)',
-                        transition: 'all 0.3s'
-                    }}
-                    title={isHardcore ? "Switch to Block Mode" : "Switch to Keyboard Mode"}
+                    onClick={handleToggleMode} 
+                    className={`p-2 rounded-lg transition-colors ${
+                        isHardcore 
+                            ? 'bg-slate-800 dark:bg-slate-700 text-white' 
+                            : 'bg-slate-200 dark:bg-slate-700 text-slate-600 dark:text-slate-300 hover:bg-slate-300 dark:hover:bg-slate-600'
+                    }`}
                 >
                     ⌨️
                 </button>
@@ -131,12 +117,7 @@ const ConstructionComponent = ({ question, onCodeChange }) => {
 
             {isHardcore ? (
                 // HARDCORE MODE (Monaco Editor)
-                <div style={{
-                    flex: '1',
-                    borderRadius: '12px',
-                    overflow: 'hidden',
-                    border: '1px solid var(--card-border)',
-                }}>
+                <div className="w-full h-full border-2 border-slate-300 dark:border-slate-700 rounded-xl overflow-hidden mb-4">
                     <Editor
                         height="100%"
                         defaultLanguage={question.language === 'python' ? 'python' : 'java'}
@@ -147,88 +128,43 @@ const ConstructionComponent = ({ question, onCodeChange }) => {
                             minimap: { enabled: false },
                             scrollBeyondLastLine: false,
                             fontSize: 14,
-                            padding: { top: 20 }
+                            padding: { top: 20 },
+                            lineNumbers: 'on',
                         }}
                     />
                 </div>
             ) : (
                 // NORMAL MODE (Construction)
                 <>
-                    {/* Construction Area */}
-                    <div style={{
-                        flex: '1',
-                        borderRadius: '12px',
-                        border: '2px dashed var(--primary-color)',
-                        padding: '15px',
-                        background: isDark ? 'rgba(var(--primary-rgb), 0.1)' : '#f0f9ff',
-                        overflowY: 'auto',
-                        minHeight: '200px'
-                    }}>
-                        <div style={{
-                            fontSize: '0.9rem',
-                            fontWeight: 'bold',
-                            textTransform: 'uppercase',
-                            color: 'var(--primary-color)',
-                            marginBottom: '10px',
-                            letterSpacing: '1px'
-                        }}>
-                            Your Code
-                        </div>
+                    {/* Scratch Result */}
+                    <div className="bg-white dark:bg-slate-800 border-2 border-slate-200 dark:border-slate-700 min-h-[100px] p-4 rounded-xl mb-4 flex flex-wrap gap-2 items-start font-mono text-sm shadow-inner transition-all content-start">
                         {constructedBlocks.length === 0 && (
-                            <div style={{ fontStyle: 'italic', opacity: 0.6 }}>Tap blocks to build your code...</div>
+                            <span className="text-slate-400 dark:text-slate-500 italic pointer-events-none select-none">
+                                A kódod itt jelenik meg...
+                            </span>
                         )}
-                         {constructedBlocks.map((block) => (
+                         {constructedBlocks.map((block, idx) => (
                             <div 
-                                key={block.id} 
-                                onClick={() => handleRemoveBlock(block)}
-                                style={{
-                                    padding: '10px 15px',
-                                    marginBottom: '8px',
-                                    borderRadius: '8px',
-                                    background: 'var(--card-bg)',
-                                    border: '1px solid var(--card-border)',
-                                    cursor: 'pointer',
-                                    fontFamily: 'monospace',
-                                    whiteSpace: 'pre-wrap'
-                                }}
+                                key={`${block.id}-${idx}`}
+                                onClick={() => handleRemoveBlock(idx)}
+                                className="bg-slate-100 dark:bg-slate-700 border border-slate-300 dark:border-slate-600 px-2 py-1 rounded text-slate-800 dark:text-slate-200 font-bold pop cursor-pointer hover:bg-red-50 dark:hover:bg-red-900/50 hover:border-red-300 dark:hover:border-red-700 hover:text-red-500 dark:hover:text-red-300 whitespace-pre"
                             >
                                 {block.text}
                             </div>
                         ))}
                     </div>
 
-                    {/* Block Bank */}
-                    <div style={{ flex: '0 0 auto' }}>
-                        <div style={{
-                            fontSize: '0.9rem',
-                            fontWeight: 'bold',
-                            textTransform: 'uppercase',
-                            color: 'var(--text-secondary)',
-                            marginBottom: '10px',
-                            letterSpacing: '1px'
-                        }}>
-                            Available Blocks
-                        </div>
-                        <div style={{ display: 'flex', flexWrap: 'wrap', gap: '10px' }}>
-                             {availableBlocks.map((block) => (
-                                <button
-                                    key={block.id}
-                                    onClick={() => handleAddBlock(block)}
-                                    style={{
-                                        padding: '10px 15px',
-                                        borderRadius: '8px',
-                                        border: '1px solid var(--card-border)',
-                                        background: 'var(--card-bg)',
-                                        cursor: 'pointer',
-                                        fontSize: '0.9rem',
-                                        fontFamily: 'monospace',
-                                        boxShadow: '0 2px 4px rgba(0,0,0,0.1)'
-                                    }}
-                                >
-                                    {block.text}
-                                </button>
-                            ))}
-                        </div>
+                    {/* Word Bank */}
+                    <div className="flex flex-wrap gap-2 mt-auto pt-4 border-t border-slate-100 dark:border-slate-800">
+                         {availableBlocks.map((block, idx) => (
+                            <button
+                                key={`${block.id}-${idx}`}
+                                onClick={() => handleAddBlock(block)}
+                                className="bg-white dark:bg-slate-800 border border-slate-300 dark:border-slate-600 border-b-4 px-3 py-2 rounded-lg font-mono font-bold text-slate-700 dark:text-slate-300 active:scale-95 transition-transform select-none hover:bg-slate-50 dark:hover:bg-slate-700"
+                            >
+                                {block.text}
+                            </button>
+                        ))}
                     </div>
                 </>
             )}

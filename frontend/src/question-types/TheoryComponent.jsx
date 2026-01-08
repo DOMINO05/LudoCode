@@ -6,61 +6,73 @@ const TheoryComponent = ({ question, selectedAnswer, onSelect }) => {
     const { isDark } = useTheme();
 
     return (
-        <div style={{ display: 'flex', flexDirection: 'column', height: '100%', gap: '20px', padding: '20px' }}>
+        <div className="w-full fade-in flex flex-col h-full">
             {/* Question Text */}
-            <div style={{ fontSize: '1.2rem', fontWeight: '500', lineHeight: '1.5' }}>
+            <h2 className="text-2xl font-bold mb-6 text-slate-800 dark:text-slate-100">
                 {question.description}
-            </div>
+            </h2>
 
             {/* Code Snippet (if any) */}
             {question.content.code_snippet && (
-                 <div style={{
-                    borderRadius: '12px',
-                    overflow: 'hidden',
-                    border: '1px solid var(--card-border)',
-                    height: '200px', // Fixed height for consistency
-                    flexShrink: 0
-                }}>
-                    <Editor
-                        height="100%"
-                        defaultLanguage={question.language === 'python' ? 'python' : 'java'}
-                        value={question.content.code_snippet}
-                        theme={isDark ? "vs-dark" : "light"}
-                        options={{
-                            readOnly: true,
-                            minimap: { enabled: false },
-                            scrollBeyondLastLine: false,
-                            fontSize: 14,
-                            lineNumbers: 'off',
-                            folding: false,
-                            domReadOnly: true
-                        }}
-                    />
+                 <div className="bg-slate-800 dark:bg-slate-900 rounded-2xl p-5 mb-6 shadow-lg border-2 border-slate-700 dark:border-slate-600 shrink-0">
+                    <div className="flex gap-1.5 mb-3">
+                        <div className="w-3 h-3 rounded-full bg-red-500"></div>
+                        <div className="w-3 h-3 rounded-full bg-yellow-500"></div>
+                        <div className="w-3 h-3 rounded-full bg-green-500"></div>
+                    </div>
+                    <div style={{ height: '200px' }}>
+                        <Editor
+                            height="100%"
+                            defaultLanguage={question.language === 'python' ? 'python' : 'java'}
+                            value={question.content.code_snippet}
+                            theme="vs-dark" // Always dark for the code block style
+                            options={{
+                                readOnly: true,
+                                minimap: { enabled: false },
+                                scrollBeyondLastLine: false,
+                                fontSize: 14,
+                                lineNumbers: 'off',
+                                folding: false,
+                                domReadOnly: true,
+                                contextmenu: false,
+                                overviewRulerLanes: 0,
+                                hideCursorInOverviewRuler: true,
+                                renderLineHighlight: 'none',
+                            }}
+                        />
+                    </div>
                 </div>
             )}
 
             {/* Options */}
-            <div style={{ display: 'grid', gap: '15px', marginTop: 'auto' }}>
-                {question.content.options && question.content.options.map((option, idx) => (
-                    <div
-                        key={idx}
-                        onClick={() => onSelect(option)}
-                        style={{
-                            padding: '20px',
-                            borderRadius: '16px',
-                            border: selectedAnswer === option ? '3px solid var(--primary-color)' : '1px solid var(--card-border)',
-                            background: 'var(--card-bg)',
-                            cursor: 'pointer',
-                            transition: 'all 0.2s',
-                            fontSize: '1.1rem',
-                            fontWeight: '500',
-                            textAlign: 'center',
-                            boxShadow: selectedAnswer === option ? '0 0 0 2px rgba(var(--primary-rgb), 0.2)' : 'none'
-                        }}
-                    >
-                        {option}
-                    </div>
-                ))}
+            <div className="space-y-4 w-full">
+                {question.content.options && question.content.options.map((option, idx) => {
+                    const isSelected = selectedAnswer === option;
+                    return (
+                        <div
+                            key={idx}
+                            onClick={() => onSelect(option)}
+                            className={`cursor-pointer bg-white dark:bg-slate-800 border-2 rounded-2xl p-4 transition-all duration-200 option-card group ${
+                                isSelected 
+                                    ? 'border-blue-500 bg-blue-50 dark:bg-blue-900/30 dark:border-blue-400 shadow-md' 
+                                    : 'border-slate-200 dark:border-slate-700 hover:bg-slate-50 dark:hover:bg-slate-750 hover:border-slate-300 dark:hover:border-slate-600'
+                            }`}
+                        >
+                            <div className="flex items-center gap-3">
+                                <div className={`w-8 h-8 border-2 rounded-lg flex items-center justify-center text-sm font-bold transition-colors ${
+                                    isSelected 
+                                        ? 'border-blue-500 text-blue-500 bg-white dark:bg-slate-800 dark:text-blue-400 dark:border-blue-400' 
+                                        : 'border-slate-300 text-slate-400 dark:border-slate-600 dark:text-slate-500 group-hover:border-slate-400 dark:group-hover:border-slate-500 group-hover:text-slate-500'
+                                }`}>
+                                    {String.fromCharCode(65 + idx)}
+                                </div>
+                                <div className={`code-font text-base font-medium ${isSelected ? 'text-blue-900 dark:text-blue-100' : 'text-slate-600 dark:text-slate-300'}`}>
+                                    {option}
+                                </div>
+                            </div>
+                        </div>
+                    );
+                })}
             </div>
         </div>
     );

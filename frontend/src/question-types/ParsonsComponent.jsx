@@ -28,146 +28,47 @@ const ParsonsComponent = ({ question, onSolutionChange }) => {
         setAvailable(prev => [...prev, block]);
     };
 
-    const moveBlock = (index, direction) => {
-        const newSolution = [...solution];
-        if (direction === 'up' && index > 0) {
-            [newSolution[index], newSolution[index - 1]] = [newSolution[index - 1], newSolution[index]];
-        } else if (direction === 'down' && index < newSolution.length - 1) {
-            [newSolution[index], newSolution[index + 1]] = [newSolution[index + 1], newSolution[index]];
-        }
-        setSolution(newSolution);
-    };
-
     return (
-        <div style={{ display: 'flex', flexDirection: 'column', height: '100%', gap: '20px', padding: '20px' }}>
-            {/* Question Description */}
-            <div style={{ fontSize: '1.2rem', fontWeight: '500', marginBottom: '10px' }}>
+        <div className="w-full fade-in flex flex-col h-full">
+            {/* Question Text */}
+            <h2 className="text-xl font-bold mb-2 text-slate-800 dark:text-slate-100">
                 {question.description}
-            </div>
+            </h2>
 
-            {/* Solution Area */}
-            <div style={{
-                flex: '1',
-                borderRadius: '12px',
-                border: '2px dashed var(--primary-color)',
-                padding: '15px',
-                background: isDark ? 'rgba(var(--primary-rgb), 0.1)' : '#f0f9ff',
-                overflowY: 'auto',
-                minHeight: '200px'
-            }}>
-                <div style={{
-                    fontSize: '0.9rem',
-                    fontWeight: 'bold',
-                    textTransform: 'uppercase',
-                    color: 'var(--primary-color)',
-                    marginBottom: '10px',
-                    letterSpacing: '1px'
-                }}>
-                    Your Solution
-                </div>
-                
+            {/* Drop Zone */}
+            <div className="bg-slate-100 dark:bg-slate-900 rounded-xl p-4 min-h-[200px] border-2 border-dashed border-slate-300 dark:border-slate-700 mb-4 flex flex-col gap-2 transition-colors">
                 {solution.length === 0 && (
-                     <div style={{ 
-                        display: 'flex', 
-                        alignItems: 'center', 
-                        justifyContent: 'center', 
-                        height: '100px', 
-                        color: 'var(--text-secondary)',
-                        fontStyle: 'italic'
-                    }}>
-                        Tap blocks below to add them here
-                    </div>
+                    <span className="text-slate-400 dark:text-slate-500 text-sm italic text-center my-auto pointer-events-none select-none">
+                        A kód helye...
+                    </span>
                 )}
-
                 {solution.map((block, idx) => (
-                    <div key={block.id} style={{ display: 'flex', alignItems: 'center', marginBottom: '8px' }}>
-                        {/* Up/Down Controls */}
-                        <div style={{ display: 'flex', flexDirection: 'column', marginRight: '10px' }}>
-                            <button 
-                                onClick={() => moveBlock(idx, 'up')}
-                                disabled={idx === 0}
-                                style={{ 
-                                    border: 'none', background: 'none', cursor: 'pointer', 
-                                    color: idx === 0 ? 'transparent' : 'var(--text-secondary)',
-                                    fontSize: '12px', padding: '0'
-                                }}
-                            >
-                                ▲
-                            </button>
-                            <button 
-                                onClick={() => moveBlock(idx, 'down')}
-                                disabled={idx === solution.length - 1}
-                                style={{ 
-                                    border: 'none', background: 'none', cursor: 'pointer', 
-                                    color: idx === solution.length - 1 ? 'transparent' : 'var(--text-secondary)',
-                                    fontSize: '12px', padding: '0'
-                                }}
-                            >
-                                ▼
-                            </button>
-                        </div>
-                        
-                        {/* The Block */}
-                        <div 
+                    <div 
+                        key={block.id}
+                        className="bg-slate-800 dark:bg-slate-700 text-white p-2 rounded text-xs font-mono flex justify-between items-center pop"
+                    >
+                        <span style={{ whiteSpace: 'pre' }}>{block.text}</span>
+                        <span 
                             onClick={() => handleRemoveFromSolution(block)}
-                            style={{
-                                flex: 1,
-                                padding: '12px 15px',
-                                borderRadius: '8px',
-                                background: 'var(--card-bg)',
-                                border: '1px solid var(--card-border)',
-                                cursor: 'pointer',
-                                fontFamily: 'monospace',
-                                fontSize: '1rem',
-                                boxShadow: '0 1px 3px rgba(0,0,0,0.1)',
-                                // Handle indentation visualization if needed. 
-                                // Assuming block.text might contain tabs or spaces, 
-                                // or we might rely on CSS padding-left based on logic? 
-                                // For now, let's preserve whitespace.
-                                whiteSpace: 'pre',
-                                overflowX: 'auto'
-                            }}
+                            className="text-red-400 font-bold ml-2 cursor-pointer hover:text-red-300"
                         >
-                            {block.text}
-                        </div>
+                            ×
+                        </span>
                     </div>
                 ))}
             </div>
 
-            {/* Block Bank */}
-            <div style={{ flex: '0 0 auto' }}>
-                <div style={{
-                    fontSize: '0.9rem',
-                    fontWeight: 'bold',
-                    textTransform: 'uppercase',
-                    color: 'var(--text-secondary)',
-                    marginBottom: '10px',
-                    letterSpacing: '1px'
-                }}>
-                    Available Lines
-                </div>
-                <div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
-                    {available.map((block) => (
-                        <div
-                            key={block.id}
-                            onClick={() => handleAddToSolution(block)}
-                            style={{
-                                padding: '12px 15px',
-                                borderRadius: '8px',
-                                background: 'var(--card-bg)',
-                                border: '1px solid var(--card-border)',
-                                cursor: 'pointer',
-                                fontFamily: 'monospace',
-                                fontSize: '1rem',
-                                whiteSpace: 'pre',
-                                overflowX: 'auto',
-                                transition: 'transform 0.1s'
-                            }}
-                        >
-                            {block.text}
-                        </div>
-                    ))}
-                </div>
+            {/* Source Pool */}
+            <div className="flex flex-col gap-2">
+                {available.map((block) => (
+                    <button
+                        key={block.id}
+                        onClick={() => handleAddToSolution(block)}
+                        className="parsons-block bg-white dark:bg-slate-800 border border-slate-300 dark:border-slate-600 border-b-2 px-3 py-2 rounded-lg font-mono text-sm text-left text-slate-700 dark:text-slate-300 shadow-sm active:bg-slate-50 dark:active:bg-slate-700 hover:bg-slate-50 dark:hover:bg-slate-700 transition-colors"
+                    >
+                        <span style={{ whiteSpace: 'pre' }}>{block.text}</span>
+                    </button>
+                ))}
             </div>
         </div>
     );

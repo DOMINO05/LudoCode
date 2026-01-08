@@ -95,6 +95,41 @@ create policy "Read own logins" on public.daily_logins for select using (auth.ui
 -- Insertet a backend fogja csinálni "admin" joggal (vagy service role-lal), de ha kliensről akarod:
 create policy "Insert own login" on public.daily_logins for insert with check (auth.uid() = user_id);
 
+-- ... (A te meglévő tábláid: profiles, concepts, questions, submissions maradnak!) ...
+
+-- ÚJ TÁBLÁK A "TÉRKÉPHEZ" (Saga Map)
+
+-- 1. Units (A színes fejezetek)
+create table public.units (
+  id uuid default uuid_generate_v4() primary key,
+  title text not null, -- pl. "Bevezetés"
+  description text,
+  order_index int not null, -- Hányadik fejezet
+  color_hex text default '#58cc02'
+);
+
+-- 2. Levels (A körök a térképen)
+create table public.levels (
+  id uuid default uuid_generate_v4() primary key,
+  unit_id uuid references public.units(id) on delete cascade,
+  title text not null, -- pl. "Változók"
+  order_index int not null, -- Hányadik kör
+  icon_slug text, -- pl. 'star'
+  total_xp int default 10,
+  
+  -- KAPCSOLAT A TE KONCEPCIÓIDDAL:
+  -- Ez mondja meg, hogy ez a kör milyen típusú kérdéseket dobáljon fel!
+  target_concept_id uuid references public.concepts(id)
+);
+
+-- 3. Felhasználói haladás a TÉRKÉPEN
+create table public.user_level_progress (
+  id uuid default uuid_generate_v4() primary key,
+  user_id uuid references public.profiles(id),
+  level_id uuid references public.levels(id),
+  status text default 'locked', -- locked, active, completed, legendary
+  stars_earned int default 0
+);
 
 -- ====================================================================
 -- 2. RÉSZ: ADATFELTÖLTÉS (60 DB FELADAT)

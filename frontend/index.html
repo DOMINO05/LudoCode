@@ -5,6 +5,65 @@
     <link rel="icon" type="image/svg+xml" href="/vite.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>frontend</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+      tailwind.config = {
+        darkMode: 'class',
+      }
+    </script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800&family=Fira+Code:wght@400;500&display=swap');
+        
+        body { font-family: 'Nunito', sans-serif; }
+        .code-font { font-family: 'Fira Code', monospace; }
+        
+        /* Custom Animations */
+        .fade-in { animation: fadeIn 0.3s ease-out; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+        
+        .pop { animation: pop 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275); }
+        @keyframes pop { 0% { transform: scale(0.9); } 100% { transform: scale(1); } }
+
+        /* Shake animation for wrong debug selection */
+        .shake { animation: shake 0.4s cubic-bezier(.36,.07,.19,.97) both; }
+        @keyframes shake {
+            10%, 90% { transform: translate3d(-1px, 0, 0); }
+            20%, 80% { transform: translate3d(2px, 0, 0); }
+            30%, 50%, 70% { transform: translate3d(-4px, 0, 0); }
+            40%, 60% { transform: translate3d(4px, 0, 0); }
+        }
+
+        /* Custom UI Elements */
+        .btn-shadow { box-shadow: 0 4px 0 rgba(0,0,0,0.15); transition: all 0.1s; }
+        .btn-shadow:active { box-shadow: 0 0 0 rgba(0,0,0,0.15); transform: translateY(4px); }
+        
+        .chip-shadow { box-shadow: 0 2px 0 #cbd5e1; }
+        .chip-shadow:active { box-shadow: 0 0 0 #cbd5e1; transform: translateY(2px); }
+
+        .selected-card { border-color: #3b82f6; background-color: #eff6ff; box-shadow: 0 0 0 2px #3b82f6; }
+        
+        /* Debug Token Styles */
+        .debug-token { 
+            cursor: pointer; 
+            padding: 2px 4px; 
+            border-radius: 4px; 
+            transition: background-color 0.2s;
+            display: inline-block;
+        }
+        .debug-token:hover { background-color: rgba(0,0,0,0.05); }
+        
+        /* Hide Scrollbar for Nav */
+        .no-scrollbar::-webkit-scrollbar { display: none; }
+        .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+
+        /* Tailwind animate-in polyfill */
+        .animate-in { animation-duration: 0.3s; animation-fill-mode: both; }
+        .slide-in-from-bottom-2 { animation-name: slideInBottom2; }
+        @keyframes slideInBottom2 {
+            from { transform: translateY(0.5rem); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+    </style>
   </head>
   <body>
     <div id="root"></div>

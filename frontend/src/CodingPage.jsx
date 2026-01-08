@@ -9,7 +9,6 @@ import FillBlankComponent from './question-types/FillBlankComponent';
 import ParsonsComponent from './question-types/ParsonsComponent';
 import DebugComponent from './question-types/DebugComponent';
 import ConstructionComponent from './question-types/ConstructionComponent';
-import FeedbackSheet from './FeedbackSheet';
 
 // Fallback for types not yet fully implemented or standard 'coding'
 import Editor from '@monaco-editor/react';
@@ -17,7 +16,7 @@ import Editor from '@monaco-editor/react';
 const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:3000';
 
 export default function CodingPage() {
-  const { session, refreshProfile } = useOutletContext();
+  const { session, profile, refreshProfile } = useOutletContext();
   const { isDark } = useTheme();
   const navigate = useNavigate();
   const [searchParams] = useSearchParams();
@@ -197,6 +196,19 @@ export default function CodingPage() {
       }
   };
 
+  const isCheckDisabled = () => {
+      if (!question) return true;
+      if (question.qType === 'theory' || question.qType === 'predict_output') return !selectedOption;
+      if (question.qType === 'fill_in_blank') return !code;
+      if (question.qType === 'parsons') return parsonsSolution.length === 0;
+      if (question.qType === 'debug') {
+          if (debugPhase === 'identify') return debugSelections.length === 0;
+          return !code || code === question.content.buggy_code; // Ideally check if code changed
+      }
+      if (question.qType === 'coding' || question.qType === 'construction') return !code;
+      return false;
+  };
+
   // Render Logic
   const renderContent = () => {
       if (!question) return null;
@@ -237,14 +249,12 @@ export default function CodingPage() {
                   checkResult={result}
               />;
           case 'coding':
-          case 'construction': // Spec calls it ConstructionComponent but maps 'coding' to it? 
-          // Spec says: "coding -> <ConstructionComponent /> (Ez speciális...)"
+          case 'construction': 
               return <ConstructionComponent 
                   question={question} 
                   onCodeChange={setCode} 
               />;
           default:
-              // Fallback to basic editor if type unknown
                return (
                   <div style={{ padding: '20px', display: 'flex', flexDirection: 'column', height: '100%' }}>
                       <h2>{question.title}</h2>
@@ -263,17 +273,17 @@ export default function CodingPage() {
       }
   };
 
-  if (loading) return <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100vh' }}>Loading...</div>;
+  if (loading) return <div className="flex justify-center items-center h-screen">Loading...</div>;
 
   if (isCourseFinished) {
       return (
-          <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', height: '100vh', textAlign: 'center', color: 'var(--text-color)' }}>
-              <div style={{ fontSize: '60px', marginBottom: '20px' }}>🎓</div>
-              <h1 style={{ color: 'var(--success-color)' }}>Témakör Teljesítve!</h1>
-              <p style={{ fontSize: '18px', maxWidth: '600px', marginBottom: '40px' }}>
+          <div className="flex flex-col items-center justify-center h-screen text-center text-slate-700">
+              <div className="text-6xl mb-5">🎓</div>
+              <h1 className="text-green-500 text-3xl font-bold">Témakör Teljesítve!</h1>
+              <p className="text-lg max-w-xl mb-10 mt-4">
                   Sikeresen megoldottad az összes feladatot ebben a témakörben.
               </p>
-              <button onClick={() => navigate('/courses')} className="btn btn-primary" style={{ padding: '15px 30px', fontSize: '18px' }}>
+              <button onClick={() => navigate('/courses')} className="bg-blue-500 text-white font-bold py-3 px-8 rounded-full shadow-md hover:bg-blue-600 transition">
                   Vissza a Tanuló Ösvényre
               </button>
           </div>
@@ -282,13 +292,13 @@ export default function CodingPage() {
 
   if (noQuestions) {
       return (
-          <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', height: '100vh', textAlign: 'center', color: 'var(--text-color)' }}>
-              <div style={{ fontSize: '60px', marginBottom: '20px' }}>🎉</div>
-              <h1 style={{ color: 'var(--success-color)' }}>Gratulálunk!</h1>
-              <p style={{ fontSize: '18px', maxWidth: '600px', marginBottom: '40px' }}>
+          <div className="flex flex-col items-center justify-center h-screen text-center text-slate-700">
+              <div className="text-6xl mb-5">🎉</div>
+              <h1 className="text-green-500 text-3xl font-bold">Gratulálunk!</h1>
+              <p className="text-lg max-w-xl mb-10 mt-4">
                   Jelenleg nincs több feladat a szintednek megfelelően.
               </p>
-              <button onClick={() => navigate('/dashboard')} className="btn btn-primary" style={{ padding: '15px 30px', fontSize: '18px' }}>
+              <button onClick={() => navigate('/dashboard')} className="bg-blue-500 text-white font-bold py-3 px-8 rounded-full shadow-md hover:bg-blue-600 transition">
                   Vissza a Dashboardra
               </button>
           </div>
@@ -296,74 +306,66 @@ export default function CodingPage() {
   }
 
   return (
-    <div style={{ 
-        display: 'flex', 
-        flexDirection: 'column',
-        height: '100%', 
-        overflow: 'hidden',
-        position: 'relative',
-        backgroundColor: 'var(--bg-color)',
-        color: 'var(--text-color)'
-    }}>
-      
-      {/* Main Content Area - Scrollable */}
-      <div style={{ 
-          flex: 1, 
-          overflowY: 'auto', 
-          paddingBottom: '80px', // Space for footer
-          maxWidth: '800px',
-          width: '100%',
-          margin: '0 auto',
-      }}>
-          {renderContent()}
-      </div>
+    <div className="h-screen flex flex-col text-slate-700 dark:text-slate-100 overflow-hidden font-nunito bg-[#f7f7f7] dark:bg-slate-900 transition-colors duration-300">
+        {/* Progress Bar Area */}
+        <div className="px-4 pt-4 pb-2 shrink-0 max-w-md mx-auto w-full">
+            <div className="flex items-center gap-4">
+                <span className="text-2xl cursor-pointer text-slate-400 hover:text-slate-600 dark:hover:text-slate-300 transition-colors" onClick={() => navigate('/dashboard')}>✕</span>
+                <div className="h-4 bg-slate-200 dark:bg-slate-700 rounded-full flex-grow overflow-hidden">
+                    <div className="h-full bg-green-500 transition-all duration-500" style={{ width: '30%' }}></div>
+                </div>
+                <span className="text-red-500 font-bold flex items-center">❤️ {profile?.hp || 5}</span>
+            </div>
+        </div>
 
-      {/* Footer */}
-      <div style={{
-          position: 'fixed',
-          bottom: 0,
-          left: 0,
-          right: 0,
-          padding: '20px',
-          borderTop: '1px solid var(--card-border)',
-          backgroundColor: isDark ? '#1e1e1e' : '#fff',
-          display: 'flex',
-          justifyContent: 'center',
-          zIndex: 100
-      }}>
-          <div style={{ maxWidth: '800px', width: '100%' }}>
-            <button 
-                onClick={handleCheck}
-                disabled={showFeedback && result?.isCorrect} // Disable if already correct and showing feedback (waiting for next)
-                style={{
-                    width: '100%',
-                    padding: '16px',
-                    borderRadius: '16px',
-                    border: 'none',
-                    backgroundColor: 'var(--success-color)', // Or primary
-                    color: '#fff',
-                    fontSize: '1.2rem',
-                    fontWeight: 'bold',
-                    textTransform: 'uppercase',
-                    letterSpacing: '1px',
-                    cursor: 'pointer',
-                    boxShadow: '0 4px 6px rgba(0,0,0,0.1)',
-                    transition: 'transform 0.1s',
-                }}
-                onMouseDown={(e) => e.target.style.transform = 'scale(0.98)'}
-                onMouseUp={(e) => e.target.style.transform = 'scale(1)'}
-            >
-                ELLENŐRZÉS
-            </button>
-          </div>
-      </div>
+        {/* Main Content */}
+        <main className="flex-grow flex flex-col items-center justify-between p-4 max-w-md mx-auto w-full overflow-y-auto">
+            <div className="w-full h-full flex flex-col">
+                {renderContent()}
+            </div>
+        </main>
 
-      {/* Feedback Bottom Sheet */}
-      <FeedbackSheet 
-          result={result} 
-          isVisible={showFeedback} 
-          onNext={handleNext} 
-      />
+        {/* Footer */}
+        <footer className="p-4 border-t bg-white dark:bg-slate-800 dark:border-slate-700 shrink-0 z-10 transition-colors duration-300">
+            <div className="max-w-md mx-auto w-full flex flex-col gap-4">
+                {/* Inline Feedback Area */}
+                {showFeedback && result && (
+                    <div className={`rounded-xl p-4 flex items-start gap-3 animate-in fade-in slide-in-from-bottom-2 ${result.isCorrect ? 'bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-100' : 'bg-red-100 text-red-800 dark:bg-red-900 dark:text-red-100'}`}>
+                        <div className="text-3xl">{result.isCorrect ? '🎉' : '⚠️'}</div>
+                        <div>
+                            <div className="font-bold text-lg">{result.isCorrect ? 'Tökéletes!' : 'Nem egészen...'}</div>
+                            <div className="text-sm opacity-90">{result.isCorrect ? 'Helyes válasz. Csak így tovább!' : (result.compile_message || result.output || 'Próbáld újra átgondolni a logikát.')}</div>
+                        </div>
+                    </div>
+                )}
+                
+                <button 
+                    onClick={() => {
+                        console.log('Button clicked. showFeedback:', showFeedback);
+                        if(showFeedback) {
+                            handleNext();
+                        } else {
+                            console.log('Submitting data:', {
+                                qType: question.qType,
+                                code,
+                                parsonsSolution,
+                                selectedOption,
+                                debugSelections
+                            });
+                            handleCheck();
+                        }
+                    }}
+                    disabled={!showFeedback && isCheckDisabled()}
+                    className={`w-full font-bold py-3 px-8 rounded-xl uppercase tracking-wider btn-shadow transition-colors ${
+                        showFeedback 
+                            ? (result?.isCorrect ? 'bg-green-600 text-white' : 'bg-red-500 text-white hover:bg-red-600')
+                            : (isCheckDisabled() ? 'bg-slate-200 text-slate-400 cursor-not-allowed dark:bg-slate-700 dark:text-slate-500' : 'bg-green-500 text-white hover:bg-green-600')
+                    }`}
+                >
+                    {showFeedback ? (result?.isCorrect ? 'TOVÁBB' : 'ÉRTEM') : 'ELLENŐRZÉS'}
+                </button>
+            </div>
+        </footer>
     </div>
   );
 }
