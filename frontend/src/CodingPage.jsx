@@ -340,21 +340,7 @@ export default function CodingPage() {
                 )}
                 
                 <button 
-                    onClick={() => {
-                        console.log('Button clicked. showFeedback:', showFeedback);
-                        if(showFeedback) {
-                            handleNext();
-                        } else {
-                            console.log('Submitting data:', {
-                                qType: question.qType,
-                                code,
-                                parsonsSolution,
-                                selectedOption,
-                                debugSelections
-                            });
-                            handleCheck();
-                        }
-                    }}
+                    onClick={showFeedback ? handleNext : handleCheck}
                     disabled={!showFeedback && isCheckDisabled()}
                     className={`w-full font-bold py-3 px-8 rounded-xl uppercase tracking-wider btn-shadow transition-colors ${
                         showFeedback 

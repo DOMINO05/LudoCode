@@ -11,20 +11,37 @@ const DebugComponent = ({ question, onCodeChange, debugPhase, selections, onSele
     const [shakingOption, setShakingOption] = useState(null);
     const [bugToken, setBugToken] = useState(null); // The identified bug token coordinates
     const [resolved, setResolved] = useState(false);
+    const [bugRange, setBugRange] = useState(null); // { start, end }
 
     useEffect(() => {
         let codeLines = [];
+        let fullCode = "";
         if (question.content.buggy_code) {
-            codeLines = question.content.buggy_code.split('\n');
+            fullCode = question.content.buggy_code;
+            codeLines = fullCode.split('\n');
         }
         
-        // Tokenize lines with simple type inference for coloring
+        // Find bug range in full text
+        const errorLoc = question.content.error_location || "";
+        const bugStart = fullCode.indexOf(errorLoc);
+        const bugEnd = bugStart !== -1 ? bugStart + errorLoc.length : -1;
+        setBugRange({ start: bugStart, end: bugEnd });
+
+        // Tokenize lines with simple type inference for coloring AND character indices
+        let currentCharIndex = 0;
         const tokenized = codeLines.map((line, lIdx) => {
              // Split preserving delimiters
              const regex = /(".*?"|'.*?'|[a-zA-Z_]\w*|[0-9]+|[^\s\w]|\s+)/g;
-             const rawTokens = line.match(regex) || [];
+             let match;
+             const tokens = [];
              
-             return rawTokens.map((text, tIdx) => {
+             // Reset regex state for new string? No, simple match doesn't work for indices with global
+             // Use loop with exec for indices
+             while ((match = regex.exec(line)) !== null) {
+                 const text = match[0];
+                 const start = currentCharIndex + match.index;
+                 const end = start + text.length;
+                 
                  let type = 'text-slate-700';
                  const trimmed = text.trim();
                  if (!trimmed) type = 'whitespace';
@@ -32,8 +49,13 @@ const DebugComponent = ({ question, onCodeChange, debugPhase, selections, onSele
                  else if (/^[0-9]+$/.test(trimmed)) type = 'text-blue-600'; // Number
                  else if (['if', 'else', 'for', 'while', 'return', 'def', 'class', 'import', 'from', 'public', 'static', 'void', 'int', 'float', 'double', 'boolean'].includes(trimmed)) type = 'text-purple-600'; // Keyword
                  
-                 return { text, type, line: lIdx, index: tIdx };
-             });
+                 tokens.push({ text, type, line: lIdx, index: tokens.length, start, end });
+             }
+             
+             // Update char index for next line (add newline char length)
+             currentCharIndex += line.length + 1; // +1 for \n
+             
+             return tokens;
         });
         setTokenizedLines(tokenized);
         setLocalPhase('identify');
@@ -47,18 +69,46 @@ const DebugComponent = ({ question, onCodeChange, debugPhase, selections, onSele
         if (localPhase !== 'identify') return;
         if (t.type === 'whitespace') return;
 
-        // Check if this token is the bug
-        // Heuristic: Check if token text is contained in error_location
-        // or if error_location is contained in token text.
-        // Ideally exact match or part of range.
-        const errorLoc = question.content.error_location;
-        const isBug = t.text.trim() === errorLoc.trim() || errorLoc.includes(t.text.trim());
+        // Check if this token IS part of the bug range
+        let isBug = false;
+        if (bugRange && bugRange.start !== -1) {
+            // Check if token overlaps with bug range
+            // We want tokens strictly INSIDE the error location?
+            // Or tokens that contain the error location?
+            // Usually error location is a set of tokens.
+            // If user clicks ANY token within the error range, it's a hit.
+            // Token interval: [t.start, t.end)
+            // Bug interval: [bugRange.start, bugRange.end)
+            
+            // Intersection check: max(start1, start2) < min(end1, end2)
+            const intersectStart = Math.max(t.start, bugRange.start);
+            const intersectEnd = Math.min(t.end, bugRange.end);
+            
+            // Allow loose matching: if token is significantly part of the bug
+            if (intersectStart < intersectEnd) {
+                isBug = true;
+            }
+        }
 
         if (isBug) {
             // Found it!
             setBugToken(t);
             setLocalPhase('fix');
-            // We don't update parent 'selections' or 'code' yet, just UI state.
+            
+            // Select all tokens in the bug range to update parent state
+            const allBugTokens = [];
+            tokenizedLines.forEach(line => {
+                line.forEach(tok => {
+                    const iStart = Math.max(tok.start, bugRange.start);
+                    const iEnd = Math.min(tok.end, bugRange.end);
+                    if (iStart < iEnd) {
+                        // Map token to format expected by CodingPage
+                        allBugTokens.push({ lineIndex: tok.line, tokenIndex: tok.index, text: tok.text });
+                    }
+                });
+            });
+            
+            onSelect(allBugTokens);
         } else {
             // Wrong! Shake it.
             setShakingToken({ line: t.line, index: t.index });
@@ -70,9 +120,6 @@ const DebugComponent = ({ question, onCodeChange, debugPhase, selections, onSele
         if (localPhase !== 'fix') return;
 
         // Check if this option is the correct one
-        // We assume question.content.correct_code holds the correct replacement
-        // OR we infer from logic.
-        // schema.sql has 'correct_code'.
         const correctFix = question.content.correct_code;
         
         // Allow loose matching if exact string differs slightly (e.g. whitespace)
@@ -85,25 +132,43 @@ const DebugComponent = ({ question, onCodeChange, debugPhase, selections, onSele
             setLocalPhase('resolved');
             
             // Update code visually
-            const newLines = [...tokenizedLines];
-            if (bugToken) {
-                // Replace the bug token text with the fix
-                newLines[bugToken.line][bugToken.index].text = option;
-                // If the fix is multiline or complex, this single-token replacement is simplistic
-                // but matches tasks.html logic where a single token ')' becomes '}'.
-                // If option is full line, we might need full line replacement logic from before.
-                // Given tasks.html style, let's assume token-swapping mostly.
-                // But for robustness, let's update parent with Full Corrected Code.
-                
-                // We need to construct the full code string for submission.
-                // We take original lines, replace the bug token with option.
-                // Reconstruct string.
-                const finalCodeLines = newLines.map(lineTokens => lineTokens.map(tok => tok.text).join(''));
-                onCodeChange(finalCodeLines.join('\n'));
-                
-                // Signal parent that we have a selection (so button enables)
-                onSelect([{...bugToken, text: option}]); 
-            }
+            // We replace the text in the bug range with the option.
+            // Since we might have multiple lines, string manipulation is safer.
+            const fullCode = question.content.buggy_code;
+            const prefix = fullCode.substring(0, bugRange.start);
+            const suffix = fullCode.substring(bugRange.end);
+            const newFullCode = prefix + option + suffix;
+            
+            // Re-tokenize the NEW code to display it correctly
+            const codeLines = newFullCode.split('\n');
+            let currentCharIndex = 0;
+            const newTokenized = codeLines.map((line, lIdx) => {
+                 const regex = /(".*?"|'.*?'|[a-zA-Z_]\w*|[0-9]+|[^\s\w]|\s+)/g;
+                 let match;
+                 const tokens = [];
+                 while ((match = regex.exec(line)) !== null) {
+                     const text = match[0];
+                     const start = currentCharIndex + match.index;
+                     const end = start + text.length;
+                     let type = 'text-slate-700';
+                     const trimmed = text.trim();
+                     if (!trimmed) type = 'whitespace';
+                     else if (/^["'].*["']$/.test(trimmed)) type = 'text-green-600';
+                     else if (/^[0-9]+$/.test(trimmed)) type = 'text-blue-600';
+                     else if (['if', 'else', 'for', 'while', 'return', 'def', 'class', 'import', 'from', 'public', 'static', 'void', 'int', 'float', 'double', 'boolean'].includes(trimmed)) type = 'text-purple-600';
+                     
+                     tokens.push({ text, type, line: lIdx, index: tokens.length, start, end });
+                 }
+                 currentCharIndex += line.length + 1;
+                 return tokens;
+            });
+            setTokenizedLines(newTokenized);
+
+            onCodeChange(newFullCode);
+            // Signal parent that we have a selection (so button enables)
+            // We pass a dummy selection to enable the button
+            onSelect([{text: option}]); 
+            
         } else {
             // Wrong fix! Shake the button.
             setShakingOption(option);
@@ -127,12 +192,15 @@ const DebugComponent = ({ question, onCodeChange, debugPhase, selections, onSele
                     {tokenizedLines.map((lineTokens, lIdx) => (
                         <div key={lIdx} className="min-h-[1.5rem]">
                             {lineTokens.map((t, tIdx) => {
-                                const isBug = bugToken && bugToken.line === lIdx && bugToken.index === tIdx;
-                                const isShaking = shakingToken && shakingToken.line === lIdx && shakingToken.index === tIdx;
+                                // Determine if this token is part of the bug range
+                                const isBugInRange = bugRange && t.start < bugRange.end && t.end > bugRange.start;
+                                // Is this token logically the bug?
+                                // If localPhase is fix/resolved, show it as bug/fixed.
+                                // If identify, show only if buggy token was clicked? No, we show it IF we found it.
+                                // But localPhase 'fix' means found.
+                                const showAsBug = (localPhase === 'fix' || resolved) && isBugInRange;
                                 
-                                // Adjust token colors for dark mode if needed (or rely on default classes being compatible)
-                                // 'text-purple-600' is fine in dark mode? Maybe lighter purple.
-                                // I'll keep explicit classes for now as they are utility classes.
+                                const isShaking = shakingToken && shakingToken.line === lIdx && shakingToken.index === tIdx;
                                 
                                 return (
                                     <span 
@@ -141,9 +209,9 @@ const DebugComponent = ({ question, onCodeChange, debugPhase, selections, onSele
                                         className={`debug-token text-xl font-medium inline-block 
                                             ${t.type === 'whitespace' ? '' : (t.type === 'text-slate-700' ? 'text-slate-700 dark:text-slate-300' : t.type)}
                                             ${isShaking ? 'shake bg-slate-200 dark:bg-slate-600' : ''}
-                                            ${isBug ? (resolved ? 'bg-green-500 text-white scale-110 shadow-md' : 'bg-red-500 text-white shadow-md') : ''}
-                                            ${(localPhase !== 'identify' && !isBug) ? 'opacity-50 pointer-events-none' : ''}
-                                            ${resolved && isBug ? 'transition-transform' : ''}
+                                            ${showAsBug ? (resolved ? 'bg-green-500 text-white scale-110 shadow-md rounded' : 'bg-red-500 text-white shadow-md rounded') : ''}
+                                            ${(localPhase !== 'identify' && !showAsBug) ? 'opacity-50 pointer-events-none' : ''}
+                                            ${resolved && showAsBug ? 'transition-transform' : ''}
                                         `}
                                     >
                                         {t.text}

@@ -65,16 +65,6 @@ const ConstructionComponent = ({ question, onCodeChange }) => {
     // Normal Mode Handlers
     const handleAddBlock = (block) => {
         setConstructedBlocks(prev => [...prev, block]);
-        // Do NOT remove from available (Reusable blocks?) Or remove? 
-        // tasks.html behavior implies "addToken" doesn't remove from bank? 
-        // "addToken(btn, token)" -> clone. Bank stays.
-        // My previous logic removed it.
-        // If bank stays, user can reuse tokens (like brackets).
-        // I will keep bank intact to match "Word Bank" behavior usually allowing repeats or not?
-        // tasks.html example loop over array.
-        // Actually, construction tasks usually allow using blocks once or multiple times?
-        // Scaffolding suggests usage once? Or basic tokens like `{` multiple?
-        // Let's assume reusable for now, as tasks.html implies static bank.
         
         // Update parent with constructed code
         const currentBlocks = [...constructedBlocks, block];

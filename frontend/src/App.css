@@ -21,9 +21,9 @@
   --mobile-breakpoint: 768px;
 }
 
-[data-theme='dark'] {
+html.dark {
   /* Dark Mode Overrides */
-  --bg-color: #121212;
+  --bg-color: #0f172a; /* Slate 900 matching Tailwind */
   --text-color: #e0e0e0;
   --card-bg: #1e1e1e;
   --card-border: #333;

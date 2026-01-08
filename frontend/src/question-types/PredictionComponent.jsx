@@ -13,7 +13,7 @@ const PredictionComponent = ({ question, selectedAnswer, onSelect }) => {
             </h2>
 
             {/* Code Block */}
-            <div className="bg-slate-800 dark:bg-slate-900 rounded-2xl p-5 mb-6 shadow-lg border-2 border-slate-700 dark:border-slate-600 shrink-0">
+            <div className="bg-slate-100 dark:bg-slate-900 rounded-2xl p-5 mb-6 shadow-lg border-2 border-slate-200 dark:border-slate-600 shrink-0 transition-colors duration-300">
                 {/* Window Dots */}
                 <div className="flex gap-1.5 mb-3">
                     <div className="w-3 h-3 rounded-full bg-red-500"></div>
@@ -26,7 +26,7 @@ const PredictionComponent = ({ question, selectedAnswer, onSelect }) => {
                         height="100%"
                         defaultLanguage={question.language === 'python' ? 'python' : 'java'}
                         value={question.content.code_snippet || question.content.initial_code}
-                        theme="vs-dark"
+                        theme={isDark ? "vs-dark" : "light"}
                         options={{
                             readOnly: true,
                             minimap: { enabled: false },
