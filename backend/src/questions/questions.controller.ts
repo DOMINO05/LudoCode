@@ -15,4 +15,12 @@ export class QuestionsController {
     this.logger.log(`Serving question to user ${req.user.userId}: ${JSON.stringify(question)}`);
     return question;
   }
+
+  @UseGuards(AuthGuard('jwt'))
+  @Get('random')
+  async getRandomByType(@Request() req) {
+    const type = req.query.type;
+    const question = await this.questionsService.getRandomQuestionByType(type);
+    return question;
+  }
 }

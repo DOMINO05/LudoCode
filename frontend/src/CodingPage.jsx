@@ -21,6 +21,8 @@ export default function CodingPage() {
   const navigate = useNavigate();
   const [searchParams] = useSearchParams();
   const conceptId = searchParams.get('conceptId');
+  const mode = searchParams.get('mode');
+  const type = searchParams.get('type');
 
   // State
   const [question, setQuestion] = useState(null);
@@ -62,6 +64,8 @@ export default function CodingPage() {
     let url = `${API_URL}/questions/next`;
     if (conceptId) {
         url = `${API_URL}/courses/${conceptId}/next-question`;
+    } else if (mode === 'dev') {
+        url = `${API_URL}/questions/random?type=${type}`;
     }
 
     try {
@@ -134,6 +138,14 @@ export default function CodingPage() {
           if (normalizedSelected === normalizedError || normalizedError.includes(normalizedSelected)) {
                // Correct Phase A
                setDebugPhase('fix');
+               
+               // If the user has already selected a fix (code is modified), proceed to submission immediately
+               // to avoid requiring a second click.
+               if (code && question.content.buggy_code && code.trim() !== question.content.buggy_code.trim()) {
+                   // Fall through to submission logic below
+               } else {
+                   return; // Wait for user to select a fix
+               }
           } else {
               // Incorrect Phase A
                setResult({ 
@@ -142,8 +154,8 @@ export default function CodingPage() {
                    output: "Nem ez a hibás rész." 
                });
                setShowFeedback(true);
+               return;
           }
-          return;
       }
 
       // Prepare Submission
@@ -296,10 +308,12 @@ export default function CodingPage() {
               <div className="text-6xl mb-5">🎉</div>
               <h1 className="text-green-500 text-3xl font-bold">Gratulálunk!</h1>
               <p className="text-lg max-w-xl mb-10 mt-4">
-                  Jelenleg nincs több feladat a szintednek megfelelően.
+                  {mode === 'dev' 
+                      ? "Nincs ilyen típusú feladat az adatbázisban." 
+                      : "Jelenleg nincs több feladat a szintednek megfelelően."}
               </p>
-              <button onClick={() => navigate('/dashboard')} className="bg-blue-500 text-white font-bold py-3 px-8 rounded-full shadow-md hover:bg-blue-600 transition">
-                  Vissza a Dashboardra
+              <button onClick={() => navigate(mode === 'dev' ? '/dev' : '/dashboard')} className="bg-blue-500 text-white font-bold py-3 px-8 rounded-full shadow-md hover:bg-blue-600 transition">
+                  {mode === 'dev' ? "Vissza a menübe" : "Vissza a Dashboardra"}
               </button>
           </div>
       );
@@ -310,7 +324,7 @@ export default function CodingPage() {
         {/* Progress Bar Area */}
         <div className="px-4 pt-4 pb-2 shrink-0 max-w-md mx-auto w-full">
             <div className="flex items-center gap-4">
-                <span className="text-2xl cursor-pointer text-slate-400 hover:text-slate-600 dark:hover:text-slate-300 transition-colors" onClick={() => navigate('/dashboard')}>✕</span>
+                <span className="text-2xl cursor-pointer text-slate-400 hover:text-slate-600 dark:hover:text-slate-300 transition-colors" onClick={() => navigate(mode === 'dev' ? '/dev' : '/dashboard')}>✕</span>
                 <div className="h-4 bg-slate-200 dark:bg-slate-700 rounded-full flex-grow overflow-hidden">
                     <div className="h-full bg-green-500 transition-all duration-500" style={{ width: '30%' }}></div>
                 </div>

@@ -6,6 +6,7 @@ import CodingPage from './CodingPage'
 import Dashboard from './Dashboard'
 import ProfilePage from './ProfilePage'
 import CoursesPage from './CoursesPage'
+import DevPage from './DevPage'
 import Layout from './Layout'
 import './App.css'
 
@@ -41,6 +42,7 @@ function App() {
           <Route path="/solve" element={<CodingPage />} />
           <Route path="/courses" element={<CoursesPage />} />
           <Route path="/profile" element={<ProfilePage />} />
+          <Route path="/dev" element={<DevPage />} />
         </Route>
       )}
 

@@ -165,9 +165,9 @@ const DebugComponent = ({ question, onCodeChange, debugPhase, selections, onSele
             setTokenizedLines(newTokenized);
 
             onCodeChange(newFullCode);
-            // Signal parent that we have a selection (so button enables)
-            // We pass a dummy selection to enable the button
-            onSelect([{text: option}]); 
+            // Do NOT overwrite selections here. We want to keep the bug token selection 
+            // so that CodingPage can validate Phase A correctly.
+            // onSelect([{text: option}]); 
             
         } else {
             // Wrong fix! Shake the button.

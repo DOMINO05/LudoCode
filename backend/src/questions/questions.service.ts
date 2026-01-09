@@ -62,4 +62,20 @@ export class QuestionsService {
 
     return question;
   }
+
+  async getRandomQuestionByType(type: string): Promise<Question> {
+    let query = this.questionsRepository.createQueryBuilder('question');
+    
+    if (type) {
+        query = query.where('question.qType = :type', { type });
+    }
+
+    const question = await query.orderBy('RANDOM()').getOne();
+
+    if (!question) {
+        throw new NotFoundException(`No questions found for type: ${type}`);
+    }
+
+    return question;
+  }
 }
