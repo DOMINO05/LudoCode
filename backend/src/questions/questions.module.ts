@@ -5,9 +5,11 @@ import { QuestionsService } from './questions.service';
 import { Question } from '../entities/question.entity';
 import { Profile } from '../entities/profile.entity';
 import { UserSubmission } from '../entities/user-submission.entity';
+import { UserConceptMastery } from '../entities/user-concept-mastery.entity';
+import { Concept } from '../entities/concept.entity';
 
 @Module({
-  imports: [TypeOrmModule.forFeature([Question, Profile, UserSubmission])],
+  imports: [TypeOrmModule.forFeature([Question, Profile, UserSubmission, UserConceptMastery, Concept])],
   controllers: [QuestionsController],
   providers: [QuestionsService],
 })

@@ -1,5 +1,6 @@
-import { Entity, Column, PrimaryGeneratedColumn, ManyToMany } from 'typeorm';
-import { Question } from './question.entity';
+import { Entity, Column, PrimaryGeneratedColumn, ManyToMany, JoinTable, OneToMany } from 'typeorm';
+import { QuestionConcept } from './question-concept.entity';
+import { UserConceptMastery } from './user-concept-mastery.entity';
 
 @Entity('concepts')
 export class Concept {
@@ -12,6 +13,31 @@ export class Concept {
   @Column({ type: 'text', nullable: true })
   description: string;
 
-  @ManyToMany(() => Question, (question: Question) => question.concepts)
-  questions: Question[];
+  // BKT Parameters
+  @Column({ name: 'p_init', type: 'float', default: 0.10 })
+  pInit: number;
+
+  @Column({ name: 'p_transit', type: 'float', default: 0.15 })
+  pTransit: number;
+
+  @Column({ name: 'p_guess', type: 'float', default: 0.20 })
+  pGuess: number;
+
+  @Column({ name: 'p_slip', type: 'float', default: 0.10 })
+  pSlip: number;
+
+  // Prerequisites
+  @ManyToMany(() => Concept)
+  @JoinTable({
+    name: 'concept_prerequisites',
+    joinColumn: { name: 'concept_id', referencedColumnName: 'id' },
+    inverseJoinColumn: { name: 'prerequisite_id', referencedColumnName: 'id' },
+  })
+  prerequisites: Concept[];
+
+  @OneToMany(() => QuestionConcept, (qc) => qc.concept)
+  questionConcepts: QuestionConcept[];
+
+  @OneToMany(() => UserConceptMastery, (ucm) => ucm.concept)
+  userMastery: UserConceptMastery[];
 }

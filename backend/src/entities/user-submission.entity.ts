@@ -30,6 +30,12 @@ export class UserSubmission {
   @Column({ name: 'execution_time_ms', type: 'int', nullable: true })
   executionTimeMs: number;
 
+  @Column({ name: 'mastery_before', type: 'float', nullable: true })
+  masteryBefore: number;
+
+  @Column({ name: 'mastery_after', type: 'float', nullable: true })
+  masteryAfter: number;
+
   @CreateDateColumn({ name: 'created_at', type: 'timestamptz' })
   createdAt: Date;
 }

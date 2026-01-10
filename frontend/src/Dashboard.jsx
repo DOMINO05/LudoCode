@@ -71,7 +71,7 @@ const Leaderboard = ({ currentUserId }) => {
                             <th style={{ padding: '10px', whiteSpace: 'nowrap' }}>#</th>
                             <th style={{ padding: '10px', whiteSpace: 'nowrap' }}>Felhasználó</th>
                             <th style={{ padding: '10px', textAlign: 'right', whiteSpace: 'nowrap' }}>XP</th>
-                            <th style={{ padding: '10px', textAlign: 'right', whiteSpace: 'nowrap' }}>ELO</th>
+                            <th style={{ padding: '10px', textAlign: 'right', whiteSpace: 'nowrap' }}>Proficiency (Theta)</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -90,7 +90,7 @@ const Leaderboard = ({ currentUserId }) => {
                                         {user.username || 'Anonymous'} {isCurrentUser && '(Te)'}
                                     </td>
                                     <td style={{ padding: '10px', textAlign: 'right', color: 'var(--success-color)', whiteSpace: 'nowrap' }}>{user.xp}</td>
-                                    <td style={{ padding: '10px', textAlign: 'right', color: 'var(--primary-color)', whiteSpace: 'nowrap' }}>{user.globalEloRating}</td>
+                                    <td style={{ padding: '10px', textAlign: 'right', color: 'var(--primary-color)', whiteSpace: 'nowrap' }}>{user.globalProficiency?.toFixed(2)}</td>
                                 </tr>
                             );
                         })}
@@ -138,17 +138,17 @@ const ProgressChart = ({ session }) => {
 
     return (
         <div style={{ width: '100%', display: 'flex', flexDirection: 'column', gap: '20px', minWidth: 0 }}>
-            {/* ELO Chart */}
+            {/* Proficiency Chart */}
             <div className="card">
-                <h4 style={{ textAlign: 'center', color: 'var(--primary-color)', marginBottom: '10px' }}>📈 ELO Növekedés</h4>
+                <h4 style={{ textAlign: 'center', color: 'var(--primary-color)', marginBottom: '10px' }}>📈 Proficiency (Theta)</h4>
                 <div style={{ height: '200px', width: '100%' }}>
                     <ResponsiveContainer>
-                        <LineChart data={stats.eloHistory}>
+                        <LineChart data={stats.proficiencyHistory}>
                             <CartesianGrid strokeDasharray="3 3" stroke="var(--card-border)" />
                             <XAxis dataKey="date" stroke="var(--text-color)" tickFormatter={date => date.substring(5)} fontSize={12} />
                             <YAxis stroke="var(--text-color)" domain={['auto', 'auto']} fontSize={12} />
                             <Tooltip contentStyle={{ backgroundColor: 'var(--card-bg)', border: '1px solid var(--card-border)', color: 'var(--text-color)' }} />
-                            <Line type="monotone" dataKey="elo" stroke="var(--primary-color)" strokeWidth={2} dot={{ r: 3 }} activeDot={{ r: 5 }} />
+                            <Line type="monotone" dataKey="value" stroke="var(--primary-color)" strokeWidth={2} dot={{ r: 3 }} activeDot={{ r: 5 }} />
                         </LineChart>
                     </ResponsiveContainer>
                 </div>
@@ -211,13 +211,23 @@ export default function Dashboard() {
       {/* Stats Cards */}
       <div style={{ display: 'flex', gap: '20px', textAlign: 'center', flexWrap: 'wrap', justifyContent: 'center', width: '100%' }}>
           <div className="card" style={{ flex: '1 1 150px', minWidth: '150px', borderColor: 'var(--primary-color)', padding: '15px' }}>
-              <h3 style={{margin: 0, marginBottom: '5px', fontSize: '16px'}}>Level / ELO</h3>
-              <div style={{ fontSize: '32px', fontWeight: 'bold' }}>{profile.globalEloRating}</div>
+              <h3 style={{margin: 0, marginBottom: '5px', fontSize: '16px'}}>Proficiency</h3>
+              <div style={{ fontSize: '32px', fontWeight: 'bold' }}>{profile.globalProficiency?.toFixed(2)}</div>
           </div>
           
           <div className="card" style={{ flex: '1 1 150px', minWidth: '150px', borderColor: 'var(--secondary-color)', padding: '15px' }}>
               <h3 style={{margin: 0, marginBottom: '5px', fontSize: '16px'}}>XP</h3>
               <div style={{ fontSize: '32px', fontWeight: 'bold' }}>{profile.xp}</div>
+          </div>
+
+          <div className="card" style={{ flex: '1 1 150px', minWidth: '150px', borderColor: '#9c27b0', padding: '15px' }}>
+              <h3 style={{margin: 0, marginBottom: '5px', fontSize: '16px'}}>Gems</h3>
+              <div style={{ fontSize: '32px', fontWeight: 'bold' }}>💎 {profile.gems}</div>
+          </div>
+
+          <div className="card" style={{ flex: '1 1 150px', minWidth: '150px', borderColor: '#2196f3', padding: '15px' }}>
+              <h3 style={{margin: 0, marginBottom: '5px', fontSize: '16px'}}>Sanity</h3>
+              <div style={{ fontSize: '32px', fontWeight: 'bold' }}>🧠 {profile.sanityPoints}%</div>
           </div>
       </div>
 

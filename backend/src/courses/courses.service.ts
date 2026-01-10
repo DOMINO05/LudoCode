@@ -4,6 +4,7 @@ import { Repository } from 'typeorm';
 import { Concept } from '../entities/concept.entity';
 import { Question } from '../entities/question.entity';
 import { UserSubmission } from '../entities/user-submission.entity';
+import { UserConceptMastery } from '../entities/user-concept-mastery.entity';
 
 @Injectable()
 export class CoursesService {
@@ -14,57 +15,60 @@ export class CoursesService {
     private questionsRepository: Repository<Question>,
     @InjectRepository(UserSubmission)
     private submissionsRepository: Repository<UserSubmission>,
+    @InjectRepository(UserConceptMastery)
+    private masteryRepository: Repository<UserConceptMastery>,
   ) {}
 
-  async getProgress(userId: string) {
+  async getProgress(userId: string, languageId: string) {
     const concepts = await this.conceptsRepository.find({
-        relations: ['questions'],
+        relations: ['questionConcepts', 'questionConcepts.question', 'prerequisites'],
         order: { name: 'ASC' } 
     });
 
-    const userSubmissions = await this.submissionsRepository.find({
-        where: { userId, isCorrect: true },
-        select: ['questionId']
-    });
-    const solvedQuestionIds = new Set(userSubmissions.map(s => s.questionId));
+    const userMasteries = await this.masteryRepository.find({ where: { userId, languageId } });
+    const masteryMap = new Map(userMasteries.map(m => [m.conceptId, m]));
 
     const progressData = [];
-    let previousConceptCompleted = true; // First one unlocked
 
     for (const concept of concepts) {
-        const totalQuestions = concept.questions.length;
-        let completedQuestions = 0;
-        
-        for (const q of concept.questions) {
-            if (solvedQuestionIds.has(q.id)) {
-                completedQuestions++;
+        // Calculate progress based on BKT Mastery Probability
+        const mastery = masteryMap.get(concept.id);
+        const progressPercent = mastery ? Math.round(mastery.masteryProbability * 100) : 0; 
+
+        // Determine if locked based on Prerequisites
+        let isLocked = false;
+        if (concept.prerequisites && concept.prerequisites.length > 0) {
+            for (const prereq of concept.prerequisites) {
+                // Check prereq mastery IN THE SAME LANGUAGE
+                const prereqMastery = masteryMap.get(prereq.id);
+                if (!prereqMastery || prereqMastery.masteryProbability < 0.7) {
+                    isLocked = true;
+                    break;
+                }
             }
         }
-
-        const percentage = totalQuestions > 0 ? (completedQuestions / totalQuestions) * 100 : 0;
-        const isLocked = !previousConceptCompleted;
-
+        
+        // Count questions for display (filtered by language)
+        const totalQuestions = concept.questionConcepts ? concept.questionConcepts.filter(qc => qc.question.languageId === languageId).length : 0;
+        
         progressData.push({
             id: concept.id,
             name: concept.name,
             description: concept.description,
             total_questions: totalQuestions,
-            completed_questions: completedQuestions,
-            percentage: Math.round(percentage),
+            completed_questions: mastery ? mastery.totalAttempts : 0, // This is attempts, not unique solved.
+            percentage: progressPercent,
             is_locked: isLocked
         });
-
-        // Unlock next if >= 80% completed
-        previousConceptCompleted = percentage >= 80;
     }
 
     return progressData;
   }
 
-  async getNextQuestionForConcept(userId: string, conceptId: string) {
+  async getNextQuestionForConcept(userId: string, conceptId: string, languageId: string) {
       const concept = await this.conceptsRepository.findOne({
           where: { id: conceptId },
-          relations: ['questions']
+          relations: ['questionConcepts', 'questionConcepts.question']
       });
 
       if (!concept) return null;
@@ -75,10 +79,21 @@ export class CoursesService {
       });
       const solvedIds = new Set(userSubmissions.map(s => s.questionId));
 
-      const unsolved = concept.questions.find(q => !solvedIds.has(q.id));
-      
-      if (!unsolved) return null; 
+      // Filter QCs by language first
+      const languageQCs = concept.questionConcepts.filter(qc => qc.question.languageId === languageId);
 
-      return this.questionsRepository.findOne({ where: { id: unsolved.id } });
+      // Find a question not yet solved
+      const unsolvedQC = languageQCs.find(qc => !solvedIds.has(qc.questionId));
+      
+      if (!unsolvedQC) {
+          // If all solved, pick random one?
+          if (languageQCs.length > 0) {
+              const randomQC = languageQCs[Math.floor(Math.random() * languageQCs.length)];
+              return randomQC.question;
+          }
+          return null;
+      } 
+
+      return unsolvedQC.question;
   }
 }

@@ -8,6 +8,8 @@ import { UsersModule } from './users/users.module';
 import { SubmissionsModule } from './submissions/submissions.module';
 import { QuestionsModule } from './questions/questions.module';
 import { CoursesModule } from './courses/courses.module';
+import { ShopModule } from './shop/shop.module';
+import { LanguagesModule } from './languages/languages.module';
 import { DebugMiddleware } from './debug.middleware';
 
 @Module({
@@ -34,6 +36,8 @@ import { DebugMiddleware } from './debug.middleware';
     SubmissionsModule,
     QuestionsModule,
     CoursesModule,
+    ShopModule,
+    LanguagesModule,
   ],
   controllers: [AppController],
   providers: [AppService],

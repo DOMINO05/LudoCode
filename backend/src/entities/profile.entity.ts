@@ -1,32 +1,30 @@
 import { Entity, Column, PrimaryColumn, CreateDateColumn, OneToMany } from 'typeorm';
 import { UserSubmission } from './user-submission.entity';
-import { DailyLogin } from './daily-login.entity';
+import { UserConceptMastery } from './user-concept-mastery.entity';
+import { UserInventory } from './user-inventory.entity';
 
 @Entity('profiles')
 export class Profile {
   @PrimaryColumn('uuid')
-  id: string; // References auth.users, manually set
+  id: string; // References auth.users
 
-  @Column({ type: 'text', nullable: true })
+  @Column({ type: 'text', unique: true, nullable: true })
   username: string;
-
-  @Column({ name: 'avatar_url', type: 'text', nullable: true })
-  avatarUrl: string;
 
   @Column({ type: 'int', default: 0 })
   xp: number;
 
-  @Column({ type: 'int', default: 5 })
-  hp: number;
+  @Column({ name: 'sanity_points', type: 'int', default: 100 })
+  sanityPoints: number;
+
+  @Column({ name: 'current_streak', type: 'int', default: 0 })
+  currentStreak: number;
 
   @Column({ type: 'int', default: 0 })
-  streak: number;
+  gems: number;
 
-  @Column({ name: 'global_elo_rating', type: 'float', default: 1000.0 })
-  globalEloRating: number;
-
-  @Column({ type: 'simple-array', default: '' })
-  badges: string[];
+  @Column({ name: 'global_proficiency', type: 'float', default: 0.0 })
+  globalProficiency: number;
 
   @CreateDateColumn({ name: 'created_at', type: 'timestamptz' })
   createdAt: Date;
@@ -34,6 +32,15 @@ export class Profile {
   @OneToMany(() => UserSubmission, (submission: UserSubmission) => submission.user)
   submissions: UserSubmission[];
 
-  @OneToMany(() => DailyLogin, (login: DailyLogin) => login.user)
-  dailyLogins: DailyLogin[];
+  @Column({ name: 'last_daily_bonus', type: 'date', nullable: true })
+  lastDailyBonus: string;
+
+  @Column({ name: 'avatar_config', type: 'jsonb', nullable: true })
+  avatarConfig: any;
+
+  @OneToMany(() => UserConceptMastery, (ucm) => ucm.user)
+  conceptMastery: UserConceptMastery[];
+
+  @OneToMany(() => UserInventory, (ui) => ui.user)
+  inventory: UserInventory[];
 }

@@ -2,7 +2,6 @@ import { Injectable, ConflictException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository, MoreThanOrEqual, Not } from 'typeorm';
 import { Profile } from '../entities/profile.entity';
-import { DailyLogin } from '../entities/daily-login.entity';
 import { UserSubmission } from '../entities/user-submission.entity';
 
 @Injectable()
@@ -10,8 +9,6 @@ export class UsersService {
   constructor(
     @InjectRepository(Profile)
     private profilesRepository: Repository<Profile>,
-    @InjectRepository(DailyLogin)
-    private dailyLoginsRepository: Repository<DailyLogin>,
     @InjectRepository(UserSubmission)
     private userSubmissionsRepository: Repository<UserSubmission>,
   ) {}
@@ -22,24 +19,33 @@ export class UsersService {
       return existingProfile;
     }
 
-    let initialElo = 1000;
-    if (level === 'Beginner') initialElo = 800;
-    else if (level === 'Intermediate') initialElo = 1200;
-    else if (level === 'Pro') initialElo = 1600;
+    let initialProficiency = 0.0;
+    if (level === 'Beginner') initialProficiency = -2.0;
+    else if (level === 'Intermediate') initialProficiency = 0.0;
+    else if (level === 'Pro') initialProficiency = 2.0;
 
     const newProfile = this.profilesRepository.create({
       id: userId,
-      globalEloRating: initialElo,
+      globalProficiency: initialProficiency,
+      sanityPoints: 100,
+      gems: 0,
+      xp: 0,
+      currentStreak: 0
     });
 
     return this.profilesRepository.save(newProfile);
   }
 
   async getProfile(userId: string): Promise<Profile> {
-    return this.profilesRepository.findOne({ where: { id: userId } });
+    const profile = await this.profilesRepository.findOne({ where: { id: userId } });
+    if (!profile) {
+        // Auto-sync/create profile if missing (e.g. after DB reset)
+        return this.syncProfile(userId);
+    }
+    return profile;
   }
 
-  async updateProfile(userId: string, updates: { username?: string; avatar_url?: string }): Promise<Profile> {
+  async updateProfile(userId: string, updates: { username?: string }): Promise<Profile> {
     const profile = await this.profilesRepository.findOne({ where: { id: userId } });
     if (!profile) throw new Error('User not found');
 
@@ -54,42 +60,41 @@ export class UsersService {
         profile.username = updates.username;
     }
 
-    if (updates.avatar_url) {
-        profile.avatarUrl = updates.avatar_url;
-    }
-
     return this.profilesRepository.save(profile);
   }
 
   async claimDailyBonus(userId: string): Promise<{ claimed: boolean; bonus?: number; message?: string }> {
     const today = new Date().toISOString().split('T')[0];
     
+    // Ensure profile exists first
+    let profile = await this.profilesRepository.findOne({ where: { id: userId } });
+    if (!profile) {
+        profile = await this.syncProfile(userId);
+    }
+
     // Check if already claimed today
-    const existing = await this.dailyLoginsRepository.findOne({
-      where: {
-        userId: userId,
-        loginDate: today,
-      },
-    });
-
-    if (existing) {
-      return { claimed: false, message: 'Mára már megkaptad' };
+    if (profile.lastDailyBonus === today) {
+        return { claimed: false, message: 'Mára már megkaptad' };
     }
 
-    // Claim bonus
-    // 1. Create DailyLogin record
-    const dailyLogin = this.dailyLoginsRepository.create({
-      userId: userId,
-      loginDate: today,
-    });
-    await this.dailyLoginsRepository.save(dailyLogin);
+    // Update Streak logic
+    // If last claim was yesterday, increment. If older, reset to 1.
+    const yesterday = new Date();
+    yesterday.setDate(yesterday.getDate() - 1);
+    const yesterdayStr = yesterday.toISOString().split('T')[0];
 
-    // 2. Add XP to user
-    const profile = await this.profilesRepository.findOne({ where: { id: userId } });
-    if (profile) {
-      profile.xp += 50;
-      await this.profilesRepository.save(profile);
+    if (profile.lastDailyBonus === yesterdayStr) {
+        profile.currentStreak += 1;
+    } else {
+        profile.currentStreak = 1;
     }
+
+    profile.lastDailyBonus = today;
+    profile.xp += 50;
+    profile.gems += 5; 
+    profile.sanityPoints = Math.min(100, profile.sanityPoints + 20); // Restore Sanity
+
+    await this.profilesRepository.save(profile);
 
     return { claimed: true, bonus: 50 };
   }
@@ -100,7 +105,7 @@ export class UsersService {
         xp: 'DESC',
       },
       take: 10,
-      select: ['id', 'username', 'xp', 'globalEloRating', 'avatarUrl', 'badges'],
+      select: ['id', 'username', 'xp', 'globalProficiency', 'currentStreak'],
     });
   }
 
@@ -142,18 +147,15 @@ export class UsersService {
         .sort((a, b) => a.date.localeCompare(b.date));
 
 
-    // Calculate ELO History
+    // Calculate Proficiency History (Approximation)
     const allRecentSubmissionsDesc = await this.userSubmissionsRepository.find({
         where: { userId: userId },
         order: { createdAt: 'DESC' },
-        take: 100 // Limit to last 100 for performance, assuming user hasn't done >100 in 7 days. If they have, well, it's an approximation.
+        take: 100 
     });
 
-    const eloHistory = [];
-    let runningElo = profile.globalEloRating;
-    
-    // We need to calculate the "Sum of changes from Day X+1 to Today"
-    // Let's filter submissions by date.
+    const proficiencyHistory = [];
+    let runningProficiency = profile.globalProficiency;
     
     for (let i = 0; i < 7; i++) {
         const d = new Date();
@@ -161,17 +163,19 @@ export class UsersService {
         const dateStr = d.toISOString().split('T')[0];
         
         const submissionsOnDay = allRecentSubmissionsDesc.filter(s => s.createdAt.toISOString().split('T')[0] === dateStr);
-        const dayChange = submissionsOnDay.reduce((acc, sub) => acc + (sub.isCorrect ? 15 : -15), 0);
+        // Reverse engineer the change: Correct = +0.05, Incorrect = 0 (we only penalize sanity, not proficiency, for now in SubmissionsService, though in reality IRT should drop)
+        // SubmissionsService logic was: correct -> +0.05. Incorrect -> no change to proficiency (only sanity).
+        const dayChange = submissionsOnDay.reduce((acc, sub) => acc + (sub.isCorrect ? 0.05 : 0), 0);
         
-        eloHistory.unshift({ date: dateStr, elo: runningElo });
+        proficiencyHistory.unshift({ date: dateStr, value: Number(runningProficiency.toFixed(2)) });
         
-        // Prepare for next iteration (Yesterday): subtract today's change from running total
-        runningElo -= dayChange;
+        // Prepare for next iteration (Yesterday)
+        runningProficiency -= dayChange;
     }
 
     return {
         activity,
-        eloHistory
+        proficiencyHistory
     };
   }
 
@@ -179,13 +183,10 @@ export class UsersService {
       if (code.toLowerCase() === 'ludo' || code.toLowerCase() === 'konami') {
           const profile = await this.profilesRepository.findOne({ where: { id: userId } });
           if (profile) {
-              if (!profile.badges) profile.badges = [];
-              if (!profile.badges.includes('Hacker')) {
-                  profile.badges.push('Hacker');
-                  await this.profilesRepository.save(profile);
-                  return { success: true, message: 'Hacker Badge Unlocked!' };
-              }
-              return { success: true, message: 'Badge already unlocked.' };
+              // Grant gems instead of badge
+              profile.gems += 50;
+              await this.profilesRepository.save(profile);
+              return { success: true, message: 'Cheat Code Activated: 50 Gems added!' };
           }
       }
       return { success: false };

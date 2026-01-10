@@ -2,6 +2,8 @@ import React, { useState, useEffect } from 'react';
 import { Outlet, useNavigate } from 'react-router-dom';
 import { supabase } from './supabaseClient';
 import { useTheme } from './ThemeContext';
+import { useLanguage } from './LanguageContext';
+import Avatar from './Avatar';
 
 const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:3000';
 
@@ -9,6 +11,7 @@ export default function Layout({ session }) {
   const [profile, setProfile] = useState(null);
   const navigate = useNavigate();
   const { isDark, toggleTheme } = useTheme();
+  const { languages, currentLanguage, changeLanguage } = useLanguage();
 
   useEffect(() => {
     fetchProfile();
@@ -43,6 +46,19 @@ export default function Layout({ session }) {
         </div>
         
         <div className="flex items-center gap-4">
+            <select 
+                value={currentLanguage?.id || ''} 
+                onChange={(e) => changeLanguage(e.target.value)}
+                className="p-2 rounded-lg bg-slate-100 dark:bg-slate-700 text-slate-600 dark:text-slate-300 border-none outline-none"
+            >
+                {languages.map(lang => (
+                    <option key={lang.id} value={lang.id}>
+                        {lang.displayName || lang.name}
+                    </option>
+                ))}
+            </select>
+
+            <button className="text-lg" onClick={() => navigate('/shop')} title="Shop">🛒</button>
             <button 
                 onClick={toggleTheme} 
                 className="p-2 rounded-lg bg-slate-100 dark:bg-slate-700 text-slate-600 dark:text-slate-300 hover:bg-slate-200 dark:hover:bg-slate-600 transition-colors"
@@ -54,13 +70,15 @@ export default function Layout({ session }) {
             {profile ? (
                 <>
                     <div className="flex items-center gap-3 cursor-pointer group" onClick={() => navigate('/profile')}>
-                        {profile.avatarUrl && <img src={profile.avatarUrl} alt="Avatar" className="w-8 h-8 rounded-full border border-slate-300 dark:border-slate-600" />}
+                        <div className="w-10 h-10 border border-slate-300 dark:border-slate-600 rounded-lg overflow-hidden">
+                            <Avatar config={profile.avatarConfig} size={40} />
+                        </div>
                         <span className="font-bold hidden sm:block group-hover:text-blue-500 transition-colors">{profile.username || 'User'}</span>
                     </div>
                     <div className="hidden md:flex items-center gap-4 text-sm font-medium">
                         <span className="text-yellow-600 dark:text-yellow-400">XP: {profile.xp}</span>
-                        <span className="text-red-500">{'❤️'.repeat(Math.max(0, profile.hp))}</span>
-                        <span className="text-blue-600 dark:text-blue-400">ELO: {profile.globalEloRating}</span>
+                        <span className="text-purple-500">💎 {profile.gems}</span>
+                        <span className="text-blue-500" title="Sanity Points">🧠 {profile.sanityPoints}%</span>
                     </div>
                 </>
             ) : (

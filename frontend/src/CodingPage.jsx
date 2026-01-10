@@ -68,11 +68,16 @@ export default function CodingPage() {
         url = `${API_URL}/questions/random?type=${type}`;
     }
 
+    console.log(`[Frontend] Fetching question from: ${url}`);
+    console.log(`[Frontend] Params: mode=${mode}, type=${type}, conceptId=${conceptId}`);
+
     try {
       const res = await fetch(url, {
         headers: { 'Authorization': `Bearer ${session.access_token}` }
       });
       
+      console.log(`[Frontend] Response status: ${res.status}`);
+
       if (!res.ok) {
           if (res.status === 404) {
               setQuestion(null);
@@ -174,7 +179,10 @@ export default function CodingPage() {
           return;
       }
 
-      try {
+    try {
+        console.log(`[Frontend] Submitting answer to ${API_URL}/questions/${question.id}/submit`);
+        console.log(`[Frontend] Submission data:`, { code: submissionData });
+
         const res = await fetch(`${API_URL}/questions/${question.id}/submit`, {
             method: 'POST',
             headers: {
@@ -184,6 +192,7 @@ export default function CodingPage() {
             body: JSON.stringify({ code: submissionData })
         });
         const data = await res.json();
+        console.log(`[Frontend] Submission response:`, data);
         setResult(data);
         setShowFeedback(true);
         
@@ -328,7 +337,7 @@ export default function CodingPage() {
                 <div className="h-4 bg-slate-200 dark:bg-slate-700 rounded-full flex-grow overflow-hidden">
                     <div className="h-full bg-green-500 transition-all duration-500" style={{ width: '30%' }}></div>
                 </div>
-                <span className="text-red-500 font-bold flex items-center">❤️ {profile?.hp || 5}</span>
+                <span className="text-blue-500 font-bold flex items-center" title="Sanity">🧠 {profile?.sanityPoints}%</span>
             </div>
         </div>
 

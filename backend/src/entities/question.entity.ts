@@ -1,6 +1,7 @@
-import { Entity, Column, PrimaryGeneratedColumn, CreateDateColumn, ManyToMany, JoinTable, OneToMany } from 'typeorm';
-import { Concept } from './concept.entity';
+import { Entity, Column, PrimaryGeneratedColumn, CreateDateColumn, OneToMany, ManyToOne, JoinColumn } from 'typeorm';
 import { UserSubmission } from './user-submission.entity';
+import { QuestionConcept } from './question-concept.entity';
+import { Language } from './language.entity';
 
 export enum QuestionType {
   THEORY = 'theory',
@@ -29,14 +30,26 @@ export class Question {
     type: 'enum',
     enum: QuestionType,
     name: 'q_type',
+    enumName: 'question_type',
   })
   qType: QuestionType;
 
-  @Column({ name: 'difficulty_rating', type: 'float', default: 1000.0 })
-  difficultyRating: number;
+  // New columns
+  @Column({ name: 'difficulty_display', type: 'int', default: 1000 })
+  difficultyDisplay: number;
 
-  @Column({ type: 'text' })
-  language: string;
+  @Column({ name: 'difficulty_beta', type: 'float', default: 0.0 })
+  difficultyBeta: number;
+
+  @Column({ name: 'discrimination_alpha', type: 'float', default: 1.0 })
+  discriminationAlpha: number;
+
+  @Column({ name: 'language_id', type: 'uuid' })
+  languageId: string;
+
+  @ManyToOne(() => Language, (lang) => lang.questions, { onDelete: 'CASCADE' })
+  @JoinColumn({ name: 'language_id' })
+  language: Language;
 
   @Column({ type: 'jsonb' })
   content: any;
@@ -44,13 +57,9 @@ export class Question {
   @CreateDateColumn({ name: 'created_at', type: 'timestamptz' })
   createdAt: Date;
 
-  @ManyToMany(() => Concept, (concept) => concept.questions)
-  @JoinTable({
-    name: 'question_concepts',
-    joinColumn: { name: 'question_id', referencedColumnName: 'id' },
-    inverseJoinColumn: { name: 'concept_id', referencedColumnName: 'id' },
-  })
-  concepts: Concept[];
+  // Replaces the old @ManyToMany relation with Concept
+  @OneToMany(() => QuestionConcept, (qc) => qc.question)
+  questionConcepts: QuestionConcept[];
 
   @OneToMany(() => UserSubmission, (submission: UserSubmission) => submission.question)
   submissions: UserSubmission[];

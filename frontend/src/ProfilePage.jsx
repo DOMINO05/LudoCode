@@ -1,19 +1,16 @@
 import React, { useState, useEffect } from 'react';
 import { useOutletContext, useNavigate } from 'react-router-dom';
+import AvatarEditor from './AvatarEditor';
 
 const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:3000';
-
-const AVATAR_SEEDS = [
-    'Felix', 'Aneka', 'Zoe', 'Midnight', 'Bear', 'Tiger', 'Leo', 'Max', 'Luna', 'Shadow', 
-    'Simba', 'Milo', 'Oreo', 'Coco', 'Bella', 'Charlie', 'Lucy', 'Daisy', 'Lola', 'Jasper'
-];
 
 export default function ProfilePage() {
     const { session, profile, refreshProfile } = useOutletContext();
     const navigate = useNavigate();
     
     const [username, setUsername] = useState('');
-    const [selectedAvatar, setSelectedAvatar] = useState('');
+    const [avatarConfig, setAvatarConfig] = useState(null);
+    const [inventory, setInventory] = useState([]);
     const [message, setMessage] = useState(null);
     const [loading, setLoading] = useState(false);
     
@@ -23,9 +20,24 @@ export default function ProfilePage() {
     useEffect(() => {
         if (profile) {
             setUsername(profile.username || '');
-            setSelectedAvatar(profile.avatarUrl || `https://api.dicebear.com/7.x/pixel-art/svg?seed=${profile.username || 'default'}`);
+            setAvatarConfig(profile.avatarConfig || {});
+            fetchInventory();
         }
     }, [profile]);
+
+    const fetchInventory = async () => {
+        try {
+            const res = await fetch(`${API_URL}/shop/inventory`, {
+                headers: { 'Authorization': `Bearer ${session.access_token}` }
+            });
+            if (res.ok) {
+                const data = await res.json();
+                setInventory(data);
+            }
+        } catch (err) {
+            console.error("Failed to fetch inventory", err);
+        }
+    };
 
     // Easter Egg Listener
     useEffect(() => {
@@ -59,10 +71,6 @@ export default function ProfilePage() {
         return () => window.removeEventListener('keydown', handleKeyDown);
     }, [keySequence, session]);
 
-    const handleAvatarClick = (seed) => {
-        setSelectedAvatar(`https://api.dicebear.com/7.x/pixel-art/svg?seed=${seed}`);
-    };
-
     const handleSave = async () => {
         setLoading(true);
         setMessage(null);
@@ -75,7 +83,7 @@ export default function ProfilePage() {
                 },
                 body: JSON.stringify({
                     username: username,
-                    avatar_url: selectedAvatar
+                    avatar_config: avatarConfig
                 })
             });
 
@@ -126,69 +134,19 @@ export default function ProfilePage() {
                     />
                 </div>
 
+                {/* 
                 {profile.badges && profile.badges.length > 0 && (
-                    <div style={{ marginBottom: '20px' }}>
-                        <label style={{ display: 'block', marginBottom: '10px', fontSize: '18px' }}>Badges</label>
-                        <div style={{ display: 'flex', gap: '10px' }}>
-                            {profile.badges.map((badge, idx) => (
-                                <span key={idx} style={{ 
-                                    padding: '5px 10px', 
-                                    backgroundColor: 'var(--secondary-color)', 
-                                    color: '#000', 
-                                    borderRadius: '15px',
-                                    fontWeight: 'bold',
-                                    fontSize: '14px'
-                                }}>
-                                    {badge === 'Hacker' ? '💻 Hacker' : badge}
-                                </span>
-                            ))}
-                        </div>
-                    </div>
-                )}
+                    ...
+                )} 
+                */}
 
                 <div style={{ marginBottom: '20px' }}>
-                    <label style={{ display: 'block', marginBottom: '20px', fontSize: '18px' }}>Choose Avatar</label>
-                    
-                    <div style={{ display: 'flex', justifyContent: 'center', marginBottom: '30px' }}>
-                        <div style={{ 
-                            width: '120px', 
-                            height: '120px', 
-                            borderRadius: '50%', 
-                            overflow: 'hidden', 
-                            border: '4px solid var(--primary-color)',
-                            backgroundColor: 'var(--input-bg)'
-                        }}>
-                            <img src={selectedAvatar} alt="Selected Avatar" style={{ width: '100%', height: '100%' }} />
-                        </div>
-                    </div>
-
-                    <div style={{ 
-                        display: 'grid', 
-                        gridTemplateColumns: 'repeat(auto-fill, minmax(80px, 1fr))', 
-                        gap: '15px' 
-                    }}>
-                        {AVATAR_SEEDS.map(seed => {
-                            const url = `https://api.dicebear.com/7.x/pixel-art/svg?seed=${seed}`;
-                            const isSelected = selectedAvatar === url;
-                            return (
-                                <div 
-                                    key={seed}
-                                    onClick={() => handleAvatarClick(seed)}
-                                    style={{
-                                        cursor: 'pointer',
-                                        borderRadius: '10px',
-                                        border: isSelected ? '3px solid var(--primary-color)' : '3px solid transparent',
-                                        overflow: 'hidden',
-                                        backgroundColor: 'var(--input-bg)',
-                                        transition: 'transform 0.2s',
-                                        transform: isSelected ? 'scale(1.1)' : 'scale(1)'
-                                    }}
-                                >
-                                    <img src={url} alt={seed} style={{ width: '100%', height: '100%', display: 'block' }} />
-                                </div>
-                            );
-                        })}
-                    </div>
+                    <label style={{ display: 'block', marginBottom: '20px', fontSize: '18px' }}>Customize Avatar</label>
+                    <AvatarEditor 
+                        config={avatarConfig} 
+                        onChange={setAvatarConfig} 
+                        inventory={inventory}
+                    />
                 </div>
 
                 <div style={{ display: 'flex', gap: '20px', justifyContent: 'center', marginTop: '30px' }}>
