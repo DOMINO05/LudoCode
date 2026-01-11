@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useOutletContext, useNavigate, useSearchParams } from 'react-router-dom';
 import { useTheme } from './ThemeContext';
+import { useLanguage } from './LanguageContext';
 
 // Import New Question Components
 import TheoryComponent from './question-types/TheoryComponent';
@@ -18,6 +19,7 @@ const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:3000';
 export default function CodingPage() {
   const { session, profile, refreshProfile } = useOutletContext();
   const { isDark } = useTheme();
+  const { currentLanguage } = useLanguage();
   const navigate = useNavigate();
   const [searchParams] = useSearchParams();
   const conceptId = searchParams.get('conceptId');
@@ -44,10 +46,13 @@ export default function CodingPage() {
   const [showFeedback, setShowFeedback] = useState(false);
 
   useEffect(() => {
-    fetchNextQuestion();
-  }, []);
+    if (currentLanguage) {
+        fetchNextQuestion();
+    }
+  }, [currentLanguage]);
 
   const fetchNextQuestion = async () => {
+    if (!currentLanguage) return;
     setLoading(true);
     setResult(null);
     setShowFeedback(false);
@@ -61,11 +66,11 @@ export default function CodingPage() {
     setDebugPhase('identify');
     setDebugSelections([]);
 
-    let url = `${API_URL}/questions/next`;
+    let url = `${API_URL}/questions/next?languageId=${currentLanguage.id}`;
     if (conceptId) {
-        url = `${API_URL}/courses/${conceptId}/next-question`;
+        url = `${API_URL}/courses/${conceptId}/next-question?languageId=${currentLanguage.id}`;
     } else if (mode === 'dev') {
-        url = `${API_URL}/questions/random?type=${type}`;
+        url = `${API_URL}/questions/random?type=${type}&languageId=${currentLanguage.id}`;
     }
 
     console.log(`[Frontend] Fetching question from: ${url}`);

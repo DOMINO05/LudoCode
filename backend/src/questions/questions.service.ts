@@ -6,6 +6,7 @@ import { Profile } from '../entities/profile.entity';
 import { UserSubmission } from '../entities/user-submission.entity';
 import { UserConceptMastery } from '../entities/user-concept-mastery.entity';
 import { Concept } from '../entities/concept.entity';
+import { Language } from '../entities/language.entity';
 
 @Injectable()
 export class QuestionsService {
@@ -20,9 +21,27 @@ export class QuestionsService {
     private masteryRepository: Repository<UserConceptMastery>,
     @InjectRepository(Concept)
     private conceptRepository: Repository<Concept>,
+    @InjectRepository(Language)
+    private languageRepository: Repository<Language>,
   ) {}
 
-  async getNextQuestion(userId: string, languageId: string): Promise<Question> {
+  private async resolveLanguageId(lang: string): Promise<string> {
+      // Check if UUID
+      const uuidRegex = /^[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i;
+      if (uuidRegex.test(lang)) {
+          return lang;
+      }
+      // Else assume name
+      const language = await this.languageRepository.findOne({ where: { name: lang } });
+      if (!language) {
+          throw new NotFoundException(`Language not found: ${lang}`);
+      }
+      return language.id;
+  }
+
+  async getNextQuestion(userId: string, languageIdentifier: string): Promise<Question> {
+    const languageId = await this.resolveLanguageId(languageIdentifier);
+
     const user = await this.profilesRepository.findOne({ where: { id: userId } });
     if (!user) {
       throw new NotFoundException('User not found');
@@ -87,9 +106,10 @@ export class QuestionsService {
 
       const findInBetaRange = async (range: number) => {
           let query = this.questionsRepository.createQueryBuilder('question')
+            .leftJoinAndSelect('question.language', 'language') // Load language relation?
             .leftJoin('question.questionConcepts', 'qc')
-            .where('question.language_id = :languageId', { languageId })
-            .andWhere('question.difficulty_beta BETWEEN :min AND :max', { 
+            .where('question.languageId = :languageId', { languageId }) // Use Property Name
+            .andWhere('question.difficultyBeta BETWEEN :min AND :max', { 
                 min: userTheta - range, 
                 max: userTheta + range 
             });
@@ -97,12 +117,6 @@ export class QuestionsService {
           if (conceptIds.length > 0) {
               query = query.andWhere('qc.concept_id IN (:...conceptIds)', { conceptIds });
           }
-
-          // Avoid duplicates? The current service filtered solved questions. 
-          // Ideally in adaptive learning you can repeat questions after a while, 
-          // but let's stick to "unseen" if possible or just random for now.
-          // Since we don't pass solved IDs here, we might repeat. 
-          // Let's add simple random ordering.
           
           return query.orderBy('RANDOM()').getOne();
       };
@@ -132,7 +146,7 @@ export class QuestionsService {
       return question;
   }
 
-  async getRandomQuestionByType(type: string, languageId?: string): Promise<Question> {
+  async getRandomQuestionByType(type: string, languageIdentifier?: string): Promise<Question> {
     console.log(`Getting random question for type: ${type}`);
     let query = this.questionsRepository.createQueryBuilder('question');
     
@@ -140,8 +154,9 @@ export class QuestionsService {
         query = query.where('question.qType = :type', { type });
     }
     
-    if (languageId) {
-        query = query.andWhere('question.language_id = :languageId', { languageId });
+    if (languageIdentifier) {
+        const languageId = await this.resolveLanguageId(languageIdentifier);
+        query = query.andWhere('question.languageId = :languageId', { languageId });
     }
 
     const count = await query.getCount();

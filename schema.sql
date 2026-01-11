@@ -7,6 +7,7 @@ create extension if not exists "uuid-ossp";
 
 -- Takarítás (Clean Slate)
 drop table if exists public.user_logs cascade;
+drop table if exists public.user_language_progress cascade;
 drop table if exists public.user_inventory cascade;
 drop table if exists public.shop_items cascade;
 drop table if exists public.user_submissions cascade;
@@ -159,7 +160,8 @@ create table public.user_inventory (
   id uuid default uuid_generate_v4() primary key,
   user_id uuid references public.profiles(id) on delete cascade,
   item_id uuid references public.shop_items(id),
-  quantity int default 1
+  quantity int default 1,
+  metadata jsonb
 );
 
 -- INDEXEK (Teljesítmény optimalizálás a lekérdezésekhez)
@@ -282,7 +284,7 @@ BEGIN
       "difficulty_rating": 900,
       "language": "java",
       "concept": "functions",
-      "content": {"code_snippet": "public static {{BLANK}} main(String args)", "correct_answer": "void", "options": [], "explanation": "A void azt jelenti, nincs visszatérési érték."}
+      "content": {"code_snippet": "public static {{BLANK}} main(String args)", "correct_answer": "void", "options": ["int", "void", "String", "null"], "explanation": "A void azt jelenti, nincs visszatérési érték."}
     },
     {
       "title": "Python Csere",
@@ -332,7 +334,7 @@ BEGIN
       "difficulty_rating": 1400,
       "language": "python",
       "concept": "arrays",
-      "content": {"initial_code": "def reverse(s):\n  ", "test_cases": [{"input": "'abc'", "expected_output": "'cba'"}], "scaffolding_blocks": ["return", "s[::-1]", "reversed(s)"], "explanation": "return s[::-1]"}
+      "content": {"initial_code": "def reverse(s):\n", "test_cases": [{"input": "'abc'", "expected_output": "'cba'"}], "scaffolding_blocks": ["return", "s[::-1]", "reversed(s)"], "explanation": "return s[::-1]"}
     },
     {
       "title": "Java Hello World",
@@ -342,7 +344,7 @@ BEGIN
       "difficulty_rating": 1000,
       "language": "java",
       "concept": "basics",
-      "content": {"initial_code": "public class Main {\n  public static void main(String args[]) {\n    \n  }\n}", "test_cases": [], "scaffolding_blocks": [], "explanation": "System.out.println('Hello World');"}
+      "content": {"initial_code": "public class Main {\n  public static void main(String args[]) {\n", "test_cases": [], "scaffolding_blocks": ["System.out.println", "'Hello World'"], "explanation": "System.out.println('Hello World');"}
     }
   ]
   $json$::jsonb;
@@ -384,15 +386,37 @@ BEGIN
 
   END LOOP;
   
-  -- 5. SHOP
+  -- 5. SHOP POOL (Generated variants)
   INSERT INTO public.shop_items (name, category, rarity, cost_gems, metadata) VALUES 
   ('Streak Freeze', 'streak_freeze', 'common', 100, '{"description": "Megvéd egy nap mulasztástól."}'),
-  ('Gold', 'avatar_frame', 'legendary', 2000, '{"description": "Arany keret a profilodhoz."}'),
-  ('Neon', 'avatar_frame', 'rare', 500, '{"description": "Neon fényű keret."}'),
-  ('Wizard Hat', 'hat', 'rare', 300, '{"description": "Varázslósüveg."}'),
-  ('Crown', 'hat', 'legendary', 2500, '{"description": "Királyi korona."}'),
-  ('Sunglasses', 'accessory', 'common', 150, '{"description": "Menő napszemüveg."}'),
-  ('Cat', 'pet', 'epic', 1000, '{"description": "Egy kiscica a képed sarkába."}'),
-  ('Robot', 'pet', 'epic', 1200, '{"description": "Saját robot asszisztens."}');
+  ('Gold Frame', 'avatar_frame', 'legendary', 2000, '{"description": "Arany keret.", "dicebear": {"frame": "Gold"}}'),
+  ('Neon Frame', 'avatar_frame', 'rare', 500, '{"description": "Neon keret.", "dicebear": {"frame": "Neon"}}'),
+  ('Gradient BG', 'theme', 'rare', 600, '{"description": "Színes háttér.", "dicebear": {"background": "gradient"}}');
+
+  -- Generate Accessories (Variant 01-04)
+  FOR i IN 1..4 LOOP
+    INSERT INTO public.shop_items (name, category, rarity, cost_gems, metadata)
+    VALUES ('Earrings V' || i, 'accessory', 'common', 100, jsonb_build_object('dicebear', jsonb_build_object('accessories', 'variant0' || i)));
+  END LOOP;
+
+  -- Generate Clothing (Variant 01-23)
+  FOR i IN 1..23 LOOP
+    INSERT INTO public.shop_items (name, category, rarity, cost_gems, metadata)
+    VALUES ('Outfit V' || i, 'theme', 'common', 200, jsonb_build_object('dicebear', jsonb_build_object('clothing', 'variant' || to_char(i, 'FM00'))));
+  END LOOP;
+
+  -- Generate Glasses (Dark 01-07, Light 01-07)
+  FOR i IN 1..7 LOOP
+    INSERT INTO public.shop_items (name, category, rarity, cost_gems, metadata)
+    VALUES ('Dark Glasses V' || i, 'accessory', 'common', 150, jsonb_build_object('dicebear', jsonb_build_object('glasses', 'dark0' || i)));
+    INSERT INTO public.shop_items (name, category, rarity, cost_gems, metadata)
+    VALUES ('Light Glasses V' || i, 'accessory', 'common', 150, jsonb_build_object('dicebear', jsonb_build_object('glasses', 'light0' || i)));
+  END LOOP;
+
+  -- Generate Hats (Variant 01-10)
+  FOR i IN 1..10 LOOP
+    INSERT INTO public.shop_items (name, category, rarity, cost_gems, metadata)
+    VALUES ('Hat V' || i, 'hat', 'common', 200, jsonb_build_object('dicebear', jsonb_build_object('hat', 'variant' || to_char(i, 'FM00'))));
+  END LOOP;
 
 END $do$;

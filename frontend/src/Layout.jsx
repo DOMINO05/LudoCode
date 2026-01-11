@@ -58,7 +58,13 @@ export default function Layout({ session }) {
                 ))}
             </select>
 
-            <button className="text-lg" onClick={() => navigate('/shop')} title="Shop">🛒</button>
+            <button 
+                onClick={() => navigate('/shop')} 
+                className="p-2 rounded-lg bg-slate-100 dark:bg-slate-700 text-slate-600 dark:text-slate-300 hover:bg-slate-200 dark:hover:bg-slate-600 transition-colors"
+                title="Shop"
+            >
+                🛒
+            </button>
             <button 
                 onClick={toggleTheme} 
                 className="p-2 rounded-lg bg-slate-100 dark:bg-slate-700 text-slate-600 dark:text-slate-300 hover:bg-slate-200 dark:hover:bg-slate-600 transition-colors"
@@ -84,14 +90,11 @@ export default function Layout({ session }) {
             ) : (
                 <span>Loading...</span>
             )}
-            <button onClick={handleLogout} className="bg-red-500 hover:bg-red-600 text-white px-4 py-2 rounded-lg text-sm font-bold transition-colors">
-                Logout
-            </button>
         </div>
       </header>
       
       <main className="flex-1 overflow-y-auto">
-        <Outlet context={{ session, profile, refreshProfile: fetchProfile }} />
+        <Outlet context={{ session, profile, refreshProfile: fetchProfile, handleLogout }} />
       </main>
     </div>
   );

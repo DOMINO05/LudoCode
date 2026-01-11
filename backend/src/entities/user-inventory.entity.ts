@@ -16,6 +16,9 @@ export class UserInventory {
   @Column({ type: 'int', default: 1 })
   quantity: number;
 
+  @Column({ type: 'jsonb', nullable: true })
+  metadata: any;
+
   @ManyToOne(() => Profile, (profile) => profile.inventory, { onDelete: 'CASCADE' })
   @JoinColumn({ name: 'user_id' })
   user: Profile;

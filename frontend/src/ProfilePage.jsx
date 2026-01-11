@@ -5,7 +5,7 @@ import AvatarEditor from './AvatarEditor';
 const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:3000';
 
 export default function ProfilePage() {
-    const { session, profile, refreshProfile } = useOutletContext();
+    const { session, profile, refreshProfile, handleLogout } = useOutletContext();
     const navigate = useNavigate();
     
     const [username, setUsername] = useState('');
@@ -165,6 +165,15 @@ export default function ProfilePage() {
                         {loading ? 'Saving...' : 'Save Changes'}
                     </button>
                 </div>
+            </div>
+
+            <div style={{ textAlign: 'center', marginTop: '40px', borderTop: '1px solid #ccc', paddingTop: '20px' }}>
+                 <button 
+                    onClick={handleLogout} 
+                    className="bg-red-500 hover:bg-red-600 text-white px-6 py-3 rounded-lg font-bold transition-colors"
+                >
+                    Logout
+                </button>
             </div>
         </div>
     );

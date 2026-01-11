@@ -7,9 +7,10 @@ import { Profile } from '../entities/profile.entity';
 import { UserSubmission } from '../entities/user-submission.entity';
 import { UserConceptMastery } from '../entities/user-concept-mastery.entity';
 import { Concept } from '../entities/concept.entity';
+import { Language } from '../entities/language.entity';
 
 @Module({
-  imports: [TypeOrmModule.forFeature([Question, Profile, UserSubmission, UserConceptMastery, Concept])],
+  imports: [TypeOrmModule.forFeature([Question, Profile, UserSubmission, UserConceptMastery, Concept, Language])],
   controllers: [QuestionsController],
   providers: [QuestionsService],
 })

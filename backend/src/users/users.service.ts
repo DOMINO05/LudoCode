@@ -45,7 +45,7 @@ export class UsersService {
     return profile;
   }
 
-  async updateProfile(userId: string, updates: { username?: string }): Promise<Profile> {
+  async updateProfile(userId: string, updates: { username?: string; avatar_config?: any }): Promise<Profile> {
     const profile = await this.profilesRepository.findOne({ where: { id: userId } });
     if (!profile) throw new Error('User not found');
 
@@ -58,6 +58,10 @@ export class UsersService {
             throw new ConflictException('Username already taken');
         }
         profile.username = updates.username;
+    }
+
+    if (updates.avatar_config) {
+        profile.avatarConfig = updates.avatar_config;
     }
 
     return this.profilesRepository.save(profile);
