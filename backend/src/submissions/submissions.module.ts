@@ -13,7 +13,15 @@ import { CodeRunnerModule } from '../code-runner/code-runner.module';
 
 @Module({
   imports: [
-    TypeOrmModule.forFeature([UserSubmission, Question, Profile, UserConceptMastery, UserLanguageProgress, Concept, QuestionConcept]),
+    TypeOrmModule.forFeature([
+      UserSubmission,
+      Question,
+      Profile,
+      UserConceptMastery,
+      UserLanguageProgress,
+      Concept,
+      QuestionConcept,
+    ]),
     CodeRunnerModule,
   ],
   controllers: [SubmissionsController],

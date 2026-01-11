@@ -13,11 +13,15 @@ export class QuestionConcept {
   @Column({ type: 'float', default: 1.0 })
   weight: number;
 
-  @ManyToOne(() => Question, (question) => question.questionConcepts, { onDelete: 'CASCADE' })
+  @ManyToOne(() => Question, (question) => question.questionConcepts, {
+    onDelete: 'CASCADE',
+  })
   @JoinColumn({ name: 'question_id' })
   question: Question;
 
-  @ManyToOne(() => Concept, (concept) => concept.questionConcepts, { onDelete: 'CASCADE' })
+  @ManyToOne(() => Concept, (concept) => concept.questionConcepts, {
+    onDelete: 'CASCADE',
+  })
   @JoinColumn({ name: 'concept_id' })
   concept: Concept;
 }

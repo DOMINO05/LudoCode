@@ -1,4 +1,11 @@
-import { Entity, Column, PrimaryGeneratedColumn, ManyToMany, JoinTable, OneToMany } from 'typeorm';
+import {
+  Entity,
+  Column,
+  PrimaryGeneratedColumn,
+  ManyToMany,
+  JoinTable,
+  OneToMany,
+} from 'typeorm';
 import { QuestionConcept } from './question-concept.entity';
 import { UserConceptMastery } from './user-concept-mastery.entity';
 
@@ -14,16 +21,16 @@ export class Concept {
   description: string;
 
   // BKT Parameters
-  @Column({ name: 'p_init', type: 'float', default: 0.10 })
+  @Column({ name: 'p_init', type: 'float', default: 0.1 })
   pInit: number;
 
   @Column({ name: 'p_transit', type: 'float', default: 0.15 })
   pTransit: number;
 
-  @Column({ name: 'p_guess', type: 'float', default: 0.20 })
+  @Column({ name: 'p_guess', type: 'float', default: 0.2 })
   pGuess: number;
 
-  @Column({ name: 'p_slip', type: 'float', default: 0.10 })
+  @Column({ name: 'p_slip', type: 'float', default: 0.1 })
   pSlip: number;
 
   // Prerequisites

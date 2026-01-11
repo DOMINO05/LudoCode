@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { Download, Moon, Sun, Palette, Smile, Eye, User, Sparkles, ChevronLeft, ChevronRight, RefreshCw, Star } from 'lucide-react';
+import { Smile, Eye, User, Sparkles, ChevronLeft, ChevronRight, RefreshCw, Star } from 'lucide-react';
 import Avatar from './Avatar';
 
 // --- KONFIGURÁCIÓ ÉS ADATOK (PIXEL-ART STÍLUS) ---
@@ -41,8 +41,9 @@ const CATEGORIES = [
 
 export default function AvatarEditor({ config, onChange, inventory = [] }) {
   const [activeTab, setActiveTab] = useState('hair');
-  const [darkMode, setDarkMode] = useState(false);
-  
+  // const [darkMode, setDarkMode] = useState(false); // Removed unused state setter
+  const darkMode = false; // Hardcoded for now as toggle was unused
+
   // Local state for immediate feedback, synced with parent via useEffect
   const [localConfig, setLocalConfig] = useState(config || {
     skinColor: 'f5d0a9',
@@ -57,7 +58,13 @@ export default function AvatarEditor({ config, onChange, inventory = [] }) {
 
   useEffect(() => {
     if (config) {
-        setLocalConfig(prev => ({ ...prev, ...config }));
+        setLocalConfig(prev => {
+             // Only update if different to avoid potential loops/renders
+             if (JSON.stringify(prev) !== JSON.stringify({ ...prev, ...config })) {
+                 return { ...prev, ...config };
+             }
+             return prev;
+        });
     }
   }, [config]);
 
@@ -82,11 +89,6 @@ export default function AvatarEditor({ config, onChange, inventory = [] }) {
     updateConfig({ ...localConfig, [param]: optionsList[newIndex] });
   };
 
-  // Randomize
-  const handleRandomize = () => {
-      const newSeed = Math.random().toString(36).substring(7);
-      updateConfig({ ...localConfig, seed: newSeed });
-  };
 
   // Swipe kezelés
   const touchStartX = useRef(null);

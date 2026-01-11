@@ -1,6 +1,16 @@
-import { Controller, Get, Post, Patch, Body, UseGuards, Request } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  Post,
+  Patch,
+  Body,
+  UseGuards,
+} from '@nestjs/common';
 import { AuthGuard } from '@nestjs/passport';
 import { UsersService } from './users.service';
+import { User, UserPayload } from '../common/decorators/user.decorator';
+import { SyncUserDto } from './dto/sync-user.dto';
+import { EasterEggDto, UpdateProfileDto } from './dto/update-profile.dto';
 
 @Controller('users')
 export class UsersController {
@@ -8,21 +18,20 @@ export class UsersController {
 
   @UseGuards(AuthGuard('jwt'))
   @Post('sync')
-  async syncUser(@Request() req, @Body() body: { level: 'Beginner' | 'Intermediate' | 'Pro' }) {
-    const userId = req.user.userId;
-    return this.usersService.syncProfile(userId, body.level);
+  async syncUser(@User() user: UserPayload, @Body() body: SyncUserDto) {
+    return this.usersService.syncProfile(user.userId, body.level);
   }
 
   @UseGuards(AuthGuard('jwt'))
   @Get('profile')
-  async getProfile(@Request() req) {
-    return this.usersService.getProfile(req.user.userId);
+  async getProfile(@User() user: UserPayload) {
+    return this.usersService.getProfile(user.userId);
   }
 
   @UseGuards(AuthGuard('jwt'))
   @Post('daily-claim')
-  async claimDailyBonus(@Request() req) {
-    return this.usersService.claimDailyBonus(req.user.userId);
+  async claimDailyBonus(@User() user: UserPayload) {
+    return this.usersService.claimDailyBonus(user.userId);
   }
 
   @Get('leaderboard')
@@ -32,19 +41,22 @@ export class UsersController {
 
   @UseGuards(AuthGuard('jwt'))
   @Get('stats')
-  async getUserStats(@Request() req) {
-    return this.usersService.getUserStats(req.user.userId);
+  async getUserStats(@User() user: UserPayload) {
+    return this.usersService.getUserStats(user.userId);
   }
 
   @UseGuards(AuthGuard('jwt'))
   @Patch('profile')
-  async updateProfile(@Request() req, @Body() body: { username?: string; avatar_config?: any }) {
-    return this.usersService.updateProfile(req.user.userId, body);
+  async updateProfile(
+    @User() user: UserPayload,
+    @Body() body: UpdateProfileDto,
+  ) {
+    return this.usersService.updateProfile(user.userId, body);
   }
 
   @UseGuards(AuthGuard('jwt'))
   @Post('easter-egg')
-  async easterEgg(@Request() req, @Body() body: { code: string }) {
-    return this.usersService.checkEasterEgg(req.user.userId, body.code);
+  async easterEgg(@User() user: UserPayload, @Body() body: EasterEggDto) {
+    return this.usersService.checkEasterEgg(user.userId, body.code);
   }
 }

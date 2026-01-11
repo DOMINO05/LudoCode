@@ -8,7 +8,14 @@ import { UserSubmission } from '../entities/user-submission.entity';
 import { UserConceptMastery } from '../entities/user-concept-mastery.entity';
 
 @Module({
-  imports: [TypeOrmModule.forFeature([Concept, Question, UserSubmission, UserConceptMastery])],
+  imports: [
+    TypeOrmModule.forFeature([
+      Concept,
+      Question,
+      UserSubmission,
+      UserConceptMastery,
+    ]),
+  ],
   controllers: [CoursesController],
   providers: [CoursesService],
 })

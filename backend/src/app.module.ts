@@ -1,4 +1,4 @@
-import { Module, MiddlewareConsumer, RequestMethod } from '@nestjs/common';
+import { Module } from '@nestjs/common';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { AppController } from './app.controller';
@@ -10,7 +10,6 @@ import { QuestionsModule } from './questions/questions.module';
 import { CoursesModule } from './courses/courses.module';
 import { ShopModule } from './shop/shop.module';
 import { LanguagesModule } from './languages/languages.module';
-import { DebugMiddleware } from './debug.middleware';
 
 @Module({
   imports: [
@@ -24,9 +23,9 @@ import { DebugMiddleware } from './debug.middleware';
         type: 'postgres',
         url: configService.get('DATABASE_URL'),
         entities: [__dirname + '/**/*.entity{.ts,.js}'],
-        synchronize: true, // Be careful with this in production
+        synchronize: configService.get('NODE_ENV') !== 'production',
         ssl: {
-            rejectUnauthorized: false,
+          rejectUnauthorized: false,
         },
       }),
       inject: [ConfigService],
@@ -42,10 +41,4 @@ import { DebugMiddleware } from './debug.middleware';
   controllers: [AppController],
   providers: [AppService],
 })
-export class AppModule {
-  configure(consumer: MiddlewareConsumer) {
-    consumer
-      .apply(DebugMiddleware)
-      .forRoutes({ path: '*', method: RequestMethod.ALL });
-  }
-}
+export class AppModule {}

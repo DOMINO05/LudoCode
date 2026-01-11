@@ -1,4 +1,12 @@
-import { Entity, Column, PrimaryGeneratedColumn, CreateDateColumn, OneToMany, ManyToOne, JoinColumn } from 'typeorm';
+import {
+  Entity,
+  Column,
+  PrimaryGeneratedColumn,
+  CreateDateColumn,
+  OneToMany,
+  ManyToOne,
+  JoinColumn,
+} from 'typeorm';
 import { UserSubmission } from './user-submission.entity';
 import { QuestionConcept } from './question-concept.entity';
 import { Language } from './language.entity';
@@ -61,6 +69,9 @@ export class Question {
   @OneToMany(() => QuestionConcept, (qc) => qc.question)
   questionConcepts: QuestionConcept[];
 
-  @OneToMany(() => UserSubmission, (submission: UserSubmission) => submission.question)
+  @OneToMany(
+    () => UserSubmission,
+    (submission: UserSubmission) => submission.question,
+  )
   submissions: UserSubmission[];
 }

@@ -16,10 +16,15 @@ export class QuestionsController {
     // Let's assume frontend sends it. If not, throw error or default (hard to default if dynamic).
     // Or fetch user's preferred language.
     // For now, assume param.
-    if (!languageId) throw new Error("Language ID required");
+    if (!languageId) throw new Error('Language ID required');
 
-    const question = await this.questionsService.getNextQuestion(req.user.userId, languageId);
-    this.logger.log(`Serving question to user ${req.user.userId} (Lang: ${languageId}): ${JSON.stringify(question)}`);
+    const question = await this.questionsService.getNextQuestion(
+      req.user.userId,
+      languageId,
+    );
+    this.logger.log(
+      `Serving question to user ${req.user.userId} (Lang: ${languageId}): ${JSON.stringify(question)}`,
+    );
     return question;
   }
 
@@ -28,7 +33,10 @@ export class QuestionsController {
   async getRandomByType(@Request() req) {
     const type = req.query.type;
     const languageId = req.query.languageId;
-    const question = await this.questionsService.getRandomQuestionByType(type, languageId);
+    const question = await this.questionsService.getRandomQuestionByType(
+      type,
+      languageId,
+    );
     return question;
   }
 }

@@ -13,8 +13,13 @@ export class UsersService {
     private userSubmissionsRepository: Repository<UserSubmission>,
   ) {}
 
-  async syncProfile(userId: string, level: 'Beginner' | 'Intermediate' | 'Pro' = 'Beginner'): Promise<Profile> {
-    const existingProfile = await this.profilesRepository.findOne({ where: { id: userId } });
+  async syncProfile(
+    userId: string,
+    level: 'Beginner' | 'Intermediate' | 'Pro' = 'Beginner',
+  ): Promise<Profile> {
+    const existingProfile = await this.profilesRepository.findOne({
+      where: { id: userId },
+    });
     if (existingProfile) {
       return existingProfile;
     }
@@ -30,55 +35,66 @@ export class UsersService {
       sanityPoints: 100,
       gems: 0,
       xp: 0,
-      currentStreak: 0
+      currentStreak: 0,
     });
 
     return this.profilesRepository.save(newProfile);
   }
 
   async getProfile(userId: string): Promise<Profile> {
-    const profile = await this.profilesRepository.findOne({ where: { id: userId } });
+    const profile = await this.profilesRepository.findOne({
+      where: { id: userId },
+    });
     if (!profile) {
-        // Auto-sync/create profile if missing (e.g. after DB reset)
-        return this.syncProfile(userId);
+      // Auto-sync/create profile if missing (e.g. after DB reset)
+      return this.syncProfile(userId);
     }
     return profile;
   }
 
-  async updateProfile(userId: string, updates: { username?: string; avatar_config?: any }): Promise<Profile> {
-    const profile = await this.profilesRepository.findOne({ where: { id: userId } });
+  async updateProfile(
+    userId: string,
+    updates: { username?: string; avatar_config?: any },
+  ): Promise<Profile> {
+    const profile = await this.profilesRepository.findOne({
+      where: { id: userId },
+    });
     if (!profile) throw new Error('User not found');
 
     if (updates.username && updates.username !== profile.username) {
-        // Check uniqueness
-        const existing = await this.profilesRepository.findOne({
-            where: { username: updates.username, id: Not(userId) }
-        });
-        if (existing) {
-            throw new ConflictException('Username already taken');
-        }
-        profile.username = updates.username;
+      // Check uniqueness
+      const existing = await this.profilesRepository.findOne({
+        where: { username: updates.username, id: Not(userId) },
+      });
+      if (existing) {
+        throw new ConflictException('Username already taken');
+      }
+      profile.username = updates.username;
     }
 
     if (updates.avatar_config) {
-        profile.avatarConfig = updates.avatar_config;
+      profile.avatarConfig = updates.avatar_config;
     }
 
     return this.profilesRepository.save(profile);
   }
 
-  async claimDailyBonus(userId: string): Promise<{ claimed: boolean; bonus?: number; message?: string }> {
+  async claimDailyBonus(
+    userId: string,
+  ): Promise<{ claimed: boolean; bonus?: number; message?: string }> {
     const today = new Date().toISOString().split('T')[0];
-    
+
     // Ensure profile exists first
-    let profile = await this.profilesRepository.findOne({ where: { id: userId } });
+    let profile = await this.profilesRepository.findOne({
+      where: { id: userId },
+    });
     if (!profile) {
-        profile = await this.syncProfile(userId);
+      profile = await this.syncProfile(userId);
     }
 
     // Check if already claimed today
     if (profile.lastDailyBonus === today) {
-        return { claimed: false, message: 'Mára már megkaptad' };
+      return { claimed: false, message: 'Mára már megkaptad' };
     }
 
     // Update Streak logic
@@ -88,14 +104,14 @@ export class UsersService {
     const yesterdayStr = yesterday.toISOString().split('T')[0];
 
     if (profile.lastDailyBonus === yesterdayStr) {
-        profile.currentStreak += 1;
+      profile.currentStreak += 1;
     } else {
-        profile.currentStreak = 1;
+      profile.currentStreak = 1;
     }
 
     profile.lastDailyBonus = today;
     profile.xp += 50;
-    profile.gems += 5; 
+    profile.gems += 5;
     profile.sanityPoints = Math.min(100, profile.sanityPoints + 20); // Restore Sanity
 
     await this.profilesRepository.save(profile);
@@ -114,7 +130,9 @@ export class UsersService {
   }
 
   async getUserStats(userId: string) {
-    const profile = await this.profilesRepository.findOne({ where: { id: userId } });
+    const profile = await this.profilesRepository.findOne({
+      where: { id: userId },
+    });
     if (!profile) throw new Error('User not found');
 
     const sevenDaysAgo = new Date();
@@ -123,76 +141,91 @@ export class UsersService {
 
     // Fetch submissions for activity count
     const recentSubmissions = await this.userSubmissionsRepository.find({
-        where: {
-            userId: userId,
-            createdAt: MoreThanOrEqual(sevenDaysAgo),
-        },
-        order: { createdAt: 'ASC' }
+      where: {
+        userId: userId,
+        createdAt: MoreThanOrEqual(sevenDaysAgo),
+      },
+      order: { createdAt: 'ASC' },
     });
 
     // Calculate Activity (submissions per day)
     const activityMap = new Map<string, number>();
     // Initialize last 7 days with 0
     for (let i = 0; i < 7; i++) {
-        const d = new Date();
-        d.setDate(d.getDate() - i);
-        activityMap.set(d.toISOString().split('T')[0], 0);
+      const d = new Date();
+      d.setDate(d.getDate() - i);
+      activityMap.set(d.toISOString().split('T')[0], 0);
     }
 
-    recentSubmissions.forEach(sub => {
-        const dateStr = sub.createdAt.toISOString().split('T')[0];
-        if (activityMap.has(dateStr)) {
-            activityMap.set(dateStr, activityMap.get(dateStr) + 1);
-        }
+    recentSubmissions.forEach((sub) => {
+      const dateStr = sub.createdAt.toISOString().split('T')[0];
+      if (activityMap.has(dateStr)) {
+        activityMap.set(dateStr, activityMap.get(dateStr) + 1);
+      }
     });
 
     const activity = Array.from(activityMap.entries())
-        .map(([date, count]) => ({ date, count }))
-        .sort((a, b) => a.date.localeCompare(b.date));
-
+      .map(([date, count]) => ({ date, count }))
+      .sort((a, b) => a.date.localeCompare(b.date));
 
     // Calculate Proficiency History (Approximation)
     const allRecentSubmissionsDesc = await this.userSubmissionsRepository.find({
-        where: { userId: userId },
-        order: { createdAt: 'DESC' },
-        take: 100 
+      where: { userId: userId },
+      order: { createdAt: 'DESC' },
+      take: 100,
     });
 
     const proficiencyHistory = [];
     let runningProficiency = profile.globalProficiency;
-    
+
     for (let i = 0; i < 7; i++) {
-        const d = new Date();
-        d.setDate(d.getDate() - i); // Today, Yesterday, ...
-        const dateStr = d.toISOString().split('T')[0];
-        
-        const submissionsOnDay = allRecentSubmissionsDesc.filter(s => s.createdAt.toISOString().split('T')[0] === dateStr);
-        // Reverse engineer the change: Correct = +0.05, Incorrect = 0 (we only penalize sanity, not proficiency, for now in SubmissionsService, though in reality IRT should drop)
-        // SubmissionsService logic was: correct -> +0.05. Incorrect -> no change to proficiency (only sanity).
-        const dayChange = submissionsOnDay.reduce((acc, sub) => acc + (sub.isCorrect ? 0.05 : 0), 0);
-        
-        proficiencyHistory.unshift({ date: dateStr, value: Number(runningProficiency.toFixed(2)) });
-        
-        // Prepare for next iteration (Yesterday)
-        runningProficiency -= dayChange;
+      const d = new Date();
+      d.setDate(d.getDate() - i); // Today, Yesterday, ...
+      const dateStr = d.toISOString().split('T')[0];
+
+      const submissionsOnDay = allRecentSubmissionsDesc.filter(
+        (s) => s.createdAt.toISOString().split('T')[0] === dateStr,
+      );
+      // Reverse engineer the change: Correct = +0.05, Incorrect = 0 (we only penalize sanity, not proficiency, for now in SubmissionsService, though in reality IRT should drop)
+      // SubmissionsService logic was: correct -> +0.05. Incorrect -> no change to proficiency (only sanity).
+      const dayChange = submissionsOnDay.reduce(
+        (acc, sub) => acc + (sub.isCorrect ? 0.05 : 0),
+        0,
+      );
+
+      proficiencyHistory.unshift({
+        date: dateStr,
+        value: Number(runningProficiency.toFixed(2)),
+      });
+
+      // Prepare for next iteration (Yesterday)
+      runningProficiency -= dayChange;
     }
 
     return {
-        activity,
-        proficiencyHistory
+      activity,
+      proficiencyHistory,
     };
   }
 
-  async checkEasterEgg(userId: string, code: string): Promise<{ success: boolean; message?: string }> {
-      if (code.toLowerCase() === 'ludo' || code.toLowerCase() === 'konami') {
-          const profile = await this.profilesRepository.findOne({ where: { id: userId } });
-          if (profile) {
-              // Grant gems instead of badge
-              profile.gems += 50;
-              await this.profilesRepository.save(profile);
-              return { success: true, message: 'Cheat Code Activated: 50 Gems added!' };
-          }
+  async checkEasterEgg(
+    userId: string,
+    code: string,
+  ): Promise<{ success: boolean; message?: string }> {
+    if (code.toLowerCase() === 'ludo' || code.toLowerCase() === 'konami') {
+      const profile = await this.profilesRepository.findOne({
+        where: { id: userId },
+      });
+      if (profile) {
+        // Grant gems instead of badge
+        profile.gems += 50;
+        await this.profilesRepository.save(profile);
+        return {
+          success: true,
+          message: 'Cheat Code Activated: 50 Gems added!',
+        };
       }
-      return { success: false };
+    }
+    return { success: false };
   }
 }

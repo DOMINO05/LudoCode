@@ -1,4 +1,10 @@
-import { Entity, Column, PrimaryGeneratedColumn, ManyToOne, JoinColumn } from 'typeorm';
+import {
+  Entity,
+  Column,
+  PrimaryGeneratedColumn,
+  ManyToOne,
+  JoinColumn,
+} from 'typeorm';
 import { Profile } from './profile.entity';
 import { ShopItem } from './shop-item.entity';
 
@@ -19,7 +25,9 @@ export class UserInventory {
   @Column({ type: 'jsonb', nullable: true })
   metadata: any;
 
-  @ManyToOne(() => Profile, (profile) => profile.inventory, { onDelete: 'CASCADE' })
+  @ManyToOne(() => Profile, (profile) => profile.inventory, {
+    onDelete: 'CASCADE',
+  })
   @JoinColumn({ name: 'user_id' })
   user: Profile;
 

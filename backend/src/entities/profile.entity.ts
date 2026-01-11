@@ -1,4 +1,10 @@
-import { Entity, Column, PrimaryColumn, CreateDateColumn, OneToMany } from 'typeorm';
+import {
+  Entity,
+  Column,
+  PrimaryColumn,
+  CreateDateColumn,
+  OneToMany,
+} from 'typeorm';
 import { UserSubmission } from './user-submission.entity';
 import { UserConceptMastery } from './user-concept-mastery.entity';
 import { UserInventory } from './user-inventory.entity';
@@ -29,7 +35,10 @@ export class Profile {
   @CreateDateColumn({ name: 'created_at', type: 'timestamptz' })
   createdAt: Date;
 
-  @OneToMany(() => UserSubmission, (submission: UserSubmission) => submission.user)
+  @OneToMany(
+    () => UserSubmission,
+    (submission: UserSubmission) => submission.user,
+  )
   submissions: UserSubmission[];
 
   @Column({ name: 'last_daily_bonus', type: 'date', nullable: true })

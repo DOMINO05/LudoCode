@@ -10,7 +10,16 @@ import { Concept } from '../entities/concept.entity';
 import { Language } from '../entities/language.entity';
 
 @Module({
-  imports: [TypeOrmModule.forFeature([Question, Profile, UserSubmission, UserConceptMastery, Concept, Language])],
+  imports: [
+    TypeOrmModule.forFeature([
+      Question,
+      Profile,
+      UserSubmission,
+      UserConceptMastery,
+      Concept,
+      Language,
+    ]),
+  ],
   controllers: [QuestionsController],
   providers: [QuestionsService],
 })

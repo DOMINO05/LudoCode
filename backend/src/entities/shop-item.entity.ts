@@ -38,7 +38,7 @@ export class ShopItem {
     enum: ItemRarity,
     name: 'rarity',
     enumName: 'item_rarity',
-    default: ItemRarity.COMMON
+    default: ItemRarity.COMMON,
   })
   rarity: ItemRarity;
 

@@ -1,6 +1,7 @@
-import { Controller, Get, Post, Param, UseGuards, Request } from '@nestjs/common';
+import { Controller, Get, Post, Param, UseGuards } from '@nestjs/common';
 import { AuthGuard } from '@nestjs/passport';
 import { ShopService } from './shop.service';
+import { User, UserPayload } from '../common/decorators/user.decorator';
 
 @Controller('shop')
 export class ShopController {
@@ -13,13 +14,13 @@ export class ShopController {
 
   @UseGuards(AuthGuard('jwt'))
   @Get('inventory')
-  async getUserInventory(@Request() req) {
-    return this.shopService.getUserInventory(req.user.userId);
+  async getUserInventory(@User() user: UserPayload) {
+    return this.shopService.getUserInventory(user.userId);
   }
 
   @UseGuards(AuthGuard('jwt'))
   @Post('buy/:itemId')
-  async buyItem(@Request() req, @Param('itemId') itemId: string) {
-    return this.shopService.buyItem(req.user.userId, itemId);
+  async buyItem(@User() user: UserPayload, @Param('itemId') itemId: string) {
+    return this.shopService.buyItem(user.userId, itemId);
   }
 }

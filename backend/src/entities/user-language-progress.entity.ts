@@ -20,7 +20,9 @@ export class UserLanguageProgress {
   @JoinColumn({ name: 'user_id' })
   user: Profile;
 
-  @ManyToOne(() => Language, (language) => language.userProgress, { onDelete: 'CASCADE' })
+  @ManyToOne(() => Language, (language) => language.userProgress, {
+    onDelete: 'CASCADE',
+  })
   @JoinColumn({ name: 'language_id' })
   language: Language;
 }
