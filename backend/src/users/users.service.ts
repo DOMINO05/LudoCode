@@ -1,8 +1,9 @@
-import { Injectable, ConflictException } from '@nestjs/common';
+import { Injectable, ConflictException, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Repository, MoreThanOrEqual, Not } from 'typeorm';
+import { Repository, MoreThanOrEqual, Not, In, Like } from 'typeorm';
 import { Profile } from '../entities/profile.entity';
 import { UserSubmission } from '../entities/user-submission.entity';
+import { Friendship } from '../entities/friendship.entity';
 
 @Injectable()
 export class UsersService {
@@ -11,6 +12,8 @@ export class UsersService {
     private profilesRepository: Repository<Profile>,
     @InjectRepository(UserSubmission)
     private userSubmissionsRepository: Repository<UserSubmission>,
+    @InjectRepository(Friendship)
+    private friendshipRepository: Repository<Friendship>,
   ) {}
 
   async syncProfile(
@@ -119,14 +122,108 @@ export class UsersService {
     return { claimed: true, bonus: 50 };
   }
 
-  async getLeaderboard(): Promise<Profile[]> {
-    return this.profilesRepository.find({
-      order: {
-        xp: 'DESC',
-      },
-      take: 10,
-      select: ['id', 'username', 'xp', 'globalProficiency', 'currentStreak'],
+  async getLeaderboard(
+    type: 'global' | 'friends' = 'global',
+    userId?: string,
+  ): Promise<any[]> {
+    if (type === 'global') {
+      const users = await this.profilesRepository.find({
+        order: {
+          xp: 'DESC',
+        },
+        take: 20, // Increased to see more people
+        select: ['id', 'username', 'xp', 'globalProficiency', 'currentStreak'],
+      });
+      // Append isFollowing flag if userId is provided
+      if (userId) {
+        const friendships = await this.friendshipRepository.find({
+          where: { followerId: userId },
+        });
+        const followingIds = new Set(friendships.map((f) => f.followingId));
+        return users.map((u) => ({
+          ...u,
+          isFollowing: followingIds.has(u.id),
+        }));
+      }
+      return users;
+    } else {
+      if (!userId) throw new Error('User ID required for friend leaderboard');
+
+      const friendships = await this.friendshipRepository.find({
+        where: { followerId: userId },
+      });
+      const followingIds = friendships.map((f) => f.followingId);
+      // Include self
+      followingIds.push(userId);
+
+      if (followingIds.length === 0) {
+        return [];
+      }
+
+      const friends = await this.profilesRepository.find({
+        where: { id: In(followingIds) },
+        order: {
+          xp: 'DESC',
+        },
+        select: ['id', 'username', 'xp', 'globalProficiency', 'currentStreak'],
+      });
+      
+      return friends.map(u => ({
+          ...u,
+          isFollowing: u.id !== userId // Assume friends are followed (except self)
+      }));
+    }
+  }
+
+  async searchUsers(query: string, userId: string): Promise<any[]> {
+      if (!query || query.length < 2) return [];
+      
+      const users = await this.profilesRepository.find({
+          where: { username: Like(`%${query}%`) },
+          take: 10,
+          select: ['id', 'username', 'xp', 'globalProficiency', 'avatarConfig'],
+      });
+
+      // Filter out self if needed, or keep to show self
+      // Check following status
+      const friendships = await this.friendshipRepository.find({
+          where: { followerId: userId },
+      });
+      const followingIds = new Set(friendships.map(f => f.followingId));
+
+      return users.map(u => ({
+          ...u,
+          isFollowing: followingIds.has(u.id),
+          isSelf: u.id === userId
+      }));
+  }
+
+  async followUser(followerId: string, followingId: string) {
+    if (followerId === followingId) {
+      throw new ConflictException('Cannot follow self');
+    }
+
+    const targetUser = await this.profilesRepository.findOne({
+      where: { id: followingId },
     });
+    if (!targetUser) {
+      throw new NotFoundException('User not found');
+    }
+
+    const existing = await this.friendshipRepository.findOne({
+      where: { followerId, followingId },
+    });
+    if (existing) return;
+
+    const friendship = this.friendshipRepository.create({
+      followerId,
+      followingId,
+    });
+    await this.friendshipRepository.save(friendship);
+  }
+
+  async unfollowUser(followerId: string, followingId: string) {
+    await this.friendshipRepository.delete({ followerId, followingId });
   }
 
   async getUserStats(userId: string) {

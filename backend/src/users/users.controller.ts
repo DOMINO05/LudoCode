@@ -5,6 +5,9 @@ import {
   Patch,
   Body,
   UseGuards,
+  Param,
+  Delete,
+  Query,
 } from '@nestjs/common';
 import { AuthGuard } from '@nestjs/passport';
 import { UsersService } from './users.service';
@@ -34,9 +37,33 @@ export class UsersController {
     return this.usersService.claimDailyBonus(user.userId);
   }
 
+  @UseGuards(AuthGuard('jwt'))
   @Get('leaderboard')
-  async getLeaderboard() {
-    return this.usersService.getLeaderboard();
+  async getLeaderboard(
+    @User() user: UserPayload,
+    @Query('type') type: 'global' | 'friends',
+  ) {
+    return this.usersService.getLeaderboard(type, user.userId);
+  }
+
+  @UseGuards(AuthGuard('jwt'))
+  @Get('search')
+  async searchUsers(@User() user: UserPayload, @Query('q') query: string) {
+    return this.usersService.searchUsers(query, user.userId);
+  }
+
+  @UseGuards(AuthGuard('jwt'))
+  @Post('follow/:id')
+  async followUser(@User() user: UserPayload, @Param('id') id: string) {
+    await this.usersService.followUser(user.userId, id);
+    return { success: true };
+  }
+
+  @UseGuards(AuthGuard('jwt'))
+  @Delete('follow/:id')
+  async unfollowUser(@User() user: UserPayload, @Param('id') id: string) {
+    await this.usersService.unfollowUser(user.userId, id);
+    return { success: true };
   }
 
   @UseGuards(AuthGuard('jwt'))

@@ -45,6 +45,7 @@ export class QuestionsService {
   async getNextQuestion(
     userId: string,
     languageIdentifier: string,
+    type?: string,
   ): Promise<Question> {
     const languageId = await this.resolveLanguageId(languageIdentifier);
 
@@ -55,18 +56,46 @@ export class QuestionsService {
       throw new NotFoundException('User not found');
     }
 
+    // Fetch recently answered questions to prevent repetition
+    const recentSubmissions = await this.submissionsRepository.find({
+      where: { userId },
+      order: { createdAt: 'DESC' },
+      take: 12, // Exclude last 12 questions
+    });
+    const excludedQuestionIds = recentSubmissions
+      .map((s) => s.questionId)
+      .filter((id) => id !== null) as string[];
+
+    if (type) {
+      return this.getAdaptiveQuestion(
+        user.globalProficiency,
+        languageId,
+        [],
+        excludedQuestionIds,
+        type,
+      );
+    }
+
     // 1. Determine Target Concept
     const targetConcept = await this.recommendConcept(userId, languageId);
     if (!targetConcept) {
       // Fallback: Just get any question (or maybe the user finished everything?)
       // For now, let's try to get a random question with appropriate difficulty
-      return this.getAdaptiveQuestion(user.globalProficiency, languageId, []);
+      return this.getAdaptiveQuestion(
+        user.globalProficiency,
+        languageId,
+        [],
+        excludedQuestionIds,
+      );
     }
 
     // 2. Get Adaptive Question for that Concept
-    return this.getAdaptiveQuestion(user.globalProficiency, languageId, [
-      targetConcept.id,
-    ]);
+    return this.getAdaptiveQuestion(
+      user.globalProficiency,
+      languageId,
+      [targetConcept.id],
+      excludedQuestionIds,
+    );
   }
 
   private async recommendConcept(
@@ -124,6 +153,8 @@ export class QuestionsService {
     userTheta: number,
     languageId: string,
     conceptIds: string[],
+    excludedQuestionIds: string[] = [],
+    type?: string,
   ): Promise<Question> {
     // IRT: Target difficulty (Beta) should be close to User Ability (Theta)
     // We look for questions in range [Theta - 0.5, Theta + 0.5] first
@@ -146,6 +177,16 @@ export class QuestionsService {
         });
       }
 
+      if (excludedQuestionIds.length > 0) {
+        query = query.andWhere('question.id NOT IN (:...excludedQuestionIds)', {
+          excludedQuestionIds,
+        });
+      }
+
+      if (type) {
+        query = query.andWhere('question.qType = :type', { type });
+      }
+
       return query.orderBy('RANDOM()').getOne();
     };
 
@@ -166,7 +207,13 @@ export class QuestionsService {
       // Fallback if absolutely nothing matches (e.g. concept has no questions yet)
       // Try without concept filter
       if (conceptIds.length > 0) {
-        return this.getAdaptiveQuestion(userTheta, languageId, []);
+        return this.getAdaptiveQuestion(
+          userTheta,
+          languageId,
+          [],
+          excludedQuestionIds,
+          type,
+        );
       }
       throw new NotFoundException('No suitable questions found');
     }

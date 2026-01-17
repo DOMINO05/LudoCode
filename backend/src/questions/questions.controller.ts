@@ -12,6 +12,7 @@ export class QuestionsController {
   @Get('next')
   async getNext(@Request() req) {
     const languageId = req.query.languageId;
+    const type = req.query.type;
     // Default or Error if no languageId?
     // Let's assume frontend sends it. If not, throw error or default (hard to default if dynamic).
     // Or fetch user's preferred language.
@@ -21,6 +22,7 @@ export class QuestionsController {
     const question = await this.questionsService.getNextQuestion(
       req.user.userId,
       languageId,
+      type,
     );
     this.logger.log(
       `Serving question to user ${req.user.userId} (Lang: ${languageId}): ${JSON.stringify(question)}`,
