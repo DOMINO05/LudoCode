@@ -26,6 +26,9 @@ export class Profile {
   @Column({ name: 'current_streak', type: 'int', default: 0 })
   currentStreak: number;
 
+  @Column({ name: 'max_combo', type: 'int', default: 0 })
+  maxCombo: number;
+
   @Column({ type: 'int', default: 0 })
   gems: number;
 

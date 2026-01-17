@@ -8,4 +8,8 @@ export class SubmitAnswerDto {
   @IsNumber()
   @IsOptional()
   executionTimeMs?: number;
+
+  @IsNumber()
+  @IsOptional()
+  streak?: number;
 }

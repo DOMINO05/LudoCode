@@ -8,7 +8,6 @@ dotenv.config({ path: path.resolve(__dirname, '../.env') });
 
 const pool = new Pool({
   connectionString: process.env.DATABASE_URL,
-  // If DATABASE_URL is not provided, fall back to individual params (optional)
   ...(process.env.DATABASE_URL ? {} : {
     host: process.env.DB_HOST || 'localhost',
     port: parseInt(process.env.DB_PORT || '5432'),
@@ -23,71 +22,145 @@ async function seedQuestions() {
   try {
     console.log('🔌 Connected to database');
 
-    // 1. Clear existing questions
-    console.log('🧹 Clearing existing questions...');
-    await client.query('DELETE FROM questions');
-    console.log('✅ Questions table cleared');
-
-    // 2. Find questions directory
-    // Assuming structure: /backend/scripts/seed-questions.ts -> /questions (root)
-    const questionsDir = path.resolve(__dirname, '../../questions');
+    // Questions Root Directory
+    // backend/scripts/seed-questions.ts -> ../../questions
+    const questionsRootDir = path.resolve(__dirname, '../../questions');
     
-    if (!fs.existsSync(questionsDir)) {
-      console.warn(`⚠️  Questions directory not found at: ${questionsDir}`);
-      console.warn('Please create the "questions" folder in the project root and add .sql/.json files.');
+    if (!fs.existsSync(questionsRootDir)) {
+      console.warn(`⚠️  Questions directory not found at: ${questionsRootDir}`);
       return;
     }
 
-    // 3. Read all files recursively
-    const getAllFiles = (dir: string): string[] => {
-      const entries = fs.readdirSync(dir, { withFileTypes: true });
-      const files: string[] = [];
-      for (const entry of entries) {
-        const res = path.resolve(dir, entry.name);
-        if (entry.isDirectory()) {
-          files.push(...getAllFiles(res));
-        } else {
-          files.push(res);
-        }
-      }
-      return files;
-    };
-
-    const allFiles = getAllFiles(questionsDir).filter(
-      (f) => f.endsWith('.sql') || f.endsWith('.json'),
-    );
-
-    if (allFiles.length === 0) {
-      console.log('ℹ️  No files found in questions directory.');
-      return;
-    }
-
-    console.log(`📂 Found ${allFiles.length} files to process`);
-
-    // Cache languages and concepts to avoid repeated queries
+    // Cache languages and concepts
     const languagesRes = await client.query('SELECT id, name FROM languages');
     const languages = new Map(languagesRes.rows.map(r => [r.name.toLowerCase(), r.id]));
 
     const conceptsRes = await client.query('SELECT id, name FROM concepts');
     const concepts = new Map(conceptsRes.rows.map(r => [r.name.toLowerCase(), r.id]));
 
+    // Check for arguments (Single File Mode)
+    const targetArg = process.argv[2];
+    let filesToProcess: string[] = [];
+
+    if (targetArg) {
+      // SINGLE FILE MODE
+      console.log(`🎯 Single file mode: ${targetArg}`);
+      
+      // Resolve file path. Try absolute, relative to CWD, or relative to questions dir
+      let targetPath = path.resolve(targetArg); // Relative to CWD
+      if (!fs.existsSync(targetPath)) {
+        targetPath = path.resolve(questionsRootDir, targetArg); // Relative to questions dir
+      }
+
+      if (!fs.existsSync(targetPath)) {
+        console.error(`❌ File not found: ${targetArg}`);
+        console.error(`Searched at: ${targetPath}`);
+        return;
+      }
+
+      // Parse metadata for selective delete
+      // Expected structure: questions_root / [TYPE] / [LANG]_[CONCEPT].json
+      const relativePath = path.relative(questionsRootDir, targetPath);
+      const pathParts = relativePath.split(path.sep);
+
+      if (pathParts.length < 2) {
+        console.error(`❌ Invalid file structure. Expected inside a subfolder (e.g. theory/python_oop.json). Got: ${relativePath}`);
+        return;
+      }
+
+      const qType = pathParts[0]; // e.g. 'theory'
+      const fileName = pathParts[pathParts.length - 1]; // e.g. 'python_oop.json'
+      const nameWithoutExt = path.parse(fileName).name; // 'python_oop'
+      
+      // Parse lang and concept (assuming 'lang_concept')
+      const nameParts = nameWithoutExt.split('_');
+      const langKey = nameParts[0];
+      const conceptKey = nameParts.slice(1).join('_');
+
+      console.log(`ℹ️  Scope - Type: ${qType}, Lang: ${langKey}, Concept: ${conceptKey}`);
+
+      const langId = languages.get(langKey.toLowerCase());
+      const conceptId = concepts.get(conceptKey.toLowerCase());
+
+      if (!langId) {
+        console.error(`❌ Language '${langKey}' not found in DB.`);
+        return;
+      }
+      if (!conceptId) {
+        console.error(`❌ Concept '${conceptKey}' not found in DB.`);
+        return;
+      }
+
+      // Perform Selective Delete
+      console.log(`🧹 Deleting existing questions for this scope...`);
+      const deleteQuery = `
+        DELETE FROM questions q
+        USING question_concepts qc
+        WHERE q.id = qc.question_id
+        AND q.q_type::text = $1
+        AND q.language_id = $2
+        AND qc.concept_id = $3
+      `;
+      // Note: Cast q_type to text to match folder name string if enum issues arise, 
+      // but Postgres usually handles string-to-enum if valid.
+
+      const deleteRes = await client.query(deleteQuery, [qType, langId, conceptId]);
+      console.log(`✅ Deleted ${deleteRes.rowCount} questions.`);
+
+      filesToProcess = [targetPath];
+
+    } else {
+      // FULL MODE
+      console.log('🚀 Full seed mode');
+      console.log('🧹 Clearing ALL existing questions...');
+      await client.query('DELETE FROM questions');
+      console.log('✅ Questions table cleared');
+
+      // Find all files recursively
+      const getAllFiles = (dir: string): string[] => {
+        const entries = fs.readdirSync(dir, { withFileTypes: true });
+        const files: string[] = [];
+        for (const entry of entries) {
+          const res = path.resolve(dir, entry.name);
+          if (entry.isDirectory()) {
+            files.push(...getAllFiles(res));
+          } else {
+            files.push(res);
+          }
+        }
+        return files;
+      };
+
+      filesToProcess = getAllFiles(questionsRootDir).filter(
+        (f) => f.endsWith('.sql') || f.endsWith('.json'),
+      );
+    }
+
+    if (filesToProcess.length === 0) {
+      console.log('ℹ️  No files to process.');
+      return;
+    }
+
+    console.log(`📂 Processing ${filesToProcess.length} files...`);
+
     let totalInserted = 0;
 
-    for (const filePath of allFiles) {
-      const fileName = path.basename(filePath);
-      console.log(`📄 Processing ${fileName}...`);
+    for (const filePath of filesToProcess) {
+      const relativePath = path.relative(questionsRootDir, filePath);
+      console.log(`📄 Processing ${relativePath}...`);
+      
       const fileContent = fs.readFileSync(filePath, 'utf-8');
       
       let questionsData;
       try {
         questionsData = JSON.parse(fileContent);
       } catch (e) {
-        console.error(`❌ Failed to parse JSON in ${fileName}:`, e);
+        console.error(`❌ Failed to parse JSON in ${relativePath}:`, e);
         continue;
       }
 
       if (!Array.isArray(questionsData)) {
-        console.warn(`⚠️  File ${fileName} does not contain an array of questions.`);
+        console.warn(`⚠️  File ${relativePath} does not contain an array of questions.`);
         continue;
       }
 
@@ -101,7 +174,7 @@ async function seedQuestions() {
           continue;
         }
 
-        // Calculate difficulty params (approximate IRT from ELO)
+        // Calculate difficulty params
         const difficulty = q.difficulty_rating || 1000;
         const difficultyBeta = (difficulty - 1000.0) / 200.0;
 
@@ -118,7 +191,7 @@ async function seedQuestions() {
           q.q_type,
           difficulty,
           difficultyBeta,
-          1.0, // discrimination_alpha
+          1.0, 
           langId,
           q.content
         ]);
@@ -126,10 +199,6 @@ async function seedQuestions() {
         const questionId = insertQRes.rows[0].id;
 
         // Handle Concepts
-        // Support both old string format and new object format
-        // Old: "concept": "loops"
-        // New: "concept": { "loops": 1.0, "basics": 0.5 }
-        
         let conceptMap: { [key: string]: number } = {};
         
         if (typeof q.concept === 'string') {
@@ -157,7 +226,7 @@ async function seedQuestions() {
       }
     }
 
-    console.log(`✨ Successfully inserted ${totalInserted} questions from ${allFiles.length} files.`);
+    console.log(`✨ Successfully inserted ${totalInserted} questions.`);
 
   } catch (err) {
     console.error('❌ Error seeding questions:', err);

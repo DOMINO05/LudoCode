@@ -39,6 +39,7 @@ export class SubmissionsService {
     questionId: string,
     submittedCode: string,
     executionTimeMs: number,
+    streak: number = 0,
   ) {
     const question = await this.questionRepository.findOne({
       where: { id: questionId },
@@ -160,6 +161,14 @@ export class SubmissionsService {
       masteryAfter /= conceptsProcessed;
     }
 
+    // Calculate Multiplier
+    // Streak >= 2 means we have at least 2 consecutive correct answers previously.
+    // Bonus starts at 1.3x for streak 2, +0.1 for each subsequent.
+    let multiplier = 1.0;
+    if (isCorrect && streak >= 2) {
+      multiplier = 1.3 + (streak - 2) * 0.1;
+    }
+
     // --- Language Progress Update ---
     let languageProgress = await this.languageProgressRepository.findOne({
       where: { userId, languageId: question.languageId },
@@ -175,7 +184,7 @@ export class SubmissionsService {
     }
 
     if (isCorrect) {
-      languageProgress.xp += 10;
+      languageProgress.xp += Math.round(10 * multiplier);
       languageProgress.proficiency = Math.min(
         3.0,
         languageProgress.proficiency + 0.05,
@@ -192,16 +201,24 @@ export class SubmissionsService {
     });
     if (user) {
       if (isCorrect) {
-        user.xp += 10; // Global XP accumulation
-        user.gems += 1;
-        user.currentStreak = (user.currentStreak || 0) + 1;
+        user.xp += Math.round(10 * multiplier); // Global XP accumulation
+        user.gems += Math.round(1 * multiplier);
+        // user.currentStreak is reserved for Daily Streak (Login Streak). 
+        // Question streak is handled via maxCombo and client-side session streak.
+        
+        // Update Max Combo (High Score)
+        // streak passed is previous streak. New streak is streak + 1.
+        const currentSessionStreak = streak + 1;
+        if (currentSessionStreak > (user.maxCombo || 0)) {
+            user.maxCombo = currentSessionStreak;
+        }
 
         // Global proficiency might be average of languages? Or just leave it as general.
         // Let's increment it too for now.
         user.globalProficiency = Math.min(3.0, user.globalProficiency + 0.02);
       } else {
         user.sanityPoints = Math.max(0, user.sanityPoints - 10);
-        user.currentStreak = 0;
+        // Do not reset Daily Streak on incorrect answer
       }
       await this.profileRepository.save(user);
     }
@@ -226,6 +243,7 @@ export class SubmissionsService {
         sanity: user?.sanityPoints,
         gems: user?.gems,
         proficiency: user?.globalProficiency,
+        multiplier: multiplier,
       },
     };
   }

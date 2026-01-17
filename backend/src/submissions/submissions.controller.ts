@@ -26,8 +26,9 @@ export class SubmissionsController {
   ) {
     const userId = user.userId;
     const executionTimeMs = body.executionTimeMs || 0;
+    const streak = body.streak || 0;
     this.logger.log(
-      `User ${userId} submitting answer for question ${questionId}. Code: ${body.code}`,
+      `User ${userId} submitting answer for question ${questionId}. Code: ${body.code}, Streak: ${streak}`,
     );
 
     const result = await this.submissionsService.submit(
@@ -35,6 +36,7 @@ export class SubmissionsController {
       questionId,
       body.code,
       executionTimeMs,
+      streak,
     );
 
     this.logger.log(

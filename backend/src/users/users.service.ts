@@ -112,14 +112,25 @@ export class UsersService {
       profile.currentStreak = 1;
     }
 
+    let xpBonus = 50;
+    let gemBonus = 5;
+    let message = 'Napi bónusz bezsebelve!';
+
+    // 5-day Streak Bonus
+    if (profile.currentStreak > 0 && profile.currentStreak % 5 === 0) {
+        xpBonus += 100;
+        gemBonus += 10;
+        message = `🔥 ${profile.currentStreak} napos streak! Extra jutalom: +100 XP, +10 Gem!`;
+    }
+
     profile.lastDailyBonus = today;
-    profile.xp += 50;
-    profile.gems += 5;
+    profile.xp += xpBonus;
+    profile.gems += gemBonus;
     profile.sanityPoints = Math.min(100, profile.sanityPoints + 20); // Restore Sanity
 
     await this.profilesRepository.save(profile);
 
-    return { claimed: true, bonus: 50 };
+    return { claimed: true, bonus: xpBonus, message };
   }
 
   async getLeaderboard(
