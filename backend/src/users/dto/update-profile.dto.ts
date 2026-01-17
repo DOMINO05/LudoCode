@@ -5,6 +5,10 @@ export class UpdateProfileDto {
   @IsOptional()
   username?: string;
 
+  @IsString()
+  @IsOptional()
+  bio?: string;
+
   @IsObject()
   @IsOptional()
   avatar_config?: any;

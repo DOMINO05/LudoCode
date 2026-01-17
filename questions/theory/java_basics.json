@@ -1,0 +1,863 @@
+[
+    {
+        "title": "Utasítás lezárása",
+        "description": "Milyen karakterrel kell lezárni a Java utasításokat?",
+        "hint": "Ez választja el a parancsokat.",
+        "q_type": "theory",
+        "difficulty_rating": 600,
+        "language": "java",
+        "concept": {
+            "basics": 1.0
+        },
+        "content": {
+            "options": [
+                ". (pont)",
+                ": (kettőspont)",
+                "; (pontosvessző)",
+                ", (vessző)"
+            ],
+            "correct_answer": "; (pontosvessző)",
+            "explanation": "A Java nyelvben (a C-hez hasonlóan) pontosvessző jelzi az utasítás végét."
+        }
+    },
+    {
+        "title": "Kommentelés",
+        "description": "Hogyan írunk egysoros kommentet Java-ban?",
+        "hint": "Dupla perjel.",
+        "q_type": "theory",
+        "difficulty_rating": 600,
+        "language": "java",
+        "concept": {
+            "basics": 1.0
+        },
+        "content": {
+            "options": [
+                "# Komment",
+                "-- Komment",
+                "// Komment",
+                "/* Komment */"
+            ],
+            "correct_answer": "// Komment",
+            "explanation": "A // jelek után a sor végéig tartó rész kommentnek minősül, a fordító figyelmen kívül hagyja."
+        }
+    },
+    {
+        "title": "String jelölése",
+        "description": "Milyen idézőjelek közé tesszük a szöveges literálokat (String)?",
+        "hint": "Nem az aposztróf.",
+        "q_type": "theory",
+        "difficulty_rating": 620,
+        "language": "java",
+        "concept": {
+            "basics": 1.0
+        },
+        "content": {
+            "options": [
+                "' (szimpla)",
+                "'' (dupla)",
+                "`(backtick)",
+                "Semmilyen"
+            ],
+            "correct_answer": "\" (dupla)",
+            "explanation": "Java-ban a String-eket dupla idézőjelbe (\"szöveg\") tesszük, a szimpla a karaktereké (char)."
+        }
+    },
+    {
+        "title": "Kiíratás konzolra",
+        "description": "Melyik paranccsal írunk szöveget a standard kimenetre (konzolra)?",
+        "hint": "System csomag...",
+        "q_type": "theory",
+        "difficulty_rating": 650,
+        "language": "java",
+        "concept": {
+            "basics": 1.0
+        },
+        "content": {
+            "options": [
+                "console.log()",
+                "print()",
+                "System.out.println()",
+                "echo"
+            ],
+            "correct_answer": "System.out.println()",
+            "explanation": "A System.out.println() a standard Java metódus a konzolra íráshoz és új sor kezdéséhez."
+        }
+    },
+    {
+        "title": "Fájl kiterjesztés",
+        "description": "Mi a Java forráskód fájlok kiterjesztése?",
+        "hint": "A nyelv neve.",
+        "q_type": "theory",
+        "difficulty_rating": 600,
+        "language": "java",
+        "concept": {
+            "basics": 1.0
+        },
+        "content": {
+            "options": [
+                ".js",
+                ".class",
+                ".java",
+                ".jar"
+            ],
+            "correct_answer": ".java",
+            "explanation": "A forráskódot .java fájlokba írjuk, amelyből a fordító .class fájlokat készít."
+        }
+    },
+    {
+        "title": "Kis- és nagybetűk",
+        "description": "Számítanak-e a kis- és nagybetűk a Java nyelvben (Case Sensitivity)?",
+        "hint": "Az 'alma' és 'Alma' ugyanaz?",
+        "q_type": "theory",
+        "difficulty_rating": 650,
+        "language": "java",
+        "concept": {
+            "basics": 1.0
+        },
+        "content": {
+            "options": [
+                "Nem, a Java case-insensitive.",
+                "Igen, a Java case-sensitive.",
+                "Csak változóknál.",
+                "Csak Windows-on."
+            ],
+            "correct_answer": "Igen, a Java case-sensitive.",
+            "explanation": "A Java megkülönbözteti a kis- és nagybetűket, így a 'valtozo' és 'Valtozo' két külön azonosító."
+        }
+    },
+    {
+        "title": "Main metódus",
+        "description": "Hogyan kezdődik a Java program belépési pontja (main method)?",
+        "hint": "public static void...",
+        "q_type": "theory",
+        "difficulty_rating": 700,
+        "language": "java",
+        "concept": {
+            "basics": 0.8,
+            "functions": 0.2
+        },
+        "content": {
+            "options": [
+                "void main()",
+                "public static void main(String[] args)",
+                "int main()",
+                "start()"
+            ],
+            "correct_answer": "public static void main(String[] args)",
+            "explanation": "Ez a standard szignatúra, amit a JVM keres a program indításakor."
+        }
+    },
+    {
+        "title": "Értékadás jele",
+        "description": "Melyik operátorral adunk értéket egy változónak?",
+        "hint": "Egyenlőségjel, de nem a matematikai egyenlőség.",
+        "q_type": "theory",
+        "difficulty_rating": 650,
+        "language": "java",
+        "concept": {
+            "basics": 1.0
+        },
+        "content": {
+            "options": [
+                "==",
+                ":=",
+                "=",
+                "->"
+            ],
+            "correct_answer": "=",
+            "explanation": "A szimpla '=' jel az értékadó operátor, míg a '==' az összehasonlítás."
+        }
+    },
+    {
+        "title": "Változó elnevezés",
+        "description": "Melyik változónév HELYES szintaktikailag?",
+        "hint": "Nem kezdődhet számmal.",
+        "q_type": "theory",
+        "difficulty_rating": 850,
+        "language": "java",
+        "concept": {
+            "basics": 1.0
+        },
+        "content": {
+            "options": [
+                "1stPlace",
+                "player-name",
+                "total_score",
+                "class"
+            ],
+            "correct_answer": "total_score",
+            "explanation": "A 'total_score' helyes. Az '1stPlace' számmal kezdődik (tilos), a 'player-name' mínusz jelet tartalmaz, a 'class' foglalt kulcsszó."
+        }
+    },
+    {
+        "title": "Primitív típus: egész",
+        "description": "Melyik kulcsszóval deklarálunk egész számot?",
+        "hint": "Integer rövidítése.",
+        "q_type": "theory",
+        "difficulty_rating": 800,
+        "language": "java",
+        "concept": {
+            "basics": 1.0
+        },
+        "content": {
+            "options": [
+                "num",
+                "float",
+                "int",
+                "integer"
+            ],
+            "correct_answer": "int",
+            "explanation": "Az 'int' a primitív egész típus kulcsszava Java-ban."
+        }
+    },
+    {
+        "title": "Primitív típus: logikai",
+        "description": "Melyik típus tárolhatja csak a 'true' vagy 'false' értékeket?",
+        "hint": "George Boole után.",
+        "q_type": "theory",
+        "difficulty_rating": 800,
+        "language": "java",
+        "concept": {
+            "basics": 1.0,
+            "logic": 0.3
+        },
+        "content": {
+            "options": [
+                "bit",
+                "boolean",
+                "logic",
+                "int"
+            ],
+            "correct_answer": "boolean",
+            "explanation": "A boolean típus kizárólag logikai igaz vagy hamis értéket vehet fel."
+        }
+    },
+    {
+        "title": "String összefűzés",
+        "description": "Melyik operátorral fűzünk össze két Stringet?",
+        "hint": "Összeadás jele.",
+        "q_type": "theory",
+        "difficulty_rating": 850,
+        "language": "java",
+        "concept": {
+            "basics": 0.9,
+            "oop": 0.1
+        },
+        "content": {
+            "options": [
+                ".",
+                "&",
+                "+",
+                "concat"
+            ],
+            "correct_answer": "+",
+            "explanation": "A '+' operátor Stringek esetén a konkatenációt (összefűzést) végzi."
+        }
+    },
+    {
+        "title": "Maradékos osztás",
+        "description": "Melyik operátor adja meg az osztás maradékát (modulo)?",
+        "hint": "Százalékjel.",
+        "q_type": "theory",
+        "difficulty_rating": 900,
+        "language": "java",
+        "concept": {
+            "basics": 1.0
+        },
+        "content": {
+            "options": [
+                "/",
+                "mod",
+                "%",
+                "\\"
+            ],
+            "correct_answer": "%",
+            "explanation": "A '%' (modulo) operátor az osztás után fennmaradó maradékot adja vissza (pl. 5 % 2 = 1)."
+        }
+    },
+    {
+        "title": "Növelés eggyel",
+        "description": "Melyik a rövidítése az`x = x + 1;`utasításnak?",
+        "hint": "Increment operator.",
+        "q_type": "theory",
+        "difficulty_rating": 880,
+        "language": "java",
+        "concept": {
+            "basics": 1.0
+        },
+        "content": {
+            "options": [
+                "x+",
+                "x++",
+                "++",
+                "x += 1+"
+            ],
+            "correct_answer": "x++",
+            "explanation": "A '++' operátor megnöveli a változó értékét eggyel."
+        }
+    },
+    {
+        "title": "Karakter literál",
+        "description": "Milyen típusú adat a 'A' (szimpla idézőjelben)?",
+        "hint": "Egyetlen karakter.",
+        "q_type": "theory",
+        "difficulty_rating": 900,
+        "language": "java",
+        "concept": {
+            "basics": 1.0
+        },
+        "content": {
+            "options": [
+                "String",
+                "char",
+                "Character",
+                "text"
+            ],
+            "correct_answer": "char",
+            "explanation": "A szimpla idézőjelek közé tett egyetlen jel a primitív 'char' típust jelöli."
+        }
+    },
+    {
+        "title": "Double vs Float",
+        "description": "Mi a különbség a 'float' és a 'double' között?",
+        "hint": "A pontosság és a méret.",
+        "q_type": "theory",
+        "difficulty_rating": 950,
+        "language": "java",
+        "concept": {
+            "basics": 1.0
+        },
+        "content": {
+            "options": [
+                "Nincs különbség.",
+                "A float egész, a double tört.",
+                "A double kétszeres pontosságú (64 bit), a float (32 bit).",
+                "A float a nagyobb."
+            ],
+            "correct_answer": "A double kétszeres pontosságú (64 bit), a float (32 bit).",
+            "explanation": "A double nagyobb helyet foglal és pontosabb tizedes törteket tud tárolni, mint a float."
+        }
+    },
+    {
+        "title": "Explicit típuskényszerítés",
+        "description": "Hogyan alakítunk át (cast) egy`double`értéket`int`-té?",
+        "hint": "Zárójelben a cél típus.",
+        "q_type": "theory",
+        "difficulty_rating": 1050,
+        "language": "java",
+        "concept": {
+            "basics": 1.0
+        },
+        "content": {
+            "options": [
+                "int x = (int) 5.5;",
+                "int x = int(5.5);",
+                "int x = 5.5 as int;",
+                "int x = convert(5.5);"
+            ],
+            "correct_answer": "int x = (int) 5.5;",
+            "explanation": "A castolás szintaxisa: (CélTípus) érték. Ez adatvesztéssel járhat (a tizedesjegyek levágódnak)."
+        }
+    },
+    {
+        "title": "Final kulcsszó",
+        "description": "Mit jelent, ha egy változót `final`kulcsszóval deklarálunk?",
+        "hint": "Konstans.",
+        "q_type": "theory",
+        "difficulty_rating": 1020,
+        "language": "java",
+        "concept": {
+            "basics": 1.0
+        },
+        "content": {
+            "options": [
+                "Végleges, az értéke nem változtatható meg inicializálás után.",
+                "Ez az utolsó változó a kódban.",
+                "A változó törlődik a blokk végén.",
+                "A változó globális lesz."
+            ],
+            "correct_answer": "Végleges, az értéke nem változtatható meg inicializálás után.",
+            "explanation": "A final változók konstansként viselkednek, értéküket csak egyszer kaphatják meg."
+        }
+    },
+    {
+        "title": "Lokális változó kezdőértéke",
+        "description": "Mi a kezdőértéke egy metóduson belül deklarált`int x;`változónak?",
+        "hint": "A Java szigorú az inicializálással.",
+        "q_type": "theory",
+        "difficulty_rating": 1100,
+        "language": "java",
+        "concept": {
+            "basics": 0.8,
+            "functions": 0.2
+        },
+        "content": {
+            "options": [
+                "0",
+                "null",
+                "Véletlenszerű",
+                "Nincs alapértéke, inicializálni kell használat előtt."
+            ],
+            "correct_answer": "Nincs alapértéke, inicializálni kell használat előtt.",
+            "explanation": "A lokális változók nem kapnak automatikus alapértéket (szemben az osztályszintű mezőkkel), használatuk inicializálás nélkül fordítási hiba."
+        }
+    },
+    {
+        "title": "Műveleti sorrend",
+        "description": "Mi az eredménye a`2 + 3 * 4`kifejezésnek?",
+        "hint": "A szorzás erősebb.",
+        "q_type": "theory",
+        "difficulty_rating": 1010,
+        "language": "java",
+        "concept": {
+            "basics": 0.7,
+            "logic": 0.3
+        },
+        "content": {
+            "options": [
+                "20",
+                "14",
+                "24",
+                "10"
+            ],
+            "correct_answer": "14",
+            "explanation": "A precedencia szabályok miatt a szorzás (3*4=12) előbb hajtódik végre, mint az összeadás (2+12=14)."
+        }
+    },
+    {
+        "title": "Scope (Hatókör)",
+        "description": "Meddig létezik egy`{`kapcsos zárójelek`}`között deklarált változó?",
+        "hint": "Blokk szintű láthatóság.",
+        "q_type": "theory",
+        "difficulty_rating": 1150,
+        "language": "java",
+        "concept": {
+            "basics": 1.0
+        },
+        "content": {
+            "options": [
+                "A program végéig.",
+                "A fájl végéig.",
+                "Csak az adott blokkon belül.",
+                "Bármeddig, ha public."
+            ],
+            "correct_answer": "Csak az adott blokkon belül.",
+            "explanation": "A Java blokk szintű scope-ot használ, a változó a deklaráló blokk végén megsemmisül/láthatatlanná válik."
+        }
+    },
+    {
+        "title": "Referencia vs Primitív",
+        "description": "Melyik NEM primitív típus az alábbiak közül?",
+        "hint": "Nagybetűvel kezdődik.",
+        "q_type": "theory",
+        "difficulty_rating": 1080,
+        "language": "java",
+        "concept": {
+            "basics": 0.9,
+            "oop": 0.1
+        },
+        "content": {
+            "options": [
+                "int",
+                "boolean",
+                "String",
+                "double"
+            ],
+            "correct_answer": "String",
+            "explanation": "A String egy osztály (referencia típus), nem primitív. A többi felsorolt opció primitív."
+        }
+    },
+    {
+        "title": "Scanner beolvasás",
+        "description": "Hogyan olvasunk be egy egész számot a`Scanner`osztállyal?",
+        "hint": "next...",
+        "q_type": "theory",
+        "difficulty_rating": 1120,
+        "language": "java",
+        "concept": {
+            "basics": 1.0
+        },
+        "content": {
+            "options": [
+                "scanner.readInt()",
+                "scanner.nextInt()",
+                "scanner.inputInteger()",
+                "scanner.getInt()"
+            ],
+            "correct_answer": "scanner.nextInt()",
+            "explanation": "A java.util.Scanner osztály`nextInt()`metódusa olvassa be a következő tokent int-ként."
+        }
+    },
+    {
+        "title": "Pre- vs Post-increment",
+        "description": "Mi a különbség az`++i`és az`i++`között kifejezésként használva?",
+        "hint": "Mikor történik a növelés: előtte vagy utána?",
+        "q_type": "theory",
+        "difficulty_rating": 1180,
+        "language": "java",
+        "concept": {
+            "basics": 1.0,
+            "logic": 0.5
+        },
+        "content": {
+            "options": [
+                "Nincs különbség.",
+                "++i előbb növel, aztán adja vissza az értéket; i++ fordítva.",
+                "i++ előbb növel, aztán adja vissza az értéket.",
+                "Az egyik hibás szintaxis."
+            ],
+            "correct_answer": "++i előbb növel, aztán adja vissza az értéket; i++ fordítva.",
+            "explanation": "Pre-increment (++i) azonnal növel, Post-increment (i++) a jelenlegi értéket adja vissza, és csak utána növel."
+        }
+    },
+    {
+        "title": "Integer túlcsordulás",
+        "description": "Mi történik, ha egy`int` változó értéke eléri a maximumot (`Integer.MAX_VALUE`) és hozzáadunk 1-et?",
+        "hint": "Körbefordul.",
+        "q_type": "theory",
+        "difficulty_rating": 1250,
+        "language": "java",
+        "concept": {
+            "basics": 1.0,
+            "logic": 0.5
+        },
+        "content": {
+            "options": [
+                "Hibát dob (Exception).",
+                "Az érték nem változik.",
+                "Átfordul a legkisebb negatív számba (Integer.MIN_VALUE).",
+                "Automatikusan long típusra vált."
+            ],
+            "correct_answer": "Átfordul a legkisebb negatív számba (Integer.MIN_VALUE).",
+            "explanation": "Java-ban az egész számok túlcsordulása (overflow) nem dob hibát, hanem a bitek átfordulása miatt a legkisebb értéktől folytatódik (wrap-around)."
+        }
+    },
+    {
+        "title": "Lebegőpontos pontosság",
+        "description": "Miért lehet hamis a `0.1 + 0.2 == 0.3`állítás Java-ban?",
+        "hint": "IEEE 754 szabvány.",
+        "q_type": "theory",
+        "difficulty_rating": 1280,
+        "language": "java",
+        "concept": {
+            "basics": 1.0,
+            "logic": 0.4
+        },
+        "content": {
+            "options": [
+                "Java hiba.",
+                "A bináris lebegőpontos ábrázolás pontatlansága miatt.",
+                "Mert float-ot és double-t kevertünk.",
+                "Mindig igaz, a kérdés hibás."
+            ],
+            "correct_answer": "A bináris lebegőpontos ábrázolás pontatlansága miatt.",
+            "explanation": "A tizedes törtek bináris ábrázolása nem mindig pontos (kerekítési hiba), így az összegük picit eltérhet a várttól."
+        }
+    },
+    {
+        "title": "String Pool",
+        "description": "Mit vizsgál az`s1 == s2`kifejezés Stringek esetén?",
+        "hint": "A '==' mindig a memóriacímet nézi objektumoknál.",
+        "q_type": "theory",
+        "difficulty_rating": 1220,
+        "language": "java",
+        "concept": {
+            "basics": 0.6,
+            "oop": 0.4
+        },
+        "content": {
+            "options": [
+                "A szövegek tartalmát.",
+                "Hogy ugyanarra a memória objektumra mutatnak-e (referencia egyenlőség).",
+                "A szövegek hosszát.",
+                "Hogy mindkettő String típusú-e."
+            ],
+            "correct_answer": "Hogy ugyanarra a memória objektumra mutatnak-e (referencia egyenlőség).",
+            "explanation": "Tartalomvizsgálatra az`.equals()`való. A`==`azt nézi, ugyanaz-e az objektum a Heap-en/String Pool-ban."
+        }
+    },
+    {
+        "title": "Bit eltolás",
+        "description": "Mit tesz a`<<`operátor (pl.`x << 1`)?",
+        "hint": "Minden bitet balra tol.",
+        "q_type": "theory",
+        "difficulty_rating": 1300,
+        "language": "java",
+        "concept": {
+            "basics": 1.0,
+            "logic": 0.5
+        },
+        "content": {
+            "options": [
+                "Kisebb-e az érték.",
+                "Bit eltolás balra (szorzás 2-vel).",
+                "Bit eltolás jobbra (osztás 2-vel).",
+                "A bitfolyamot a konzolra írja."
+            ],
+            "correct_answer": "Bit eltolás balra (szorzás 2-vel).",
+            "explanation": "A bitwise left shift minden bitet egy helyiértékkel feljebb tol, ami matematikailag a 2-vel való szorzásnak felel meg."
+        }
+    },
+    {
+        "title": "Ternáris operátor",
+        "description": "Melyik a helyes szintaxisa a feltételes (ternáris) operátornak?",
+        "hint": "Egy soros if-else.",
+        "q_type": "theory",
+        "difficulty_rating": 1210,
+        "language": "java",
+        "concept": {
+            "basics": 1.0,
+            "logic": 0.5
+        },
+        "content": {
+            "options": [
+                "feltétel ? igaz_érték : hamis_érték",
+                "feltétel : igaz_érték ? hamis_érték",
+                "if feltétel ? igaz : hamis",
+                "feltétel -> igaz , hamis"
+            ],
+            "correct_answer": "feltétel ? igaz_érték : hamis_érték",
+            "explanation": "Ez az egyetlen 3 operandusú operátor Java-ban: `x = (a > b) ? a : b;`."
+        }
+    },
+    {
+        "title": "Wrapper osztályok",
+        "description": "Mi az `int`primitív típus objektum burkoló osztálya (Wrapper class)?",
+        "hint": "Nagybetűs teljes név.",
+        "q_type": "theory",
+        "difficulty_rating": 1250,
+        "language": "java",
+        "concept": {
+            "basics": 0.7,
+            "oop": 0.3
+        },
+        "content": {
+            "options": [
+                "Int",
+                "Integer",
+                "Number",
+                "WrapperInt"
+            ],
+            "correct_answer": "Integer",
+            "explanation": "Az`Integer`osztály csomagolja be a primitív`int`-et objektumba (pl. Listákhoz)."
+        }
+    },
+    {
+        "title": "Autoboxing",
+        "description": "Mit jelent az 'Autoboxing' kifejezés Java-ban?",
+        "hint": "Automatikus dobozolás.",
+        "q_type": "theory",
+        "difficulty_rating": 1350,
+        "language": "java",
+        "concept": {
+            "basics": 0.7,
+            "oop": 0.3
+        },
+        "content": {
+            "options": [
+                "Automatikus fordítás.",
+                "A primitív típus automatikus konverziója a megfelelő Wrapper objektummá.",
+                "A változók automatikus deklarálása.",
+                "Csomagok automatikus importálása."
+            ],
+            "correct_answer": "A primitív típus automatikus konverziója a megfelelő Wrapper objektummá.",
+            "explanation": "A fordító automatikusan elvégzi az átalakítást, pl. `Integer a = 5;`(int -> Integer)."
+        }
+    },
+    {
+        "title": "Rövidzár kiértékelés",
+        "description": "A`&&`(ÉS) operátor 'short-circuit' tulajdonsága azt jelenti, hogy...",
+        "hint": "Lusta kiértékelés.",
+        "q_type": "theory",
+        "difficulty_rating": 1380,
+        "language": "java",
+        "concept": {
+            "basics": 0.8,
+            "logic": 0.8
+        },
+        "content": {
+            "options": [
+                "Mindig mindkét oldalt kiértékeli.",
+                "Ha a bal oldal hamis, a jobb oldalt már nem értékeli ki.",
+                "Gyorsabban fut, mint a bitwise &.",
+                "Ha a bal oldal igaz, a jobb oldalt nem értékeli ki."
+            ],
+            "correct_answer": "Ha a bal oldal hamis, a jobb oldalt már nem értékeli ki.",
+            "explanation": "Mivel`Hamis ÉS Bármi`az Hamis, a jobb oldal futtatása felesleges, így a Java kihagyja (ezért biztonságos pl. null check-re)."
+        }
+    },
+    {
+        "title": "String Immutability",
+        "description": "Mit jelent, hogy a String 'immutable' (megváltoztathatatlan)?",
+        "hint": "A String objektum tartalma a létrehozás után...",
+        "q_type": "theory",
+        "difficulty_rating": 1420,
+        "language": "java",
+        "concept": {
+            "basics": 0.6,
+            "oop": 0.4
+        },
+        "content": {
+            "options": [
+                "Nem lehet törölni.",
+                "Ha módosítjuk, új objektum jön létre a memóriában, az eredeti nem változik.",
+                "Final, tehát nem lehet belőle örökölni.",
+                "Konstans pool-ban van."
+            ],
+            "correct_answer": "Ha módosítjuk, új objektum jön létre a memóriában, az eredeti nem változik.",
+            "explanation": "A String belső állapota nem módosítható. A`str.toUpperCase()`pl. nem az eredetit írja át, hanem egy újat ad vissza."
+        }
+    },
+    {
+        "title": "Pass-by-value",
+        "description": "Hogyan adja át a Java a paramétereket a metódusoknak?",
+        "hint": "Mindig érték szerint, de...",
+        "q_type": "theory",
+        "difficulty_rating": 1450,
+        "language": "java",
+        "concept": {
+            "basics": 1.0,
+            "functions": 0.5
+        },
+        "content": {
+            "options": [
+                "Primitíveket érték, objektumokat referencia szerint (pass-by-reference).",
+                "Mindig érték szerint (pass-by-value).",
+                "Mindig referencia szerint.",
+                "Változó."
+            ],
+            "correct_answer": "Mindig érték szerint (pass-by-value).",
+            "explanation": "Java-ban mindig az érték másolata adódik át. Objektumoknál a *referencia értéke* (címe) másolódik, nem maga az objektum, ami trükkös lehet."
+        }
+    },
+    {
+        "title": "Volatile kulcsszó",
+        "description": "Mire való a`volatile`kulcsszó egy változó előtt?",
+        "hint": "Szálkezelés és láthatóság.",
+        "q_type": "theory",
+        "difficulty_rating": 1500,
+        "language": "java",
+        "concept": {
+            "basics": 1.0,
+            "logic": 0.5
+        },
+        "content": {
+            "options": [
+                "A változó konstans.",
+                "A változót nem menti a CPU cache-be, mindig a főmemóriából olvassa (thread visibility).",
+                "A változó ideiglenes.",
+                "A változó atomi műveleteket támogat."
+            ],
+            "correct_answer": "A változót nem menti a CPU cache-be, mindig a főmemóriából olvassa (thread visibility).",
+            "explanation": "Többszálú környezetben biztosítja, hogy ha egy szál írja a változót, a többi szál azonnal lássa a változást (no caching)."
+        }
+    },
+    {
+        "title": "Stack vs Heap",
+        "description": "Hol tárolódnak a lokális primitív változók és a metódushívások?",
+        "hint": "A gyorsabb, LIFO szerkezetű memória.",
+        "q_type": "theory",
+        "difficulty_rating": 1480,
+        "language": "java",
+        "concept": {
+            "basics": 1.0
+        },
+        "content": {
+            "options": [
+                "Heap (Kupac)",
+                "Stack (Verem)",
+                "Metaspace",
+                "Merevlemez"
+            ],
+            "correct_answer": "Stack (Verem)",
+            "explanation": "A metódusok lokális változói és a végrehajtási lánc a Stack-en van. Az objektumok (new ...) mindig a Heap-re kerülnek."
+        }
+    },
+    {
+        "title": "Karakter kódolás",
+        "description": "Milyen kódolást használ a Java a`char`típus tárolására a memóriában?",
+        "hint": "16 bites kódolás.",
+        "q_type": "theory",
+        "difficulty_rating": 1460,
+        "language": "java",
+        "concept": {
+            "basics": 1.0
+        },
+        "content": {
+            "options": [
+                "ASCII",
+                "UTF-8",
+                "UTF-16 (Unicode)",
+                "ISO-8859-1"
+            ],
+            "correct_answer": "UTF-16 (Unicode)",
+            "explanation": "A Java`char`típusa 2 bájtos (16 bit), és UTF-16 kódolást használ, hogy támogassa a nemzetközi karakterkészleteket."
+        }
+    },
+    {
+        "title": "Inicializáló blokk",
+        "description": "Mikor fut le egy`static { ... }`inicializáló blokk?",
+        "hint": "Nem példányosításkor.",
+        "q_type": "theory",
+        "difficulty_rating": 1520,
+        "language": "java",
+        "concept": {
+            "basics": 0.8,
+            "oop": 0.6
+        },
+        "content": {
+            "options": [
+                "Minden objektum létrehozásakor.",
+                "Csak egyszer, amikor az osztály betöltődik a memóriába (Class loading).",
+                "A konstruktor után.",
+                "A main metódus előtt mindig."
+            ],
+            "correct_answer": "Csak egyszer, amikor az osztály betöltődik a memóriába (Class loading).",
+            "explanation": "A statikus blokk osztályszintű inicializálásra való, és csak egyszer fut le az osztály élettartama alatt."
+        }
+    },
+    {
+        "title": "NaN és Infinity",
+        "description": "Mi az eredménye a`1.0 / 0.0`osztásnak Java-ban (double típusnál)?",
+        "hint": "Nem dob Exceptiont!",
+        "q_type": "theory",
+        "difficulty_rating": 1550,
+        "language": "java",
+        "concept": {
+            "basics": 1.0,
+            "logic": 0.4
+        },
+        "content": {
+            "options": [
+                "ArithmeticException",
+                "Infinity (Végtelen)",
+                "NaN (Not a Number)",
+                "0.0"
+            ],
+            "correct_answer": "Infinity (Végtelen)",
+            "explanation": "Lebegőpontos számoknál a nullával való osztás nem dob kivételt (szemben az egész számokkal), hanem Infinity-t vagy NaN-t (-0.0) eredményez."
+        }
+    },
+    {
+        "title": "ClassLoader",
+        "description": "Mi a felelőssége a`ClassLoader`-nek?",
+        "hint": "A JVM része.",
+        "q_type": "theory",
+        "difficulty_rating": 1600,
+        "language": "java",
+        "concept": {
+            "basics": 0.5,
+            "oop": 0.5
+        },
+        "content": {
+            "options": [
+                "A memória szemétgyűjtése.",
+                "A .class fájlok (bájtkód) betöltése a memóriába futásidőben.",
+                "A forráskód fordítása.",
+                "A hálózati kapcsolatok kezelése."
+            ],
+            "correct_answer": "A .class fájlok (bájtkód) betöltése a memóriába futásidőben.",
+            "explanation": "A ClassLoader keresi meg és olvassa be a lefordított osztályokat, amikor a program először hivatkozik rájuk."
+        }
+    }
+]

@@ -39,9 +39,9 @@ export default function Layout({ session }) {
   };
 
   return (
-    <div className="flex flex-col h-screen bg-slate-50 dark:bg-slate-900 text-slate-700 dark:text-slate-100 font-nunito transition-colors duration-300">
-      <header className="bg-white dark:bg-slate-800 border-b border-slate-200 dark:border-slate-700 p-4 flex justify-between items-center shrink-0 transition-colors duration-300">
-        <div className="font-bold text-xl cursor-pointer text-slate-800 dark:text-slate-100 tracking-tight" onClick={() => navigate('/dashboard')}>
+    <div className="flex flex-col h-screen bg-background-light dark:bg-background-dark text-slate-700 dark:text-slate-100 font-nunito transition-colors duration-300">
+      <header className="bg-surface-light dark:bg-surface-dark border-b border-slate-200 dark:border-slate-700 p-4 flex justify-between items-center shrink-0 transition-colors duration-300 z-40 sticky top-0">
+        <div className="font-extrabold text-2xl cursor-pointer text-transparent bg-clip-text bg-gradient-to-r from-primary to-accent tracking-tighter" onClick={() => navigate('/dashboard')}>
             LudoCode
         </div>
         
@@ -49,7 +49,7 @@ export default function Layout({ session }) {
             <select 
                 value={currentLanguage?.id || ''} 
                 onChange={(e) => changeLanguage(e.target.value)}
-                className="p-2 rounded-lg bg-slate-100 dark:bg-slate-700 text-slate-600 dark:text-slate-300 border-none outline-none"
+                className="p-2 rounded-lg bg-slate-100 dark:bg-slate-700 text-slate-600 dark:text-slate-300 border-none outline-none focus:ring-2 focus:ring-primary/50 transition-all"
             >
                 {languages.map(lang => (
                     <option key={lang.id} value={lang.id}>

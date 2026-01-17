@@ -1,0 +1,602 @@
+[
+    {
+        "title": "Tömb deklaráció",
+        "description": "Egészítse ki a kódot, hogy helyesen deklaráljon egy egész számokat tartalmazó tömböt!",
+        "hint": "A típus utáni szögletes zárójel jelzi a tömböt.",
+        "q_type": "fill_in_blank",
+        "difficulty_rating": 600,
+        "language": "java",
+        "concept": {"arrays": 1.0, "basics": 0.5},
+        "content": {
+            "code_snippet": "int{{BLANK}} numbers;",
+            "correct_answer": "[]",
+            "options": ["[]", "{}", "()", "<>"],
+            "explanation": "Java-ban a típus után írt `[]` jelzi, hogy egy tömbről van szó."
+        }
+    },
+    {
+        "title": "Memória foglalás",
+        "description": "Melyik kulcsszó hiányzik a tömb példányosításához?",
+        "hint": "Új objektum létrehozása.",
+        "q_type": "fill_in_blank",
+        "difficulty_rating": 650,
+        "language": "java",
+        "concept": {"arrays": 1.0, "basics": 0.6},
+        "content": {
+            "code_snippet": "int[] arr = {{BLANK}} int[5];",
+            "correct_answer": "new",
+            "options": ["new", "create", "make", "alloc"],
+            "explanation": "A `new` kulcsszóval foglalunk memóriát a tömb számára a heap-en."
+        }
+    },
+    {
+        "title": "Elem elérése",
+        "description": "Egészítse ki a kódot a 0. indexű elem eléréséhez!",
+        "hint": "Az indexelés szintaxisa.",
+        "q_type": "fill_in_blank",
+        "difficulty_rating": 650,
+        "language": "java",
+        "concept": {"arrays": 1.0, "basics": 0.5},
+        "content": {
+            "code_snippet": "int x = numbers{{BLANK}}0];",
+            "correct_answer": "[",
+            "options": ["{", "(", "[", "<"],
+            "explanation": "Tömb elemeire szögletes zárójelekkel hivatkozunk: `tomb[index]`."
+        }
+    },
+    {
+        "title": "Inicializáló blokk",
+        "description": "Melyik karakterrel kezdődik a tömb inicializáló listája?",
+        "hint": "Blokk határoló.",
+        "q_type": "fill_in_blank",
+        "difficulty_rating": 700,
+        "language": "java",
+        "concept": {"arrays": 1.0, "basics": 0.6},
+        "content": {
+            "code_snippet": "int[] primes = {{BLANK}}2, 3, 5, 7};",
+            "correct_answer": "{",
+            "options": ["[", "(", "{", "<"],
+            "explanation": "A tömb literálokat kapcsos zárójelek `{}` közé írjuk."
+        }
+    },
+    {
+        "title": "String tömb",
+        "description": "Mi a hiányzó típus a nevek tárolásához?",
+        "hint": "Szöveges típus.",
+        "q_type": "fill_in_blank",
+        "difficulty_rating": 700,
+        "language": "java",
+        "concept": {"arrays": 1.0, "basics": 0.8},
+        "content": {
+            "code_snippet": "{{BLANK}}[] names = {\"Anna\", \"Bela\"};",
+            "correct_answer": "String",
+            "options": ["String", "char", "Text", "int"],
+            "explanation": "Szövegek tárolására a `String` osztályt használjuk."
+        }
+    },
+    {
+        "title": "Utasítás lezárása",
+        "description": "Mi hiányzik a sor végéről?",
+        "hint": "Minden utasítás végére kell.",
+        "q_type": "fill_in_blank",
+        "difficulty_rating": 600,
+        "language": "java",
+        "concept": {"arrays": 0.5, "basics": 1.0},
+        "content": {
+            "code_snippet": "double[] prices = new double[10]{{BLANK}}",
+            "correct_answer": ";",
+            "options": [":", ".", ";", ","],
+            "explanation": "Java-ban az utasításokat pontosvesszővel `;` zárjuk le."
+        }
+    },
+    {
+        "title": "Main metódus argumentum",
+        "description": "Hogyan néz ki a main metódus paramétere?",
+        "hint": "Stringek tömbje.",
+        "q_type": "fill_in_blank",
+        "difficulty_rating": 750,
+        "language": "java",
+        "concept": {"arrays": 0.8, "functions": 0.5},
+        "content": {
+            "code_snippet": "public static void main(String{{BLANK}} args)",
+            "correct_answer": "[]",
+            "options": ["()", "{}", "[]", "<>"],
+            "explanation": "A main metódus `String[] args` paramétert vár (parancssori argumentumok)."
+        }
+    },
+    {
+        "title": "Értékadás",
+        "description": "Melyik operátorral adunk értéket a tömb egy elemének?",
+        "hint": "Hozzárendelés.",
+        "q_type": "fill_in_blank",
+        "difficulty_rating": 650,
+        "language": "java",
+        "concept": {"arrays": 1.0, "basics": 0.7},
+        "content": {
+            "code_snippet": "arr[0] {{BLANK}} 100;",
+            "correct_answer": "=",
+            "options": ["==", ":=", "=", "->"],
+            "explanation": "Az `=` jel az értékadás operátora Java-ban."
+        }
+    },
+    {
+        "title": "Tömb hossza",
+        "description": "Melyik tulajdonság adja vissza a tömb elemeinek számát?",
+        "hint": "Hossz angolul.",
+        "q_type": "fill_in_blank",
+        "difficulty_rating": 850,
+        "language": "java",
+        "concept": {"arrays": 1.0, "basics": 0.6},
+        "content": {
+            "code_snippet": "int size = myArr.{{BLANK}};",
+            "correct_answer": "length",
+            "options": ["size", "length", "count", "getSize()"],
+            "explanation": "Tömböknél a `length` mező (nem metódus!) tárolja a méretet."
+        }
+    },
+    {
+        "title": "Utolsó elem indexe",
+        "description": "Hogyan számítjuk ki az utolsó indexet?",
+        "hint": "A hossz mínusz egy.",
+        "q_type": "fill_in_blank",
+        "difficulty_rating": 900,
+        "language": "java",
+        "concept": {"arrays": 1.0, "basics": 0.7},
+        "content": {
+            "code_snippet": "int last = arr[arr.length {{BLANK}} 1];",
+            "correct_answer": "-",
+            "options": ["+", "-", "*", "%"],
+            "explanation": "Mivel az indexelés 0-tól indul, az utolsó elem indexe a `hossz - 1`."
+        }
+    },
+    {
+        "title": "Típusmegadás allokációnál",
+        "description": "Milyen típust kell írni a new után?",
+        "hint": "Ugyanaz, mint a deklarációnál.",
+        "q_type": "fill_in_blank",
+        "difficulty_rating": 850,
+        "language": "java",
+        "concept": {"arrays": 1.0, "basics": 0.6},
+        "content": {
+            "code_snippet": "double[] data = new {{BLANK}}[20];",
+            "correct_answer": "double",
+            "options": ["int", "float", "double", "Array"],
+            "explanation": "A `new` kulcsszó után meg kell ismételni a tömb típusát: `new double[...]`."
+        }
+    },
+    {
+        "title": "Első elem indexe",
+        "description": "Mi az első elem indexe?",
+        "hint": "A legkisebb nem negatív egész.",
+        "q_type": "fill_in_blank",
+        "difficulty_rating": 800,
+        "language": "java",
+        "concept": {"arrays": 1.0, "basics": 0.5},
+        "content": {
+            "code_snippet": "System.out.println(arr[{{BLANK}}]);",
+            "correct_answer": "0",
+            "options": ["1", "0", "-1", "first"],
+            "explanation": "Java-ban a tömbök 0-tól indexelődnek."
+        }
+    },
+    {
+        "title": "Mátrix elérés",
+        "description": "Hogyan érjük el a 2D tömb 0. sorának 0. elemét?",
+        "hint": "Második dimenzió indexe.",
+        "q_type": "fill_in_blank",
+        "difficulty_rating": 950,
+        "language": "java",
+        "concept": {"arrays": 1.0, "basics": 0.6},
+        "content": {
+            "code_snippet": "int val = matrix[0]{{BLANK}}0];",
+            "correct_answer": "[",
+            "options": ["{", "(", "[", ","],
+            "explanation": "Többdimenziós tömböknél minden dimenziót külön szögletes zárójelbe teszünk: `[0][0]`."
+        }
+    },
+    {
+        "title": "Ciklus léptetés",
+        "description": "Hogyan növeljük a ciklusváltozót a tömb bejárásakor?",
+        "hint": "Increment operátor.",
+        "q_type": "fill_in_blank",
+        "difficulty_rating": 900,
+        "language": "java",
+        "concept": {"arrays": 0.8, "loops": 1.0},
+        "content": {
+            "code_snippet": "for (int i = 0; i < arr.length; i{{BLANK}})",
+            "correct_answer": "++",
+            "options": ["+", "++", "+= 1", "--"],
+            "explanation": "Az `i++` operátor növeli eggyel a ciklusváltozót minden iteráció végén."
+        }
+    },
+    {
+        "title": "Karakter tömb",
+        "description": "Milyen típusú tömb tárol karaktereket?",
+        "hint": "Primitív karakter típus.",
+        "q_type": "fill_in_blank",
+        "difficulty_rating": 850,
+        "language": "java",
+        "concept": {"arrays": 1.0, "basics": 0.8},
+        "content": {
+            "code_snippet": "{{BLANK}}[] letters = {'a', 'b', 'c'};",
+            "correct_answer": "char",
+            "options": ["String", "Character", "char", "text"],
+            "explanation": "A `char` primitív típus használatos egyes karakterek tárolására."
+        }
+    },
+    {
+        "title": "Indexelési hiba",
+        "description": "Melyik kivételt dobja a Java érvénytelen index esetén?",
+        "hint": "Rövidítés: AIOOBE.",
+        "q_type": "fill_in_blank",
+        "difficulty_rating": 980,
+        "language": "java",
+        "concept": {"arrays": 1.0, "oop": 0.4},
+        "content": {
+            "code_snippet": "catch (ArrayIndexOutOfBounds{{BLANK}} e)",
+            "correct_answer": "Exception",
+            "options": ["Error", "Exception", "Event", "Handler"],
+            "explanation": "A teljes osztálynév `ArrayIndexOutOfBoundsException`."
+        }
+    },
+    {
+        "title": "For-each szintaxis",
+        "description": "Melyik karakter választja el a változót és a tömböt a for-each ciklusban?",
+        "hint": "Kettőspont.",
+        "q_type": "fill_in_blank",
+        "difficulty_rating": 1050,
+        "language": "java",
+        "concept": {"arrays": 0.7, "loops": 1.0},
+        "content": {
+            "code_snippet": "for (int num {{BLANK}} numbers)",
+            "correct_answer": ":",
+            "options": ["in", ":", "->", "="],
+            "explanation": "Java-ban a `for (Típus változó : tömb)` szintaxist használjuk a bejárásra."
+        }
+    },
+    {
+        "title": "Ciklus feltétel",
+        "description": "Meddig fusson a ciklus indexe?",
+        "hint": "Szigorúan kisebb.",
+        "q_type": "fill_in_blank",
+        "difficulty_rating": 1020,
+        "language": "java",
+        "concept": {"arrays": 0.8, "loops": 1.0},
+        "content": {
+            "code_snippet": "for (int i = 0; i {{BLANK}} arr.length; i++)",
+            "correct_answer": "<",
+            "options": ["<=", "<", ">", "=="],
+            "explanation": "Mivel az indexelés 0-tól indul, az utolsó érvényes index a `length - 1`, tehát `i < length`."
+        }
+    },
+    {
+        "title": "Összegzés",
+        "description": "Melyik operátorral adjuk hozzá az aktuális elemet az összeghez?",
+        "hint": "Összeadás és értékadás egyben.",
+        "q_type": "fill_in_blank",
+        "difficulty_rating": 1100,
+        "language": "java",
+        "concept": {"arrays": 0.8, "loops": 0.8, "logic": 0.5},
+        "content": {
+            "code_snippet": "sum {{BLANK}} arr[i];",
+            "correct_answer": "+=",
+            "options": ["+", "=", "+=", "++"],
+            "explanation": "A `+=` operátor hozzáadja a jobb oldali értéket a bal oldali változóhoz."
+        }
+    },
+    {
+        "title": "Null ellenőrzés",
+        "description": "Hogyan vizsgáljuk meg, hogy a tömb létezik-e?",
+        "hint": "Egyenlőség vizsgálat.",
+        "q_type": "fill_in_blank",
+        "difficulty_rating": 1150,
+        "language": "java",
+        "concept": {"arrays": 0.7, "logic": 1.0},
+        "content": {
+            "code_snippet": "if (arr {{BLANK}} null) return;",
+            "correct_answer": "==",
+            "options": ["=", "==", "equals", "is"],
+            "explanation": "Referencia típusoknál a `==` vizsgálja, hogy a változó értéke `null`-e."
+        }
+    },
+    {
+        "title": "2D tömb inicializálás",
+        "description": "Mi hiányzik a mátrix literál elejéről?",
+        "hint": "Blokk kezdete.",
+        "q_type": "fill_in_blank",
+        "difficulty_rating": 1180,
+        "language": "java",
+        "concept": {"arrays": 1.0, "basics": 0.6},
+        "content": {
+            "code_snippet": "int[][] m = {{BLANK}} {1, 2}, {3, 4} };",
+            "correct_answer": "{",
+            "options": ["(", "[", "{", "<"],
+            "explanation": "A külső tömböt is kapcsos zárójellel `{` kell kezdeni."
+        }
+    },
+    {
+        "title": "While ciklus feltétel",
+        "description": "Melyik tulajdonságra hivatkozunk a feltételben?",
+        "hint": "A tömb mérete.",
+        "q_type": "fill_in_blank",
+        "difficulty_rating": 1080,
+        "language": "java",
+        "concept": {"arrays": 0.8, "loops": 1.0},
+        "content": {
+            "code_snippet": "while (i < arr.{{BLANK}})",
+            "correct_answer": "length",
+            "options": ["size", "length", "count", "limit"],
+            "explanation": "A ciklusnak addig kell futnia, amíg az index kisebb, mint a tömb hossza (`length`)."
+        }
+    },
+    {
+        "title": "Tömb elem null vizsgálata",
+        "description": "Hogyan ellenőrizzük, hogy egy elem nem null?",
+        "hint": "Nem egyenlő.",
+        "q_type": "fill_in_blank",
+        "difficulty_rating": 1120,
+        "language": "java",
+        "concept": {"arrays": 0.8, "logic": 1.0},
+        "content": {
+            "code_snippet": "if (names[i] != {{BLANK}})",
+            "correct_answer": "null",
+            "options": ["0", "false", "null", "void"],
+            "explanation": "Objektum tömbök elemei (pl. String) `null` értékűek, ha nincsenek inicializálva."
+        }
+    },
+    {
+        "title": "Értékmódosítás szorzással",
+        "description": "Melyik operátorral szorozzuk meg a tömb elemét?",
+        "hint": "Szorzás.",
+        "q_type": "fill_in_blank",
+        "difficulty_rating": 1150,
+        "language": "java",
+        "concept": {"arrays": 0.8, "basics": 0.8},
+        "content": {
+            "code_snippet": "arr[i] = arr[i] {{BLANK}} 2;",
+            "correct_answer": "*",
+            "options": ["x", "*", "^", "%"],
+            "explanation": "A `*` a szorzás operátora Java-ban."
+        }
+    },
+    {
+        "title": "Tömb kiíratása",
+        "description": "Melyik Arrays metódus alakítja Stringgé a tömböt?",
+        "hint": "Szöveggé alakít.",
+        "q_type": "fill_in_blank",
+        "difficulty_rating": 1250,
+        "language": "java",
+        "concept": {"arrays": 1.0, "basics": 0.5},
+        "content": {
+            "code_snippet": "System.out.println(Arrays.{{BLANK}}(arr));",
+            "correct_answer": "toString",
+            "options": ["toString", "print", "asList", "copy"],
+            "explanation": "Az `Arrays.toString()` metódus olvasható formátumban adja vissza a tömb tartalmát."
+        }
+    },
+    {
+        "title": "Rendezés",
+        "description": "Melyik metódus rendezi a tömböt?",
+        "hint": "Angolul 'rendez'.",
+        "q_type": "fill_in_blank",
+        "difficulty_rating": 1220,
+        "language": "java",
+        "concept": {"arrays": 1.0, "functions": 0.6},
+        "content": {
+            "code_snippet": "Arrays.{{BLANK}}(arr);",
+            "correct_answer": "sort",
+            "options": ["order", "sort", "arrange", "rank"],
+            "explanation": "Az `Arrays.sort()` metódus növekvő sorrendbe rendezi a tömb elemeit."
+        }
+    },
+    {
+        "title": "2D tömb deklaráció",
+        "description": "Hány oszlopa van a mátrixnak?",
+        "hint": "A második zárójelben lévő szám.",
+        "q_type": "fill_in_blank",
+        "difficulty_rating": 1300,
+        "language": "java",
+        "concept": {"arrays": 1.0, "basics": 0.6},
+        "content": {
+            "code_snippet": "int[][] m = new int[3][{{BLANK}}]; // 3 sor, 4 oszlop",
+            "correct_answer": "4",
+            "options": ["3", "4", "0", "12"],
+            "explanation": "A deklaráció `new int[sorok][oszlopok]`, tehát a 4-es kell ide."
+        }
+    },
+    {
+        "title": "Tömb másolása",
+        "description": "Melyik Arrays metódus készít másolatot?",
+        "hint": "Másolás angolul + Of.",
+        "q_type": "fill_in_blank",
+        "difficulty_rating": 1350,
+        "language": "java",
+        "concept": {"arrays": 1.0, "functions": 0.7},
+        "content": {
+            "code_snippet": "int[] copy = Arrays.{{BLANK}}(original, original.length);",
+            "correct_answer": "copyOf",
+            "options": ["copy", "clone", "copyOf", "duplicate"],
+            "explanation": "Az `Arrays.copyOf()` létrehoz egy új tömböt az eredeti elemeivel."
+        }
+    },
+    {
+        "title": "Maximum keresés",
+        "description": "Milyen relációs jelet használunk maximum kereséshez?",
+        "hint": "Nagyobb mint.",
+        "q_type": "fill_in_blank",
+        "difficulty_rating": 1280,
+        "language": "java",
+        "concept": {"arrays": 0.8, "logic": 1.0},
+        "content": {
+            "code_snippet": "if (arr[i] {{BLANK}} max) max = arr[i];",
+            "correct_answer": ">",
+            "options": ["<", ">", "==", "!="],
+            "explanation": "Ha az aktuális elem nagyobb (`>`) mint az eddigi maximum, frissítjük a maximumot."
+        }
+    },
+    {
+        "title": "Keresés megszakítása",
+        "description": "Melyik utasítással lépünk ki a ciklusból találat esetén?",
+        "hint": "Törés.",
+        "q_type": "fill_in_blank",
+        "difficulty_rating": 1250,
+        "language": "java",
+        "concept": {"arrays": 0.7, "loops": 0.9, "logic": 0.6},
+        "content": {
+            "code_snippet": "if (arr[i] == target) {{BLANK}};",
+            "correct_answer": "break",
+            "options": ["stop", "exit", "break", "return"],
+            "explanation": "A `break` utasítás azonnal befejezi a ciklus futását."
+        }
+    },
+    {
+        "title": "Bináris keresés",
+        "description": "Melyik metódus végzi a gyors keresést rendezett tömbön?",
+        "hint": "Kettőzéses keresés.",
+        "q_type": "fill_in_blank",
+        "difficulty_rating": 1380,
+        "language": "java",
+        "concept": {"arrays": 1.0, "functions": 0.8},
+        "content": {
+            "code_snippet": "int idx = Arrays.{{BLANK}}(sortedArr, key);",
+            "correct_answer": "binarySearch",
+            "options": ["search", "find", "binarySearch", "linearSearch"],
+            "explanation": "Az `Arrays.binarySearch()` hatékony (logaritmikus) keresést valósít meg rendezett tömbökön."
+        }
+    },
+    {
+        "title": "Belső ciklus határa",
+        "description": "Meddig fusson a belső ciklus egy mátrix bejárásakor?",
+        "hint": "Az aktuális sor hossza.",
+        "q_type": "fill_in_blank",
+        "difficulty_rating": 1400,
+        "language": "java",
+        "concept": {"arrays": 1.0, "loops": 1.0},
+        "content": {
+            "code_snippet": "for (int j = 0; j < matrix[i].{{BLANK}}; j++)",
+            "correct_answer": "length",
+            "options": ["size", "length", "width", "col"],
+            "explanation": "A `matrix[i]` maga is egy tömb (a sor), így annak a `length` tulajdonsága adja az oszlopok számát."
+        }
+    },
+    {
+        "title": "Rendszer szintű másolás",
+        "description": "Mi az 5. paramétere a System.arraycopy metódusnak?",
+        "hint": "Mennyi elemet másoljunk.",
+        "q_type": "fill_in_blank",
+        "difficulty_rating": 1450,
+        "language": "java",
+        "concept": {"arrays": 1.0, "functions": 0.5},
+        "content": {
+            "code_snippet": "System.arraycopy(src, 0, dest, 0, src.{{BLANK}});",
+            "correct_answer": "length",
+            "options": ["size", "length", "end", "capacity"],
+            "explanation": "A `System.arraycopy` utolsó paramétere a másolandó elemek száma (length)."
+        }
+    },
+    {
+        "title": "Varargs (Változó argumentum)",
+        "description": "Hogyan jelöljük a varargs paramétert?",
+        "hint": "Három pont.",
+        "q_type": "fill_in_blank",
+        "difficulty_rating": 1420,
+        "language": "java",
+        "concept": {"arrays": 0.8, "functions": 1.0},
+        "content": {
+            "code_snippet": "public void fun(int{{BLANK}} nums)",
+            "correct_answer": "...",
+            "options": ["[]", "...", "->", "*"],
+            "explanation": "A `...` (ellipszis) jelöli a varargs paramétert, amelyet a Java tömbként kezel."
+        }
+    },
+    {
+        "title": "Fűrészfogas tömb",
+        "description": "Hogyan deklarálunk jagged array-t (ahol a sorok hossza eltérő)?",
+        "hint": "Csak az első dimenziót adjuk meg.",
+        "q_type": "fill_in_blank",
+        "difficulty_rating": 1500,
+        "language": "java",
+        "concept": {"arrays": 1.0, "basics": 0.8},
+        "content": {
+            "code_snippet": "int[][] jagged = new int[3]{{BLANK}};",
+            "correct_answer": "[]",
+            "options": ["[]", "[0]", "{}", ""],
+            "explanation": "Jagged array létrehozásakor csak az első dimenziót (sorok száma) adjuk meg: `new int[3][]`."
+        }
+    },
+    {
+        "title": "Anonim tömb",
+        "description": "Mi a hiányzó típus az anonim tömb létrehozásakor?",
+        "hint": "Egész szám típus.",
+        "q_type": "fill_in_blank",
+        "difficulty_rating": 1480,
+        "language": "java",
+        "concept": {"arrays": 1.0, "basics": 0.7},
+        "content": {
+            "code_snippet": "process(new {{BLANK}}[] {1, 2, 3});",
+            "correct_answer": "int",
+            "options": ["Array", "int", "Integer", "var"],
+            "explanation": "Anonim tömb létrehozásához is meg kell adni a típust: `new int[] {...}`."
+        }
+    },
+    {
+        "title": "Típuskonverzió (Cast)",
+        "description": "Hogyan kényszerítjük a típust String-re egy Object tömb eleménél?",
+        "hint": "Zárójelben a típus.",
+        "q_type": "fill_in_blank",
+        "difficulty_rating": 1460,
+        "language": "java",
+        "concept": {"arrays": 0.8, "oop": 0.9},
+        "content": {
+            "code_snippet": "String s = ({{BLANK}}) objs[0];",
+            "correct_answer": "String",
+            "options": ["String", "Object", "ToString", "Cast"],
+            "explanation": "Ha egy Object tömb Stringet tartalmaz, explicit castolás szükséges: `(String)`."
+        }
+    },
+    {
+        "title": "Reflekció (Reflection)",
+        "description": "Melyik metódussal hozunk létre tömböt futásidőben reflekcióval?",
+        "hint": "Új példány.",
+        "q_type": "fill_in_blank",
+        "difficulty_rating": 1600,
+        "language": "java",
+        "concept": {"arrays": 0.6, "oop": 1.0},
+        "content": {
+            "code_snippet": "Object arr = Array.{{BLANK}}(String.class, 10);",
+            "correct_answer": "newInstance",
+            "options": ["create", "newInstance", "alloc", "make"],
+            "explanation": "A `java.lang.reflect.Array.newInstance` metódus hoz létre dinamikusan tömböt."
+        }
+    },
+    {
+        "title": "Stream API",
+        "description": "Hogyan készítünk Stream-et egy tömbből?",
+        "hint": "A metódus neve a fogalom neve.",
+        "q_type": "fill_in_blank",
+        "difficulty_rating": 1550,
+        "language": "java",
+        "concept": {"arrays": 0.7, "functions": 0.8},
+        "content": {
+            "code_snippet": "Arrays.{{BLANK}}(arr).forEach(System.out::println);",
+            "correct_answer": "stream",
+            "options": ["list", "stream", "flow", "iterate"],
+            "explanation": "Az `Arrays.stream(arr)` metódus alakítja a tömböt Stream-mé a Java 8+ API-ban."
+        }
+    },
+    {
+        "title": "Mély kiíratás",
+        "description": "Melyik metódus írja ki a többdimenziós tömbök tartalmát rekurzívan?",
+        "hint": "Deep.",
+        "q_type": "fill_in_blank",
+        "difficulty_rating": 1520,
+        "language": "java",
+        "concept": {"arrays": 1.0, "basics": 0.5},
+        "content": {
+            "code_snippet": "System.out.println(Arrays.{{BLANK}}(matrix));",
+            "correct_answer": "deepToString",
+            "options": ["toString", "deepToString", "printAll", "recursiveString"],
+            "explanation": "Az `Arrays.deepToString()` képes a beágyazott tömböket is szövegesen megjeleníteni."
+        }
+    }
+]

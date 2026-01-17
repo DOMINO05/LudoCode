@@ -1,0 +1,873 @@
+[
+    {
+        "title": "Logikai ÉS operátor",
+        "description": "Melyik szimbólum jelöli a Java nyelvben a logikai ÉS (AND) műveletet?",
+        "hint": "Ez az operátor csak akkor ad igazat, ha mindkét oldala igaz.",
+        "q_type": "theory",
+        "difficulty_rating": 600,
+        "language": "java",
+        "concept": {
+            "logic": 1.0,
+            "basics": 0.5
+        },
+        "content": {
+            "options": [
+                "&",
+                "&&",
+                "AND",
+                "||"
+            ],
+            "correct_answer": "&&",
+            "explanation": "A Javaban a '&&' jelöli a logikai ÉS műveletet, míg a '&' a bitenkénti ÉS."
+        }
+    },
+    {
+        "title": "Logikai VAGY operátor",
+        "description": "Melyik szimbólum jelöli a Java nyelvben a logikai VAGY (OR) műveletet?",
+        "hint": "Két függőleges vonal.",
+        "q_type": "theory",
+        "difficulty_rating": 600,
+        "language": "java",
+        "concept": {
+            "logic": 1.0,
+            "basics": 0.5
+        },
+        "content": {
+            "options": [
+                "||",
+                "//",
+                "OR",
+                "::"
+            ],
+            "correct_answer": "||",
+            "explanation": "A '||' szimbólum a logikai VAGY operátor, amely igazat ad, ha legalább az egyik feltétel igaz."
+        }
+    },
+    {
+        "title": "Tagadás operátor",
+        "description": "Melyik operátor fordítja meg egy logikai kifejezés értékét (NOT)?",
+        "hint": "Felkiáltójel.",
+        "q_type": "theory",
+        "difficulty_rating": 650,
+        "language": "java",
+        "concept": {
+            "logic": 1.0,
+            "basics": 0.5
+        },
+        "content": {
+            "options": [
+                "-",
+                "not",
+                "~",
+                "!"
+            ],
+            "correct_answer": "!",
+            "explanation": "A '!' operátor a logikai tagadás (negálás), amely az igazat hamissá, a hamist igazzá teszi."
+        }
+    },
+    {
+        "title": "Egyenlőség vizsgálat",
+        "description": "Melyik operátorral vizsgáljuk meg két primitív érték egyenlőségét egy feltételben?",
+        "hint": "Nem az értékadás jele.",
+        "q_type": "theory",
+        "difficulty_rating": 650,
+        "language": "java",
+        "concept": {
+            "logic": 1.0,
+            "basics": 0.6
+        },
+        "content": {
+            "options": [
+                "=",
+                "==",
+                "equals",
+                ":="
+            ],
+            "correct_answer": "==",
+            "explanation": "A '==' operátor szolgál az összehasonlításra, míg az '=' értékadásra való."
+        }
+    },
+    {
+        "title": "Boolean literálok",
+        "description": "Melyik a két lehetséges értéke egy `boolean` típusú változónak Javaban?",
+        "hint": "Angolul az igaz és hamis.",
+        "q_type": "theory",
+        "difficulty_rating": 700,
+        "language": "java",
+        "concept": {
+            "logic": 1.0,
+            "basics": 0.8
+        },
+        "content": {
+            "options": [
+                "1 és 0",
+                "true és false",
+                "yes és no",
+                "T és F"
+            ],
+            "correct_answer": "true és false",
+            "explanation": "A Java boolean típus csak a `true` vagy `false` értékeket veheti fel (kisbetűvel)."
+        }
+    },
+    {
+        "title": "Nem egyenlő operátor",
+        "description": "Hogyan írjuk le helyesen azt a feltételt, hogy 'A nem egyenlő B-vel'?",
+        "hint": "A tagadás és az egyenlőség jele együtt.",
+        "q_type": "theory",
+        "difficulty_rating": 700,
+        "language": "java",
+        "concept": {
+            "logic": 1.0,
+            "basics": 0.5
+        },
+        "content": {
+            "options": [
+                "A <> B",
+                "A != B",
+                "A NOT B",
+                "A ! B"
+            ],
+            "correct_answer": "A != B",
+            "explanation": "A '!=' operátor jelenti a 'nem egyenlő' vizsgálatot Javaban."
+        }
+    },
+    {
+        "title": "Feltételes utasítás kulcsszava",
+        "description": "Melyik kulcsszóval kezdünk egy feltételes elágazást?",
+        "hint": "Angolul 'ha'.",
+        "q_type": "theory",
+        "difficulty_rating": 750,
+        "language": "java",
+        "concept": {
+            "logic": 0.8,
+            "basics": 1.0
+        },
+        "content": {
+            "options": [
+                "when",
+                "check",
+                "if",
+                "loop"
+            ],
+            "correct_answer": "if",
+            "explanation": "Az `if` kulcsszó vezeti be a feltételes utasítást."
+        }
+    },
+    {
+        "title": "Alternatív ág",
+        "description": "Melyik kulcsszó jelöli az 'egyébként' ágat egy feltételes szerkezetben?",
+        "hint": "Akkor fut le, ha az if feltétele hamis.",
+        "q_type": "theory",
+        "difficulty_rating": 750,
+        "language": "java",
+        "concept": {
+            "logic": 0.8,
+            "basics": 1.0
+        },
+        "content": {
+            "options": [
+                "otherwise",
+                "then",
+                "else",
+                "stop"
+            ],
+            "correct_answer": "else",
+            "explanation": "Az `else` ág hajtódik végre, ha a hozzá tartozó `if` feltétele hamisnak bizonyul."
+        }
+    },
+    {
+        "title": "Feltétel típusa",
+        "description": "Milyen típusú kifejezésnek KELL lennie egy `if` utasítás zárójelében?",
+        "hint": "Csak két értéke lehet.",
+        "q_type": "theory",
+        "difficulty_rating": 850,
+        "language": "java",
+        "concept": {
+            "logic": 1.0,
+            "basics": 0.5
+        },
+        "content": {
+            "options": [
+                "int (0 vagy 1)",
+                "String",
+                "boolean",
+                "Bármilyen objektum"
+            ],
+            "correct_answer": "boolean",
+            "explanation": "Java-ban (ellentétben a C++-szal) a feltételeknek szigorúan `boolean` típusúnak kell lenniük."
+        }
+    },
+    {
+        "title": "Nagyobb vagy egyenlő",
+        "description": "Melyik a helyes szintaxis a 'nagyobb vagy egyenlő' vizsgálatra?",
+        "hint": "A sorrend számít: először az irány, aztán az egyenlőség.",
+        "q_type": "theory",
+        "difficulty_rating": 850,
+        "language": "java",
+        "concept": {
+            "logic": 1.0,
+            "basics": 0.4
+        },
+        "content": {
+            "options": [
+                "=>",
+                ">=",
+                ">>",
+                "geq"
+            ],
+            "correct_answer": ">=",
+            "explanation": "A helyes operátor a `>=`. A `=>` szintaxisilag hibás (vagy más nyelvekben lambda)."
+        }
+    },
+    {
+        "title": "Ternáris operátor jele",
+        "description": "Melyik szimbólumpár alkotja a feltételes (ternáris) operátort?",
+        "hint": "Egy kérdés és egy válasz elválasztó.",
+        "q_type": "theory",
+        "difficulty_rating": 900,
+        "language": "java",
+        "concept": {
+            "logic": 1.0,
+            "basics": 0.3
+        },
+        "content": {
+            "options": [
+                "? :",
+                "& |",
+                "->",
+                "::"
+            ],
+            "correct_answer": "? :",
+            "explanation": "A ternáris operátor formája: `feltétel ? érték_ha_igaz : érték_ha_hamis`."
+        }
+    },
+    {
+        "title": "Logikai precedencia alap",
+        "description": "Melyik műveletnek van magasabb prioritása (kötési erőssége) zárójelezés nélkül?",
+        "hint": "A szorzás analógiájára gondolj a matekban.",
+        "q_type": "theory",
+        "difficulty_rating": 950,
+        "language": "java",
+        "concept": {
+            "logic": 1.0
+        },
+        "content": {
+            "options": [
+                "&& (ÉS)",
+                "|| (VAGY)",
+                "Egyforma erősségűek",
+                "Balról jobbra dől el"
+            ],
+            "correct_answer": "&& (ÉS)",
+            "explanation": "A logikai ÉS (`&&`) erősebben köt, mint a logikai VAGY (`||`), hasonlóan a szorzáshoz az összeadással szemben."
+        }
+    },
+    {
+        "title": "String egyenlőség",
+        "description": "Hogyan hasonlítunk össze két String tartalmát helyesen logikai szempontból?",
+        "hint": "A == az objektum azonosságot (memóriacímet) vizsgálja!",
+        "q_type": "theory",
+        "difficulty_rating": 980,
+        "language": "java",
+        "concept": {
+            "logic": 0.7,
+            "oop": 0.5
+        },
+        "content": {
+            "options": [
+                "str1 == str2",
+                "str1.equals(str2)",
+                "str1 = str2",
+                "str1.compare(str2)"
+            ],
+            "correct_answer": "str1.equals(str2)",
+            "explanation": "Objektumok tartalmának összehasonlítására az `.equals()` metódust használjuk, a `==` csak a referenciákat vetné össze."
+        }
+    },
+    {
+        "title": "Switch feltétel",
+        "description": "Melyik utasítás használható többágú elágazás tömör leírására egyetlen változó értéke alapján?",
+        "hint": "Kapcsoló.",
+        "q_type": "theory",
+        "difficulty_rating": 880,
+        "language": "java",
+        "concept": {
+            "logic": 0.9,
+            "basics": 0.5
+        },
+        "content": {
+            "options": [
+                "select",
+                "switch",
+                "choose",
+                "case-of"
+            ],
+            "correct_answer": "switch",
+            "explanation": "A `switch` utasítás teszi lehetővé egy változó értékének vizsgálatát több `case` ágon keresztül."
+        }
+    },
+    {
+        "title": "Negálás eredménye",
+        "description": "Mi az eredménye a `!(5 > 3)` kifejezésnek?",
+        "hint": "Az állítás (5 > 3) igaz, ennek vesszük a tagadását.",
+        "q_type": "theory",
+        "difficulty_rating": 820,
+        "language": "java",
+        "concept": {
+            "logic": 1.0
+        },
+        "content": {
+            "options": [
+                "true",
+                "false",
+                "null",
+                "Fordítási hiba"
+            ],
+            "correct_answer": "false",
+            "explanation": "Mivel 5 nagyobb 3-nál (igaz), a tagadás (`!`) ezt hamisra (`false`) változtatja."
+        }
+    },
+    {
+        "title": "Else if használata",
+        "description": "Hogyan fűzünk össze több feltételt, ha az első nem teljesül?",
+        "hint": "Ha az első nem jó, de van egy B tervünk...",
+        "q_type": "theory",
+        "difficulty_rating": 850,
+        "language": "java",
+        "concept": {
+            "logic": 0.9,
+            "basics": 0.6
+        },
+        "content": {
+            "options": [
+                "else check",
+                "elif",
+                "else if",
+                "then if"
+            ],
+            "correct_answer": "else if",
+            "explanation": "Javaban (eltérően pl. a Python `elif`-jétől) a helyes szintaxis az `else if`."
+        }
+    },
+    {
+        "title": "Rövidzár (Short-circuit) ÉS",
+        "description": "Mit jelent a 'rövidzár' kiértékelés az `A && B` kifejezésben?",
+        "hint": "Ha A hamis, számít-e B?",
+        "q_type": "theory",
+        "difficulty_rating": 1050,
+        "language": "java",
+        "concept": {
+            "logic": 1.0,
+            "basics": 0.3
+        },
+        "content": {
+            "options": [
+                "Mindkét oldal mindig kiértékelődik.",
+                "Ha A hamis, B-t már nem értékeli ki.",
+                "Ha A igaz, B-t már nem értékeli ki.",
+                "Fordított sorrendben értékel."
+            ],
+            "correct_answer": "Ha A hamis, B-t már nem értékeli ki.",
+            "explanation": "Mivel az ÉS műveletnél ha az egyik tag hamis, az egész hamis, így felesleges a második tagot vizsgálni (optimization)."
+        }
+    },
+    {
+        "title": "De Morgan törvénye 1.",
+        "description": "Mivel ekvivalens logikailag a `!(A && B)` kifejezés?",
+        "hint": "A tagadás 'bemegy' a zárójelbe, és megfordítja az operátort.",
+        "q_type": "theory",
+        "difficulty_rating": 1100,
+        "language": "java",
+        "concept": {
+            "logic": 1.0
+        },
+        "content": {
+            "options": [
+                "!A && !B",
+                "!A || !B",
+                "A || B",
+                "!A && B"
+            ],
+            "correct_answer": "!A || !B",
+            "explanation": "De Morgan törvénye szerint egy ÉS kapcsolat tagadása a tagadások VAGY kapcsolata."
+        }
+    },
+    {
+        "title": "XOR (Kizáró VAGY)",
+        "description": "Melyik operátor jelöli a kizáró VAGY (XOR) műveletet Javaban?",
+        "hint": "Akkor igaz, ha a két operandus különbözik.",
+        "q_type": "theory",
+        "difficulty_rating": 1150,
+        "language": "java",
+        "concept": {
+            "logic": 1.0
+        },
+        "content": {
+            "options": [
+                "^^",
+                "xor",
+                "^",
+                "%"
+            ],
+            "correct_answer": "^",
+            "explanation": "A `^` (kalap) jelöli a XOR műveletet, amely boolean típusokon logikai kizáró vagyként működik."
+        }
+    },
+    {
+        "title": "Rövidzár VAGY",
+        "description": "Mikor NEM értékeli ki a Java a `A || B` kifejezés jobb oldalát (B-t)?",
+        "hint": "Mikor biztos az eredmény már az első tag alapján?",
+        "q_type": "theory",
+        "difficulty_rating": 1050,
+        "language": "java",
+        "concept": {
+            "logic": 1.0
+        },
+        "content": {
+            "options": [
+                "Ha A igaz.",
+                "Ha A hamis.",
+                "Soha, mindig kiértékeli.",
+                "Ha B null."
+            ],
+            "correct_answer": "Ha A igaz.",
+            "explanation": "Ha az első operandus igaz, a VAGY kifejezés eredménye biztosan igaz, így a jobb oldal futtatása elmarad."
+        }
+    },
+    {
+        "title": "Fall-through a switch-ben",
+        "description": "Mi történik, ha egy `switch` `case` ágából hiányzik a `break` utasítás?",
+        "hint": "Átesik a következőre?",
+        "q_type": "theory",
+        "difficulty_rating": 1020,
+        "language": "java",
+        "concept": {
+            "logic": 0.8,
+            "basics": 0.5
+        },
+        "content": {
+            "options": [
+                "Fordítási hiba.",
+                "Kilép a switch-ből.",
+                "Végrehajtja a következő case utasításait is.",
+                "Kivételt dob."
+            ],
+            "correct_answer": "Végrehajtja a következő case utasításait is.",
+            "explanation": "Ezt hívják 'fall-through'-nak: a vezérlés továbbfolyik a következő `case` címkére a `break` hiányában."
+        }
+    },
+    {
+        "title": "Összetett feltétel",
+        "description": "Hogyan írjuk le: 'x legyen 1 és 10 között' (határokat beleértve)?",
+        "hint": "A matekos 1 <= x <= 10 nem működik közvetlenül.",
+        "q_type": "theory",
+        "difficulty_rating": 1000,
+        "language": "java",
+        "concept": {
+            "logic": 1.0,
+            "basics": 0.4
+        },
+        "content": {
+            "options": [
+                "1 <= x <= 10",
+                "x >= 1 && x <= 10",
+                "x BETWEEN 1 AND 10",
+                "x >= 1 || x <= 10"
+            ],
+            "correct_answer": "x >= 1 && x <= 10",
+            "explanation": "Programozásban két külön relációt kell összekapcsolni logikai ÉS operátorral."
+        }
+    },
+    {
+        "title": "String null ellenőrzés",
+        "description": "Melyik a biztonságos sorrend a logikai kifejezésben, hogy elkerüljük a NullPointerException-t?",
+        "hint": "Először azt ellenőrizd, hogy létezik-e, csak aztán, hogy mit tartalmaz.",
+        "q_type": "theory",
+        "difficulty_rating": 1180,
+        "language": "java",
+        "concept": {
+            "logic": 1.0,
+            "oop": 0.4
+        },
+        "content": {
+            "options": [
+                "str.length() > 0 && str != null",
+                "str != null && str.length() > 0",
+                "Mindegy, a Java megoldja.",
+                "str != null || str.length() > 0"
+            ],
+            "correct_answer": "str != null && str.length() > 0",
+            "explanation": "A rövidzár miatt, ha `str != null` hamis, a jobb oldal (ami hibát dobna null esetén) nem fut le."
+        }
+    },
+    {
+        "title": "De Morgan 2.",
+        "description": "Mivel ekvivalens a `!(A || B)` kifejezés?",
+        "hint": "Sem A, sem B.",
+        "q_type": "theory",
+        "difficulty_rating": 1120,
+        "language": "java",
+        "concept": {
+            "logic": 1.0
+        },
+        "content": {
+            "options": [
+                "!A || !B",
+                "!A && !B",
+                "A && B",
+                "!A || B"
+            ],
+            "correct_answer": "!A && !B",
+            "explanation": "De Morgan törvénye: VAGY kapcsolat tagadása a tagadások ÉS kapcsolata."
+        }
+    },
+    {
+        "title": "Bitenkénti vs Logikai ÉS",
+        "description": "Mi a különbség `boolean` operandusok esetén a `&` és a `&&` között?",
+        "hint": "Az egyik lusta (short-circuit), a másik mohó.",
+        "q_type": "theory",
+        "difficulty_rating": 1250,
+        "language": "java",
+        "concept": {
+            "logic": 1.0,
+            "basics": 0.6
+        },
+        "content": {
+            "options": [
+                "Nincs különbség.",
+                "A & mindig kiértékeli mindkét oldalt.",
+                "A && mindig kiértékeli mindkét oldalt.",
+                "A & csak számokon működik."
+            ],
+            "correct_answer": "A & mindig kiértékeli mindkét oldalt.",
+            "explanation": "Logikai kontextusban a `&` nem alkalmaz rövidzárat, tehát a jobb oldali kifejezés is mindig lefut (pl. mellékhatások miatt fontos)."
+        }
+    },
+    {
+        "title": "Boolean objektum null",
+        "description": "Mit eredményez a `if (boolObj)` kifejezés, ha a `Boolean boolObj` értéke `null`?",
+        "hint": "Auto-unboxing veszélyei.",
+        "q_type": "theory",
+        "difficulty_rating": 1280,
+        "language": "java",
+        "concept": {
+            "logic": 0.8,
+            "oop": 0.7
+        },
+        "content": {
+            "options": [
+                "Hamisnak tekinti.",
+                "Igaznak tekinti.",
+                "NullPointerException-t dob.",
+                "Fordítási hiba."
+            ],
+            "correct_answer": "NullPointerException-t dob.",
+            "explanation": "Az unboxing során a Java megpróbálja meghívni a `.booleanValue()`-t, ami null referencián kivételt okoz."
+        }
+    },
+    {
+        "title": "Lebegőpontos összehasonlítás",
+        "description": "Miért veszélyes a `d1 == d2` logikai vizsgálat `double` típusoknál?",
+        "hint": "Hogyan tárolja a gép a tizedeseket? (IEEE 754)",
+        "q_type": "theory",
+        "difficulty_rating": 1300,
+        "language": "java",
+        "concept": {
+            "logic": 0.8,
+            "basics": 0.7
+        },
+        "content": {
+            "options": [
+                "Túl lassú.",
+                "Szintaktikai hiba.",
+                "Pontatlanság miatt váratlanul hamis lehet.",
+                "Mindig igazat ad."
+            ],
+            "correct_answer": "Pontatlanság miatt váratlanul hamis lehet.",
+            "explanation": "A lebegőpontos kerekítési hibák miatt két számított érték ritkán pontosan egyenlő; helyette egy epszilon környezetet vizsgálunk."
+        }
+    },
+    {
+        "title": "Precedencia: XOR vs AND",
+        "description": "Melyik köt erősebben: a bitenkénti/logikai ÉS (`&`) vagy a kizáró VAGY (`^`)?",
+        "hint": "Az ÉS (szorzás jellegű) általában erős.",
+        "q_type": "theory",
+        "difficulty_rating": 1350,
+        "language": "java",
+        "concept": {
+            "logic": 1.0
+        },
+        "content": {
+            "options": [
+                "A ^ erősebb.",
+                "A & erősebb.",
+                "Egyforma erősek.",
+                "Balról jobbra dől el."
+            ],
+            "correct_answer": "A & erősebb.",
+            "explanation": "A precedencia sorrend: `&` (ÉS) > `^` (XOR) > `|` (VAGY)."
+        }
+    },
+    {
+        "title": "Mellékhatás feltételben",
+        "description": "Mi lesz az 'a' értéke a `if (false && ++a > 0)` után, ha 'a' kezdetben 0 volt?",
+        "hint": "Rövidzár szabály.",
+        "q_type": "theory",
+        "difficulty_rating": 1220,
+        "language": "java",
+        "concept": {
+            "logic": 1.0,
+            "basics": 0.6
+        },
+        "content": {
+            "options": [
+                "0",
+                "1",
+                "-1",
+                "Fordítási hiba"
+            ],
+            "correct_answer": "0",
+            "explanation": "A rövidzár (`&&`) miatt, mivel a bal oldal `false`, a jobb oldal (`++a`) sosem hajtódik végre, így 'a' értéke nem változik."
+        }
+    },
+    {
+        "title": "Fordított logika (Unless)",
+        "description": "Hogyan valósítanád meg az 'unless' (hacsak nem) logikát Javaban: `doSomething() unless condition`?",
+        "hint": "Akkor fusson, ha a feltétel NEM igaz.",
+        "q_type": "theory",
+        "difficulty_rating": 1250,
+        "language": "java",
+        "concept": {
+            "logic": 1.0
+        },
+        "content": {
+            "options": [
+                "if (condition) doSomething();",
+                "if (!condition) doSomething();",
+                "unless (condition) doSomething();",
+                "while (condition) doSomething();"
+            ],
+            "correct_answer": "if (!condition) doSomething();",
+            "explanation": "Az 'unless A' jelentése logikailag ekvivalens az 'if not A'-val."
+        }
+    },
+    {
+        "title": "Egyenlőség tranzitivitás",
+        "description": "Igaz-e mindig objektumoknál, hogy ha `a.equals(b)` és `b.equals(c)`, akkor `a.equals(c)`?",
+        "hint": "Az equals szerződése (contract).",
+        "q_type": "theory",
+        "difficulty_rating": 1320,
+        "language": "java",
+        "concept": {
+            "logic": 0.6,
+            "oop": 0.9
+        },
+        "content": {
+            "options": [
+                "Nem, soha.",
+                "Csak Stringeknél.",
+                "Igen, az equals kontraktus előírja.",
+                "Csak ha ugyanaz a típus."
+            ],
+            "correct_answer": "Igen, az equals kontraktus előírja.",
+            "explanation": "Az Object.equals specifikációja megköveteli a tranzitivitást, bár hibás implementáció esetén ez sérülhet."
+        }
+    },
+    {
+        "title": "Logikai komplementer",
+        "description": "Miben különbözik a `!` és a `~` operátor?",
+        "hint": "Boolean vs Bitminta.",
+        "q_type": "theory",
+        "difficulty_rating": 1380,
+        "language": "java",
+        "concept": {
+            "logic": 0.9,
+            "basics": 0.5
+        },
+        "content": {
+            "options": [
+                "Nincs különbség.",
+                "A ! logikai (boolean), a ~ bitenkénti komplementer.",
+                "A ~ csak negatív számokra működik.",
+                "A ! bitenként fordít."
+            ],
+            "correct_answer": "A ! logikai (boolean), a ~ bitenkénti komplementer.",
+            "explanation": "A `!` csak boolean-on értelmezett (igaz/hamis), a `~` egész számok bitjeit forgatja át (0->1, 1->0)."
+        }
+    },
+    {
+        "title": "Logikai optimalizáció",
+        "description": "Mit tesz a fordító a `if (false && method())` kóddal?",
+        "hint": "Dead code elimination.",
+        "q_type": "theory",
+        "difficulty_rating": 1420,
+        "language": "java",
+        "concept": {
+            "logic": 1.0,
+            "basics": 0.4
+        },
+        "content": {
+            "options": [
+                "Lefordítja, és futáskor ellenőriz.",
+                "Fordítási hibát ad.",
+                "Optimalizálja (kihagyja), mivel a kód elérhetetlen.",
+                "Warningot ad, de benne hagyja."
+            ],
+            "correct_answer": "Optimalizálja (kihagyja), mivel a kód elérhetetlen.",
+            "explanation": "Konstans kifejezéseknél a fordító felismeri, hogy a feltétel sosem teljesül, és a 'dead code'-ot gyakran ki sem generálja a bájtkódba."
+        }
+    },
+    {
+        "title": "Identity vs Equality",
+        "description": "Melyik állítás igaz a `new Boolean(true) == new Boolean(true)` kifejezésre?",
+        "hint": "Két különböző 'doboz' a memóriában.",
+        "q_type": "theory",
+        "difficulty_rating": 1450,
+        "language": "java",
+        "concept": {
+            "logic": 0.7,
+            "oop": 0.8
+        },
+        "content": {
+            "options": [
+                "Igaz (true).",
+                "Hamis (false).",
+                "Fordítási hiba.",
+                "Futásidejű hiba."
+            ],
+            "correct_answer": "Hamis (false).",
+            "explanation": "A `new` kulcsszó mindig új objektumpéldányt hoz létre, és a `==` a referenciákat (memóriacímeket) hasonlítja össze, amelyek különböznek."
+        }
+    },
+    {
+        "title": "Összetett értékadás logikával",
+        "description": "Mit jelent a `boolA |= boolB` kifejezés Javaban?",
+        "hint": "Rövidített értékadás.",
+        "q_type": "theory",
+        "difficulty_rating": 1410,
+        "language": "java",
+        "concept": {
+            "logic": 1.0,
+            "basics": 0.6
+        },
+        "content": {
+            "options": [
+                "boolA = boolA || boolB",
+                "boolA = boolA | boolB",
+                "boolA = boolB",
+                "Szintaktikai hiba"
+            ],
+            "correct_answer": "boolA = boolA | boolB",
+            "explanation": "Az összetett értékadás a nem-rövidzáró `|` operátort használja, tehát `boolA = boolA | boolB`. (Mindig kiértékeli a jobb oldalt)."
+        }
+    },
+    {
+        "title": "NaN összehasonlítás",
+        "description": "Mi az eredménye a `x == x` vizsgálatnak, ha x értéke `Double.NaN`?",
+        "hint": "A NaN (Not a Number) egy speciális érték.",
+        "q_type": "theory",
+        "difficulty_rating": 1500,
+        "language": "java",
+        "concept": {
+            "logic": 0.9,
+            "basics": 0.5
+        },
+        "content": {
+            "options": [
+                "true",
+                "false",
+                "Exception",
+                "null"
+            ],
+            "correct_answer": "false",
+            "explanation": "Az IEEE 754 szabvány szerint a NaN semmivel sem egyenlő, még önmagával sem. Ezért `NaN == NaN` mindig false."
+        }
+    },
+    {
+        "title": "Assert logika",
+        "description": "Mikor fut le az `assert feltétel : üzenet;` második része (az üzenet)?",
+        "hint": "Az assert célja a hibák jelzése.",
+        "q_type": "theory",
+        "difficulty_rating": 1480,
+        "language": "java",
+        "concept": {
+            "logic": 0.8,
+            "basics": 0.6
+        },
+        "content": {
+            "options": [
+                "Ha a feltétel igaz.",
+                "Ha a feltétel hamis.",
+                "Mindig.",
+                "Soha, csak dokumentáció."
+            ],
+            "correct_answer": "Ha a feltétel hamis.",
+            "explanation": "Az `assert` akkor dob `AssertionError`-t (az üzenettel), ha a feltétel hamis (tehát az állítás nem teljesült)."
+        }
+    },
+    {
+        "title": "Integer Cache logika",
+        "description": "Miért lehet `Integer a = 100; Integer b = 100; a == b` igaz, miközben 200-nál hamis?",
+        "hint": "A Java gyorsítótárazza a kis számokat.",
+        "q_type": "theory",
+        "difficulty_rating": 1550,
+        "language": "java",
+        "concept": {
+            "logic": 0.6,
+            "oop": 0.9
+        },
+        "content": {
+            "options": [
+                "Véletlen.",
+                "Memória hiba.",
+                "Az Integer Cache (-128-tól 127-ig) miatt.",
+                "A 200 túlcsordul."
+            ],
+            "correct_answer": "Az Integer Cache (-128-tól 127-ig) miatt.",
+            "explanation": "A Java az Integer objektumokat -128 és 127 között cache-eli, így ebben a tartományban azonos referenciát kapunk auto-boxingnál."
+        }
+    },
+    {
+        "title": "Precedencia csapda",
+        "description": "Mi a `true || false && false` kifejezés eredménye?",
+        "hint": "Az ÉS erősebb, mint a VAGY.",
+        "q_type": "theory",
+        "difficulty_rating": 1430,
+        "language": "java",
+        "concept": {
+            "logic": 1.0
+        },
+        "content": {
+            "options": [
+                "true",
+                "false",
+                "Fordítási hiba",
+                "Nem definiált"
+            ],
+            "correct_answer": "true",
+            "explanation": "Precedencia szerint először `false && false` -> `false`. Ezután `true || false` -> `true`."
+        }
+    },
+    {
+        "title": "Feltételes típuspromóció",
+        "description": "Mi lesz a típusa a kifejezésnek: `flag ? 1 : 2.0`?",
+        "hint": "Az egyik int, a másik double.",
+        "q_type": "theory",
+        "difficulty_rating": 1520,
+        "language": "java",
+        "concept": {
+            "logic": 0.7,
+            "basics": 0.8
+        },
+        "content": {
+            "options": [
+                "int",
+                "double",
+                "Object",
+                "Attól függ, melyik ág fut le."
+            ],
+            "correct_answer": "double",
+            "explanation": "A ternáris operátor típuspromóciót végez a közös típusra fordítási időben. Mivel a `double` bővebb, az eredmény mindig `double` lesz."
+        }
+    }
+]

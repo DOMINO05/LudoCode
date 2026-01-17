@@ -1,0 +1,884 @@
+[
+    {
+        "title": "Ciklus kulcsszó",
+        "description": "Melyik kulcsszóval indítunk olyan ciklust, amely egy sorozat elemein halad végig?",
+        "hint": "Angolul: 'számára' vagy 'neki'.",
+        "q_type": "theory",
+        "difficulty_rating": 600,
+        "language": "python",
+        "concept": {
+            "loops": 1.0,
+            "basics": 0.5
+        },
+        "content": {
+            "options": [
+                "loop",
+                "foreach",
+                "for",
+                "iterate"
+            ],
+            "correct_answer": "for",
+            "explanation": "Pythonban a 'for' kulcsszó használatos az iterálható objektumok bejárására."
+        }
+    },
+    {
+        "title": "Feltételes ciklus",
+        "description": "Melyik kulcsszó szolgál olyan ciklus létrehozására, amely addig fut, amíg egy feltétel igaz?",
+        "hint": "Angolul: 'amíg'.",
+        "q_type": "theory",
+        "difficulty_rating": 600,
+        "language": "python",
+        "concept": {
+            "loops": 1.0,
+            "basics": 0.5
+        },
+        "content": {
+            "options": [
+                "when",
+                "while",
+                "until",
+                "repeat"
+            ],
+            "correct_answer": "while",
+            "explanation": "A 'while' ciklus addig ismétli a törzsét, amíg a megadott logikai feltétel True értékű."
+        }
+    },
+    {
+        "title": "Ciklus törzse",
+        "description": "Hogyan jelöljük Pythonban, hogy mely utasítások tartoznak a ciklus belsejébe?",
+        "hint": "A forma a lényeg.",
+        "q_type": "theory",
+        "difficulty_rating": 650,
+        "language": "python",
+        "concept": {
+            "loops": 1.0,
+            "basics": 0.8
+        },
+        "content": {
+            "options": [
+                "Kapcsos zárójellel {}",
+                "Behúzással (indentation)",
+                "Zárójelekkel ()",
+                "End utasítással"
+            ],
+            "correct_answer": "Behúzással (indentation)",
+            "explanation": "A Pythonban a blokkokat, így a ciklusmagot is a sor eleji behúzás (szóközök/tab) jelöli."
+        }
+    },
+    {
+        "title": "Range kezdete",
+        "description": "Ha csak egy számot adunk meg a `range()` függvénynek (pl. `range(5)`), honnan indul a számlálás?",
+        "hint": "Az informatika kedvenc kezdőszáma.",
+        "q_type": "theory",
+        "difficulty_rating": 680,
+        "language": "python",
+        "concept": {
+            "loops": 1.0,
+            "basics": 0.6
+        },
+        "content": {
+            "options": [
+                "1-től",
+                "0-tól",
+                "5-től",
+                "-1-től"
+            ],
+            "correct_answer": "0-tól",
+            "explanation": "Alapértelmezésben a range() 0-tól indul, ha nincs megadva start érték."
+        }
+    },
+    {
+        "title": "Tagság vizsgálat",
+        "description": "Melyik operátor köti össze a ciklusváltozót és a listát a `for` ciklus fejlécében?",
+        "hint": "Valamiben benne lenni.",
+        "q_type": "theory",
+        "difficulty_rating": 650,
+        "language": "python",
+        "concept": {
+            "loops": 1.0,
+            "basics": 0.7
+        },
+        "content": {
+            "options": [
+                "at",
+                "on",
+                "in",
+                "of"
+            ],
+            "correct_answer": "in",
+            "explanation": "A szintaxis: `for elem in lista:`."
+        }
+    },
+    {
+        "title": "Kettőspont szerepe",
+        "description": "Milyen írásjelnek KELL állnia a `for` vagy `while` sorának legvégén?",
+        "hint": "Ez vezeti be a blokkot.",
+        "q_type": "theory",
+        "difficulty_rating": 620,
+        "language": "python",
+        "concept": {
+            "loops": 1.0,
+            "basics": 0.8
+        },
+        "content": {
+            "options": [
+                "; (pontosvessző)",
+                ": (kettőspont)",
+                ". (pont)",
+                ", (vessző)"
+            ],
+            "correct_answer": ": (kettőspont)",
+            "explanation": "A vezérlési szerkezetek fejlécét Pythonban kettőspont zárja."
+        }
+    },
+    {
+        "title": "Végtelen ciklus",
+        "description": "Mi történik, ha a `while` ciklus feltétele sosem válik hamissá?",
+        "hint": "Az idők végezetéig...",
+        "q_type": "theory",
+        "difficulty_rating": 700,
+        "language": "python",
+        "concept": {
+            "loops": 1.0,
+            "logic": 0.3
+        },
+        "content": {
+            "options": [
+                "Szintaktikai hiba.",
+                "A ciklus egyszer sem fut le.",
+                "Végtelen ciklus (infinite loop).",
+                "A Python automatikusan leállítja."
+            ],
+            "correct_answer": "Végtelen ciklus (infinite loop).",
+            "explanation": "Ha a kilépési feltétel sosem teljesül, a program elakad a ciklusban (hacsak nincs `break`)."
+        }
+    },
+    {
+        "title": "Iterálható típusok",
+        "description": "Melyik típuson NEM lehet közvetlenül végigiterálni `for` ciklussal?",
+        "hint": "Egyetlen szám önmagában.",
+        "q_type": "theory",
+        "difficulty_rating": 750,
+        "language": "python",
+        "concept": {
+            "loops": 0.8,
+            "basics": 0.8
+        },
+        "content": {
+            "options": [
+                "List (lista)",
+                "String (szöveg)",
+                "Int (egész szám)",
+                "Range (tartomány)"
+            ],
+            "correct_answer": "Int (egész szám)",
+            "explanation": "Az 'int' típus nem iterálható (not iterable), szemben a listával, stringgel vagy range-dzsel."
+        }
+    },
+    {
+        "title": "Break utasítás",
+        "description": "Mit tesz a `break` utasítás a cikluson belül?",
+        "hint": "Azonnali stop.",
+        "q_type": "theory",
+        "difficulty_rating": 850,
+        "language": "python",
+        "concept": {
+            "loops": 1.0,
+            "logic": 0.4
+        },
+        "content": {
+            "options": [
+                "Szünetelteti a ciklust.",
+                "Azonnal kilép a ciklusból.",
+                "Átugorja a jelenlegi iterációt.",
+                "Törli a ciklus változóját."
+            ],
+            "correct_answer": "Azonnal kilép a ciklusból.",
+            "explanation": "A `break` megszakítja a legbelső ciklus futását, és a vezérlés a ciklus utáni kódra ugrik."
+        }
+    },
+    {
+        "title": "Continue utasítás",
+        "description": "Miben különbözik a `continue` a `break`-től?",
+        "hint": "Csak a mostanit hagyja ki.",
+        "q_type": "theory",
+        "difficulty_rating": 850,
+        "language": "python",
+        "concept": {
+            "loops": 1.0,
+            "logic": 0.4
+        },
+        "content": {
+            "options": [
+                "Nincs különbség.",
+                "A continue kilép a programból.",
+                "A continue csak a jelenlegi iterációt szakítja meg, és a következőre ugrik.",
+                "A continue újraindítja a ciklust elölről."
+            ],
+            "correct_answer": "A continue csak a jelenlegi iterációt szakítja meg, és a következőre ugrik.",
+            "explanation": "A `continue` átugorja a ciklusmag hátralévő részét, de nem lép ki a teljes ciklusból, hanem folytatja a kövi elemmel."
+        }
+    },
+    {
+        "title": "Range felső határ",
+        "description": "Meddig megy el a `range(1, 5)` tartomány?",
+        "hint": "Inkluzív vs Exkluzív.",
+        "q_type": "theory",
+        "difficulty_rating": 820,
+        "language": "python",
+        "concept": {
+            "loops": 1.0,
+            "basics": 0.5
+        },
+        "content": {
+            "options": [
+                "1-től 5-ig (5 is benne van).",
+                "1-től 4-ig (5 nincs benne).",
+                "0-tól 4-ig.",
+                "0-tól 5-ig."
+            ],
+            "correct_answer": "1-től 4-ig (5 nincs benne).",
+            "explanation": "Pythonban a `range` stop paramétere exkluzív, azaz a felső határ már nem része a generált sorozatnak."
+        }
+    },
+    {
+        "title": "String iteráció",
+        "description": "Mi történik, ha egy stringen iterálunk végig `for` ciklussal?",
+        "hint": "A string karakterekből áll.",
+        "q_type": "theory",
+        "difficulty_rating": 880,
+        "language": "python",
+        "concept": {
+            "loops": 0.8,
+            "basics": 0.6
+        },
+        "content": {
+            "options": [
+                "Hibát dob.",
+                "Szavanként halad.",
+                "Karakterenként halad.",
+                "A teljes szöveget adja vissza egyszer."
+            ],
+            "correct_answer": "Karakterenként halad.",
+            "explanation": "A string iterálható objektum, a ciklus egyesével veszi a karaktereit."
+        }
+    },
+    {
+        "title": "Range lépésköz",
+        "description": "Mit csinál a `range(0, 10, 2)` kifejezés?",
+        "hint": "A harmadik paraméter a step.",
+        "q_type": "theory",
+        "difficulty_rating": 900,
+        "language": "python",
+        "concept": {
+            "loops": 1.0,
+            "basics": 0.5
+        },
+        "content": {
+            "options": [
+                "0-tól 10-ig minden szám.",
+                "Páros számok 0-tól 8-ig.",
+                "Páros számok 0-tól 10-ig.",
+                "Kétszer fut le."
+            ],
+            "correct_answer": "Páros számok 0-tól 8-ig.",
+            "explanation": "A lépésköz 2, és mivel a 10 exkluzív, az utolsó generált szám a 8."
+        }
+    },
+    {
+        "title": "While feltétel",
+        "description": "Mikor fut le legalább egyszer a `while` ciklus magja?",
+        "hint": "Elöltesztelő ciklus.",
+        "q_type": "theory",
+        "difficulty_rating": 800,
+        "language": "python",
+        "concept": {
+            "loops": 1.0,
+            "logic": 0.5
+        },
+        "content": {
+            "options": [
+                "Mindig.",
+                "Ha a feltétel kezdetben Hamis.",
+                "Ha a feltétel kezdetben Igaz.",
+                "Soha."
+            ],
+            "correct_answer": "Ha a feltétel kezdetben Igaz.",
+            "explanation": "Mivel elöltesztelő ciklus, ha a feltétel az elején False, be sem lép a törzsbe."
+        }
+    },
+    {
+        "title": "Beágyazott ciklus (Nested)",
+        "description": "Mit jelent a beágyazott ciklus (nested loop)?",
+        "hint": "Matrjoska baba.",
+        "q_type": "theory",
+        "difficulty_rating": 950,
+        "language": "python",
+        "concept": {
+            "loops": 1.0,
+            "logic": 0.3
+        },
+        "content": {
+            "options": [
+                "Egymás után írt ciklusok.",
+                "Egy ciklus a másik ciklus belsejében.",
+                "Ciklus függvényben.",
+                "Rekurzív ciklus."
+            ],
+            "correct_answer": "Egy ciklus a másik ciklus belsejében.",
+            "explanation": "Akkor beszélünk beágyazásról, ha a külső ciklus magja tartalmaz egy belső ciklust."
+        }
+    },
+    {
+        "title": "Lista módosítás iteráció közben",
+        "description": "Miért veszélyes elemet törölni egy listából, miközben épp `for` ciklussal iterálunk rajta?",
+        "hint": "Az indexek elcsúsznak.",
+        "q_type": "theory",
+        "difficulty_rating": 980,
+        "language": "python",
+        "concept": {
+            "loops": 0.7,
+            "arrays": 0.8
+        },
+        "content": {
+            "options": [
+                "Teljesen biztonságos.",
+                "A lista mérete nőni fog.",
+                "Váratlan viselkedést okozhat (átugrott elemek).",
+                "Fordítási hiba."
+            ],
+            "correct_answer": "Váratlan viselkedést okozhat (átugrott elemek).",
+            "explanation": "Mivel a lista hossza és az elemek indexe megváltozik, a belső iterátor átugorhat elemeket."
+        }
+    },
+    {
+        "title": "Enumerate használata",
+        "description": "Mire jó az `enumerate()` függvény `for` ciklusban?",
+        "hint": "Ha kell az érték és a sorszám is.",
+        "q_type": "theory",
+        "difficulty_rating": 1050,
+        "language": "python",
+        "concept": {
+            "loops": 0.8,
+            "arrays": 0.6
+        },
+        "content": {
+            "options": [
+                "Gyorsítja a ciklust.",
+                "Visszaadja az indexet és az értéket is párosával.",
+                "Csak az indexeken iterál.",
+                "Rendezi a listát."
+            ],
+            "correct_answer": "Visszaadja az indexet és az értéket is párosával.",
+            "explanation": "Az enumerate(lista) (index, érték) párokat generál, így nem kell manuálisan számlálót vezetni."
+        }
+    },
+    {
+        "title": "While True minta",
+        "description": "Mi a célja a `while True:` szerkezetnek?",
+        "hint": "Önmagában végtelen, de belül...",
+        "q_type": "theory",
+        "difficulty_rating": 1020,
+        "language": "python",
+        "concept": {
+            "loops": 1.0,
+            "logic": 0.7
+        },
+        "content": {
+            "options": [
+                "Hiba, sosem használjuk.",
+                "Olyan ciklus, amiből csak `break`-kel lépünk ki.",
+                "Ez a leggyorsabb ciklus.",
+                "Csak várakozásra való."
+            ],
+            "correct_answer": "Olyan ciklus, amiből csak `break`-kel lépünk ki.",
+            "explanation": "Gyakori minta, amikor a kilépési feltétel nem az elején, hanem a ciklus közepén derül ki (do-while emuláció)."
+        }
+    },
+    {
+        "title": "Szótár iteráció",
+        "description": "Mit ad vissza alapértelmezésben a `for x in my_dict:` ciklus?",
+        "hint": "Kulcs vagy érték?",
+        "q_type": "theory",
+        "difficulty_rating": 1080,
+        "language": "python",
+        "concept": {
+            "loops": 0.7,
+            "arrays": 0.8
+        },
+        "content": {
+            "options": [
+                "A kulcsokat.",
+                "Az értékeket.",
+                "Kulcs-érték párokat.",
+                "Semmit."
+            ],
+            "correct_answer": "A kulcsokat.",
+            "explanation": "Dictionary-n való iterálás alapértelmezetten a kulcsokon (keys) halad végig."
+        }
+    },
+    {
+        "title": "Dictionary items()",
+        "description": "Hogyan iterálhatunk végig egyszerre a kulcsokon és értékeken?",
+        "hint": "Van rá metódus.",
+        "q_type": "theory",
+        "difficulty_rating": 1100,
+        "language": "python",
+        "concept": {
+            "loops": 0.7,
+            "arrays": 0.8
+        },
+        "content": {
+            "options": [
+                "my_dict.keys()",
+                "my_dict.values()",
+                "my_dict.items()",
+                "my_dict.all()"
+            ],
+            "correct_answer": "my_dict.items()",
+            "explanation": "A .items() metódus (kulcs, érték) tuple-öket ad vissza."
+        }
+    },
+    {
+        "title": "Ciklusváltozó hatóköre",
+        "description": "Mi történik a `for i in range(5):` ciklusváltozójával (`i`) a ciklus lefutása után Pythonban?",
+        "hint": "Leaking scope.",
+        "q_type": "theory",
+        "difficulty_rating": 1150,
+        "language": "python",
+        "concept": {
+            "loops": 0.8,
+            "basics": 0.6
+        },
+        "content": {
+            "options": [
+                "Törlődik a memóriából.",
+                "Elérhető marad és az utolsó értéket (4) tárolja.",
+                "Nullázódik.",
+                "Hiba, ha hivatkozunk rá."
+            ],
+            "correct_answer": "Elérhető marad és az utolsó értéket (4) tárolja.",
+            "explanation": "Pythonban (Python 3) a for ciklus változója nem lokális a ciklusra, hanem 'kiszivárog' a környező scope-ba."
+        }
+    },
+    {
+        "title": "Visszafelé iterálás",
+        "description": "Hogyan iterálunk végig egy listán fordított sorrendben a legtisztábban?",
+        "hint": "Nem a range-el való bűvészkedés.",
+        "q_type": "theory",
+        "difficulty_rating": 1120,
+        "language": "python",
+        "concept": {
+            "loops": 0.8,
+            "basics": 0.5
+        },
+        "content": {
+            "options": [
+                "range(len(lista), 0, -1)",
+                "reversed(lista)",
+                "lista.reverse()",
+                "backwards(lista)"
+            ],
+            "correct_answer": "reversed(lista)",
+            "explanation": "A `reversed()` beépített függvény visszaad egy iterátort, ami fordított sorrendben adja az elemeket."
+        }
+    },
+    {
+        "title": "Pass utasítás ciklusban",
+        "description": "Mikor hasznos a `pass` utasítás egy ciklus törzsében?",
+        "hint": "Üres blokk.",
+        "q_type": "theory",
+        "difficulty_rating": 1050,
+        "language": "python",
+        "concept": {
+            "loops": 0.6,
+            "basics": 0.8
+        },
+        "content": {
+            "options": [
+                "Ciklus megszakítására.",
+                "Ha szintaktikailag kell a ciklusmag, de nem akarunk csinálni semmit.",
+                "Végtelen ciklus létrehozására.",
+                "Debugginghoz."
+            ],
+            "correct_answer": "Ha szintaktikailag kell a ciklusmag, de nem akarunk csinálni semmit.",
+            "explanation": "Például egy 'busy wait' ciklusnál vagy vázlatírásnál, mivel üres blokk nem lehet Pythonban."
+        }
+    },
+    {
+        "title": "Off-by-one hiba",
+        "description": "Mi a leggyakoribb oka az 'off-by-one' (eggyel mellé) hibának ciklusoknál?",
+        "hint": "Indexelés határai.",
+        "q_type": "theory",
+        "difficulty_rating": 1180,
+        "language": "python",
+        "concept": {
+            "loops": 0.8,
+            "logic": 0.6
+        },
+        "content": {
+            "options": [
+                "A memória betelt.",
+                "Félreértés aközött, hogy a határ inkluzív vagy exkluzív.",
+                "Rossz adattípus.",
+                "Túl gyors a ciklus."
+            ],
+            "correct_answer": "Félreértés aközött, hogy a határ inkluzív vagy exkluzív.",
+            "explanation": "Gyakori hiba, amikor a programozó azt hiszi, a range(N) N-ig megy, pedig csak N-1-ig."
+        }
+    },
+    {
+        "title": "Else ág a ciklusban",
+        "description": "Mikor fut le a `for` vagy `while` ciklushoz tartozó `else` ág?",
+        "hint": "Nem úgy működik, mint az if-else.",
+        "q_type": "theory",
+        "difficulty_rating": 1250,
+        "language": "python",
+        "concept": {
+            "loops": 1.0,
+            "logic": 0.8
+        },
+        "content": {
+            "options": [
+                "Ha a ciklusfeltétel hamis.",
+                "Ha a ciklus `break` nélkül futott végig.",
+                "Ha a ciklusban hiba történt.",
+                "Ha a ciklus legalább egyszer lefutott."
+            ],
+            "correct_answer": "Ha a ciklus `break` nélkül futott végig.",
+            "explanation": "Ez egy Python-specifikus feature: az else blokk akkor fut le, ha a ciklus 'természetes úton' ért véget, nem szakította meg break."
+        }
+    },
+    {
+        "title": "Zip iteráció",
+        "description": "Mit tesz a `zip(lista1, lista2)` egy `for` ciklusban?",
+        "hint": "Cipzár elv.",
+        "q_type": "theory",
+        "difficulty_rating": 1220,
+        "language": "python",
+        "concept": {
+            "loops": 0.9,
+            "arrays": 0.6
+        },
+        "content": {
+            "options": [
+                "Összefűzi a két listát egymás után.",
+                "Párhuzamosan iterál a két listán, tuple-öket visszaadva.",
+                "Descartes-szorzatot képez.",
+                "Hiba, ha nem egyforma hosszúak."
+            ],
+            "correct_answer": "Párhuzamosan iterál a két listán, tuple-öket visszaadva.",
+            "explanation": "A zip elem-párokat képez (1. az 1-vel, 2. a 2-val), amíg a rövidebb lista el nem fogy."
+        }
+    },
+    {
+        "title": "List comprehension",
+        "description": "Mivel ekvivalens a `[x**2 for x in range(5)]` kifejezés?",
+        "hint": "Ez egy tömörített ciklus.",
+        "q_type": "theory",
+        "difficulty_rating": 1280,
+        "language": "python",
+        "concept": {
+            "loops": 1.0,
+            "basics": 0.5
+        },
+        "content": {
+            "options": [
+                "Egy while ciklussal.",
+                "Egy for ciklussal, ami listát épít.",
+                "Egy map függvénnyel.",
+                "Egy szűrővel."
+            ],
+            "correct_answer": "Egy for ciklussal, ami listát épít.",
+            "explanation": "A list comprehension a listaépítő for ciklus szintaktikus cukorkája (syntactic sugar)."
+        }
+    },
+    {
+        "title": "Beágyazott ciklus komplexitás",
+        "description": "Mi az időbonyolultsága két egymásba ágyazott, N-ig futó ciklusnak?",
+        "hint": "N * N.",
+        "q_type": "theory",
+        "difficulty_rating": 1300,
+        "language": "python",
+        "concept": {
+            "loops": 0.7,
+            "logic": 0.9
+        },
+        "content": {
+            "options": [
+                "O(N)",
+                "O(log N)",
+                "O(N^2)",
+                "O(2^N)"
+            ],
+            "correct_answer": "O(N^2)",
+            "explanation": "Négyzetes bonyolultság, mivel minden külső lépésnél N belső lépés történik."
+        }
+    },
+    {
+        "title": "Continue beágyazott ciklusban",
+        "description": "Melyik ciklusra hat a `continue` utasítás egy beágyazott ciklus belső részében?",
+        "hint": "Mindig a legközelebbi.",
+        "q_type": "theory",
+        "difficulty_rating": 1280,
+        "language": "python",
+        "concept": {
+            "loops": 1.0,
+            "logic": 0.6
+        },
+        "content": {
+            "options": [
+                "Csak a belső ciklusra.",
+                "Csak a külső ciklusra.",
+                "Mindkettőre.",
+                "Azt választhatjuk meg címkével."
+            ],
+            "correct_answer": "Csak a belső ciklusra.",
+            "explanation": "Pythonban a break/continue mindig a legbelső, őket tartalmazó ciklusra vonatkozik."
+        }
+    },
+    {
+        "title": "Sentinel value (Őrszem)",
+        "description": "Mire használjuk az 'őrszem' (sentinel) értéket `while` ciklusoknál?",
+        "hint": "Jelzi a végét.",
+        "q_type": "theory",
+        "difficulty_rating": 1350,
+        "language": "python",
+        "concept": {
+            "loops": 0.8,
+            "logic": 0.7
+        },
+        "content": {
+            "options": [
+                "A memória felszabadítására.",
+                "Adatfolyam végének jelzésére (pl. üres string vagy -1).",
+                "Ciklus gyorsításra.",
+                "Hiba dobására."
+            ],
+            "correct_answer": "Adatfolyam végének jelzésére (pl. üres string vagy -1).",
+            "explanation": "Olyan speciális érték, amely nem valid adat, hanem a ciklus leállását váltja ki."
+        }
+    },
+    {
+        "title": "Iterator vs Iterable",
+        "description": "Mi a különbség az Iterable és az Iterator között?",
+        "hint": "Az egyik a tároló, a másik a mutató.",
+        "q_type": "theory",
+        "difficulty_rating": 1380,
+        "language": "python",
+        "concept": {
+            "loops": 0.6,
+            "basics": 0.4,
+            "oop": 0.6
+        },
+        "content": {
+            "options": [
+                "Nincs különbség.",
+                "Iterable: amin végigmehetünk (van **iter**). Iterator: ami végigmegy (van **next**).",
+                "Az iterator lista, az iterable tuple.",
+                "Az iterable csak egyszer járható be."
+            ],
+            "correct_answer": "Iterable: amin végigmehetünk (van **iter**). Iterator: ami végigmegy (van **next**).",
+            "explanation": "Az Iterable (pl. lista) képes iterátort gyártani magából, az Iterator pedig az állapotot tárolja és a next()-re adja az elemet."
+        }
+    },
+    {
+        "title": "Next() hívása",
+        "description": "Mi történik, ha egy iterátoron meghívjuk a `next()`-et, de nincs több elem?",
+        "hint": "Ez jelzi a for ciklusnak is a végét.",
+        "q_type": "theory",
+        "difficulty_rating": 1390,
+        "language": "python",
+        "concept": {
+            "loops": 0.8,
+            "basics": 0.8
+        },
+        "content": {
+            "options": [
+                "None-t ad vissza.",
+                "Újrakezdi elölről.",
+                "StopIteration kivételt dob.",
+                "Összeomlik a program."
+            ],
+            "correct_answer": "StopIteration kivételt dob.",
+            "explanation": "A for ciklus belső működése ezen a kivételen alapul: addig hívja a next()-et, amíg StopIteration nem jön."
+        }
+    },
+    {
+        "title": "Generator expression",
+        "description": "Miben különbözik a `(x*2 for x in range(10))` a `[x*2 for x in range(10)]` kifejezéstől?",
+        "hint": "Zárójel vs Kapcsos zárójel. Memória.",
+        "q_type": "theory",
+        "difficulty_rating": 1420,
+        "language": "python",
+        "concept": {
+            "loops": 0.9,
+            "basics": 0.5
+        },
+        "content": {
+            "options": [
+                "Az első tuple-t, a második listát ad.",
+                "Az első generátor (lusta), a második lista (mohó).",
+                "Szintaktikai hiba az első.",
+                "Nincs különbség."
+            ],
+            "correct_answer": "Az első generátor (lusta), a második lista (mohó).",
+            "explanation": "A generátor kifejezés nem hozza létre az összes elemet a memóriában egyszerre, hanem igény szerint (lazy evaluation)."
+        }
+    },
+    {
+        "title": "Itertools modul",
+        "description": "Mire való a `itertools` modul?",
+        "hint": "Hatékony ciklusok.",
+        "q_type": "theory",
+        "difficulty_rating": 1450,
+        "language": "python",
+        "concept": {
+            "loops": 1.0,
+            "basics": 0.4
+        },
+        "content": {
+            "options": [
+                "Matematikai számításokra.",
+                "Memória-hatékony iterátorok és kombinatorikai eszközök gyűjteménye.",
+                "Hálózati iterációra.",
+                "String manipulációra."
+            ],
+            "correct_answer": "Memória-hatékony iterátorok és kombinatorikai eszközök gyűjteménye.",
+            "explanation": "Olyan eszközöket ad (pl. count, cycle, chain), amelyekkel gyorsan és kevés memóriával lehet bonyolult iterációkat végezni."
+        }
+    },
+    {
+        "title": "Yield kulcsszó",
+        "description": "Hogyan változtatja meg a `yield` kulcsszó a függvény működését?",
+        "hint": "Nem tér vissza végleg.",
+        "q_type": "theory",
+        "difficulty_rating": 1410,
+        "language": "python",
+        "concept": {
+            "loops": 0.8,
+            "functions": 0.8
+        },
+        "content": {
+            "options": [
+                "Megállítja a függvényt hiba nélkül.",
+                "Generátorrá alakítja: állapotmegőrzés mellett ad vissza értéket.",
+                "Aszinkronná teszi a függvényt.",
+                "Visszatér és törli a lokális változókat."
+            ],
+            "correct_answer": "Generátorrá alakítja: állapotmegőrzés mellett ad vissza értéket.",
+            "explanation": "A yield 'szünetelteti' a függvényt, elmentve a stack-et, így a következő híváskor onnan folytatódik."
+        }
+    },
+    {
+        "title": "Ciklus 'Unrolling'",
+        "description": "Mi az a Loop Unrolling optimalizáció?",
+        "hint": "Kevesebb ugrás.",
+        "q_type": "theory",
+        "difficulty_rating": 1480,
+        "language": "python",
+        "concept": {
+            "loops": 0.8,
+            "logic": 0.7
+        },
+        "content": {
+            "options": [
+                "A ciklusok törlése.",
+                "A ciklusmag többszörözése az iterációk számának csökkentése érdekében.",
+                "Végtelen ciklus készítése.",
+                "A ciklus kiszervezése külön szálra."
+            ],
+            "correct_answer": "A ciklusmag többszörözése az iterációk számának csökkentése érdekében.",
+            "explanation": "Ez csökkenti a ciklusvezérlés (feltételvizsgálat, ugrás) overhead-jét a kód méretének növekedése árán."
+        }
+    },
+    {
+        "title": "In operátor komplexitása",
+        "description": "Mi az időbonyolultsága az `if x in lista:` vizsgálatnak egy ciklus belsejében?",
+        "hint": "A lista lineáris.",
+        "q_type": "theory",
+        "difficulty_rating": 1430,
+        "language": "python",
+        "concept": {
+            "loops": 0.7,
+            "logic": 0.8,
+            "arrays": 0.6
+        },
+        "content": {
+            "options": [
+                "O(1)",
+                "O(log N)",
+                "O(N)",
+                "O(N^2)"
+            ],
+            "correct_answer": "O(N)",
+            "explanation": "Listában a keresés lineáris. Ha ez egy N-szer futó ciklusban van, a teljes kód O(N^2) lesz, ami lassú!"
+        }
+    },
+    {
+        "title": "Dictionary iteráció sorrendje",
+        "description": "Garantált-e a Dictionary iterálási sorrendje Python 3.7+ verziókban?",
+        "hint": "Régen nem volt az.",
+        "q_type": "theory",
+        "difficulty_rating": 1500,
+        "language": "python",
+        "concept": {
+            "loops": 0.6,
+            "arrays": 0.9
+        },
+        "content": {
+            "options": [
+                "Nem, véletlenszerű.",
+                "Igen, a beszúrás sorrendjét követi (insertion order).",
+                "Igen, mindig rendezett (ABC).",
+                "Csak ha OrderedDict-et használunk."
+            ],
+            "correct_answer": "Igen, a beszúrás sorrendjét követi (insertion order).",
+            "explanation": "A Python 3.7 óta nyelvi specifikáció, hogy a dict megőrzi a beszúrási sorrendet (korábban implementációs részlet volt)."
+        }
+    },
+    {
+        "title": "GIL és CPU-bound ciklusok",
+        "description": "Gyorsítja-e a Python `threading` modul a CPU-igényes ciklusokat több magon?",
+        "hint": "GIL (Global Interpreter Lock).",
+        "q_type": "theory",
+        "difficulty_rating": 1550,
+        "language": "python",
+        "concept": {
+            "loops": 0.6,
+            "basics": 0.8
+        },
+        "content": {
+            "options": [
+                "Igen, lineárisan.",
+                "Nem, a GIL miatt egyszerre csak egy szál futhat Python kódot.",
+                "Csak ha `while` ciklust használunk.",
+                "Igen, de csak Linuxon."
+            ],
+            "correct_answer": "Nem, a GIL miatt egyszerre csak egy szál futhat Python kódot.",
+            "explanation": "CPU-bound feladatoknál a threading nem segít Pythonban, sőt, a váltások miatt lassíthat. Multiprocessing kell hozzá."
+        }
+    },
+    {
+        "title": "Tail Recursion",
+        "description": "Támogatja-e a Python a Tail Call Optimization-t (rekurzió ciklussá alakítása)?",
+        "hint": "Stack overflow veszély.",
+        "q_type": "theory",
+        "difficulty_rating": 1460,
+        "language": "python",
+        "concept": {
+            "loops": 0.5,
+            "functions": 0.8
+        },
+        "content": {
+            "options": [
+                "Igen, automatikusan.",
+                "Nem, a Python megtartja a stack frame-eket a traceback miatt.",
+                "Csak dekorátorral.",
+                "Csak lambda függvényeknél."
+            ],
+            "correct_answer": "Nem, a Python megtartja a stack frame-eket a traceback miatt.",
+            "explanation": "Guido van Rossum döntése alapján a Python nem optimalizálja a farokrekurziót, így mély rekurzió helyett ciklust kell írni."
+        }
+    }
+]

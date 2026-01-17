@@ -7,9 +7,13 @@ import Dashboard from './Dashboard'
 import ProfilePage from './ProfilePage'
 import CoursesPage from './CoursesPage'
 import ShopPage from './ShopPage'
-import DevPage from './DevPage'
 import Layout from './Layout'
-import './App.css'
+import QuizManagerPage from './QuizManagerPage'
+import QuizEditorPage from './QuizEditorPage'
+import QuestionCreatorPage from './QuestionCreatorPage'
+import QuizPlayerPage from './QuizPlayerPage'
+import QuizResultsPage from './QuizResultsPage'
+import CommunityPage from './CommunityPage'
 
 function App() {
   const [session, setSession] = useState(null)
@@ -44,7 +48,13 @@ function App() {
           <Route path="/courses" element={<CoursesPage />} />
           <Route path="/shop" element={<ShopPage />} />
           <Route path="/profile" element={<ProfilePage />} />
-          <Route path="/dev" element={<DevPage />} />
+          <Route path="/quizzes" element={<QuizManagerPage />} />
+          <Route path="/quizzes/edit/:id" element={<QuizEditorPage />} />
+          <Route path="/quizzes/:quizId/new-question" element={<QuestionCreatorPage />} />
+          <Route path="/quizzes/:quizId/edit-question/:questionId" element={<QuestionCreatorPage />} />
+          <Route path="/quizzes/results/:id" element={<QuizResultsPage />} />
+          <Route path="/quiz/:code" element={<QuizPlayerPage />} />
+          <Route path="/community" element={<CommunityPage />} />
         </Route>
       )}
 

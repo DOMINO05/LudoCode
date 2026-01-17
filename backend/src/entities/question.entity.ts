@@ -28,6 +28,9 @@ export class Question {
   @Column({ type: 'text' })
   title: string;
 
+  @Column({ name: 'creator_id', type: 'uuid', nullable: true })
+  creatorId: string;
+
   @Column({ type: 'text', nullable: true })
   description: string;
 

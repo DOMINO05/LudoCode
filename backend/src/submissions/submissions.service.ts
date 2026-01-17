@@ -84,9 +84,15 @@ export class SubmissionsService {
       );
       isCorrect = submittedCode.trim() === expectedFullCode.trim();
     } else {
-      const correctAnswer = content.correct_answer;
-      if (correctAnswer) {
-        isCorrect = submittedCode.trim() === correctAnswer.trim();
+      let correctAnswer = content.correct_answer;
+      // Handle numeric index for options
+      if (typeof correctAnswer === 'number' && content.options) {
+        correctAnswer = content.options[correctAnswer];
+      }
+
+      if (correctAnswer !== undefined && correctAnswer !== null) {
+        isCorrect =
+          String(submittedCode).trim() === String(correctAnswer).trim();
       } else {
         isCorrect = false;
       }

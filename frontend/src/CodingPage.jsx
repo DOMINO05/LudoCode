@@ -44,6 +44,9 @@ export default function CodingPage() {
   // Result & Feedback
   const [result, setResult] = useState(null);
   const [showFeedback, setShowFeedback] = useState(false);
+  const [sessionStreak, setSessionStreak] = useState(0);
+
+  const comboMultiplier = sessionStreak >= 2 ? 1.3 + (sessionStreak - 2) * 0.1 : 1.0;
 
   useEffect(() => {
     if (currentLanguage) {
@@ -69,6 +72,8 @@ export default function CodingPage() {
     let url = `${API_URL}/questions/next?languageId=${currentLanguage.id}`;
     if (conceptId) {
         url = `${API_URL}/courses/${conceptId}/next-question?languageId=${currentLanguage.id}`;
+    } else if (type) {
+        url = `${API_URL}/questions/next?languageId=${currentLanguage.id}&type=${type}`;
     } else if (mode === 'dev') {
         url = `${API_URL}/questions/random?type=${type}&languageId=${currentLanguage.id}`;
     }
@@ -186,7 +191,7 @@ export default function CodingPage() {
 
     try {
         console.log(`[Frontend] Submitting answer to ${API_URL}/questions/${question.id}/submit`);
-        console.log(`[Frontend] Submission data:`, { code: submissionData });
+        console.log(`[Frontend] Submission data:`, { code: submissionData, streak: sessionStreak });
 
         const res = await fetch(`${API_URL}/questions/${question.id}/submit`, {
             method: 'POST',
@@ -194,12 +199,18 @@ export default function CodingPage() {
             'Content-Type': 'application/json',
             'Authorization': `Bearer ${session.access_token}`
             },
-            body: JSON.stringify({ code: submissionData })
+            body: JSON.stringify({ code: submissionData, streak: sessionStreak })
         });
         const data = await res.json();
         console.log(`[Frontend] Submission response:`, data);
         setResult(data);
         setShowFeedback(true);
+
+        if (data.isCorrect) {
+            setSessionStreak(prev => prev + 1);
+        } else {
+            setSessionStreak(0);
+        }
         
         refreshProfile();
 
@@ -326,8 +337,8 @@ export default function CodingPage() {
                       ? "Nincs ilyen típusú feladat az adatbázisban." 
                       : "Jelenleg nincs több feladat a szintednek megfelelően."}
               </p>
-              <button onClick={() => navigate(mode === 'dev' ? '/dev' : '/dashboard')} className="bg-blue-500 text-white font-bold py-3 px-8 rounded-full shadow-md hover:bg-blue-600 transition">
-                  {mode === 'dev' ? "Vissza a menübe" : "Vissza a Dashboardra"}
+              <button onClick={() => navigate(type ? '/courses' : '/dashboard')} className="bg-blue-500 text-white font-bold py-3 px-8 rounded-full shadow-md hover:bg-blue-600 transition">
+                  {type ? "Vissza a választóhoz" : "Vissza a Dashboardra"}
               </button>
           </div>
       );
@@ -338,12 +349,19 @@ export default function CodingPage() {
         {/* Progress Bar Area */}
         <div className="px-4 pt-4 pb-2 shrink-0 max-w-md mx-auto w-full">
             <div className="flex items-center gap-4">
-                <span className="text-2xl cursor-pointer text-slate-400 hover:text-slate-600 dark:hover:text-slate-300 transition-colors" onClick={() => navigate(mode === 'dev' ? '/dev' : '/dashboard')}>✕</span>
+                <span className="text-2xl cursor-pointer text-slate-400 hover:text-slate-600 dark:hover:text-slate-300 transition-colors" onClick={() => navigate(type ? '/courses' : '/dashboard')}>✕</span>
                 <div className="h-4 bg-slate-200 dark:bg-slate-700 rounded-full flex-grow overflow-hidden">
                     <div className="h-full bg-green-500 transition-all duration-500" style={{ width: '30%' }}></div>
                 </div>
                 <span className="text-blue-500 font-bold flex items-center" title="Sanity">🧠 {profile?.sanityPoints}%</span>
             </div>
+            {comboMultiplier > 1 && (
+                <div className="flex justify-center mt-2 animate-in slide-in-from-top-1 fade-in duration-300">
+                    <span className="bg-gradient-to-r from-orange-400 to-red-500 text-white font-bold py-1 px-4 rounded-full text-sm shadow-lg border border-orange-200 flex items-center gap-2">
+                        🔥 Combo: {comboMultiplier.toFixed(1)}x
+                    </span>
+                </div>
+            )}
         </div>
 
         {/* Main Content */}

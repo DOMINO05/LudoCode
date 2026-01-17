@@ -1,0 +1,256 @@
+import React, { useState, useEffect } from 'react';
+import { useOutletContext, useParams, useNavigate } from 'react-router-dom';
+import TheoryComponent from './question-types/TheoryComponent';
+import PredictionComponent from './question-types/PredictionComponent';
+import FillBlankComponent from './question-types/FillBlankComponent';
+import ParsonsComponent from './question-types/ParsonsComponent';
+import DebugComponent from './question-types/DebugComponent';
+import ConstructionComponent from './question-types/ConstructionComponent';
+
+const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:3000';
+
+export default function QuizPlayerPage() {
+  const { session, refreshProfile } = useOutletContext();
+  const { code: shareCode } = useParams();
+  const navigate = useNavigate();
+  
+  // Quiz State
+  const [quiz, setQuiz] = useState(null);
+  const [loading, setLoading] = useState(true);
+  const [currentIndex, setCurrentIndex] = useState(0);
+  const [isFinished, setIsFinished] = useState(false);
+  const [score, setScore] = useState(0);
+
+  // Answer State (Local for current question)
+  const [code, setCode] = useState('');
+  const [selectedOption, setSelectedOption] = useState(null);
+  const [parsonsSolution, setParsonsSolution] = useState([]);
+  
+  // Feedback State
+  const [result, setResult] = useState(null);
+  const [showFeedback, setShowFeedback] = useState(false);
+  const [submitting, setSubmitting] = useState(false);
+
+  useEffect(() => {
+    fetchQuiz();
+  }, [shareCode]);
+
+  const fetchQuiz = async () => {
+    try {
+      const res = await fetch(`${API_URL}/quizzes/code/${shareCode}`, {
+        headers: {
+          Authorization: `Bearer ${session.access_token}`,
+        },
+      });
+      if (res.ok) {
+        const data = await res.json();
+        // Sort questions initially
+        data.questions.sort((a, b) => a.orderIndex - b.orderIndex);
+        setQuiz(data);
+      } else {
+          alert('Kvíz nem található vagy nincs hozzáférésed.');
+          navigate('/dashboard');
+      }
+    } catch (err) {
+      console.error('Failed to fetch quiz', err);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const handleCheck = async () => {
+    const currentQQ = quiz.questions[currentIndex];
+    const question = currentQQ.question;
+    
+    let submissionData = null;
+    if (question.qType === 'theory' || question.qType === 'predict_output') {
+      submissionData = selectedOption;
+    } else if (question.qType === 'parsons') {
+      submissionData = JSON.stringify(parsonsSolution.map(b => b.id));
+    } else {
+      submissionData = code;
+    }
+
+    if (!submissionData && question.qType !== 'debug') {
+        alert('Kérlek adj meg egy választ!');
+        return;
+    }
+
+    setSubmitting(true);
+    try {
+      const res = await fetch(`${API_URL}/questions/${question.id}/submit`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${session.access_token}`,
+        },
+        body: JSON.stringify({ code: submissionData }),
+      });
+      const data = await res.json();
+      setResult(data);
+      setShowFeedback(true);
+      if (data.isCorrect) {
+          setScore(s => s + 1);
+      }
+      refreshProfile();
+    } catch (err) {
+      console.error('Submission failed', err);
+    } finally {
+      setSubmitting(false);
+    }
+  };
+
+  const handleNext = async () => {
+    if (currentIndex < quiz.questions.length - 1) {
+      // Reset for next question
+      setCurrentIndex(currentIndex + 1);
+      setResult(null);
+      setShowFeedback(false);
+      setCode('');
+      setSelectedOption(null);
+      setParsonsSolution([]);
+    } else {
+      // Finish the whole quiz
+      setIsFinished(true);
+
+      // Submit final attempt to quiz results
+      try {
+        await fetch(`${API_URL}/quizzes/${quiz.id}/attempt`, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            Authorization: `Bearer ${session.access_token}`,
+          },
+          body: JSON.stringify({
+            score: score + (result?.isCorrect ? 0 : 0), // Score is already updated in handleCheck
+            maxScore: quiz.questions.length,
+          }),
+        });
+      } catch (err) {
+        console.error('Failed to submit attempt', err);
+      }
+    }
+  };
+
+  if (loading) return <div className="h-screen flex items-center justify-center">Kvíz betöltése...</div>;
+  if (!quiz) return null;
+
+  const currentQQ = quiz.questions[currentIndex];
+  const progress = (currentIndex / quiz.questions.length) * 100;
+
+  if (isFinished) {
+    return (
+      <div className="h-screen flex flex-col items-center justify-center p-4">
+        <div className="bg-surface-light dark:bg-surface-dark p-12 rounded-3xl shadow-2xl text-center max-w-md w-full border border-slate-200 dark:border-slate-700">
+          <div className="text-7xl mb-6">🏆</div>
+          <h1 className="text-3xl font-extrabold mb-2">Gratulálunk!</h1>
+          <p className="text-slate-500 mb-8">Befejezted a(z) <span className="font-bold text-slate-700 dark:text-slate-200">{quiz.title}</span> kvízt.</p>
+          
+          <div className="bg-slate-100 dark:bg-slate-800 p-6 rounded-2xl mb-8">
+            <div className="text-sm text-slate-500 uppercase font-bold tracking-widest mb-1">Eredményed</div>
+            <div className="text-5xl font-black text-primary">{score} / {quiz.questions.length}</div>
+          </div>
+
+          <button
+            onClick={() => navigate('/dashboard')}
+            className="w-full bg-primary text-white py-4 rounded-2xl font-bold text-xl hover:bg-primary-dark transition-all shadow-lg"
+          >
+            Vissza a főoldalra
+          </button>
+        </div>
+      </div>
+    );
+  }
+
+  const renderQuestion = () => {
+    const question = currentQQ.question;
+    
+    switch (question.qType) {
+      case 'theory': 
+        return <TheoryComponent question={question} selectedAnswer={selectedOption} onSelect={setSelectedOption} />;
+      case 'predict_output': 
+        return <PredictionComponent question={question} selectedAnswer={selectedOption} onSelect={setSelectedOption} />;
+      case 'fill_in_blank': 
+        return <FillBlankComponent question={question} onCodeChange={setCode} />;
+      case 'parsons': 
+        return <ParsonsComponent question={question} onSolutionChange={setParsonsSolution} />;
+      case 'debug': 
+        return <DebugComponent question={question} onCodeChange={setCode} debugPhase="fix" selections={[]} onSelect={() => {}} />;
+      case 'coding': 
+        return <ConstructionComponent question={question} onCodeChange={setCode} />;
+      default: return <div>Ismeretlen kérdéstípus.</div>;
+    }
+  };
+
+  return (
+    <div className="h-screen flex flex-col bg-background-light dark:bg-background-dark">
+      {/* Progress Bar */}
+      <div className="shrink-0 bg-slate-50 dark:bg-slate-900 border-b border-slate-200 dark:border-slate-800">
+        <div className="max-w-3xl mx-auto px-4 py-3 flex items-center gap-4">
+          <div className="text-xl">🧘</div>
+          <div className="flex-1 h-3 bg-slate-200 dark:bg-slate-800 rounded-full overflow-hidden flex gap-0.5">
+            {quiz.questions.map((_, idx) => (
+              <div 
+                key={idx}
+                className={`h-full flex-1 transition-all duration-500 ${idx < currentIndex ? 'bg-primary' : idx === currentIndex ? 'bg-primary/40' : 'bg-slate-300 dark:bg-slate-700'}`}
+              />
+            ))}
+          </div>
+          <div className="text-xl">🏁</div>
+        </div>
+      </div>
+
+      <div className="flex-1 overflow-y-auto p-4 sm:p-8">
+        <div className="max-w-3xl mx-auto flex flex-col h-full">
+          <div className="flex justify-between items-center mb-8 shrink-0">
+              <div className="flex flex-col">
+                <span className="font-black text-slate-800 dark:text-slate-100 text-xl">{quiz.title}</span>
+                <span className="font-bold text-slate-400 uppercase tracking-widest text-xs">
+                    {currentIndex + 1} / {quiz.questions.length} KÉRDÉS
+                </span>
+              </div>
+              <button 
+                onClick={() => navigate('/dashboard')}
+                className="w-10 h-10 flex items-center justify-center rounded-full hover:bg-slate-100 dark:hover:bg-slate-800 text-slate-400 transition-all"
+              >
+                ✕
+              </button>
+          </div>
+
+          <div className="flex-1">
+            {renderQuestion()}
+          </div>
+
+          {/* Footer / Feedback */}
+          <div className="mt-8 pt-6 border-t border-slate-100 dark:border-slate-800 shrink-0">
+            {showFeedback && result && (
+                <div className={`mb-6 p-6 rounded-3xl flex items-start gap-4 animate-in slide-in-from-bottom-4 duration-500 ${result.isCorrect ? 'bg-green-100 text-green-800 dark:bg-green-900/40 dark:text-green-100' : 'bg-red-100 text-red-800 dark:bg-red-900/40 dark:text-red-100'}`}>
+                    <div className="text-4xl">{result.isCorrect ? '🎉' : '💡'}</div>
+                    <div className="flex-1">
+                        <div className="font-black text-xl mb-1">{result.isCorrect ? 'Helyes!' : 'Sajnos nem...'}</div>
+                        <div className="text-sm opacity-80 font-medium">
+                            {result.isCorrect ? 'Szép munka, csak így tovább!' : (result.output || 'Próbáld újra a következőnél!')}
+                        </div>
+                    </div>
+                </div>
+            )}
+
+            <div className="flex justify-end">
+                <button
+                    onClick={showFeedback ? handleNext : handleCheck}
+                    disabled={submitting}
+                    className={`px-12 py-4 rounded-2xl font-black text-xl transition-all shadow-xl hover:scale-105 active:scale-95 disabled:opacity-50 ${
+                        showFeedback 
+                        ? 'bg-slate-800 text-white dark:bg-white dark:text-slate-900' 
+                        : 'bg-primary text-white'
+                    }`}
+                >
+                    {submitting ? 'Ellenőrzés...' : showFeedback ? (currentIndex === quiz.questions.length - 1 ? 'Befejezés' : 'Következő') : 'Ellenőrzés'}
+                </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}

@@ -1,0 +1,882 @@
+[
+    {
+        "title": "Lista létrehozása",
+        "description": "Melyik szimbólumpárral hozunk létre üres listát Pythonban?",
+        "hint": "Szögletes.",
+        "q_type": "theory",
+        "difficulty_rating": 600,
+        "language": "python",
+        "concept": {
+            "arrays": 1.0,
+            "basics": 0.5
+        },
+        "content": {
+            "options": [
+                "()",
+                "{}",
+                "[]",
+                "<>"
+            ],
+            "correct_answer": "[]",
+            "explanation": "A Python listákat szögletes zárójelekkel [] jelöljük."
+        }
+    },
+    {
+        "title": "Első elem indexe",
+        "description": "Hányas indexen található a lista legelső eleme?",
+        "hint": "Az informatikában 0-tól számolunk.",
+        "q_type": "theory",
+        "difficulty_rating": 600,
+        "language": "python",
+        "concept": {
+            "arrays": 1.0,
+            "basics": 0.5
+        },
+        "content": {
+            "options": [
+                "1",
+                "0",
+                "-1",
+                "A hossztól függ"
+            ],
+            "correct_answer": "0",
+            "explanation": "A Python (és sok más nyelv) 0-bázisú indexelést használ."
+        }
+    },
+    {
+        "title": "Tuple jelölése",
+        "description": "Melyik zárójel típus jellemző a Tuple (n-es) adatszerkezetre?",
+        "hint": "Kerek.",
+        "q_type": "theory",
+        "difficulty_rating": 650,
+        "language": "python",
+        "concept": {
+            "arrays": 1.0,
+            "basics": 0.5
+        },
+        "content": {
+            "options": [
+                "[]",
+                "{}",
+                "()",
+                "// //"
+            ],
+            "correct_answer": "()",
+            "explanation": "A tuple-öket kerek zárójelekkel () hozzuk létre (bár néha elhagyhatók)."
+        }
+    },
+    {
+        "title": "Elem hozzáadása",
+        "description": "Melyik metódussal adunk hozzá egy új elemet a lista végére?",
+        "hint": "Angolul 'hozzácsatol'.",
+        "q_type": "theory",
+        "difficulty_rating": 650,
+        "language": "python",
+        "concept": {
+            "arrays": 1.0,
+            "functions": 0.3
+        },
+        "content": {
+            "options": [
+                "add()",
+                "push()",
+                "insert()",
+                "append()"
+            ],
+            "correct_answer": "append()",
+            "explanation": "A `.append(elem)` metódus fűzi hozzá az új elemet a lista végéhez."
+        }
+    },
+    {
+        "title": "Lista hossza",
+        "description": "Melyik függvénnyel kérdezzük le egy lista elemeinek számát?",
+        "hint": "Length rövidítése.",
+        "q_type": "theory",
+        "difficulty_rating": 620,
+        "language": "python",
+        "concept": {
+            "arrays": 1.0,
+            "basics": 0.5
+        },
+        "content": {
+            "options": [
+                "count()",
+                "size()",
+                "len()",
+                "length()"
+            ],
+            "correct_answer": "len()",
+            "explanation": "A `len()` beépített függvény adja vissza a gyűjtemények (így a listák) hosszát."
+        }
+    },
+    {
+        "title": "Szótár jelölése",
+        "description": "Melyik karakterrel definiálunk egy Dictionary-t (szótárat)?",
+        "hint": "Kapcsos.",
+        "q_type": "theory",
+        "difficulty_rating": 680,
+        "language": "python",
+        "concept": {
+            "arrays": 1.0,
+            "basics": 0.5
+        },
+        "content": {
+            "options": [
+                "[]",
+                "()",
+                "{}",
+                "<>"
+            ],
+            "correct_answer": "{}",
+            "explanation": "A Dictionary (és a Set) kapcsos zárójeleket {} használ."
+        }
+    },
+    {
+        "title": "Indexelő operátor",
+        "description": "Milyen zárójelek közé írjuk az indexet egy elem lekéréséhez?",
+        "hint": "Ugyanaz, mint a lista jele.",
+        "q_type": "theory",
+        "difficulty_rating": 650,
+        "language": "python",
+        "concept": {
+            "arrays": 1.0,
+            "basics": 0.5
+        },
+        "content": {
+            "options": [
+                "()",
+                "{}",
+                "[]",
+                "||"
+            ],
+            "correct_answer": "[]",
+            "explanation": "Az indexelést szögletes zárójelekkel végezzük: `lista[0]`."
+        }
+    },
+    {
+        "title": "Vegyes típusok",
+        "description": "Tárolhat-e egy Python lista különböző típusú elemeket (pl. számot és szöveget egyszerre)?",
+        "hint": "A Python dinamikusan típusos.",
+        "q_type": "theory",
+        "difficulty_rating": 700,
+        "language": "python",
+        "concept": {
+            "arrays": 1.0,
+            "basics": 0.8
+        },
+        "content": {
+            "options": [
+                "Nem, csak egyfélét.",
+                "Igen, bármilyen típust vegyesen.",
+                "Csak számokat.",
+                "Csak objektumokat, primitíveket nem."
+            ],
+            "correct_answer": "Igen, bármilyen típust vegyesen.",
+            "explanation": "A Python listák heterogének, tehát vegyesen tárolhatnak int-et, string-et, vagy akár más listákat is."
+        }
+    },
+    {
+        "title": "Negatív index",
+        "description": "Mit jelent a `-1` index egy listánál?",
+        "hint": "A végétől számolunk.",
+        "q_type": "theory",
+        "difficulty_rating": 820,
+        "language": "python",
+        "concept": {
+            "arrays": 1.0,
+            "basics": 0.6
+        },
+        "content": {
+            "options": [
+                "Az első elemet.",
+                "Hibát dob.",
+                "Az utolsó elemet.",
+                "A lista törlését."
+            ],
+            "correct_answer": "Az utolsó elemet.",
+            "explanation": "A negatív indexelés hátulról indul, a -1 az utolsó elem, -2 az utolsó előtti."
+        }
+    },
+    {
+        "title": "Lista rendezése",
+        "description": "Melyik lista-metódus rendezi sorba az elemeket 'helyben' (in-place)?",
+        "hint": "A metódus neve a cselekvés.",
+        "q_type": "theory",
+        "difficulty_rating": 850,
+        "language": "python",
+        "concept": {
+            "arrays": 1.0,
+            "functions": 0.4
+        },
+        "content": {
+            "options": [
+                "order()",
+                "sorted()",
+                "sort()",
+                "arrange()"
+            ],
+            "correct_answer": "sort()",
+            "explanation": "A `.sort()` metódus módosítja az eredeti listát. A `sorted()` függvény új listát ad vissza."
+        }
+    },
+    {
+        "title": "Elem törlése érték szerint",
+        "description": "Hogyan töröljük az első előfordulását egy konkrét értéknek (pl. 'alma') a listából?",
+        "hint": "Eltávolít.",
+        "q_type": "theory",
+        "difficulty_rating": 880,
+        "language": "python",
+        "concept": {
+            "arrays": 1.0,
+            "functions": 0.4
+        },
+        "content": {
+            "options": [
+                "delete('alma')",
+                "remove('alma')",
+                "pop('alma')",
+                "discard('alma')"
+            ],
+            "correct_answer": "remove('alma')",
+            "explanation": "A `.remove(x)` törli az első x értékű elemet. A `pop` index szerint töröl."
+        }
+    },
+    {
+        "title": "Szeletelés alapjai",
+        "description": "Mit ad vissza a `lista[1:3]` kifejezés?",
+        "hint": "Indextől-indexig, a felső határ exkluzív.",
+        "q_type": "theory",
+        "difficulty_rating": 900,
+        "language": "python",
+        "concept": {
+            "arrays": 1.0,
+            "basics": 0.5
+        },
+        "content": {
+            "options": [
+                "Az 1., 2. és 3. elemet.",
+                "Az 1. és 2. indexű elemet.",
+                "A 2. és 3. elemet.",
+                "Az 1. és 3. elemet."
+            ],
+            "correct_answer": "Az 1. és 2. indexű elemet.",
+            "explanation": "A slicing `[start:stop]` a start-tól indul (inkluzív) és a stop-ig tart (exkluzív), tehát az 1-es és 2-es indexű elemeket adja."
+        }
+    },
+    {
+        "title": "Tagság vizsgálat",
+        "description": "Melyik operátorral döntjük el, hogy egy elem benne van-e a listában?",
+        "hint": "Angol elöljárószó.",
+        "q_type": "theory",
+        "difficulty_rating": 850,
+        "language": "python",
+        "concept": {
+            "arrays": 1.0,
+            "logic": 0.6
+        },
+        "content": {
+            "options": [
+                "has",
+                "contains",
+                "exists",
+                "in"
+            ],
+            "correct_answer": "in",
+            "explanation": "Az `in` operátor (pl. `if x in lista:`) ellenőrzi a tagságot."
+        }
+    },
+    {
+        "title": "Szótár elérés",
+        "description": "Hogyan kérjük le egy Dictionary-ből a 'nev' kulcshoz tartozó értéket?",
+        "hint": "Kulcsot használunk index helyett.",
+        "q_type": "theory",
+        "difficulty_rating": 880,
+        "language": "python",
+        "concept": {
+            "arrays": 1.0,
+            "basics": 0.5
+        },
+        "content": {
+            "options": [
+                "dict.nev",
+                "dict('nev')",
+                "dict['nev']",
+                "dict->nev"
+            ],
+            "correct_answer": "dict['nev']",
+            "explanation": "A szótárak elemeit szögletes zárójelben megadott kulccsal érjük el."
+        }
+    },
+    {
+        "title": "String darabolás",
+        "description": "Melyik string metódus ad vissza listát a szeparátorok mentén szétvágva?",
+        "hint": "Szétvág.",
+        "q_type": "theory",
+        "difficulty_rating": 950,
+        "language": "python",
+        "concept": {
+            "arrays": 0.8,
+            "basics": 0.6
+        },
+        "content": {
+            "options": [
+                "slice()",
+                "cut()",
+                "explode()",
+                "split()"
+            ],
+            "correct_answer": "split()",
+            "explanation": "A `.split()` metódus darabolja fel a szöveget (pl. szóközök mentén) és listát készít belőle."
+        }
+    },
+    {
+        "title": "Tuple módosítása",
+        "description": "Mi történik, ha megpróbáljuk módosítani egy Tuple elemét: `t[0] = 5`?",
+        "hint": "A tuple immutable.",
+        "q_type": "theory",
+        "difficulty_rating": 920,
+        "language": "python",
+        "concept": {
+            "arrays": 1.0,
+            "basics": 0.7
+        },
+        "content": {
+            "options": [
+                "Sikeresen módosul.",
+                "Létrejön egy új tuple.",
+                "TypeError hibát dob.",
+                "Figyelmeztetést kapunk."
+            ],
+            "correct_answer": "TypeError hibát dob.",
+            "explanation": "A Tuple megváltoztathatatlan (immutable) típus, elemei nem írhatók felül létrehozás után."
+        }
+    },
+    {
+        "title": "Lista megfordítása",
+        "description": "Mi a leggyakoribb Pythonos 'idióm' (szeletelés) egy lista megfordítására?",
+        "hint": "Lépésköz paraméter.",
+        "q_type": "theory",
+        "difficulty_rating": 1050,
+        "language": "python",
+        "concept": {
+            "arrays": 1.0,
+            "basics": 0.6
+        },
+        "content": {
+            "options": [
+                "list.reverse()",
+                "[::-1]",
+                "[-1:0]",
+                "flip()"
+            ],
+            "correct_answer": "[::-1]",
+            "explanation": "A `lista[::-1]` szeletelés a végétől az elejéig haladva (-1 lépésköz) adja vissza a lista másolatát."
+        }
+    },
+    {
+        "title": "List Comprehension",
+        "description": "Mire való a `[x*2 for x in lista]` szintaxis?",
+        "hint": "Tömör listaépítés.",
+        "q_type": "theory",
+        "difficulty_rating": 1100,
+        "language": "python",
+        "concept": {
+            "arrays": 1.0,
+            "loops": 0.7
+        },
+        "content": {
+            "options": [
+                "Ciklus gyorsításra.",
+                "Új lista létrehozására transzformációval (listaértelmezés).",
+                "A lista szűrésére.",
+                "Szótár készítésére."
+            ],
+            "correct_answer": "Új lista létrehozására transzformációval (listaértelmezés).",
+            "explanation": "A List Comprehension tömör módja új listák generálásának egy meglévő iterálható objektumból."
+        }
+    },
+    {
+        "title": "Biztonságos szótár lekérés",
+        "description": "Melyik Dictionary metódus ad vissza `None`-t (vagy default értéket) hiba helyett, ha a kulcs nincs benne?",
+        "hint": "Megszerez.",
+        "q_type": "theory",
+        "difficulty_rating": 1020,
+        "language": "python",
+        "concept": {
+            "arrays": 1.0,
+            "functions": 0.4
+        },
+        "content": {
+            "options": [
+                "find()",
+                "check()",
+                "get()",
+                "fetch()"
+            ],
+            "correct_answer": "get()",
+            "explanation": "A `.get(key)` metódus nem dob KeyError-t hiányzó kulcs esetén, hanem None-t (vagy megadott alapértéket) ad."
+        }
+    },
+    {
+        "title": "Halmaz (Set) tulajdonsága",
+        "description": "Mi történik, ha egy listát halmazzá (Set) alakítunk: `set([1, 2, 2, 3])`?",
+        "hint": "Egyediség.",
+        "q_type": "theory",
+        "difficulty_rating": 1050,
+        "language": "python",
+        "concept": {
+            "arrays": 1.0,
+            "logic": 0.3
+        },
+        "content": {
+            "options": [
+                "A sorrend megfordul.",
+                "Hibaüzenetet kapunk.",
+                "A duplikált elemek eltűnnek.",
+                "A lista tuple lesz."
+            ],
+            "correct_answer": "A duplikált elemek eltűnnek.",
+            "explanation": "A halmaz (Set) matematikai tulajdonsága, hogy minden elemet csak egyszer tartalmazhat, így a duplikációk törlődnek."
+        }
+    },
+    {
+        "title": "Extend vs Append",
+        "description": "Mi a különbség az `a.append(b)` és az `a.extend(b)` között, ha `b` egy lista?",
+        "hint": "Beágyazás vs Összefűzés.",
+        "q_type": "theory",
+        "difficulty_rating": 1150,
+        "language": "python",
+        "concept": {
+            "arrays": 1.0,
+            "functions": 0.5
+        },
+        "content": {
+            "options": [
+                "Nincs különbség.",
+                "Az append beleteszi a listát elemként (beágyaz), az extend hozzáfűzi az elemeket (összeolvaszt).",
+                "Az append a végére, az extend az elejére szúr be.",
+                "Az extend csak számokra működik."
+            ],
+            "correct_answer": "Az append beleteszi a listát elemként (beágyaz), az extend hozzáfűzi az elemeket (összeolvaszt).",
+            "explanation": "Az `append` egyetlen elemként kezeli a `b` listát, míg az `extend` kicsomagolja annak elemeit és egyenként fűzi hozzá `a`-hoz."
+        }
+    },
+    {
+        "title": "Sorted() visszatérése",
+        "description": "Miben különbözik a `sorted(lista)` a `lista.sort()`-tól?",
+        "hint": "Eredeti vs Másolat.",
+        "q_type": "theory",
+        "difficulty_rating": 1080,
+        "language": "python",
+        "concept": {
+            "arrays": 1.0,
+            "functions": 0.4
+        },
+        "content": {
+            "options": [
+                "A sorted() gyorsabb.",
+                "A sorted() visszaad egy új rendezett listát, az eredetit nem bántja.",
+                "A sorted() csökkenő sorrendbe rendez.",
+                "Nincs különbség."
+            ],
+            "correct_answer": "A sorted() visszaad egy új rendezett listát, az eredetit nem bántja.",
+            "explanation": "A `sorted()` függvény nem módosítja az eredeti listát (immutable művelet), hanem egy újat hoz létre."
+        }
+    },
+    {
+        "title": "IndexError oka",
+        "description": "Mikor kapunk `IndexError` kivételt lista műveletnél?",
+        "hint": "Határok.",
+        "q_type": "theory",
+        "difficulty_rating": 1010,
+        "language": "python",
+        "concept": {
+            "arrays": 1.0,
+            "basics": 0.4
+        },
+        "content": {
+            "options": [
+                "Ha a lista üres és append-elünk.",
+                "Ha nem létező indexre hivatkozunk (túlindexelés).",
+                "Ha rossz típust teszünk a listába.",
+                "Ha törlünk egy elemet."
+            ],
+            "correct_answer": "Ha nem létező indexre hivatkozunk (túlindexelés).",
+            "explanation": "Ha olyan indexet kérünk (pl. lista[10]), ami kívül esik a lista tartományán, IndexError keletkezik."
+        }
+    },
+    {
+        "title": "Lista szorzása",
+        "description": "Mit eredményez a `[0] * 3` kifejezés?",
+        "hint": "Ismétlés.",
+        "q_type": "theory",
+        "difficulty_rating": 1120,
+        "language": "python",
+        "concept": {
+            "arrays": 1.0,
+            "basics": 0.5
+        },
+        "content": {
+            "options": [
+                "0",
+                "[0, 0, 0]",
+                "[0, 3]",
+                "Hiba"
+            ],
+            "correct_answer": "[0, 0, 0]",
+            "explanation": "A lista szorzása egész számmal az elemek ismétlését (duplikálását) eredményezi."
+        }
+    },
+    {
+        "title": "Referencia másolás",
+        "description": "Mi történik, ha `lista2 = lista1` értékadást használunk?",
+        "hint": "Nem jön létre új lista.",
+        "q_type": "theory",
+        "difficulty_rating": 1250,
+        "language": "python",
+        "concept": {
+            "arrays": 1.0,
+            "oop": 0.6
+        },
+        "content": {
+            "options": [
+                "Létrejön egy független másolat.",
+                "A lista2 ugyanarra a memóriaobjektumra mutat (alias).",
+                "A lista2 üres lesz.",
+                "A lista1 törlődik."
+            ],
+            "correct_answer": "A lista2 ugyanarra a memóriaobjektumra mutat (alias).",
+            "explanation": "Ez csak referencia másolás (shallow assignment). Ha módosítjuk a lista2-t, a lista1 is változik."
+        }
+    },
+    {
+        "title": "Szótár kulcs típusok",
+        "description": "Milyen típusú adat lehet egy Dictionary kulcsa?",
+        "hint": "Hash-elhetőnek kell lennie.",
+        "q_type": "theory",
+        "difficulty_rating": 1280,
+        "language": "python",
+        "concept": {
+            "arrays": 1.0,
+            "basics": 0.8
+        },
+        "content": {
+            "options": [
+                "Bármilyen típus.",
+                "Csak string.",
+                "Csak immutable (megváltoztathatatlan) típus.",
+                "Csak lista."
+            ],
+            "correct_answer": "Csak immutable (megváltoztathatatlan) típus.",
+            "explanation": "A kulcsnak hash-elhetőnek kell lennie, ezért lista vagy dict nem lehet kulcs, de tuple, string, int igen."
+        }
+    },
+    {
+        "title": "Zip függvény",
+        "description": "Mit csinál a `zip(lista1, lista2)` függvény?",
+        "hint": "Cipzár elv.",
+        "q_type": "theory",
+        "difficulty_rating": 1300,
+        "language": "python",
+        "concept": {
+            "arrays": 0.8,
+            "loops": 0.7
+        },
+        "content": {
+            "options": [
+                "Összefűzi a listákat.",
+                "Párokat képez a listák elemeiből.",
+                "Tömöríti a listákat.",
+                "Rendezi a listákat."
+            ],
+            "correct_answer": "Párokat képez a listák elemeiből.",
+            "explanation": "A zip visszaad egy iterátort, amely tuple-öket tartalmaz: (lista1[0], lista2[0]), (lista1[1], lista2[1]) stb."
+        }
+    },
+    {
+        "title": "Enumerate használata",
+        "description": "Mit ad vissza az `enumerate(lista)` egy for ciklusban?",
+        "hint": "Index és érték.",
+        "q_type": "theory",
+        "difficulty_rating": 1220,
+        "language": "python",
+        "concept": {
+            "arrays": 0.8,
+            "loops": 0.8
+        },
+        "content": {
+            "options": [
+                "Csak az indexeket.",
+                "Csak az értékeket.",
+                "Index-érték párokat (tuple).",
+                "Egy szótárat."
+            ],
+            "correct_answer": "Index-érték párokat (tuple).",
+            "explanation": "Az enumerate segítségével egyszerre kapjuk meg az iteráció sorszámát és magát az elemet."
+        }
+    },
+    {
+        "title": "Comprehension feltétellel",
+        "description": "Melyik szintaxis válogatja ki a páros számokat egy listából?",
+        "hint": "if a végén.",
+        "q_type": "theory",
+        "difficulty_rating": 1320,
+        "language": "python",
+        "concept": {
+            "arrays": 1.0,
+            "loops": 0.8
+        },
+        "content": {
+            "options": [
+                "{x for x in l if x%2==0}",
+                "[x for x in l where x%2==0]",
+                "[x for x in l if x%2==0]",
+                "[x if x%2==0 for x in l]"
+            ],
+            "correct_answer": "[x for x in l if x%2==0]",
+            "explanation": "List comprehension-ben a szűrő feltétel (if) a `for` rész után áll."
+        }
+    },
+    {
+        "title": "Halmaz műveletek",
+        "description": "Melyik operátor jelöli két halmaz metszetét (közös elemeit)?",
+        "hint": "Logikai ÉS analógia.",
+        "q_type": "theory",
+        "difficulty_rating": 1350,
+        "language": "python",
+        "concept": {
+            "arrays": 1.0,
+            "logic": 0.6
+        },
+        "content": {
+            "options": [
+                "+",
+                "-",
+                "|",
+                "&"
+            ],
+            "correct_answer": "&",
+            "explanation": "Az `&` operátor végzi a metszetképzést (intersection), míg a `|` az uniót."
+        }
+    },
+    {
+        "title": "Törlés iterálás közben",
+        "description": "Miért veszélyes elemet törölni egy listából, miközben for ciklussal iterálunk rajta?",
+        "hint": "Az indexek elcsúsznak.",
+        "q_type": "theory",
+        "difficulty_rating": 1380,
+        "language": "python",
+        "concept": {
+            "arrays": 1.0,
+            "loops": 0.8
+        },
+        "content": {
+            "options": [
+                "Hibaüzenetet kapunk.",
+                "Semmi baj nem történik.",
+                "Átugorhatunk elemeket a csúszás miatt.",
+                "A lista duplikálódik."
+            ],
+            "correct_answer": "Átugorhatunk elemeket a csúszás miatt.",
+            "explanation": "Ha törlünk egy elemet, a mögötte lévők indexe csökken, de a ciklusváltozó nő, így egy elemet kihagy a feldolgozás."
+        }
+    },
+    {
+        "title": "Nested List elérés",
+        "description": "Hogyan érjük el a `matrix` lista 2. sorának 3. elemét?",
+        "hint": "Indexelés indexelés után.",
+        "q_type": "theory",
+        "difficulty_rating": 1250,
+        "language": "python",
+        "concept": {
+            "arrays": 1.0,
+            "basics": 0.6
+        },
+        "content": {
+            "options": [
+                "matrix[1, 2]",
+                "matrix[1][2]",
+                "matrix(1)(2)",
+                "matrix[2][3]"
+            ],
+            "correct_answer": "matrix[1][2]",
+            "explanation": "Mivel 0-tól indexelünk, a 2. sor az 1-es index, a 3. elem a 2-es index: `m[1][2]`."
+        }
+    },
+    {
+        "title": "Keresés sebessége",
+        "description": "Melyik adatszerkezetben leggyorsabb (O(1)) eldönteni, hogy egy elem benne van-e?",
+        "hint": "Hash alapú.",
+        "q_type": "theory",
+        "difficulty_rating": 1450,
+        "language": "python",
+        "concept": {
+            "arrays": 1.0,
+            "logic": 0.4
+        },
+        "content": {
+            "options": [
+                "List (lista)",
+                "Tuple (n-es)",
+                "Set (halmaz)",
+                "String"
+            ],
+            "correct_answer": "Set (halmaz)",
+            "explanation": "A halmazok (és szótárak) hash táblát használnak, így a keresés átlagosan konstans idejű, szemben a lista lineáris keresésével."
+        }
+    },
+    {
+        "title": "Deepcopy",
+        "description": "Mikor szükséges a `copy.deepcopy()` használata?",
+        "hint": "Egymásba ágyazott listák.",
+        "q_type": "theory",
+        "difficulty_rating": 1480,
+        "language": "python",
+        "concept": {
+            "arrays": 1.0,
+            "oop": 0.5
+        },
+        "content": {
+            "options": [
+                "Nagy listáknál.",
+                "Ha a lista tartalmaz más mutable objektumokat (pl. belső listákat) és azokat is függetleníteni akarjuk.",
+                "String másolásnál.",
+                "Mindig, biztonsági okokból."
+            ],
+            "correct_answer": "Ha a lista tartalmaz más mutable objektumokat (pl. belső listákat) és azokat is függetleníteni akarjuk.",
+            "explanation": "A sima copy (shallow) csak a külső listát másolja, a belső referenciák közösek maradnak. A deepcopy rekurzívan mindent másol."
+        }
+    },
+    {
+        "title": "Generator Expression",
+        "description": "Miben különbözik a `(x*2 for x in l)` a `[x*2 for x in l]` kifejezéstől?",
+        "hint": "Zárójel vs Szögletes. Memória.",
+        "q_type": "theory",
+        "difficulty_rating": 1420,
+        "language": "python",
+        "concept": {
+            "arrays": 0.7,
+            "loops": 0.8
+        },
+        "content": {
+            "options": [
+                "Az első tuple-t hoz létre.",
+                "Az első generátort hoz létre (memóriatakarékos), a második listát.",
+                "Nincs különbség.",
+                "Az első szótárat készít."
+            ],
+            "correct_answer": "Az első generátort hoz létre (memóriatakarékos), a második listát.",
+            "explanation": "A kerek zárójel generator expression-t hoz létre, ami lusta kiértékelésű (lazy), nem foglalja le a memóriát előre."
+        }
+    },
+    {
+        "title": "Hashable",
+        "description": "Mi a feltétele annak, hogy egy objektum eleme lehessen egy halmaznak (Set)?",
+        "hint": "Ugyanaz, mint a szótár kulcsnál.",
+        "q_type": "theory",
+        "difficulty_rating": 1500,
+        "language": "python",
+        "concept": {
+            "arrays": 1.0,
+            "oop": 0.6
+        },
+        "content": {
+            "options": [
+                "Legyen `__hash__` metódusa (hashable).",
+                "Legyen `__len__` metódusa.",
+                "Legyen mutable.",
+                "Legyen int típusú."
+            ],
+            "correct_answer": "Legyen `__hash__` metódusa (hashable).",
+            "explanation": "A Set elemeinek hash-elhetőnek kell lenniük az egyediség vizsgálatához. A mutable típusok (list) általában nem hashable-ek."
+        }
+    },
+    {
+        "title": "Dictionary sorrend",
+        "description": "Garantált-e a Dictionary elemeinek sorrendje Python 3.7+ verziókban?",
+        "hint": "Beszúrási sorrend.",
+        "q_type": "theory",
+        "difficulty_rating": 1460,
+        "language": "python",
+        "concept": {
+            "arrays": 1.0,
+            "basics": 0.4
+        },
+        "content": {
+            "options": [
+                "Nem, véletlenszerű.",
+                "Igen, a beszúrás sorrendjét követi.",
+                "Igen, kulcs szerint rendezett.",
+                "Csak az OrderedDict-nél."
+            ],
+            "correct_answer": "Igen, a beszúrás sorrendjét követi.",
+            "explanation": "A modern Python verziókban a Dictionary implementációs szinten megőrzi a beszúrási sorrendet."
+        }
+    },
+    {
+        "title": "Unpacking operátor",
+        "description": "Mit csinál a `*` operátor lista kontextusban: `[*lista1, *lista2]`?",
+        "hint": "Kicsomagolás.",
+        "q_type": "theory",
+        "difficulty_rating": 1520,
+        "language": "python",
+        "concept": {
+            "arrays": 1.0,
+            "basics": 0.6
+        },
+        "content": {
+            "options": [
+                "Szorozza a listákat.",
+                "Kicsomagolja az elemeket, és egy új, egyesített listát hoz létre.",
+                "Pointert hoz létre.",
+                "Hibaüzenetet ad."
+            ],
+            "correct_answer": "Kicsomagolja az elemeket, és egy új, egyesített listát hoz létre.",
+            "explanation": "Ez a 'splat' vagy unpacking operátor, amely kiveszi az elemeket a listából, így könnyen összefűzhetők."
+        }
+    },
+    {
+        "title": "Defaultdict",
+        "description": "Miben jobb a `collections.defaultdict` a sima `dict`-nél?",
+        "hint": "Hiányzó kulcs kezelése.",
+        "q_type": "theory",
+        "difficulty_rating": 1550,
+        "language": "python",
+        "concept": {
+            "arrays": 1.0,
+            "functions": 0.4
+        },
+        "content": {
+            "options": [
+                "Gyorsabb.",
+                "Automatikusan létrehoz egy alapértelmezett értéket, ha a kulcs nem létezik.",
+                "Rendezett.",
+                "Csak számokat tárolhat."
+            ],
+            "correct_answer": "Automatikusan létrehoz egy alapértelmezett értéket, ha a kulcs nem létezik.",
+            "explanation": "Nem dob KeyError-t, hanem a megadott gyárfüggvénnyel (pl. list, int) létrehoz egy kezdőértéket a hiányzó kulcshoz."
+        }
+    },
+    {
+        "title": "Tuple memória",
+        "description": "Miért használhat kevesebb memóriát egy Tuple mint egy ugyanakkora Lista?",
+        "hint": "Statikus vs Dinamikus.",
+        "q_type": "theory",
+        "difficulty_rating": 1600,
+        "language": "python",
+        "concept": {
+            "arrays": 1.0,
+            "oop": 0.5
+        },
+        "content": {
+            "options": [
+                "Mert tömörítve van.",
+                "Mivel a Tuple fix méretű (immutable), nincs szüksége 'túlméretezésre' (overallocation), mint a dinamikus listának.",
+                "A Tuple csak számokat tárol.",
+                "Nem használ kevesebbet."
+            ],
+            "correct_answer": "Mivel a Tuple fix méretű (immutable), nincs szüksége 'túlméretezésre' (overallocation), mint a dinamikus listának.",
+            "explanation": "A listák dinamikus növekedése miatt a Python extra helyet foglal le a jövőbeli elemeknek, míg a Tuple pontosan akkora, amennyi kell."
+        }
+    }
+]

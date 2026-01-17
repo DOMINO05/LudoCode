@@ -1,0 +1,881 @@
+[
+    {
+        "title": "A void jelentése",
+        "description": "Mit jelent a `void` kulcsszó a metódus deklarációjában?",
+        "hint": "Az ürességre utal.",
+        "q_type": "theory",
+        "difficulty_rating": 600,
+        "language": "java",
+        "concept": {
+            "functions": 1.0,
+            "basics": 0.5
+        },
+        "content": {
+            "options": [
+                "A metódus 0-át ad vissza.",
+                "A metódusnak nincs visszatérési értéke.",
+                "A metódus érvénytelen.",
+                "A metódus végtelen ciklus."
+            ],
+            "correct_answer": "A metódusnak nincs visszatérési értéke.",
+            "explanation": "A void (üres) kulcsszó jelzi, hogy a metódus végrehajt egy feladatot, de nem szolgáltat vissza adatot a hívónak."
+        }
+    },
+    {
+        "title": "Metódus hívása",
+        "description": "Melyik a helyes szintaxis egy paraméter nélküli `start` metódus meghívására?",
+        "hint": "Ne felejtsd el a zárójeleket.",
+        "q_type": "theory",
+        "difficulty_rating": 600,
+        "language": "java",
+        "concept": {
+            "functions": 1.0,
+            "basics": 0.5
+        },
+        "content": {
+            "options": [
+                "start",
+                "start;",
+                "start();",
+                "call start"
+            ],
+            "correct_answer": "start();",
+            "explanation": "Metódushívásnál a metódus neve után kötelező kitenni a zárójeleket (), még ha üresek is, és az utasítást pontosvessző zárja."
+        }
+    },
+    {
+        "title": "Visszatérés kulcsszó",
+        "description": "Melyik kulcsszóval küldünk vissza értéket egy metódusból?",
+        "hint": "Angolul 'visszatér'.",
+        "q_type": "theory",
+        "difficulty_rating": 650,
+        "language": "java",
+        "concept": {
+            "functions": 1.0,
+            "basics": 0.5
+        },
+        "content": {
+            "options": [
+                "send",
+                "back",
+                "return",
+                "output"
+            ],
+            "correct_answer": "return",
+            "explanation": "A `return` utasítás fejezi be a metódus futását és adja át az értéket a hívó félnek."
+        }
+    },
+    {
+        "title": "Paraméterek helye",
+        "description": "Milyen zárójelek közé írjuk a metódus paramétereit a definícióban?",
+        "hint": "Ugyanaz, mint az if feltételnél.",
+        "q_type": "theory",
+        "difficulty_rating": 650,
+        "language": "java",
+        "concept": {
+            "functions": 1.0,
+            "basics": 0.4
+        },
+        "content": {
+            "options": [
+                "[] szögletes",
+                "{} kapcsos",
+                "() kerek",
+                "<> csúcsos"
+            ],
+            "correct_answer": "() kerek",
+            "explanation": "A paraméterlistát mindig kerek zárójelek () fogják közre a metódus neve után."
+        }
+    },
+    {
+        "title": "Metódustörzs",
+        "description": "Mi határolja a metódus utasításait tartalmazó blokkot (törzset)?",
+        "hint": "Blokk határoló.",
+        "q_type": "theory",
+        "difficulty_rating": 700,
+        "language": "java",
+        "concept": {
+            "functions": 1.0,
+            "basics": 0.5
+        },
+        "content": {
+            "options": [
+                "()",
+                "[]",
+                "{}",
+                "##"
+            ],
+            "correct_answer": "{}",
+            "explanation": "A Java-ban a kódblokkokat, így a metódusok törzsét is, kapcsos zárójelek {} jelölik."
+        }
+    },
+    {
+        "title": "Főprogram belépési pontja",
+        "description": "Mi a neve annak a speciális metódusnak, ahol a Java program futása elindul?",
+        "hint": "A legfontosabb metódus.",
+        "q_type": "theory",
+        "difficulty_rating": 700,
+        "language": "java",
+        "concept": {
+            "functions": 1.0,
+            "basics": 0.8
+        },
+        "content": {
+            "options": [
+                "start",
+                "run",
+                "main",
+                "init"
+            ],
+            "correct_answer": "main",
+            "explanation": "A `public static void main(String[] args)` a szabványos belépési pont a Java alkalmazásokban."
+        }
+    },
+    {
+        "title": "Paraméter elválasztó",
+        "description": "Milyen karakterrel választjuk el a paramétereket, ha egy metódus többet is vár?",
+        "hint": "Felsorolás jele.",
+        "q_type": "theory",
+        "difficulty_rating": 750,
+        "language": "java",
+        "concept": {
+            "functions": 1.0,
+            "basics": 0.6
+        },
+        "content": {
+            "options": [
+                ". (pont)",
+                "; (pontosvessző)",
+                ", (vessző)",
+                "| (vonal)"
+            ],
+            "correct_answer": ", (vessző)",
+            "explanation": "A paraméterlistában az egyes elemeket vesszővel választjuk el egymástól."
+        }
+    },
+    {
+        "title": "Deklarációs sorrend",
+        "description": "Mi a helyes sorrend egy metódus fejlécében?",
+        "hint": "Először a típus, aztán a név.",
+        "q_type": "theory",
+        "difficulty_rating": 780,
+        "language": "java",
+        "concept": {
+            "functions": 1.0,
+            "basics": 0.7
+        },
+        "content": {
+            "options": [
+                "név típus()",
+                "típus név()",
+                "function név()",
+                "def név()"
+            ],
+            "correct_answer": "típus név()",
+            "explanation": "Java-ban (C-stílusú nyelvekben) először a visszatérési típust adjuk meg, utána a metódus nevét. Pl: `int calculate()`."
+        }
+    },
+    {
+        "title": "Return kötelezettség",
+        "description": "Ha egy metódus definíciója `int szamol()`, akkor mit KÖTELEZŐ tartalmaznia?",
+        "hint": "Nem lehet void.",
+        "q_type": "theory",
+        "difficulty_rating": 850,
+        "language": "java",
+        "concept": {
+            "functions": 1.0,
+            "basics": 0.6
+        },
+        "content": {
+            "options": [
+                "Legalább egy paramétert.",
+                "Egy print utasítást.",
+                "Egy return utasítást int értékkel.",
+                "Semmit, lehet üres."
+            ],
+            "correct_answer": "Egy return utasítást int értékkel.",
+            "explanation": "Ha a visszatérési típus nem void, akkor minden lehetséges futási ágnak vissza kell adnia egy megfelelő típusú értéket."
+        }
+    },
+    {
+        "title": "Lokális változó láthatósága",
+        "description": "Hol használható egy metóduson belül deklarált változó?",
+        "hint": "A scope (hatókör) szabály.",
+        "q_type": "theory",
+        "difficulty_rating": 900,
+        "language": "java",
+        "concept": {
+            "functions": 0.8,
+            "basics": 0.7
+        },
+        "content": {
+            "options": [
+                "Bárhol az osztályban.",
+                "Csak abban a metódusban.",
+                "Más metódusokban is.",
+                "Az egész programban."
+            ],
+            "correct_answer": "Csak abban a metódusban.",
+            "explanation": "A metódusban létrehozott változók lokálisak, azaz csak a metódus végrehajtása alatt és annak blokkján belül léteznek."
+        }
+    },
+    {
+        "title": "Static metódus",
+        "description": "Mit jelent, ha egy metódus `static`?",
+        "hint": "Nem kell példányosítani az osztályt a használatához.",
+        "q_type": "theory",
+        "difficulty_rating": 950,
+        "language": "java",
+        "concept": {
+            "functions": 0.8,
+            "oop": 0.6
+        },
+        "content": {
+            "options": [
+                "Nem változtatható.",
+                "Az osztályhoz tartozik, nem példányhoz.",
+                "Gyorsabban fut.",
+                "Nincs visszatérési értéke."
+            ],
+            "correct_answer": "Az osztályhoz tartozik, nem példányhoz.",
+            "explanation": "A statikus metódusok osztályszintűek, így meghívhatók az osztály nevével, objektumpéldány létrehozása nélkül."
+        }
+    },
+    {
+        "title": "Main paramétere",
+        "description": "Mi a pontos típusa a `main` metódus argumentumának?",
+        "hint": "Parancssori argumentumok tömbje.",
+        "q_type": "theory",
+        "difficulty_rating": 920,
+        "language": "java",
+        "concept": {
+            "functions": 1.0,
+            "arrays": 0.5
+        },
+        "content": {
+            "options": [
+                "String",
+                "String[]",
+                "int[]",
+                "Object"
+            ],
+            "correct_answer": "String[]",
+            "explanation": "A rendszer szöveges tömbként (`String[] args`) adja át a parancssori argumentumokat a programnak."
+        }
+    },
+    {
+        "title": "Paraméter vs Argumentum",
+        "description": "Mi a különbség a paraméter és az argumentum között?",
+        "hint": "Definíció vs Hívás.",
+        "q_type": "theory",
+        "difficulty_rating": 980,
+        "language": "java",
+        "concept": {
+            "functions": 1.0
+        },
+        "content": {
+            "options": [
+                "Nincs különbség.",
+                "A paraméter a definícióban van, az argumentum a híváskor átadott érték.",
+                "A paraméter a híváskor van, az argumentum a definícióban.",
+                "Argumentum csak szám lehet."
+            ],
+            "correct_answer": "A paraméter a definícióban van, az argumentum a híváskor átadott érték.",
+            "explanation": "Paraméter: a változó a metódus fejlécében. Argumentum: a konkrét adat, amit a híváskor a zárójelek közé írunk."
+        }
+    },
+    {
+        "title": "Több paraméter típusa",
+        "description": "Hogyan definiálunk két int paramétert helyesen?",
+        "hint": "Minden paraméternek kell típus.",
+        "q_type": "theory",
+        "difficulty_rating": 880,
+        "language": "java",
+        "concept": {
+            "functions": 1.0,
+            "basics": 0.6
+        },
+        "content": {
+            "options": [
+                "void method(int a, b)",
+                "void method(int a, int b)",
+                "void method(int a; int b)",
+                "void method(a, b : int)"
+            ],
+            "correct_answer": "void method(int a, int b)",
+            "explanation": "Java-ban minden egyes paraméter elé ki kell írni annak típusát, még ha ugyanaz is, mint az előzőé."
+        }
+    },
+    {
+        "title": "Return elérése",
+        "description": "Mit jelez a fordító, ha a `return` utasítás után még van kód a blokkban?",
+        "hint": "Oda sosem jut el a vezérlés.",
+        "q_type": "theory",
+        "difficulty_rating": 990,
+        "language": "java",
+        "concept": {
+            "functions": 0.8,
+            "basics": 0.7
+        },
+        "content": {
+            "options": [
+                "Warning",
+                "Unreachable code error",
+                "Semmit",
+                "Runtime error"
+            ],
+            "correct_answer": "Unreachable code error",
+            "explanation": "A return utasítás feltétel nélkül kilép a metódusból, így a közvetlenül utána írt utasítások elérhetetlenek, ami fordítási hiba."
+        }
+    },
+    {
+        "title": "Eredmény figyelmen kívül hagyása",
+        "description": "Helyes-e szintaktikailag: `Math.max(10, 20);` (értékadás nélkül)?",
+        "hint": "Kiszámolja, aztán eldobjuk.",
+        "q_type": "theory",
+        "difficulty_rating": 950,
+        "language": "java",
+        "concept": {
+            "functions": 0.9,
+            "basics": 0.5
+        },
+        "content": {
+            "options": [
+                "Nem, kötelező változóba tenni.",
+                "Igen, de az eredmény elvész.",
+                "Nem, fordítási hiba.",
+                "Csak void metódus hívható így."
+            ],
+            "correct_answer": "Igen, de az eredmény elvész.",
+            "explanation": "Szintaktikailag helyes meghívni egy visszatérési értékkel rendelkező metódust anélkül, hogy az eredményt felhasználnánk (bár gyakran logikátlan)."
+        }
+    },
+    {
+        "title": "Túlterhelés (Overloading)",
+        "description": "Mit jelent a metódus túlterhelés (Method Overloading)?",
+        "hint": "Ugyanaz a név, de...",
+        "q_type": "theory",
+        "difficulty_rating": 1050,
+        "language": "java",
+        "concept": {
+            "functions": 1.0,
+            "oop": 0.5
+        },
+        "content": {
+            "options": [
+                "Egy metódus felülírja a szülő osztályét.",
+                "Több metódus azonos névvel, de eltérő paraméterlistával.",
+                "A metódus túl sok memóriát használ.",
+                "A metódus rekurzívan hívja magát."
+            ],
+            "correct_answer": "Több metódus azonos névvel, de eltérő paraméterlistával.",
+            "explanation": "Az overloading lehetővé teszi, hogy ugyanazt a nevet használjuk különböző típusú vagy számú bemeneti adathoz."
+        }
+    },
+    {
+        "title": "Metódus szignatúra",
+        "description": "Mely elemek alkotják a metódus szignatúráját Java-ban?",
+        "hint": "A visszatérési típus NEM része.",
+        "q_type": "theory",
+        "difficulty_rating": 1150,
+        "language": "java",
+        "concept": {
+            "functions": 1.0,
+            "oop": 0.7
+        },
+        "content": {
+            "options": [
+                "Név + Visszatérési típus",
+                "Név + Paraméterek típusai és sorrendje",
+                "Csak a név",
+                "Név + Paraméterek nevei"
+            ],
+            "correct_answer": "Név + Paraméterek típusai és sorrendje",
+            "explanation": "A Java a szignatúra alapján azonosítja a metódusokat. Ez a névből és a paramétertípusok listájából áll. A visszatérési típus nem része!"
+        }
+    },
+    {
+        "title": "Primitív átadása",
+        "description": "Hogyan adódnak át a primitív típusú paraméterek Java-ban?",
+        "hint": "Másolat vagy eredeti?",
+        "q_type": "theory",
+        "difficulty_rating": 1100,
+        "language": "java",
+        "concept": {
+            "functions": 1.0,
+            "basics": 0.8
+        },
+        "content": {
+            "options": [
+                "Referencia szerint (by reference)",
+                "Érték szerint (by value)",
+                "Pointerrel",
+                "Attól függ, mekkora a szám"
+            ],
+            "correct_answer": "Érték szerint (by value)",
+            "explanation": "Primitív típusoknál (int, double, stb.) az érték másolata adódik át. A metóduson belüli módosítás nem hat az eredeti változóra."
+        }
+    },
+    {
+        "title": "Rekurzió feltétele",
+        "description": "Mi a legfontosabb eleme egy rekurzív metódusnak a végtelen futás elkerülésére?",
+        "hint": "Ahol megállunk.",
+        "q_type": "theory",
+        "difficulty_rating": 1120,
+        "language": "java",
+        "concept": {
+            "functions": 0.8,
+            "logic": 0.9
+        },
+        "content": {
+            "options": [
+                "A hívási lánc.",
+                "A bázisfeltétel (base case).",
+                "A return null;",
+                "A ciklusváltozó."
+            ],
+            "correct_answer": "A bázisfeltétel (base case).",
+            "explanation": "A bázisfeltétel az az eset, amikor a metódus már nem hívja meg önmagát, hanem visszatér, ezzel lezárva a rekurziót."
+        }
+    },
+    {
+        "title": "Overloading visszatérési típusa",
+        "description": "Lehet-e két metódus túlterhelt (overloaded), ha csak a visszatérési típusukban különböznek?",
+        "hint": "int foo() vs double foo() - honnan tudja a hívó, melyik kell?",
+        "q_type": "theory",
+        "difficulty_rating": 1180,
+        "language": "java",
+        "concept": {
+            "functions": 1.0,
+            "oop": 0.6
+        },
+        "content": {
+            "options": [
+                "Igen, a fordító kitalálja.",
+                "Nem, ez fordítási hiba.",
+                "Csak ha különböző osztályban vannak.",
+                "Igen, ha explicit castoljuk."
+            ],
+            "correct_answer": "Nem, ez fordítási hiba.",
+            "explanation": "Mivel a visszatérési típus nem része a szignatúrának, és a híváskor nem mindig derül ki a várt típus, ez nem megengedett."
+        }
+    },
+    {
+        "title": "Getter metódusok",
+        "description": "Mi a konvenció a `name` nevű privát mező értékének lekérdezésére szolgáló metódus nevére?",
+        "hint": "Java Bean naming convention.",
+        "q_type": "theory",
+        "difficulty_rating": 1050,
+        "language": "java",
+        "concept": {
+            "functions": 0.6,
+            "oop": 0.9
+        },
+        "content": {
+            "options": [
+                "name()",
+                "getName()",
+                "fetchName()",
+                "readName()"
+            ],
+            "correct_answer": "getName()",
+            "explanation": "A Java konvenciók szerint a hozzáférő metódusokat `get` + a mező neve (Nagybetűvel kezdve) formában írjuk."
+        }
+    },
+    {
+        "title": "Math.random() tartománya",
+        "description": "Milyen tartományban ad vissza értéket a `Math.random()`?",
+        "hint": "0 és 1 között, de a vége...",
+        "q_type": "theory",
+        "difficulty_rating": 1080,
+        "language": "java",
+        "concept": {
+            "functions": 0.7,
+            "basics": 0.6
+        },
+        "content": {
+            "options": [
+                "[0.0, 1.0]",
+                "[0.0, 1.0)",
+                "(0.0, 1.0)",
+                "Egész számokat 0-100 között"
+            ],
+            "correct_answer": "[0.0, 1.0)",
+            "explanation": "A Math.random() egy double értéket ad, amely nagyobb vagy egyenlő mint 0.0, és szigorúan kisebb mint 1.0."
+        }
+    },
+    {
+        "title": "Statikus hívás",
+        "description": "Hogyan hívunk meg egy statikus metódust egy másik osztályból?",
+        "hint": "Osztálynév a kulcs.",
+        "q_type": "theory",
+        "difficulty_rating": 1020,
+        "language": "java",
+        "concept": {
+            "functions": 0.8,
+            "oop": 0.8
+        },
+        "content": {
+            "options": [
+                "new Osztaly().metodus()",
+                "Osztaly.metodus()",
+                "metodus()",
+                "Osztaly->metodus()"
+            ],
+            "correct_answer": "Osztaly.metodus()",
+            "explanation": "Statikus metódusokat az osztály nevével minősítve érünk el: `OsztalyNev.metodusNev()`."
+        }
+    },
+    {
+        "title": "Varargs szintaxis",
+        "description": "Hogyan jelöljük, ha egy metódus tetszőleges számú int paramétert fogadhat (Varargs)?",
+        "hint": "Három pont.",
+        "q_type": "theory",
+        "difficulty_rating": 1250,
+        "language": "java",
+        "concept": {
+            "functions": 1.0,
+            "arrays": 0.7
+        },
+        "content": {
+            "options": [
+                "int[] numbers",
+                "int... numbers",
+                "int args numbers",
+                "int *numbers"
+            ],
+            "correct_answer": "int... numbers",
+            "explanation": "A három pont (`...`) jelöli a Variable Arguments (varargs) mechanizmust, ami tömbként kezeli a bemenetet."
+        }
+    },
+    {
+        "title": "Objektum módosítása",
+        "description": "Ha egy objektumot adunk át paraméterként, és a metódusban módosítjuk a mezőjét (`obj.x = 5`), az látszik-e kívül?",
+        "hint": "A referencia másolata az objektumra mutat.",
+        "q_type": "theory",
+        "difficulty_rating": 1300,
+        "language": "java",
+        "concept": {
+            "functions": 0.9,
+            "oop": 1.0
+        },
+        "content": {
+            "options": [
+                "Nem, mert pass-by-value van.",
+                "Igen, mert a referencia másolata ugyanarra az objektumra mutat.",
+                "Csak ha static a metódus.",
+                "Fordítási hiba."
+            ],
+            "correct_answer": "Igen, mert a referencia másolata ugyanarra az objektumra mutat.",
+            "explanation": "Bár a Java érték szerinti paraméterátadást használ, objektumoknál ez a referencia értékét jelenti. A másolt referencia is ugyanarra a memóriaterületre mutat."
+        }
+    },
+    {
+        "title": "Return void metódusban",
+        "description": "Használható-e a `return;` utasítás egy `void` típusú metódusban?",
+        "hint": "Csak érték nélkül.",
+        "q_type": "theory",
+        "difficulty_rating": 1220,
+        "language": "java",
+        "concept": {
+            "functions": 1.0,
+            "basics": 0.5
+        },
+        "content": {
+            "options": [
+                "Nem, tilos.",
+                "Igen, a metódus azonnali befejezésére.",
+                "Csak hibajelzésre.",
+                "Csak main metódusban."
+            ],
+            "correct_answer": "Igen, a metódus azonnali befejezésére.",
+            "explanation": "A `return;` (érték nélkül) érvényes módja egy void metódus futásának megszakítására (pl. egy feltétel esetén)."
+        }
+    },
+    {
+        "title": "StackOverflowError",
+        "description": "Mi okozza leggyakrabban a `StackOverflowError` hibát metódusoknál?",
+        "hint": "Túl mélyre ástunk.",
+        "q_type": "theory",
+        "difficulty_rating": 1280,
+        "language": "java",
+        "concept": {
+            "functions": 0.8,
+            "logic": 0.8
+        },
+        "content": {
+            "options": [
+                "Túl sok paraméter.",
+                "Végtelen (vagy túl mély) rekurzió.",
+                "Túl nagy tömb visszaadása.",
+                "Privát metódus hívása."
+            ],
+            "correct_answer": "Végtelen (vagy túl mély) rekurzió.",
+            "explanation": "Minden metódushívás foglal egy helyet a veremben (stack frame). Ha a rekurzió nem áll meg, a verem betelik."
+        }
+    },
+    {
+        "title": "Varargs pozíciója",
+        "description": "Hol helyezkedhet el a varargs (`...`) paraméter a listában?",
+        "hint": "A végén, hogy ne zavarja a többit.",
+        "q_type": "theory",
+        "difficulty_rating": 1250,
+        "language": "java",
+        "concept": {
+            "functions": 1.0,
+            "basics": 0.6
+        },
+        "content": {
+            "options": [
+                "Bárhol.",
+                "Csak az első helyen.",
+                "Csak az utolsó helyen.",
+                "Középen."
+            ],
+            "correct_answer": "Csak az utolsó helyen.",
+            "explanation": "Egy metódusnak legfeljebb egy varargs paramétere lehet, és annak az utolsónak kell lennie, hogy a fordító el tudja különíteni a többi argumentumtól."
+        }
+    },
+    {
+        "title": "Final paraméter",
+        "description": "Mit jelent, ha egy metódus paramétere `final int x`?",
+        "hint": "Konstans-szerű.",
+        "q_type": "theory",
+        "difficulty_rating": 1350,
+        "language": "java",
+        "concept": {
+            "functions": 0.8,
+            "basics": 0.7
+        },
+        "content": {
+            "options": [
+                "Az x értéke nem olvasható.",
+                "Az x paraméter értéke nem módosítható (nem írható felül) a metóduson belül.",
+                "Az x kötelező paraméter.",
+                "A metódus nem írható felül."
+            ],
+            "correct_answer": "Az x paraméter értéke nem módosítható (nem írható felül) a metóduson belül.",
+            "explanation": "A `final` paramétert a metódus megkapja, de nem rendelhet hozzá új értéket (pl. `x = 5;` hiba)."
+        }
+    },
+    {
+        "title": "Pass-by-value mechanika",
+        "description": "Mi a pontos megnevezése a Java paraméterátadási mechanizmusának?",
+        "hint": "Sok vita van róla, de a specifikáció egyértelmű.",
+        "q_type": "theory",
+        "difficulty_rating": 1380,
+        "language": "java",
+        "concept": {
+            "functions": 1.0,
+            "oop": 0.5
+        },
+        "content": {
+            "options": [
+                "Pass-by-reference",
+                "Pass-by-value (mindig)",
+                "Primitíveknél value, objektumoknál reference",
+                "Pass-by-pointer"
+            ],
+            "correct_answer": "Pass-by-value (mindig)",
+            "explanation": "A Java szigorúan 'Pass-by-value'. Objektumoknál a *referencia értékének* másolata adódik át, nem maga az objektum vagy a memóriacím közvetlenül."
+        }
+    },
+    {
+        "title": "Varargs üres hívás",
+        "description": "Mi történik, ha egy `void test(int... nums)` metódust argumentumok nélkül hívunk meg: `test()`?",
+        "hint": "A tömb létrejön.",
+        "q_type": "theory",
+        "difficulty_rating": 1320,
+        "language": "java",
+        "concept": {
+            "functions": 0.9,
+            "arrays": 0.7
+        },
+        "content": {
+            "options": [
+                "Fordítási hiba.",
+                "NullPointerException.",
+                "Lefut, és a 'nums' egy üres tömb (hossza 0).",
+                "Lefut, és a 'nums' null."
+            ],
+            "correct_answer": "Lefut, és a 'nums' egy üres tömb (hossza 0).",
+            "explanation": "A varargs mechanizmus automatikusan létrehoz egy üres tömböt, ha nem adunk meg argumentumot."
+        }
+    },
+    {
+        "title": "Overloading prioritás",
+        "description": "Melyik metódus hívódik meg a `foo(5)` hívásra, ha van `foo(long l)` és `foo(int... i)` is?",
+        "hint": "Widening (bővítés) vs Varargs.",
+        "q_type": "theory",
+        "difficulty_rating": 1450,
+        "language": "java",
+        "concept": {
+            "functions": 1.0,
+            "oop": 0.8
+        },
+        "content": {
+            "options": [
+                "foo(int... i) - mert az int pontosabb.",
+                "foo(long l) - mert a bővítés (widening) erősebb a varargs-nál.",
+                "Fordítási hiba (ambiguous).",
+                "Véletlenszerű."
+            ],
+            "correct_answer": "foo(long l) - mert a bővítés (widening) erősebb a varargs-nál.",
+            "explanation": "A Java overloading feloldási sorrendje: 1. Pontos egyezés, 2. Widening (pl. int->long), 3. Boxing/Unboxing, 4. Varargs."
+        }
+    },
+    {
+        "title": "Kovariáns visszatérés",
+        "description": "Felüldefiniáláskor (Override) megváltozhat-e a metódus visszatérési típusa?",
+        "hint": "Csak szűkebb típusra.",
+        "q_type": "theory",
+        "difficulty_rating": 1500,
+        "language": "java",
+        "concept": {
+            "functions": 0.8,
+            "oop": 1.0
+        },
+        "content": {
+            "options": [
+                "Nem, pontosan egyeznie kell.",
+                "Igen, bármilyen típusra.",
+                "Igen, de csak az eredeti típus leszármazottjára (covariant return type).",
+                "Csak primitíveknél."
+            ],
+            "correct_answer": "Igen, de csak az eredeti típus leszármazottjára (covariant return type).",
+            "explanation": "A Java 5 óta megengedett a 'covariant return type', azaz a felüldefiniált metódus visszaadhatja az eredeti típus egy alosztályát."
+        }
+    },
+    {
+        "title": "Native metódus",
+        "description": "Mit jelez a `native` kulcsszó egy metóduson?",
+        "hint": "JNI - Java Native Interface.",
+        "q_type": "theory",
+        "difficulty_rating": 1420,
+        "language": "java",
+        "concept": {
+            "functions": 1.0,
+            "basics": 0.4
+        },
+        "content": {
+            "options": [
+                "A metódus Java bájtkódban van.",
+                "A metódus más nyelven (pl. C/C++) van implementálva.",
+                "A metódus az operációs rendszertől független.",
+                "A metódus elavult."
+            ],
+            "correct_answer": "A metódus más nyelven (pl. C/C++) van implementálva.",
+            "explanation": "A native metódusok implementációja nem Java-ban, hanem platform-specifikus kódban (pl. DLL/.so fájlokban) található."
+        }
+    },
+    {
+        "title": "Method Reference",
+        "description": "Melyik operátorral hivatkozunk egy metódusra lambda kifejezés helyett (Method Reference)?",
+        "hint": "Dupla kettőspont.",
+        "q_type": "theory",
+        "difficulty_rating": 1480,
+        "language": "java",
+        "concept": {
+            "functions": 0.9,
+            "oop": 0.7
+        },
+        "content": {
+            "options": [
+                "->",
+                "=>",
+                "::",
+                "."
+            ],
+            "correct_answer": "::",
+            "explanation": "A `::` operátor (pl. `System.out::println`) egy metódusreferenciát hoz létre, ami egy funkcionális interfész implementációjaként szolgál."
+        }
+    },
+    {
+        "title": "Tail Call Optimization",
+        "description": "Támogatja-e a standard Java (HotSpot VM) a farokrekurzió (Tail Call) optimalizációt?",
+        "hint": "Átírja-e a fordító a rekurziót ciklussá?",
+        "q_type": "theory",
+        "difficulty_rating": 1550,
+        "language": "java",
+        "concept": {
+            "functions": 0.7,
+            "logic": 0.8
+        },
+        "content": {
+            "options": [
+                "Igen, minden esetben.",
+                "Nem támogatja.",
+                "Csak a final metódusoknál.",
+                "Csak 64 bites rendszereken."
+            ],
+            "correct_answer": "Nem támogatja.",
+            "explanation": "Jelenleg a Java nem végzi el automatikusan a tail call optimalizációt, így a farokrekurzív hívások is növelik a stacket (StackOverflow veszély)."
+        }
+    },
+    {
+        "title": "Default metódus",
+        "description": "Hol szerepelhet `default` kulcsszóval ellátott, implementációval rendelkező metódus?",
+        "hint": "Java 8 újdonság az absztrakcióban.",
+        "q_type": "theory",
+        "difficulty_rating": 1410,
+        "language": "java",
+        "concept": {
+            "functions": 0.8,
+            "oop": 1.0
+        },
+        "content": {
+            "options": [
+                "Abstract osztályban.",
+                "Interfészben.",
+                "Final osztályban.",
+                "Enum-ban."
+            ],
+            "correct_answer": "Interfészben.",
+            "explanation": "A Java 8 óta az interfészek tartalmazhatnak `default` metódusokat konkrét kóddal, hogy biztosítsák a visszamenőleges kompatibilitást bővítéskor."
+        }
+    },
+    {
+        "title": "Abstract metódus",
+        "description": "Mit NEM tartalmazhat egy `abstract` metódus?",
+        "hint": "Nincs teste.",
+        "q_type": "theory",
+        "difficulty_rating": 1400,
+        "language": "java",
+        "concept": {
+            "functions": 1.0,
+            "oop": 0.8
+        },
+        "content": {
+            "options": [
+                "Paramétereket.",
+                "Visszatérési típust.",
+                "Metódustörzset (blokkot).",
+                "Throws deklarációt."
+            ],
+            "correct_answer": "Metódustörzset (blokkot).",
+            "explanation": "Az absztrakt metódusnak csak deklarációja van, implementációja (kapcsos zárójelek közötti kódja) nincs; azt a leszármazottnak kell megvalósítania."
+        }
+    },
+    {
+        "title": "Synchronized metódus",
+        "description": "Mire szolgál a `synchronized` kulcsszó egy metódus fejlécében?",
+        "hint": "Többszálúság.",
+        "q_type": "theory",
+        "difficulty_rating": 1520,
+        "language": "java",
+        "concept": {
+            "functions": 0.7,
+            "oop": 0.8
+        },
+        "content": {
+            "options": [
+                "Gyorsítja a futást.",
+                "Kizárólagos hozzáférést biztosít egyszerre egy szálnak az objektumhoz (monitor lock).",
+                "A metódus aszinkron fut.",
+                "A metódus tranzakcionális."
+            ],
+            "correct_answer": "Kizárólagos hozzáférést biztosít egyszerre egy szálnak az objektumhoz (monitor lock).",
+            "explanation": "A `synchronized` metódus belépéskor megszerzi az adott objektum (vagy static esetén az osztály) zárját (lock), így más szálaknak várakozniuk kell."
+        }
+    }
+]

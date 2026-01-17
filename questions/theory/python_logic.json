@@ -1,0 +1,874 @@
+[
+    {
+        "title": "Logikai igaz érték",
+        "description": "Hogyan írjuk helyesen a 'logikai igaz' literált Pythonban?",
+        "hint": "Figyelj a kis- és nagybetűkre!",
+        "q_type": "theory",
+        "difficulty_rating": 600,
+        "language": "python",
+        "concept": {
+            "logic": 1.0,
+            "basics": 0.8
+        },
+        "content": {
+            "options": [
+                "true",
+                "True",
+                "TRUE",
+                "yes"
+            ],
+            "correct_answer": "True",
+            "explanation": "Pythonban a logikai értékek kulcsszavai nagy kezdőbetűvel írandók: `True` és `False`."
+        }
+    },
+    {
+        "title": "Egyenlőségvizsgálat",
+        "description": "Melyik operátorral vizsgáljuk meg két érték egyenlőségét?",
+        "hint": "Nem az értékadás jele.",
+        "q_type": "theory",
+        "difficulty_rating": 600,
+        "language": "python",
+        "concept": {
+            "logic": 1.0,
+            "basics": 0.5
+        },
+        "content": {
+            "options": [
+                "=",
+                "==",
+                "===",
+                "equals"
+            ],
+            "correct_answer": "==",
+            "explanation": "A dupla egyenlőségjel `==` az összehasonlító operátor, a szimpla `=` az értékadás."
+        }
+    },
+    {
+        "title": "Nem egyenlő",
+        "description": "Melyik jel jelenti a 'nem egyenlő' relációt?",
+        "hint": "A felkiáltójel a tagadás.",
+        "q_type": "theory",
+        "difficulty_rating": 650,
+        "language": "python",
+        "concept": {
+            "logic": 1.0,
+            "basics": 0.5
+        },
+        "content": {
+            "options": [
+                "<>",
+                "!=",
+                "not =",
+                "=/="
+            ],
+            "correct_answer": "!=",
+            "explanation": "Pythonban a `!=` operátorral vizsgáljuk, hogy két érték különbözik-e."
+        }
+    },
+    {
+        "title": "Feltételes kulcsszó",
+        "description": "Melyik kulcsszóval kezdünk egy feltételes elágazást?",
+        "hint": "Angolul 'ha'.",
+        "q_type": "theory",
+        "difficulty_rating": 650,
+        "language": "python",
+        "concept": {
+            "logic": 0.8,
+            "basics": 1.0
+        },
+        "content": {
+            "options": [
+                "when",
+                "check",
+                "if",
+                "loop"
+            ],
+            "correct_answer": "if",
+            "explanation": "Az `if` kulcsszó vezeti be a feltételes utasítást."
+        }
+    },
+    {
+        "title": "Logikai ÉS",
+        "description": "Hogyan írjuk a logikai ÉS műveletet Pythonban?",
+        "hint": "Angol szó.",
+        "q_type": "theory",
+        "difficulty_rating": 700,
+        "language": "python",
+        "concept": {
+            "logic": 1.0
+        },
+        "content": {
+            "options": [
+                "&&",
+                "and",
+                "&",
+                "AND"
+            ],
+            "correct_answer": "and",
+            "explanation": "Pythonban a logikai operátorokat angol szavakkal írjuk: `and`."
+        }
+    },
+    {
+        "title": "Logikai VAGY",
+        "description": "Hogyan írjuk a logikai VAGY műveletet Pythonban?",
+        "hint": "Angol szó.",
+        "q_type": "theory",
+        "difficulty_rating": 700,
+        "language": "python",
+        "concept": {
+            "logic": 1.0
+        },
+        "content": {
+            "options": [
+                "||",
+                "or",
+                "|",
+                "OR"
+            ],
+            "correct_answer": "or",
+            "explanation": "Pythonban a logikai operátorokat angol szavakkal írjuk: `or`."
+        }
+    },
+    {
+        "title": "Logikai TAGADÁS",
+        "description": "Melyik kulcsszó fordítja meg egy logikai kifejezés értékét?",
+        "hint": "Angol szó.",
+        "q_type": "theory",
+        "difficulty_rating": 750,
+        "language": "python",
+        "concept": {
+            "logic": 1.0
+        },
+        "content": {
+            "options": [
+                "!",
+                "not",
+                "inv",
+                "~"
+            ],
+            "correct_answer": "not",
+            "explanation": "A `not` kulcsszó a logikai negálás operátora (pl. `not True` az `False`)."
+        }
+    },
+    {
+        "title": "Alternatív ág",
+        "description": "Melyik kulcsszó jelöli az 'egyébként' ágat, ha a feltétel nem teljesül?",
+        "hint": "Minden más esetben.",
+        "q_type": "theory",
+        "difficulty_rating": 750,
+        "language": "python",
+        "concept": {
+            "logic": 0.8,
+            "basics": 0.8
+        },
+        "content": {
+            "options": [
+                "otherwise",
+                "then",
+                "else",
+                "elif"
+            ],
+            "correct_answer": "else",
+            "explanation": "Az `else` ág fut le, ha az `if` (és az esetleges `elif`-ek) feltétele hamis."
+        }
+    },
+    {
+        "title": "Összehasonlítás eredménye",
+        "description": "Milyen típusú értéket ad vissza a `5 > 3` kifejezés?",
+        "hint": "Igaz vagy Hamis lehet.",
+        "q_type": "theory",
+        "difficulty_rating": 820,
+        "language": "python",
+        "concept": {
+            "logic": 1.0,
+            "basics": 0.5
+        },
+        "content": {
+            "options": [
+                "int",
+                "str",
+                "bool",
+                "float"
+            ],
+            "correct_answer": "bool",
+            "explanation": "Az összehasonlító operátorok eredménye mindig `bool` (True vagy False)."
+        }
+    },
+    {
+        "title": "Láncolt összehasonlítás",
+        "description": "Érvényes-e Pythonban a matematikai `10 < x < 20` jelölés?",
+        "hint": "Ez egy Python-specifikus kényelmi funkció.",
+        "q_type": "theory",
+        "difficulty_rating": 850,
+        "language": "python",
+        "concept": {
+            "logic": 1.0,
+            "basics": 0.6
+        },
+        "content": {
+            "options": [
+                "Nem, szintaktikai hiba.",
+                "Igen, és helyesen működik.",
+                "Igen, de mást jelent, mint matematikában.",
+                "Csak zárójelekkel érvényes."
+            ],
+            "correct_answer": "Igen, és helyesen működik.",
+            "explanation": "A Python támogatja a láncolt összehasonlítást, ami ekvivalens a `10 < x and x < 20` kifejezéssel."
+        }
+    },
+    {
+        "title": "Elif jelentése",
+        "description": "Minek a rövidítése az `elif` kulcsszó?",
+        "hint": "Ha az előző nem volt igaz, de ez...",
+        "q_type": "theory",
+        "difficulty_rating": 850,
+        "language": "python",
+        "concept": {
+            "logic": 0.8,
+            "basics": 0.8
+        },
+        "content": {
+            "options": [
+                "Element if",
+                "Else if",
+                "Early if",
+                "End if"
+            ],
+            "correct_answer": "Else if",
+            "explanation": "Az `elif` az 'else if' rövidítése, és további feltételek megadására szolgál."
+        }
+    },
+    {
+        "title": "Nulla logikai értéke",
+        "description": "Igaznak vagy hamisnak számít-e a `0` szám egy feltételben?",
+        "hint": "A semmi általában hamis.",
+        "q_type": "theory",
+        "difficulty_rating": 900,
+        "language": "python",
+        "concept": {
+            "logic": 1.0,
+            "basics": 0.5
+        },
+        "content": {
+            "options": [
+                "True (Igaz)",
+                "False (Hamis)",
+                "Hiba",
+                "Egyik sem"
+            ],
+            "correct_answer": "False (Hamis)",
+            "explanation": "Pythonban a 0 (int vagy float) Falsy értéknek számít, azaz logikai környezetben Hamisként viselkedik."
+        }
+    },
+    {
+        "title": "Identitás vs Egyenlőség",
+        "description": "Melyik operátor vizsgálja, hogy két változó UGYANAZ az objektum-e a memóriában?",
+        "hint": "Nem az értéküket, hanem az azonosságukat.",
+        "q_type": "theory",
+        "difficulty_rating": 950,
+        "language": "python",
+        "concept": {
+            "logic": 0.8,
+            "basics": 0.8
+        },
+        "content": {
+            "options": [
+                "==",
+                "===",
+                "is",
+                "same"
+            ],
+            "correct_answer": "is",
+            "explanation": "Az `is` operátor az objektum identitást (memóriacímet) vizsgálja, míg a `==` az értékegyenlőséget."
+        }
+    },
+    {
+        "title": "String összehasonlítás",
+        "description": "Hogyan dönti el a Python a `'alma' < 'körte'` kifejezés eredményét?",
+        "hint": "Szótári sorrend.",
+        "q_type": "theory",
+        "difficulty_rating": 920,
+        "language": "python",
+        "concept": {
+            "logic": 0.8,
+            "basics": 0.6
+        },
+        "content": {
+            "options": [
+                "A hosszuk alapján.",
+                "ABC (lexikografikus) sorrend alapján.",
+                "Véletlenszerűen.",
+                "Nem lehet stringeket összehasonlítani."
+            ],
+            "correct_answer": "ABC (lexikografikus) sorrend alapján.",
+            "explanation": "Stringeknél a relációs jelek az ABC sorrendet vizsgálják (karakterkódok alapján)."
+        }
+    },
+    {
+        "title": "Üres blokk",
+        "description": "Mit írunk az `if` ágba, ha szintaktikailag kötelező valamit írni, de nem akarunk csinálni semmit?",
+        "hint": "Passz.",
+        "q_type": "theory",
+        "difficulty_rating": 900,
+        "language": "python",
+        "concept": {
+            "logic": 0.5,
+            "basics": 1.0
+        },
+        "content": {
+            "options": [
+                "continue",
+                "break",
+                "pass",
+                "return"
+            ],
+            "correct_answer": "pass",
+            "explanation": "A `pass` egy 'no-op' (semmittevő) utasítás, amelyet helykitöltőként használunk üres blokkoknál."
+        }
+    },
+    {
+        "title": "In operátor",
+        "description": "Mire használható logikai kifejezésben az `in` kulcsszó?",
+        "hint": "Tagság vizsgálat.",
+        "q_type": "theory",
+        "difficulty_rating": 980,
+        "language": "python",
+        "concept": {
+            "logic": 0.7,
+            "arrays": 0.6
+        },
+        "content": {
+            "options": [
+                "Ciklus indítására.",
+                "Annak vizsgálatára, hogy egy elem benne van-e egy gyűjteményben.",
+                "Bemenet kérésére.",
+                "Függvény definiálására."
+            ],
+            "correct_answer": "Annak vizsgálatára, hogy egy elem benne van-e egy gyűjteményben.",
+            "explanation": "Az `in` operátor (pl. `'a' in 'alma'`) True-t ad, ha az elem megtalálható a sorozatban."
+        }
+    },
+    {
+        "title": "Üres lista igazsága",
+        "description": "Hogyan értékeli ki a Python az üres listát `[]` egy `if` feltételben?",
+        "hint": "Van-e benne valami?",
+        "q_type": "theory",
+        "difficulty_rating": 1050,
+        "language": "python",
+        "concept": {
+            "logic": 1.0,
+            "arrays": 0.5
+        },
+        "content": {
+            "options": [
+                "True (Igaz)",
+                "False (Hamis)",
+                "Hiba",
+                "None"
+            ],
+            "correct_answer": "False (Hamis)",
+            "explanation": "Pythonban az üres gyűjtemények (lista, tuple, dict, set, string) Falsy értékek, azaz hamisnak számítanak."
+        }
+    },
+    {
+        "title": "Ternary operator",
+        "description": "Mi a Pythonban a 'ternary operator' (egy soros if-else) helyes szintaxisa?",
+        "hint": "Érték HA feltétel KÜLÖNBEN más.",
+        "q_type": "theory",
+        "difficulty_rating": 1100,
+        "language": "python",
+        "concept": {
+            "logic": 1.0,
+            "basics": 0.4
+        },
+        "content": {
+            "options": [
+                "condition ? a : b",
+                "a if condition else b",
+                "if condition then a else b",
+                "a when condition else b"
+            ],
+            "correct_answer": "a if condition else b",
+            "explanation": "A Python egyedi szintaxisa: `érték_ha_igaz if feltétel else érték_ha_hamis`."
+        }
+    },
+    {
+        "title": "None összehasonlítása",
+        "description": "Hogyan a legbiztonságosabb ellenőrizni, hogy egy változó `None`-e?",
+        "hint": "Az identitás a fontos.",
+        "q_type": "theory",
+        "difficulty_rating": 1150,
+        "language": "python",
+        "concept": {
+            "logic": 0.8,
+            "basics": 0.7
+        },
+        "content": {
+            "options": [
+                "x == None",
+                "x is None",
+                "x equals None",
+                "not x"
+            ],
+            "correct_answer": "x is None",
+            "explanation": "A `None` egy singleton, ezért az `is` operátorral (identitás) szokás és javasolt vizsgálni (a PEP8 szerint is)."
+        }
+    },
+    {
+        "title": "And művelet viselkedése",
+        "description": "Mi kell ahhoz, hogy az `A and B` kifejezés Igaz legyen?",
+        "hint": "Mindkettő...",
+        "q_type": "theory",
+        "difficulty_rating": 1020,
+        "language": "python",
+        "concept": {
+            "logic": 1.0
+        },
+        "content": {
+            "options": [
+                "Legalább az egyiknek igaznak kell lennie.",
+                "Mindkettőnek igaznak kell lennie.",
+                "Csak az elsőnek.",
+                "Csak a másodiknak."
+            ],
+            "correct_answer": "Mindkettőnek igaznak kell lennie.",
+            "explanation": "Az ÉS (`and`) művelet csak akkor ad True-t, ha mindkét operandusa True."
+        }
+    },
+    {
+        "title": "Or művelet viselkedése",
+        "description": "Mi kell ahhoz, hogy az `A or B` kifejezés Igaz legyen?",
+        "hint": "Elegendő egy is.",
+        "q_type": "theory",
+        "difficulty_rating": 1020,
+        "language": "python",
+        "concept": {
+            "logic": 1.0
+        },
+        "content": {
+            "options": [
+                "Mindkettőnek igaznak kell lennie.",
+                "Legalább az egyiknek igaznak kell lennie.",
+                "Egyik sem lehet igaz.",
+                "Csak a másodiknak."
+            ],
+            "correct_answer": "Legalább az egyiknek igaznak kell lennie.",
+            "explanation": "A VAGY (`or`) művelet True-t ad, ha legalább az egyik operandus True."
+        }
+    },
+    {
+        "title": "Prioritás: not vs and",
+        "description": "Melyik köt erősebben (melyik hajtódik végre előbb): a `not` vagy az `and`?",
+        "hint": "A tagadás nagyon erős.",
+        "q_type": "theory",
+        "difficulty_rating": 1180,
+        "language": "python",
+        "concept": {
+            "logic": 1.0
+        },
+        "content": {
+            "options": [
+                "Az 'and' erősebb.",
+                "A 'not' erősebb.",
+                "Egyforma erősek.",
+                "Balról jobbra dől el."
+            ],
+            "correct_answer": "A 'not' erősebb.",
+            "explanation": "A precedencia sorrend: `not` > `and` > `or`. Tehát `not A and B` jelentése `(not A) and B`."
+        }
+    },
+    {
+        "title": "Nem-üres string",
+        "description": "Igaznak vagy hamisnak számít-e a `\"False\"` string (szövegként)?",
+        "hint": "Nem üres a string.",
+        "q_type": "theory",
+        "difficulty_rating": 1120,
+        "language": "python",
+        "concept": {
+            "logic": 1.0,
+            "basics": 0.5
+        },
+        "content": {
+            "options": [
+                "True",
+                "False",
+                "Hiba",
+                "None"
+            ],
+            "correct_answer": "True",
+            "explanation": "Minden nem üres string Truthy (Igaznak számít), függetlenül a tartalmától (még ha az a ''False'' szó is)."
+        }
+    },
+    {
+        "title": "Any függvény",
+        "description": "Mit csinál az `any()` függvény egy listán?",
+        "hint": "Van-e benne bármi jó?",
+        "q_type": "theory",
+        "difficulty_rating": 1200,
+        "language": "python",
+        "concept": {
+            "logic": 0.8,
+            "arrays": 0.6
+        },
+        "content": {
+            "options": [
+                "Igazat ad, ha MINDEN elem igaz.",
+                "Igazat ad, ha LEGALÁBB EGY elem igaz.",
+                "Igazat ad, ha a lista nem üres.",
+                "Megszámolja az igaz elemeket."
+            ],
+            "correct_answer": "Igazat ad, ha LEGALÁBB EGY elem igaz.",
+            "explanation": "Az `any(iterable)` True-t ad vissza, ha az iterable-ben található bármelyik elem Truthy."
+        }
+    },
+    {
+        "title": "Rövidzár (Short-circuit) AND",
+        "description": "Mit jelent a rövidzár kiértékelés az `A and B` kifejezésnél?",
+        "hint": "Lusta kiértékelés.",
+        "q_type": "theory",
+        "difficulty_rating": 1250,
+        "language": "python",
+        "concept": {
+            "logic": 1.0,
+            "basics": 0.5
+        },
+        "content": {
+            "options": [
+                "Mindig mindkét oldalt kiértékeli.",
+                "Ha A hamis, B-t már nem értékeli ki.",
+                "Ha A igaz, B-t már nem értékeli ki.",
+                "Ha B hiba, A-t nem nézi."
+            ],
+            "correct_answer": "Ha A hamis, B-t már nem értékeli ki.",
+            "explanation": "Ha az `and` első operandusa False, az eredmény biztosan False, így a második operandust meg sem vizsgálja (futtatja)."
+        }
+    },
+    {
+        "title": "Rövidzár (Short-circuit) OR",
+        "description": "Mikor NEM fut le a jobb oldal az `A or B` kifejezésben?",
+        "hint": "Ha már tudjuk az eredményt az elején.",
+        "q_type": "theory",
+        "difficulty_rating": 1250,
+        "language": "python",
+        "concept": {
+            "logic": 1.0,
+            "basics": 0.5
+        },
+        "content": {
+            "options": [
+                "Ha A hamis.",
+                "Ha A igaz.",
+                "Mindig lefut.",
+                "Soha nem fut le."
+            ],
+            "correct_answer": "Ha A igaz.",
+            "explanation": "Ha az `or` első operandusa True, az eredmény biztosan True, így a második operandust felesleges kiértékelni."
+        }
+    },
+    {
+        "title": "De Morgan törvénye",
+        "description": "Mivel ekvivalens a `not (A or B)` kifejezés?",
+        "hint": "A tagadás bevitele megfordítja a jelet.",
+        "q_type": "theory",
+        "difficulty_rating": 1300,
+        "language": "python",
+        "concept": {
+            "logic": 1.0
+        },
+        "content": {
+            "options": [
+                "not A or not B",
+                "not A and not B",
+                "A and B",
+                "not A or B"
+            ],
+            "correct_answer": "not A and not B",
+            "explanation": "De Morgan törvénye szerint a VAGY tagadása a tagadások ÉS kapcsolata."
+        }
+    },
+    {
+        "title": "All függvény",
+        "description": "Mit csinál az `all()` függvény?",
+        "hint": "Mindenkinek jónak kell lennie.",
+        "q_type": "theory",
+        "difficulty_rating": 1220,
+        "language": "python",
+        "concept": {
+            "logic": 0.8,
+            "arrays": 0.6
+        },
+        "content": {
+            "options": [
+                "Igazat ad, ha MINDEN elem igaz.",
+                "Igazat ad, ha van igaz elem.",
+                "Minden elemet igazzá alakít.",
+                "Visszaadja az összes elemet."
+            ],
+            "correct_answer": "Igazat ad, ha MINDEN elem igaz.",
+            "explanation": "Az `all(iterable)` csak akkor True, ha a gyűjtemény minden egyes eleme Truthy."
+        }
+    },
+    {
+        "title": "Is vs == számoknál",
+        "description": "Miért veszélyes az `is` használata számok összehasonlítására (pl. `x is 1000`)?",
+        "hint": "Kis egész számok cache-elve vannak, nagyok nem biztos.",
+        "q_type": "theory",
+        "difficulty_rating": 1350,
+        "language": "python",
+        "concept": {
+            "logic": 0.7,
+            "basics": 0.8
+        },
+        "content": {
+            "options": [
+                "Mindig működik.",
+                "Szintaktikai hiba.",
+                "Nem garantált, hogy a nagy számok ugyanazok az objektumok a memóriában.",
+                "Lassabb, mint az ==."
+            ],
+            "correct_answer": "Nem garantált, hogy a nagy számok ugyanazok az objektumok a memóriában.",
+            "explanation": "Pythonban a kis egészek cache-elve vannak, de nagyobb számoknál két azonos értékű változó lehet két külön objektum, így az `is` False-t ad."
+        }
+    },
+    {
+        "title": "Logic return value",
+        "description": "Mit ad vissza a `3 and 5` kifejezés Pythonban?",
+        "hint": "Nem True/False, hanem az utolsó kiértékelt érték.",
+        "q_type": "theory",
+        "difficulty_rating": 1380,
+        "language": "python",
+        "concept": {
+            "logic": 1.0,
+            "basics": 0.5
+        },
+        "content": {
+            "options": [
+                "True",
+                "False",
+                "3",
+                "5"
+            ],
+            "correct_answer": "5",
+            "explanation": "Pythonban a logikai operátorok nem bool-t adnak vissza, hanem az utolsó kiértékelt operandust. Mivel 3 igaz, továbbmegy, és visszaadja az 5-öt."
+        }
+    },
+    {
+        "title": "Chained comparison logic",
+        "description": "Hogyan értékeli ki a Python a `False == False in [False]` kifejezést?",
+        "hint": "Láncolt összehasonlítás trükkje.",
+        "q_type": "theory",
+        "difficulty_rating": 1400,
+        "language": "python",
+        "concept": {
+            "logic": 1.0,
+            "arrays": 0.4
+        },
+        "content": {
+            "options": [
+                "(False == False) és (False in [False]) -> True",
+                "False == (False in [False]) -> False",
+                "Szintaktikai hiba.",
+                "True in [False] -> False"
+            ],
+            "correct_answer": "(False == False) és (False in [False]) -> True",
+            "explanation": "Ez egy láncolt összehasonlítás: `A op1 B op2 C` jelentése `A op1 B and B op2 C`. Itt: `False == False` (True) AND `False in [False]` (True)."
+        }
+    },
+    {
+        "title": "Boolean aritmetika",
+        "description": "Mi az értéke a `True + True` kifejezésnek?",
+        "hint": "A bool az int leszármazottja.",
+        "q_type": "theory",
+        "difficulty_rating": 1280,
+        "language": "python",
+        "concept": {
+            "logic": 0.6,
+            "basics": 0.6
+        },
+        "content": {
+            "options": [
+                "True",
+                "TrueTrue",
+                "2",
+                "Hiba"
+            ],
+            "correct_answer": "2",
+            "explanation": "Pythonban a `bool` típus az `int` leszármazottja. `True` értéke 1, `False` értéke 0, így `1 + 1 = 2`."
+        }
+    },
+    {
+        "title": "Bitenkénti vs Logikai",
+        "description": "Mi a különbség a `&` és az `and` között Pythonban?",
+        "hint": "Bitwise vs Logical.",
+        "q_type": "theory",
+        "difficulty_rating": 1420,
+        "language": "python",
+        "concept": {
+            "logic": 0.9,
+            "basics": 0.5
+        },
+        "content": {
+            "options": [
+                "Szinonimák.",
+                "Az & bitenkénti művelet, az 'and' logikai rövidzáras.",
+                "Az & gyorsabb.",
+                "Az 'and' bitenkénti."
+            ],
+            "correct_answer": "Az & bitenkénti művelet, az 'and' logikai rövidzáras.",
+            "explanation": "Az `&` a számok bitjein dolgozik (és nem short-circuit), míg az `and` a logikai igazságértéket nézi."
+        }
+    },
+    {
+        "title": "Walrus a feltételben",
+        "description": "Mit tesz lehetővé a `:=` (walrus) operátor egy `if` feltételben?",
+        "hint": "Értékadás és ellenőrzés egyszerre.",
+        "q_type": "theory",
+        "difficulty_rating": 1450,
+        "language": "python",
+        "concept": {
+            "logic": 0.7,
+            "basics": 0.8
+        },
+        "content": {
+            "options": [
+                "Összehasonlít két értéket.",
+                "Értéket ad egy változónak, és vissza is adja azt a feltételvizsgálathoz.",
+                "Megcserél két változót.",
+                "Bitműveletet végez."
+            ],
+            "correct_answer": "Értéket ad egy változónak, és vissza is adja azt a feltételvizsgálathoz.",
+            "explanation": "Python 3.8+ újítása. Pl. `if (n := len(a)) > 10:` kiszámolja n-t, és rögtön ellenőrzi is."
+        }
+    },
+    {
+        "title": "NaN összehasonlítás",
+        "description": "Mi az eredménye a `float('nan') == float('nan')` kifejezésnek?",
+        "hint": "Not a Number.",
+        "q_type": "theory",
+        "difficulty_rating": 1480,
+        "language": "python",
+        "concept": {
+            "logic": 0.8,
+            "basics": 0.6
+        },
+        "content": {
+            "options": [
+                "True",
+                "False",
+                "None",
+                "Hiba"
+            ],
+            "correct_answer": "False",
+            "explanation": "Az IEEE 754 szabvány szerint a NaN (Not a Number) semmivel sem egyenlő, még önmagával sem."
+        }
+    },
+    {
+        "title": "Logic default pattern",
+        "description": "Mi a jelentése a `name = input_name or \"Unknown\"` mintának?",
+        "hint": "Ha az első üres...",
+        "q_type": "theory",
+        "difficulty_rating": 1410,
+        "language": "python",
+        "concept": {
+            "logic": 1.0,
+            "basics": 0.6
+        },
+        "content": {
+            "options": [
+                "Ha input_name igaz (nem üres), azt használja, különben ''Unknown''-t.",
+                "Mindig ''Unknown'' lesz.",
+                "Logikai VAGY eredményét (True/False) tárolja.",
+                "Hiba, stringeken nem működik az or."
+            ],
+            "correct_answer": "Ha input_name igaz (nem üres), azt használja, különben ''Unknown''-t.",
+            "explanation": "Ez egy gyakori idióma alapértelmezett érték adására. Ha `input_name` üres string (False), a kifejezés értéke a második operandus lesz."
+        }
+    },
+    {
+        "title": "Precedencia: Comparison vs Logic",
+        "description": "Melyik köt erősebben: az összehasonlítás (`<`, `==`) vagy a logikai (`and`, `or`)?",
+        "hint": "x < 5 and y > 10",
+        "q_type": "theory",
+        "difficulty_rating": 1460,
+        "language": "python",
+        "concept": {
+            "logic": 1.0
+        },
+        "content": {
+            "options": [
+                "A logikai operátorok.",
+                "Az összehasonlító operátorok.",
+                "Egyforma erősek.",
+                "Balról jobbra."
+            ],
+            "correct_answer": "Az összehasonlító operátorok.",
+            "explanation": "Először értékelődnek ki a relációk (pl. `x < 5`), és utána a köztük lévő logikai kapcsolatok."
+        }
+    },
+    {
+        "title": "Bitenkénti negálás",
+        "description": "Mi az értéke `~True` -nak (bitenkénti NOT)?",
+        "hint": "True mint 1 (int). ~x = -x - 1.",
+        "q_type": "theory",
+        "difficulty_rating": 1500,
+        "language": "python",
+        "concept": {
+            "logic": 0.6,
+            "basics": 0.7
+        },
+        "content": {
+            "options": [
+                "False",
+                "-1",
+                "-2",
+                "0"
+            ],
+            "correct_answer": "-2",
+            "explanation": "A True értéke 1. A bitenkénti negálás képlete `~x = -x - 1`. Így `~1 = -1 - 1 = -2`."
+        }
+    },
+    {
+        "title": "Mutable default argument logika",
+        "description": "Miért nem javasolt `def f(a, L=[]):` formátumot használni logikai ellenőrzéseknél?",
+        "hint": "A default érték csak egyszer jön létre.",
+        "q_type": "theory",
+        "difficulty_rating": 1550,
+        "language": "python",
+        "concept": {
+            "logic": 0.5,
+            "functions": 1.0
+        },
+        "content": {
+            "options": [
+                "Szintaktikai hiba.",
+                "A lista minden hívásnál megosztott marad, így megőrzi az előző állapotot.",
+                "Lassítja a kódot.",
+                "A lista None lesz."
+            ],
+            "correct_answer": "A lista minden hívásnál megosztott marad, így megőrzi az előző állapotot.",
+            "explanation": "A default argumentumok a definíciókor értékelődnek ki. Ha a listát módosítjuk, a következő hívásnál már nem lesz üres, ami logikai hibákhoz vezet."
+        }
+    },
+    {
+        "title": "List/Set comprehension logika",
+        "description": "Mire való az `if` a `[x for x in data if x > 0]` kifejezés végén?",
+        "hint": "Szűrés.",
+        "q_type": "theory",
+        "difficulty_rating": 1430,
+        "language": "python",
+        "concept": {
+            "logic": 0.8,
+            "arrays": 0.8
+        },
+        "content": {
+            "options": [
+                "Else ágat vezet be.",
+                "Szűri az elemeket: csak akkor kerül be x, ha a feltétel igaz.",
+                "Megállítja a ciklust.",
+                "Hiba, ott nem lehet if."
+            ],
+            "correct_answer": "Szűri az elemeket: csak akkor kerül be x, ha a feltétel igaz.",
+            "explanation": "Ez a filtering (szűrés) része a comprehension-nek."
+        }
+    }
+]

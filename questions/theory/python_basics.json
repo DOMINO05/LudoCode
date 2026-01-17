@@ -1,0 +1,867 @@
+[
+    {
+        "title": "Kommentelés Pythonban",
+        "description": "Melyik karakterrel kezdődik az egysoros megjegyzés (komment) a Python kódban?",
+        "hint": "Gyakran 'hashmark'-nak is hívják.",
+        "q_type": "theory",
+        "difficulty_rating": 600,
+        "language": "python",
+        "concept": {
+            "basics": 1.0
+        },
+        "content": {
+            "options": [
+                "//",
+                "#",
+                "/*",
+                "--"
+            ],
+            "correct_answer": "#",
+            "explanation": "Pythonban a kettőskereszt (#) jelzi a komment kezdetét a sor végéig."
+        }
+    },
+    {
+        "title": "Blokkok jelölése",
+        "description": "Hogyan jelöljük a kódblokkokat (pl. egy if utasítás belsejét) Pythonban?",
+        "hint": "Nem kapcsos zárójelekkel, mint a C-alapú nyelvekben.",
+        "q_type": "theory",
+        "difficulty_rating": 650,
+        "language": "python",
+        "concept": {
+            "basics": 1.0
+        },
+        "content": {
+            "options": [
+                "Kapcsos zárójellel {}",
+                "Behúzással (indentation)",
+                "Begin/End kulcsszavakkal",
+                "Pontosvesszővel ;"
+            ],
+            "correct_answer": "Behúzással (indentation)",
+            "explanation": "A Python a behúzást (szóközök vagy tabulátor) használja a kódblokkok strukturálására."
+        }
+    },
+    {
+        "title": "Kimenet írása",
+        "description": "Melyik függvénnyel írunk ki szöveget a konzolra?",
+        "hint": "Angolul a 'nyomtatni' szó.",
+        "q_type": "theory",
+        "difficulty_rating": 600,
+        "language": "python",
+        "concept": {
+            "basics": 1.0
+        },
+        "content": {
+            "options": [
+                "echo()",
+                "console.log()",
+                "write()",
+                "print()"
+            ],
+            "correct_answer": "print()",
+            "explanation": "A print() a beépített függvény az adatok standard kimenetre történő írásához."
+        }
+    },
+    {
+        "title": "Értékadás operátora",
+        "description": "Melyik jellel adunk értéket egy változónak?",
+        "hint": "Nem az összehasonlítás jele.",
+        "q_type": "theory",
+        "difficulty_rating": 620,
+        "language": "python",
+        "concept": {
+            "basics": 1.0
+        },
+        "content": {
+            "options": [
+                "==",
+                ":=",
+                "=",
+                "->"
+            ],
+            "correct_answer": "=",
+            "explanation": "A szimpla egyenlőségjel (=) az értékadó operátor, míg a dupla (==) az összehasonlítás."
+        }
+    },
+    {
+        "title": "Logikai igaz érték",
+        "description": "Hogyan írjuk helyesen a 'logikai igaz' értéket Pythonban?",
+        "hint": "Figyelj a kis- és nagybetűkre!",
+        "q_type": "theory",
+        "difficulty_rating": 680,
+        "language": "python",
+        "concept": {
+            "basics": 1.0,
+            "logic": 0.5
+        },
+        "content": {
+            "options": [
+                "true",
+                "True",
+                "TRUE",
+                "1"
+            ],
+            "correct_answer": "True",
+            "explanation": "Pythonban a logikai értékek (True, False) nagy kezdőbetűvel írandók."
+        }
+    },
+    {
+        "title": "Fájlkiterjesztés",
+        "description": "Mi a Python forráskód fájlok szabványos kiterjesztése?",
+        "hint": "A nyelv nevének első két betűje.",
+        "q_type": "theory",
+        "difficulty_rating": 600,
+        "language": "python",
+        "concept": {
+            "basics": 1.0
+        },
+        "content": {
+            "options": [
+                ".python",
+                ".pt",
+                ".py",
+                ".pi"
+            ],
+            "correct_answer": ".py",
+            "explanation": "A Python szkripteket .py kiterjesztéssel mentjük."
+        }
+    },
+    {
+        "title": "Sztring határolók",
+        "description": "Mivel határolhatunk egy sztringet (szöveget) Pythonban?",
+        "hint": "Több lehetőség is van.",
+        "q_type": "theory",
+        "difficulty_rating": 650,
+        "language": "python",
+        "concept": {
+            "basics": 1.0
+        },
+        "content": {
+            "options": [
+                "Csak macskakörömmel ''.",
+                "Csak aposztróffal '.",
+                "Aposztróffal ' vagy macskakörömmel '' is.",
+                "Csak backtick-kel `."
+            ],
+            "correct_answer": "Aposztróffal ' vagy macskakörömmel \" is.",
+            "explanation": "Pythonban a 'szöveg' és a \"szöveg\" is érvényes, nincs különbség a működésükben."
+        }
+    },
+    {
+        "title": "Elágazás kezdete",
+        "description": "Melyik karakternek kell állnia az if/else/for sorok legvégén?",
+        "hint": "Ez vezeti be a behúzott blokkot.",
+        "q_type": "theory",
+        "difficulty_rating": 700,
+        "language": "python",
+        "concept": {
+            "basics": 1.0,
+            "logic": 0.2
+        },
+        "content": {
+            "options": [
+                "; (pontosvessző)",
+                ": (kettőspont)",
+                "{ (kapcsos zárójel)",
+                ". (pont)"
+            ],
+            "correct_answer": ": (kettőspont)",
+            "explanation": "A vezérlési szerkezetek fejlécét kettősponttal zárjuk le, ezután következik a behúzott blokk."
+        }
+    },
+    {
+        "title": "Hatványozás",
+        "description": "Melyik operátor végzi a hatványozást Pythonban?",
+        "hint": "A csillaghoz van köze.",
+        "q_type": "theory",
+        "difficulty_rating": 850,
+        "language": "python",
+        "concept": {
+            "basics": 1.0
+        },
+        "content": {
+            "options": [
+                "^",
+                "pow",
+                "**",
+                "//"
+            ],
+            "correct_answer": "**",
+            "explanation": "Pythonban a ** operátor a hatványozás (pl. 2**3 az 8). A ^ a bitenkénti XOR."
+        }
+    },
+    {
+        "title": "Bemenet típusa",
+        "description": "Milyen típusú adatot ad vissza MINDIG az `input()`függvény?",
+        "hint": "Még akkor is, ha számot írsz be.",
+        "q_type": "theory",
+        "difficulty_rating": 820,
+        "language": "python",
+        "concept": {
+            "basics": 1.0,
+            "functions": 0.3
+        },
+        "content": {
+            "options": [
+                "int (egész)",
+                "str (szöveg)",
+                "float (lebegőpontos)",
+                "Attól függ, mit gépel a felhasználó."
+            ],
+            "correct_answer": "str (szöveg)",
+            "explanation": "Az input() minden bemenetet szövegként (string) olvas be, konverziót külön kell végezni."
+        }
+    },
+    {
+        "title": "Egészosztás",
+        "description": "Melyik operátorral kapjuk meg az osztás egész részét (lefelé kerekítve)?",
+        "hint": "Dupla jel.",
+        "q_type": "theory",
+        "difficulty_rating": 880,
+        "language": "python",
+        "concept": {
+            "basics": 1.0
+        },
+        "content": {
+            "options": [
+                "/",
+                "//",
+                "%",
+                "div"
+            ],
+            "correct_answer": "//",
+            "explanation": "A // operátor (floor division) végzi az egészosztást, eldobva a tizedes részt."
+        }
+    },
+    {
+        "title": "Sztring szorzás",
+        "description": "Mit eredményez a`'Na' * 3`kifejezés?",
+        "hint": "A szorzás ismétlést jelent szövegeknél.",
+        "q_type": "theory",
+        "difficulty_rating": 850,
+        "language": "python",
+        "concept": {
+            "basics": 1.0
+        },
+        "content": {
+            "options": [
+                "Hiba",
+                "Na3",
+                "NaNaNa",
+                "NaN"
+            ],
+            "correct_answer": "NaNaNa",
+            "explanation": "Pythonban a sztring szorzása egy egész számmal a szöveg ismétlését eredményezi."
+        }
+    },
+    {
+        "title": "Típusellenőrzés",
+        "description": "Melyik függvénnyel kérdezhetjük le egy változó típusát?",
+        "hint": "Angolul 'típus'.",
+        "q_type": "theory",
+        "difficulty_rating": 800,
+        "language": "python",
+        "concept": {
+            "basics": 1.0,
+            "functions": 0.2
+        },
+        "content": {
+            "options": [
+                "typeof()",
+                "type()",
+                "class()",
+                "isinstance()"
+            ],
+            "correct_answer": "type()",
+            "explanation": "A type(x) függvény visszaadja az x objektum típusát/osztályát."
+        }
+    },
+    {
+        "title": "Null érték",
+        "description": "Mi a Python megfelelője a 'null' vagy 'semmi' értékre?",
+        "hint": "Nagybetűvel kezdődik.",
+        "q_type": "theory",
+        "difficulty_rating": 880,
+        "language": "python",
+        "concept": {
+            "basics": 1.0
+        },
+        "content": {
+            "options": [
+                "null",
+                "nil",
+                "None",
+                "Nothing"
+            ],
+            "correct_answer": "None",
+            "explanation": "A None egy speciális kulcsszó és objektum a Pythonban, ami az érték hiányát jelöli."
+        }
+    },
+    {
+        "title": "Változó elnevezés",
+        "description": "Melyik változónév ÉRVÉNYTELEN Pythonban?",
+        "hint": "Nem kezdődhet számmal.",
+        "q_type": "theory",
+        "difficulty_rating": 900,
+        "language": "python",
+        "concept": {
+            "basics": 1.0
+        },
+        "content": {
+            "options": [
+                "my_var",
+                "_private",
+                "2cool",
+                "var2"
+            ],
+            "correct_answer": "2cool",
+            "explanation": "Változónév nem kezdődhet számjeggyel."
+        }
+    },
+    {
+        "title": "Pass utasítás",
+        "description": "Mire való a`pass`utasítás?",
+        "hint": "Amikor szintaktikailag kell valami, de nem akarunk csinálni semmit.",
+        "q_type": "theory",
+        "difficulty_rating": 950,
+        "language": "python",
+        "concept": {
+            "basics": 1.0,
+            "logic": 0.3
+        },
+        "content": {
+            "options": [
+                "Kilép a programból.",
+                "Átugorja a következő utasítást.",
+                "Helykitöltő (placeholder) üres blokkokhoz.",
+                "Visszatér a függvényből."
+            ],
+            "correct_answer": "Helykitöltő (placeholder) üres blokkokhoz.",
+            "explanation": "A pass egy 'no-op' (no operation) utasítás, arra használjuk, hogy üres blokkokat hozzunk létre szintaktikai hiba nélkül."
+        }
+    },
+    {
+        "title": "Benne van-e?",
+        "description": "Melyik operátorral vizsgáljuk meg, hogy egy elem benne van-e egy listában vagy sztringben?",
+        "hint": "Angol elöljárószó.",
+        "q_type": "theory",
+        "difficulty_rating": 1050,
+        "language": "python",
+        "concept": {
+            "basics": 0.7,
+            "logic": 0.3,
+            "arrays": 0.5
+        },
+        "content": {
+            "options": [
+                "exists",
+                "has",
+                "contains",
+                "in"
+            ],
+            "correct_answer": "in",
+            "explanation": "Az`in`operátor (membership operator) vizsgálja a tartalmazást (pl. 'a' in 'alma')."
+        }
+    },
+    {
+        "title": "Elif kulcsszó",
+        "description": "Mit jelent az`elif`kulcsszó?",
+        "hint": "Else If rövidítése.",
+        "q_type": "theory",
+        "difficulty_rating": 1020,
+        "language": "python",
+        "concept": {
+            "basics": 0.8,
+            "logic": 1.0
+        },
+        "content": {
+            "options": [
+                "Ciklus feltétel.",
+                "Egyébként ha (else if).",
+                "Kivételkezelés.",
+                "Függvény definíció."
+            ],
+            "correct_answer": "Egyébként ha (else if).",
+            "explanation": "Az if-elif-else szerkezetben az elif szolgál a további feltételek megadására."
+        }
+    },
+    {
+        "title": "Negatív indexelés",
+        "description": "Mit jelent a`lista[-1]`kifejezés?",
+        "hint": "Hátulról számolunk.",
+        "q_type": "theory",
+        "difficulty_rating": 1100,
+        "language": "python",
+        "concept": {
+            "basics": 0.6,
+            "arrays": 1.0
+        },
+        "content": {
+            "options": [
+                "Az első elemet.",
+                "A lista utolsó elemét.",
+                "Hiba, nincs negatív index.",
+                "Az összes elemet fordítva."
+            ],
+            "correct_answer": "A lista utolsó elemét.",
+            "explanation": "Pythonban a negatív indexek a sorozat végéről számolnak visszafelé, a -1 az utolsó elem."
+        }
+    },
+    {
+        "title": "Range vége",
+        "description": "Milyen számokat generál a`range(1, 5)`?",
+        "hint": "A felső határ exkluzív (nem része).",
+        "q_type": "theory",
+        "difficulty_rating": 1080,
+        "language": "python",
+        "concept": {
+            "basics": 1.0,
+            "loops": 0.6
+        },
+        "content": {
+            "options": [
+                "1, 2, 3, 4, 5",
+                "1, 2, 3, 4",
+                "0, 1, 2, 3, 4",
+                "1, 5"
+            ],
+            "correct_answer": "1, 2, 3, 4",
+            "explanation": "A range start-ja inkluzív, a stop-ja exkluzív (nem tartozik bele az intervallumba)."
+        }
+    },
+    {
+        "title": "Logikai és",
+        "description": "Hogyan írjuk a logikai ÉS műveletet Pythonban?",
+        "hint": "Nem szimbólum, hanem szó.",
+        "q_type": "theory",
+        "difficulty_rating": 1050,
+        "language": "python",
+        "concept": {
+            "basics": 1.0,
+            "logic": 1.0
+        },
+        "content": {
+            "options": [
+                "&&",
+                "&",
+                "and",
+                "AND"
+            ],
+            "correct_answer": "and",
+            "explanation": "Pythonban az angol szavakat használjuk logikai operátornak: `and`, `or`, `not`(kisbetűvel)."
+        }
+    },
+    {
+        "title": "F-sztringek",
+        "description": "Mi a helyes szintaxis változó beillesztésére f-sztringbe?",
+        "hint": "Kapcsos zárójel a sztringen belül.",
+        "q_type": "theory",
+        "difficulty_rating": 1150,
+        "language": "python",
+        "concept": {
+            "basics": 1.0
+        },
+        "content": {
+            "options": [
+                "f\"Hello {name}\"",
+                "f\"Hello (name)\"",
+                "f\"Hello %name%\"",
+                "f\"Hello $name\""
+            ],
+            "correct_answer": "f\"Hello {name}\"",
+            "explanation": "Az f-sztringek (Python 3.6+) kapcsos zárójelek {} között értékelik ki a kifejezéseket."
+        }
+    },
+    {
+        "title": "Lista hossza",
+        "description": "Melyik függvénnyel kérjük le egy lista vagy sztring hosszát?",
+        "hint": "Length rövidítése.",
+        "q_type": "theory",
+        "difficulty_rating": 1020,
+        "language": "python",
+        "concept": {
+            "basics": 1.0,
+            "arrays": 0.4
+        },
+        "content": {
+            "options": [
+                "size()",
+                "count()",
+                "length()",
+                "len()"
+            ],
+            "correct_answer": "len()",
+            "explanation": "A len() a beépített függvény gyűjtemények hosszának lekérdezésére."
+        }
+    },
+    {
+        "title": "Konverzió számra",
+        "description": "Hogyan alakítjuk a \"123\" sztringet egész számmá?",
+        "hint": "Típus neve függvényként.",
+        "q_type": "theory",
+        "difficulty_rating": 1050,
+        "language": "python",
+        "concept": {
+            "basics": 1.0
+        },
+        "content": {
+            "options": [
+                "str(123)",
+                "int(\"123\")",
+                "float(\"123\")",
+                "to_int(\"123\")"
+            ],
+            "correct_answer": "int(\"123\")",
+            "explanation": "Az int() konstruktor végzi a típuskonverziót (casting) sztringről egész számra."
+        }
+    },
+    {
+        "title": "Immutabilitás",
+        "description": "Melyik típus megváltoztathatatlan (immutable) az alábbiak közül?",
+        "hint": "A listával ellentétben ezt nem lehet módosítani létrehozás után.",
+        "q_type": "theory",
+        "difficulty_rating": 1250,
+        "language": "python",
+        "concept": {
+            "basics": 0.8,
+            "arrays": 0.8
+        },
+        "content": {
+            "options": [
+                "List (lista)",
+                "Dictionary (szótár)",
+                "Set (halmaz)",
+                "Tuple (n-es)"
+            ],
+            "correct_answer": "Tuple (n-es)",
+            "explanation": "A tuple elemei nem módosíthatók a létrehozás után, míg a lista, szótár és halmaz mutable típusok."
+        }
+    },
+    {
+        "title": "Szeletelés lépésköze",
+        "description": "Mit csinál a`lista[::-1]`szeletelés (slicing)?",
+        "hint": "A lépésköz negatív.",
+        "q_type": "theory",
+        "difficulty_rating": 1280,
+        "language": "python",
+        "concept": {
+            "basics": 0.7,
+            "arrays": 1.0
+        },
+        "content": {
+            "options": [
+                "Törli az utolsó elemet.",
+                "Visszaadja a listát fordított sorrendben.",
+                "Visszaadja az utolsó elemet.",
+                "Nem érvényes szintaxis."
+            ],
+            "correct_answer": "Visszaadja a listát fordított sorrendben.",
+            "explanation": "A [start:stop:step] szintaxisban a -1 lépésköz visszafelé haladást jelent."
+        }
+    },
+    {
+        "title": "Global kulcsszó",
+        "description": "Mikor kell használni a`global`kulcsszót egy függvényen belül?",
+        "hint": "Írás vs Olvasás.",
+        "q_type": "theory",
+        "difficulty_rating": 1300,
+        "language": "python",
+        "concept": {
+            "basics": 1.0,
+            "functions": 0.8
+        },
+        "content": {
+            "options": [
+                "Mindig, ha globális változót olvasunk.",
+                "Ha globális változónak akarunk új értéket adni (írni).",
+                "Ha globális függvényt hívunk.",
+                "Importáláshoz."
+            ],
+            "correct_answer": "Ha globális változónak akarunk új értéket adni (írni).",
+            "explanation": "Olvasni lehet global nélkül is, de az íráshoz (assignment) jelezni kell, hogy nem új lokális változót akarunk, hanem a kintit módosítjuk."
+        }
+    },
+    {
+        "title": "Kicsomagolás (Unpacking)",
+        "description": "Mit jelent az`a, b = b, a`utasítás?",
+        "hint": "Pythonos trükk csereberére.",
+        "q_type": "theory",
+        "difficulty_rating": 1220,
+        "language": "python",
+        "concept": {
+            "basics": 1.0
+        },
+        "content": {
+            "options": [
+                "a és b értéke egyenlő lesz.",
+                "Hiba, egyszerre csak egy értékadás lehet.",
+                "Kicseréli a két változó értékét (swap).",
+                "Tuple-t hoz létre."
+            ],
+            "correct_answer": "Kicseréli a két változó értékét (swap).",
+            "explanation": "Ez a tuple unpacking (kicsomagolás) képessége, ami lehetővé teszi a csere műveletét segédváltozó nélkül."
+        }
+    },
+    {
+        "title": "Dictionary kulcsok",
+        "description": "Milyen típusú adat lehet egy Dictionary (szótár) kulcsa?",
+        "hint": "Hash-elhetőnek kell lennie.",
+        "q_type": "theory",
+        "difficulty_rating": 1350,
+        "language": "python",
+        "concept": {
+            "basics": 0.7,
+            "arrays": 1.0
+        },
+        "content": {
+            "options": [
+                "Bármilyen típus.",
+                "Csak string.",
+                "Csak immutable (megváltoztathatatlan) típus.",
+                "Csak int."
+            ],
+            "correct_answer": "Csak immutable (megváltoztathatatlan) típus.",
+            "explanation": "A kulcsoknak hash-elhetőnek kell lenniük, amihez immutabilitás szükséges (pl. lista nem lehet kulcs, de tuple igen)."
+        }
+    },
+    {
+        "title": "Halmaz egyedisége",
+        "description": "Mi történik, ha egy`set`(halmaz) adatszerkezetbe kétszer tesszük bele ugyanazt az elemet?",
+        "hint": "A halmaz definíciója.",
+        "q_type": "theory",
+        "difficulty_rating": 1250,
+        "language": "python",
+        "concept": {
+            "basics": 0.6,
+            "arrays": 1.0
+        },
+        "content": {
+            "options": [
+                "Hibaüzenetet kapunk.",
+                "Mindkét példány bekerül.",
+                "Csak az egyik marad meg (duplikáció szűrés).",
+                "A halmaz listává alakul."
+            ],
+            "correct_answer": "Csak az egyik marad meg (duplikáció szűrés).",
+            "explanation": "A set matematikai halmazt valósít meg, amelyben minden elem csak egyszer szerepelhet."
+        }
+    },
+    {
+        "title": "Docstring",
+        "description": "Mi a Docstring szerepe?",
+        "hint": "Dokumentáció.",
+        "q_type": "theory",
+        "difficulty_rating": 1210,
+        "language": "python",
+        "concept": {
+            "basics": 1.0
+        },
+        "content": {
+            "options": [
+                "Többsoros komment kikommentelésre.",
+                "A függvény/osztály működésének dokumentálása (help() által elérhető).",
+                "Fájl beolvasás.",
+                "String formázás."
+            ],
+            "correct_answer": "A függvény/osztály működésének dokumentálása (help() által elérhető).",
+            "explanation": "A függvény definíciójának első sorában lévő sztring literál a __doc__ attribútumba kerül."
+        }
+    },
+    {
+        "title": "Pass-by-assignment",
+        "description": "Hogyan működik a paraméterátadás Pythonban?",
+        "hint": "Referencia az objektumra.",
+        "q_type": "theory",
+        "difficulty_rating": 1380,
+        "language": "python",
+        "concept": {
+            "basics": 1.0,
+            "functions": 0.6
+        },
+        "content": {
+            "options": [
+                "Mindig érték szerinti (másolat).",
+                "Mindig referencia szerinti.",
+                "Pass-by-object-reference (hozzárendelés szerinti).",
+                "Pointer szerinti."
+            ],
+            "correct_answer": "Pass-by-object-reference (hozzárendelés szerinti).",
+            "explanation": "Az objektum referenciája adódik át érték szerint. Mutable objektumok módosíthatók a függvényben, immutable-ök nem."
+        }
+    },
+    {
+        "title": "Azonosság vs Egyenlőség",
+        "description": "Mi a különbség az`is`és a`==`operátor között?",
+        "hint": "Memóriacím vs Tartalom.",
+        "q_type": "theory",
+        "difficulty_rating": 1420,
+        "language": "python",
+        "concept": {
+            "basics": 1.0,
+            "logic": 0.8
+        },
+        "content": {
+            "options": [
+                "Nincs különbség.",
+                "Az == a memóriacímet (identitást), az is az értéket vizsgálja.",
+                "Az is a memóriacímet (identitást), az == az értéket vizsgálja.",
+                "Az is csak számokra működik."
+            ],
+            "correct_answer": "Az is a memóriacímet (identitást), az == az értéket vizsgálja.",
+            "explanation": "Az`is` azt nézi, hogy a két változó ugyanaz-e az objektum a memóriában (`id(a) == id(b)`), míg a `==`az értékük egyezését."
+        }
+    },
+    {
+        "title": "Mutable default argument",
+        "description": "Mi a veszélye a`def f(l=[])`típusú függvénydefiníciónak?",
+        "hint": "Az alapértelmezett érték csak egyszer jön létre.",
+        "q_type": "theory",
+        "difficulty_rating": 1450,
+        "language": "python",
+        "concept": {
+            "basics": 0.8,
+            "functions": 1.0
+        },
+        "content": {
+            "options": [
+                "Szintaktikai hiba.",
+                "Semmi, teljesen biztonságos.",
+                "A lista megosztott marad a hívások között (állapotot őriz).",
+                "Minden hívásnál új üres lista jön létre."
+            ],
+            "correct_answer": "A lista megosztott marad a hívások között (állapotot őriz).",
+            "explanation": "A default argumentumok a definíciókor értékelődnek ki, nem híváskor. Így a mutable objektum (lista) közös lesz minden hívásnál."
+        }
+    },
+    {
+        "title": "Lambda korlátja",
+        "description": "Mi a fő korlátja a lambda függvényeknek Pythonban?",
+        "hint": "Hány kifejezés lehet benne?",
+        "q_type": "theory",
+        "difficulty_rating": 1410,
+        "language": "python",
+        "concept": {
+            "basics": 0.6,
+            "functions": 1.0
+        },
+        "content": {
+            "options": [
+                "Nem fogadhatnak paramétert.",
+                "Csak egyetlen kifejezésből (expression) állhatnak.",
+                "Nem hívhatnak más függvényt.",
+                "Lassabbak, mint a normál függvények."
+            ],
+            "correct_answer": "Csak egyetlen kifejezésből (expression) állhatnak.",
+            "explanation": "A lambda 'body'-ja egyetlen expression lehet, nem tartalmazhat statement-eket (pl. több soros utasításokat, értékadást)."
+        }
+    },
+    {
+        "title": "Deepcopy",
+        "description": "Mikor szükséges a`deepcopy`használata a sima`copy`helyett?",
+        "hint": "Egymásba ágyazott listák.",
+        "q_type": "theory",
+        "difficulty_rating": 1480,
+        "language": "python",
+        "concept": {
+            "basics": 1.0,
+            "arrays": 0.5
+        },
+        "content": {
+            "options": [
+                "Nagy méretű objektumoknál.",
+                "Ha az objektum immutable.",
+                "Ha beágyazott mutable objektumokat (pl. lista a listában) is függetleníteni akarunk.",
+                "String másolásnál."
+            ],
+            "correct_answer": "Ha beágyazott mutable objektumokat (pl. lista a listában) is függetleníteni akarunk.",
+            "explanation": "A shallow copy (sima másolás) csak a külső konténert másolja, a belső elemek referenciák maradnak. A deepcopy rekurzívan mindent másol."
+        }
+    },
+    {
+        "title": "GIL jelentése",
+        "description": "Mit jelent a GIL a CPython implementációban?",
+        "hint": "Global Interpreter Lock.",
+        "q_type": "theory",
+        "difficulty_rating": 1550,
+        "language": "python",
+        "concept": {
+            "basics": 1.0
+        },
+        "content": {
+            "options": [
+                "A memória felszabadításért felelős modul.",
+                "Global Interpreter Lock - egyszerre csak egy szál futhat Python bytecode-ot.",
+                "Graphical Interface Library.",
+                "General Input Language."
+            ],
+            "correct_answer": "Global Interpreter Lock - egyszerre csak egy szál futhat Python bytecode-ot.",
+            "explanation": "A GIL miatt a többszálú (multi-threaded) Python programok CPU-intenzív feladatoknál nem gyorsulnak több magon."
+        }
+    },
+    {
+        "title": "Main guard",
+        "description": "Mire való az`if **name** == ''**main**'':` blokk?",
+        "hint": "Import vs Futtatás.",
+        "q_type": "theory",
+        "difficulty_rating": 1430,
+        "language": "python",
+        "concept": {
+            "basics": 1.0
+        },
+        "content": {
+            "options": [
+                "Kommentelésre.",
+                "Hogy a kód csak akkor fusson le, ha közvetlenül indítják, importáláskor ne.",
+                "Főfüggvény definiálására.",
+                "Hibakezelésre."
+            ],
+            "correct_answer": "Hogy a kód csak akkor fusson le, ha közvetlenül indítják, importáláskor ne.",
+            "explanation": "Ez biztosítja, hogy a szkript modulként is importálható legyen mellékhatások (pl. kód lefutása) nélkül."
+        }
+    },
+    {
+        "title": "Generator",
+        "description": "Melyik kulcsszóval tér vissza értékenként egy generátor függvény?",
+        "hint": "Nem return.",
+        "q_type": "theory",
+        "difficulty_rating": 1500,
+        "language": "python",
+        "concept": {
+            "basics": 0.6,
+            "functions": 1.0,
+            "loops": 0.4
+        },
+        "content": {
+            "options": [
+                "return",
+                "yield",
+                "emit",
+                "output"
+            ],
+            "correct_answer": "yield",
+            "explanation": "A yield kulcsszó felfüggeszti a függvény futását és visszaad egy értéket, megőrizve az állapotot a következő hívásig."
+        }
+    },
+    {
+        "title": "Bitművelet: XOR",
+        "description": "Melyik operátor a bitenkénti kizáró vagy (XOR) Pythonban?",
+        "hint": "Kalap.",
+        "q_type": "theory",
+        "difficulty_rating": 1460,
+        "language": "python",
+        "concept": {
+            "basics": 1.0,
+            "logic": 0.5
+        },
+        "content": {
+            "options": [
+                "xor",
+                "|",
+                "&",
+                "^"
+            ],
+            "correct_answer": "^",
+            "explanation": "A kalap (^) jelöli a bitenkénti XOR műveletet."
+        }
+    }
+]

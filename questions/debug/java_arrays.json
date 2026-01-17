@@ -1,0 +1,802 @@
+[
+    {
+        "title": "Tömb létrehozása",
+        "description": "Javítsd ki a tömb inicializálásának szintaxisát!",
+        "hint": "Java-ban a tömb literálokat kapcsos zárójelbe tesszük.",
+        "q_type": "debug",
+        "difficulty_rating": 600,
+        "language": "java",
+        "concept": {"arrays": 1.0, "basics": 0.5},
+        "content": {
+            "buggy_code": "int[] numbers = (1, 2, 3, 4, 5);",
+            "error_location": "(1, 2, 3, 4, 5)",
+            "correct_code": "{1, 2, 3, 4, 5}",
+            "options": [
+                "{1, 2, 3, 4, 5}",
+                "[1, 2, 3, 4, 5]",
+                "new int(1, 2, 3, 4, 5)"
+            ],
+            "explanation": "A tömb literálokat Java-ban kapcsos zárójelek `{}` között kell felsorolni, nem kerek zárójelben."
+        }
+    },
+    {
+        "title": "Tömb elérése",
+        "description": "Hogyan hivatkozunk helyesen a tömb első elemére?",
+        "hint": "Indexeléshez szögletes zárójelet használunk.",
+        "q_type": "debug",
+        "difficulty_rating": 600,
+        "language": "java",
+        "concept": {"arrays": 1.0, "basics": 0.5},
+        "content": {
+            "buggy_code": "int x = numbers(0);",
+            "error_location": "numbers(0)",
+            "correct_code": "numbers[0]",
+            "options": [
+                "numbers[0]",
+                "numbers{0}",
+                "numbers.get(0)"
+            ],
+            "explanation": "A tömbök elemeit szögletes zárójelben megadott indexszel érjük el: `tomb[index]`."
+        }
+    },
+    {
+        "title": "Tömb mérete",
+        "description": "Javítsd ki a tömb méretének deklarációját!",
+        "hint": "A méretet szögletes zárójelben adjuk meg.",
+        "q_type": "debug",
+        "difficulty_rating": 650,
+        "language": "java",
+        "concept": {"arrays": 1.0, "basics": 0.6},
+        "content": {
+            "buggy_code": "int[] data = new int(10);",
+            "error_location": "new int(10)",
+            "correct_code": "new int[10]",
+            "options": [
+                "new int[10]",
+                "new int{10}",
+                "new int<10>"
+            ],
+            "explanation": "A `new` kulcsszó után a típust és szögletes zárójelben a méretet kell megadni."
+        }
+    },
+    {
+        "title": "Hiányzó pontosvessző",
+        "description": "A deklaráció végéről hiányzik valami.",
+        "hint": "Minden utasítást le kell zárni.",
+        "q_type": "debug",
+        "difficulty_rating": 600,
+        "language": "java",
+        "concept": {"arrays": 0.5, "basics": 1.0},
+        "content": {
+            "buggy_code": "double[] prices = {10.5, 20.0}",
+            "error_location": "double[] prices = {10.5, 20.0}",
+            "correct_code": "double[] prices = {10.5, 20.0};",
+            "options": [
+                "double[] prices = {10.5, 20.0};",
+                "double[] prices = {10.5, 20.0}:",
+                "double[] prices = {10.5, 20.0}."
+            ],
+            "explanation": "Java-ban az utasításokat pontosvesszővel `;` kell lezárni."
+        }
+    },
+    {
+        "title": "String tömb típusa",
+        "description": "Javítsd ki a típusdeklarációt!",
+        "hint": "A String nagybetűvel kezdődik.",
+        "q_type": "debug",
+        "difficulty_rating": 650,
+        "language": "java",
+        "concept": {"arrays": 1.0, "basics": 0.8},
+        "content": {
+            "buggy_code": "string[] names = {\"Anna\", \"Bela\"};",
+            "error_location": "string[]",
+            "correct_code": "String[]",
+            "options": [
+                "String[]",
+                "Char[]",
+                "Text[]"
+            ],
+            "explanation": "A Java `String` osztálya nagy kezdőbetűvel írandó, ellentétben pl. a C#-pal vagy a `int` primitívvel."
+        }
+    },
+    {
+        "title": "Tömb deklaráció helye",
+        "description": "Hová kell tenni a szögletes zárójelet?",
+        "hint": "A típus vagy a változónév után álljon.",
+        "q_type": "debug",
+        "difficulty_rating": 700,
+        "language": "java",
+        "concept": {"arrays": 1.0, "basics": 0.6},
+        "content": {
+            "buggy_code": "int numbers = new int[5];",
+            "error_location": "int numbers",
+            "correct_code": "int[] numbers",
+            "options": [
+                "int[] numbers",
+                "int numbers()",
+                "Array<int> numbers"
+            ],
+            "explanation": "A változó deklarálásakor jelezni kell, hogy tömbről van szó: `int[] numbers` vagy `int numbers[]`."
+        }
+    },
+    {
+        "title": "Char tömb literál",
+        "description": "Javítsd ki a karaktertömb elemeit!",
+        "hint": "A karaktereket aposztróffal jelöljük.",
+        "q_type": "debug",
+        "difficulty_rating": 750,
+        "language": "java",
+        "concept": {"arrays": 1.0, "basics": 0.7},
+        "content": {
+            "buggy_code": "char[] letters = {\"a\", \"b\", \"c\"};",
+            "error_location": "{\"a\", \"b\", \"c\"}",
+            "correct_code": "{'a', 'b', 'c'}",
+            "options": [
+                "{'a', 'b', 'c'}",
+                "[a, b, c]",
+                "(a, b, c)"
+            ],
+            "explanation": "A `char` típusú értékeket szimpla idézőjelbe ('a') tesszük, a dupla (\"a\") Stringet jelöl."
+        }
+    },
+    {
+        "title": "Tömb típuseltérés",
+        "description": "Nem tehetünk szöveget számokat váró tömbbe.",
+        "hint": "A típusoknak egyezniük kell.",
+        "q_type": "debug",
+        "difficulty_rating": 780,
+        "language": "java",
+        "concept": {"arrays": 1.0, "basics": 0.8},
+        "content": {
+            "buggy_code": "int[] nums = {1, 2, \"3\"};",
+            "error_location": "\"3\"",
+            "correct_code": "3",
+            "options": [
+                "3",
+                "Integer.parseInt(\"3\")",
+                "'3'"
+            ],
+            "explanation": "Az `int[]` tömb csak egész számokat fogadhat el, a \"3\" egy String literál."
+        }
+    },
+    {
+        "title": "Length tulajdonság",
+        "description": "A tömb hosszát nem metódusként érjük el.",
+        "hint": "Nincs zárójel.",
+        "q_type": "debug",
+        "difficulty_rating": 850,
+        "language": "java",
+        "concept": {"arrays": 1.0, "basics": 0.6},
+        "content": {
+            "buggy_code": "int size = arr.length();",
+            "error_location": "arr.length()",
+            "correct_code": "arr.length",
+            "options": [
+                "arr.length",
+                "arr.size()",
+                "arr.count"
+            ],
+            "explanation": "Tömböknél a `length` egy mező (tulajdonság), nem pedig metódus, mint a Stringeknél, ezért nem kell `()`."
+        }
+    },
+    {
+        "title": "Inicializálás nélkül",
+        "description": "A változót használat előtt inicializálni kell.",
+        "hint": "Adj neki értéket (pl. null vagy tömb).",
+        "q_type": "debug",
+        "difficulty_rating": 880,
+        "language": "java",
+        "concept": {"arrays": 0.8, "basics": 0.8},
+        "content": {
+            "buggy_code": "int[] arr;\nSystem.out.println(arr[0]);",
+            "error_location": "int[] arr;",
+            "correct_code": "int[] arr = new int[5];",
+            "options": [
+                "int[] arr = new int[5];",
+                "int[] arr = null;",
+                "int[] arr = 0;"
+            ],
+            "explanation": "A lokális változóknak (mint itt az `arr`) kötelező értéket adni a felhasználás előtt."
+        }
+    },
+    {
+        "title": "Túlindexelés (Konstans)",
+        "description": "A tömb mérete 5, de túl messzire nyúlunk.",
+        "hint": "Az utolsó index a 4.",
+        "q_type": "debug",
+        "difficulty_rating": 900,
+        "language": "java",
+        "concept": {"arrays": 1.0, "basics": 0.5},
+        "content": {
+            "buggy_code": "int[] arr = new int[5];\narr[5] = 10;",
+            "error_location": "arr[5]",
+            "correct_code": "arr[4]",
+            "options": [
+                "arr[4]",
+                "arr[0]",
+                "arr[length]"
+            ],
+            "explanation": "Egy 5 elemű tömb indexei 0-tól 4-ig tartanak. Az `arr[5]` `ArrayIndexOutOfBoundsException`-t okoz."
+        }
+    },
+    {
+        "title": "NullPointerException",
+        "description": "Null értékű tömbre nem hivatkozhatunk.",
+        "hint": "Inicializáld a tömböt.",
+        "q_type": "debug",
+        "difficulty_rating": 950,
+        "language": "java",
+        "concept": {"arrays": 1.0, "oop": 0.6},
+        "content": {
+            "buggy_code": "int[] arr = null;\nSystem.out.println(arr.length);",
+            "error_location": "int[] arr = null;",
+            "correct_code": "int[] arr = new int[0];",
+            "options": [
+                "int[] arr = new int[0];",
+                "int[] arr = {};",
+                "if (arr != null)"
+            ],
+            "explanation": "Ha az `arr` null, akkor a mezőinek elérése (pl. length) kivételt dob. Valódi tömbobjektumot kell létrehozni."
+        }
+    },
+    {
+        "title": "Hiányzó méret",
+        "description": "A `new` kulcsszónál meg kell adni a méretet.",
+        "hint": "Írj egy számot a zárójelbe.",
+        "q_type": "debug",
+        "difficulty_rating": 820,
+        "language": "java",
+        "concept": {"arrays": 1.0, "basics": 0.6},
+        "content": {
+            "buggy_code": "int[] arr = new int[];",
+            "error_location": "new int[]",
+            "correct_code": "new int[10]",
+            "options": [
+                "new int[10]",
+                "new int(10)",
+                "new int{}"
+            ],
+            "explanation": "Tömb létrehozásakor (ha nem adunk meg inicializáló listát) kötelező megadni a méretet: `new int[méret]`."
+        }
+    },
+    {
+        "title": "2D tömb deklaráció",
+        "description": "Javítsd ki a többdimenziós tömb deklarációját!",
+        "hint": "Java-ban tömbök tömbje van.",
+        "q_type": "debug",
+        "difficulty_rating": 920,
+        "language": "java",
+        "concept": {"arrays": 1.0, "basics": 0.7},
+        "content": {
+            "buggy_code": "int[,] matrix = new int[3,3];",
+            "error_location": "int[,] matrix = new int[3,3];",
+            "correct_code": "int[][] matrix = new int[3][3];",
+            "options": [
+                "int[][] matrix = new int[3][3];",
+                "int matrix[][] = new int[3][3];",
+                "int[] matrix[] = new int[3][3];"
+            ],
+            "explanation": "Java-ban (eltérően a C#-tól) a többdimenziós tömböket `[][]` jelöléssel hozzuk létre."
+        }
+    },
+    {
+        "title": "Tömb kiíratása",
+        "description": "A `println(arr)` nem a tartalmat írja ki.",
+        "hint": "Használd az Arrays osztályt.",
+        "q_type": "debug",
+        "difficulty_rating": 980,
+        "language": "java",
+        "concept": {"arrays": 1.0, "basics": 0.5},
+        "content": {
+            "buggy_code": "int[] arr = {1, 2};\nSystem.out.println(arr);",
+            "error_location": "System.out.println(arr)",
+            "correct_code": "System.out.println(Arrays.toString(arr))",
+            "options": [
+                "System.out.println(Arrays.toString(arr))",
+                "System.out.println(arr.toString())",
+                "System.out.print(arr)"
+            ],
+            "explanation": "A tömbobjektum `toString`-je a memóriacímet írja ki. A tartalomhoz `Arrays.toString(arr)` kell."
+        }
+    },
+    {
+        "title": "Rossz inicializálás new-val",
+        "description": "Nem adhatunk meg méretet és listát egyszerre.",
+        "hint": "Hagyd üresen a méretet.",
+        "q_type": "debug",
+        "difficulty_rating": 960,
+        "language": "java",
+        "concept": {"arrays": 1.0, "basics": 0.6},
+        "content": {
+            "buggy_code": "int[] arr = new int[3] {1, 2, 3};",
+            "error_location": "new int[3] {1, 2, 3}",
+            "correct_code": "new int[] {1, 2, 3}",
+            "options": [
+                "new int[] {1, 2, 3}",
+                "new int[3]",
+                "{1, 2, 3}"
+            ],
+            "explanation": "Ha inicializáló listát adunk meg (`{...}`), nem szabad a szögletes zárójelbe méretet írni."
+        }
+    },
+    {
+        "title": "Ciklus feltétel hiba (<=)",
+        "description": "A ciklus túl sokszor fut le.",
+        "hint": "Az utolsó elem indexe length-1.",
+        "q_type": "debug",
+        "difficulty_rating": 1050,
+        "language": "java",
+        "concept": {"arrays": 0.8, "loops": 1.0},
+        "content": {
+            "buggy_code": "for(int i=0; i <= arr.length; i++) {\n  System.out.println(arr[i]);\n}",
+            "error_location": "i <= arr.length",
+            "correct_code": "i < arr.length",
+            "options": [
+                "i < arr.length",
+                "i <= arr.length - 1",
+                "i != arr.length"
+            ],
+            "explanation": "Az `=` miatt a ciklus eléri az `arr.length` indexet, ami már kívül esik a tömbön (Out of Bounds)."
+        }
+    },
+    {
+        "title": "Tömbök összehasonlítása",
+        "description": "A `==` nem a tartalmat hasonlítja össze.",
+        "hint": "Használj segédfüggvényt.",
+        "q_type": "debug",
+        "difficulty_rating": 1100,
+        "language": "java",
+        "concept": {"arrays": 1.0, "logic": 0.8},
+        "content": {
+            "buggy_code": "int[] a = {1}; int[] b = {1};\nif (a == b) { ... }",
+            "error_location": "a == b",
+            "correct_code": "Arrays.equals(a, b)",
+            "options": [
+                "Arrays.equals(a, b)",
+                "a.equals(b)",
+                "a.contentEquals(b)"
+            ],
+            "explanation": "Tömböknél a `==` a referenciákat (memóriacímeket) hasonlítja össze. Tartalmi egyezéshez `Arrays.equals` kell."
+        }
+    },
+    {
+        "title": "Negatív tömbméret",
+        "description": "A tömb mérete nem lehet negatív.",
+        "hint": "Pozitív szám kell.",
+        "q_type": "debug",
+        "difficulty_rating": 1020,
+        "language": "java",
+        "concept": {"arrays": 1.0, "basics": 0.5},
+        "content": {
+            "buggy_code": "int[] arr = new int[-5];",
+            "error_location": "-5",
+            "correct_code": "5",
+            "options": [
+                "5",
+                "0",
+                "Math.abs(-5)"
+            ],
+            "explanation": "A tömb méretének nem negatív egész számnak kell lennie (`NegativeArraySizeException`)."
+        }
+    },
+    {
+        "title": "Hiba a for-each módosításban",
+        "description": "A for-each ciklus változója csak másolat.",
+        "hint": "Használj hagyományos for ciklust indexszel.",
+        "q_type": "debug",
+        "difficulty_rating": 1150,
+        "language": "java",
+        "concept": {"arrays": 0.7, "loops": 1.0},
+        "content": {
+            "buggy_code": "for(int x : arr) {\n  x = 0; // Nem nullázza a tömb elemét\n}",
+            "error_location": "for(int x : arr)",
+            "correct_code": "for(int i=0; i<arr.length; i++)",
+            "options": [
+                "for(int i=0; i<arr.length; i++)",
+                "for(int x : arr) arr[x] = 0",
+                "Arrays.fill(arr, 0)"
+            ],
+            "explanation": "A for-each ciklusban az `x` csak az aktuális elem értékének másolata. A tömb módosításához indexre van szükség."
+        }
+    },
+    {
+        "title": "Csere hiba (Swap)",
+        "description": "Az adat elveszik, ha nem mentjük el.",
+        "hint": "Használj ideiglenes változót.",
+        "q_type": "debug",
+        "difficulty_rating": 1120,
+        "language": "java",
+        "concept": {"arrays": 0.8, "logic": 0.8},
+        "content": {
+            "buggy_code": "arr[i] = arr[j];\narr[j] = arr[i];",
+            "error_location": "arr[j] = arr[i];",
+            "correct_code": "int temp = arr[i]; arr[i] = arr[j]; arr[j] = temp;",
+            "options": [
+                "int temp = arr[i]; arr[i] = arr[j]; arr[j] = temp;",
+                "arr[i] <-> arr[j];",
+                "swap(arr[i], arr[j]);"
+            ],
+            "explanation": "Az első sorban felülírjuk `arr[i]`-t `arr[j]`-vel, így az eredeti érték elveszik. Temp változó kell."
+        }
+    },
+    {
+        "title": "2D tömb inicializálási hiba",
+        "description": "A második dimenzió típusa nem egyezik.",
+        "hint": "A tömb eleme egy int.",
+        "q_type": "debug",
+        "difficulty_rating": 1180,
+        "language": "java",
+        "concept": {"arrays": 1.0, "basics": 0.6},
+        "content": {
+            "buggy_code": "int[][] m = new int[3][];\nm[0] = 1;",
+            "error_location": "m[0] = 1",
+            "correct_code": "m[0] = new int[]{1}",
+            "options": [
+                "m[0] = new int[]{1}",
+                "m[0][0] = 1",
+                "m[0] = new int[1]; m[0][0] = 1;"
+            ],
+            "explanation": "Az `m[0]` egy `int[]` típusú referenciát vár (egy sort), nem pedig egy `int` számot."
+        }
+    },
+    {
+        "title": "Referencia másolás hiba",
+        "description": "A `b` változó módosítása az `a`-t is érinti.",
+        "hint": "Készíts valódi másolatot.",
+        "q_type": "debug",
+        "difficulty_rating": 1250,
+        "language": "java",
+        "concept": {"arrays": 1.0, "oop": 0.7},
+        "content": {
+            "buggy_code": "int[] b = a;\nb[0] = 99; // a[0] is változik",
+            "error_location": "int[] b = a",
+            "correct_code": "int[] b = a.clone()",
+            "options": [
+                "int[] b = a.clone()",
+                "int[] b = Arrays.copyOf(a, a.length)",
+                "int[] b = new int[a.length]; System.arraycopy(...)"
+            ],
+            "explanation": "Az `int[] b = a` csak a referenciát másolja. Független tömbhöz klónozni kell (`a.clone()` vagy `Arrays.copyOf`)."
+        }
+    },
+    {
+        "title": "Ciklus kezdete",
+        "description": "A ciklus kihagyja az első elemet.",
+        "hint": "0-tól kezdünk.",
+        "q_type": "debug",
+        "difficulty_rating": 1080,
+        "language": "java",
+        "concept": {"arrays": 0.8, "loops": 1.0},
+        "content": {
+            "buggy_code": "for(int i=1; i<arr.length; i++) {\n  System.out.println(arr[i]);\n}",
+            "error_location": "int i=1",
+            "correct_code": "int i=0",
+            "options": [
+                "int i=0",
+                "int i=-1",
+                "int i=start"
+            ],
+            "explanation": "Mivel a tömb 0-tól indexelődik, az `i=1` kihagyja a legelső elemet."
+        }
+    },
+    {
+        "title": "Jagged array hiba",
+        "description": "A belső tömb még nem létezik.",
+        "hint": "Inicializáld a sort.",
+        "q_type": "debug",
+        "difficulty_rating": 1220,
+        "language": "java",
+        "concept": {"arrays": 1.0, "basics": 0.7},
+        "content": {
+            "buggy_code": "int[][] jag = new int[3][];\njag[0][0] = 5;",
+            "error_location": "jag[0][0] = 5",
+            "correct_code": "jag[0] = new int[5]; jag[0][0] = 5;",
+            "options": [
+                "jag[0] = new int[5]; jag[0][0] = 5;",
+                "jag = new int[3][5];",
+                "if (jag[0] != null)"
+            ],
+            "explanation": "A `new int[3][]` létrehozása után a sorok (`jag[0]`, stb.) értéke `null`. Használat előtt létre kell hozni a belső tömböket."
+        }
+    },
+    {
+        "title": "ArrayStoreException",
+        "description": "Nem tehetünk Integer-t String tömbbe, még ha Object-nek is látjuk.",
+        "hint": "A tömb típusa számít.",
+        "q_type": "debug",
+        "difficulty_rating": 1300,
+        "language": "java",
+        "concept": {"arrays": 1.0, "oop": 0.8},
+        "content": {
+            "buggy_code": "Object[] arr = new String[5];\narr[0] = 1;",
+            "error_location": "arr[0] = 1",
+            "correct_code": "arr[0] = \"1\"",
+            "options": [
+                "arr[0] = \"1\"",
+                "Object[] arr = new Object[5]",
+                "Integer[] arr = new Integer[5]"
+            ],
+            "explanation": "A tömb futásidőben tudja, hogy ő `String[]`, ezért nem enged bele `Integer`-t tenni, hiába mutat rá `Object[]` referencia."
+        }
+    },
+    {
+        "title": "BinarySearch rendezetlenül",
+        "description": "A bináris keresés feltétele nem teljesül.",
+        "hint": "Rendezd a tömböt előtte.",
+        "q_type": "debug",
+        "difficulty_rating": 1280,
+        "language": "java",
+        "concept": {"arrays": 1.0, "functions": 0.7},
+        "content": {
+            "buggy_code": "int[] arr = {3, 1, 2};\nint idx = Arrays.binarySearch(arr, 1);",
+            "error_location": "Arrays.binarySearch(arr, 1)",
+            "correct_code": "Arrays.sort(arr); int idx = Arrays.binarySearch(arr, 1);",
+            "options": [
+                "Arrays.sort(arr); int idx = Arrays.binarySearch(arr, 1);",
+                "Arrays.linearSearch(arr, 1)",
+                "for loop keresés"
+            ],
+            "explanation": "Az `Arrays.binarySearch` csak rendezett tömbökön működik helyesen. Rendezetlen tömbnél az eredmény definiálatlan."
+        }
+    },
+    {
+        "title": "2D tömb ciklus hiba",
+        "description": "Összekevert sor és oszlop index.",
+        "hint": "A belső ciklus az aktuális sor hosszáig menjen.",
+        "q_type": "debug",
+        "difficulty_rating": 1350,
+        "language": "java",
+        "concept": {"arrays": 1.0, "loops": 1.0},
+        "content": {
+            "buggy_code": "for(int i=0; i<m.length; i++) \n  for(int j=0; j<m.length; j++) \n    print(m[i][j]);",
+            "error_location": "j<m.length",
+            "correct_code": "j<m[i].length",
+            "options": [
+                "j<m[i].length",
+                "j<m[0].length",
+                "j<i"
+            ],
+            "explanation": "Ha a mátrix nem négyzetes (pl. 2x5), a `j<m.length` hibás. A helyes a `j < m[i].length` (az aktuális sor hossza)."
+        }
+    },
+    {
+        "title": "Maximum keresés hiba",
+        "description": "Ha minden szám negatív, a 0 hibás maximum.",
+        "hint": "Kezdd az első elemmel.",
+        "q_type": "debug",
+        "difficulty_rating": 1320,
+        "language": "java",
+        "concept": {"arrays": 0.8, "logic": 1.0},
+        "content": {
+            "buggy_code": "int max = 0;\nfor(int x : arr) if(x > max) max = x;",
+            "error_location": "int max = 0",
+            "correct_code": "int max = arr[0]",
+            "options": [
+                "int max = arr[0]",
+                "int max = Integer.MIN_VALUE",
+                "if (arr.length > 0)"
+            ],
+            "explanation": "Ha a tömb csak negatív számokat tartalmaz (pl. -5, -10), a `0` kezdőérték tévesen a 0-t adná vissza maximumként. Jobb az `arr[0]`-val vagy `Integer.MIN_VALUE`-val kezdeni."
+        }
+    },
+    {
+        "title": "Elem törlése (Remove)",
+        "description": "A tömbök fix méretűek, nincs remove metódusuk.",
+        "hint": "Használj ArrayList-et vagy másolást.",
+        "q_type": "debug",
+        "difficulty_rating": 1260,
+        "language": "java",
+        "concept": {"arrays": 1.0, "oop": 0.5},
+        "content": {
+            "buggy_code": "int[] arr = {1, 2, 3};\narr.remove(1);",
+            "error_location": "arr.remove(1)",
+            "correct_code": "// Nem lehet, új tömb kell",
+            "options": [
+                "Használj ArrayList-et",
+                "arr[1] = 0",
+                "Arrays.remove(arr, 1)"
+            ],
+            "explanation": "A primitív tömböknek nincs `remove` metódusa. Törléshez új, kisebb tömböt kell létrehozni és átmásolni az elemeket."
+        }
+    },
+    {
+        "title": "Listához adás hiba",
+        "description": "Az `Arrays.asList` fix méretű listát ad.",
+        "hint": "Nem lehet hozzáadni elemet.",
+        "q_type": "debug",
+        "difficulty_rating": 1380,
+        "language": "java",
+        "concept": {"arrays": 0.8, "oop": 0.9},
+        "content": {
+            "buggy_code": "List<String> l = Arrays.asList(arr);\nl.add(\"New\");",
+            "error_location": "l.add(\"New\")",
+            "correct_code": "new ArrayList<>(Arrays.asList(arr))",
+            "options": [
+                "new ArrayList<>(Arrays.asList(arr))",
+                "l.set(0, \"New\")",
+                "Tömb átméretezés"
+            ],
+            "explanation": "Az `Arrays.asList` által visszaadott lista az eredeti tömbre épül, így nem változtatható a mérete (add/remove `UnsupportedOperationException`-t dob)."
+        }
+    },
+    {
+        "title": "Üres tömb létrehozása",
+        "description": "A `new int[0]` valid, de nem fér bele elem.",
+        "hint": "Növeld a méretet.",
+        "q_type": "debug",
+        "difficulty_rating": 1240,
+        "language": "java",
+        "concept": {"arrays": 1.0, "basics": 0.5},
+        "content": {
+            "buggy_code": "int[] arr = new int[0];\narr[0] = 5;",
+            "error_location": "arr[0] = 5",
+            "correct_code": "int[] arr = new int[1]",
+            "options": [
+                "int[] arr = new int[1]",
+                "arr = Arrays.copyOf(arr, 1)",
+                "List használata"
+            ],
+            "explanation": "A 0 méretű tömbbe nem lehet írni. Nagyobb mérettel kell létrehozni."
+        }
+    },
+    {
+        "title": "Generikus tömb hiba",
+        "description": "Nem hozható létre közvetlenül generikus tömb.",
+        "hint": "Használj Object tömböt és castolj.",
+        "q_type": "debug",
+        "difficulty_rating": 1450,
+        "language": "java",
+        "concept": {"arrays": 0.7, "oop": 1.0},
+        "content": {
+            "buggy_code": "T[] arr = new T[10];",
+            "error_location": "new T[10]",
+            "correct_code": "(T[]) new Object[10]",
+            "options": [
+                "(T[]) new Object[10]",
+                "Array.newInstance(clazz, 10)",
+                "new Object[10]"
+            ],
+            "explanation": "Java-ban a típusradírozás (type erasure) miatt nem lehet `new T[...]` hívást használni. `Object[]`-et kell létrehozni és castolni (vagy `Array.newInstance`)."
+        }
+    },
+    {
+        "title": "Ciklikus puffer index hiba",
+        "description": "A körkörös indexeléshez modulo kell.",
+        "hint": "Maradékos osztás.",
+        "q_type": "debug",
+        "difficulty_rating": 1480,
+        "language": "java",
+        "concept": {"arrays": 0.9, "logic": 0.9},
+        "content": {
+            "buggy_code": "int nextIndex = (head + 1); // Ha eléri a végét, hiba",
+            "error_location": "head + 1",
+            "correct_code": "(head + 1) % capacity",
+            "options": [
+                "(head + 1) % capacity",
+                "head + 1 == capacity ? 0 : head + 1",
+                "Math.abs(head + 1)"
+            ],
+            "explanation": "A körkörös puffer (circular buffer) implementációjához a `(head + 1) % capacity` képlet szükséges, hogy a végéről az elejére ugorjon."
+        }
+    },
+    {
+        "title": "Végtelen ciklus",
+        "description": "A ciklusfeltétel vagy léptetés hibás.",
+        "hint": "Az index csökken a növekedés helyett.",
+        "q_type": "debug",
+        "difficulty_rating": 1420,
+        "language": "java",
+        "concept": {"arrays": 0.5, "loops": 1.0},
+        "content": {
+            "buggy_code": "for(int i=0; i<arr.length; i--) {\n  arr[i] = 0;\n}",
+            "error_location": "i--",
+            "correct_code": "i++",
+            "options": [
+                "i++",
+                "i += 1",
+                "break"
+            ],
+            "explanation": "Az `i--` miatt az `i` egyre kisebb lesz, így mindig kisebb marad, mint a hossz, és negatív indexelési hibához vagy végtelen ciklushoz vezet."
+        }
+    },
+    {
+        "title": "Mély kiíratás",
+        "description": "Többdimenziós tömbnél a sima `toString` nem elég.",
+        "hint": "Deep.",
+        "q_type": "debug",
+        "difficulty_rating": 1460,
+        "language": "java",
+        "concept": {"arrays": 1.0, "basics": 0.6},
+        "content": {
+            "buggy_code": "int[][] m = {{1}}; \nSystem.out.println(Arrays.toString(m));",
+            "error_location": "Arrays.toString(m)",
+            "correct_code": "Arrays.deepToString(m)",
+            "options": [
+                "Arrays.deepToString(m)",
+                "m.toString()",
+                "printMatrix(m)"
+            ],
+            "explanation": "Az `Arrays.toString` a belső tömböknek csak a referenciáját írja ki. A tartalomhoz `Arrays.deepToString` kell."
+        }
+    },
+    {
+        "title": "Tömb eltolás hiba",
+        "description": "Kicsúszunk a tömbből.",
+        "hint": "A ciklus határa rossz.",
+        "q_type": "debug",
+        "difficulty_rating": 1440,
+        "language": "java",
+        "concept": {"arrays": 1.0, "loops": 0.9},
+        "content": {
+            "buggy_code": "for(int i=0; i<arr.length; i++) {\n  arr[i] = arr[i+1];\n}",
+            "error_location": "i<arr.length",
+            "correct_code": "i < arr.length - 1",
+            "options": [
+                "i < arr.length - 1",
+                "i <= arr.length",
+                "arr[i+1] check"
+            ],
+            "explanation": "Ha `i` eléri az utolsó elemet, az `arr[i+1]` kivételt dob. A ciklust eggyel korábban kell megállítani."
+        }
+    },
+    {
+        "title": "Módosítás for-each ciklusban",
+        "description": "Nem tudjuk módosítani a tömböt for-each-csel.",
+        "hint": "Használj indexet.",
+        "q_type": "debug",
+        "difficulty_rating": 1410,
+        "language": "java",
+        "concept": {"arrays": 0.7, "loops": 1.0},
+        "content": {
+            "buggy_code": "for(String s : array) {\n  s = \"Modified\";\n}",
+            "error_location": "s = \"Modified\"",
+            "correct_code": "array[i] = \"Modified\"",
+            "options": [
+                "array[i] = \"Modified\"",
+                "s.setValue(\"Modified\")",
+                "iter.set(\"Modified\")"
+            ],
+            "explanation": "A for-each ciklus változója (`s`) csak egy másolat a referenciáról. Az eredeti tömb módosításához az indexen keresztül kell elérni az elemet (`array[i]`)."
+        }
+    },
+    {
+        "title": "Split limit hiba",
+        "description": "Az üres stringek eltűnhetnek a split végéről.",
+        "hint": "Használj negatív limitet.",
+        "q_type": "debug",
+        "difficulty_rating": 1390,
+        "language": "java",
+        "concept": {"arrays": 0.8, "basics": 0.7},
+        "content": {
+            "buggy_code": "String[] parts = \"a,b,,\".split(\",\");\n// parts.length csak 2 lesz",
+            "error_location": ".split(\",\")",
+            "correct_code": ".split(\",\", -1)",
+            "options": [
+                ".split(\",\", -1)",
+                ".split(\",\", 0)",
+                ".splitAll(\",\")"
+            ],
+            "explanation": "A `split(regex)` alapértelmezetten eldobja az üres stringeket a tömb végéről. A `split(regex, -1)` megtartja őket."
+        }
+    },
+    {
+        "title": "Szinkronizáció hiánya",
+        "description": "Több szálon módosított tömb.",
+        "hint": "Atomic vagy szinkronizáció.",
+        "q_type": "debug",
+        "difficulty_rating": 1500,
+        "language": "java",
+        "concept": {"arrays": 0.6, "oop": 1.0},
+        "content": {
+            "buggy_code": "int[] counter = {0};\n// Thread 1 & 2: counter[0]++;",
+            "error_location": "counter[0]++",
+            "correct_code": "AtomicInteger",
+            "options": [
+                "AtomicInteger használata",
+                "volatile int[]",
+                "synchronized(this)"
+            ],
+            "explanation": "A tömb elemeinek módosítása nem atomi művelet. `volatile` tömb referenciára nem védi az elemeket. `AtomicIntegerArray` vagy szinkronizáció kell."
+        }
+    }
+]

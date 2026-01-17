@@ -1,0 +1,874 @@
+[
+    {
+        "title": "Osztály definíció",
+        "description": "Melyik kulcsszóval hozunk létre osztályt Pythonban?",
+        "hint": "Az angol 'osztály' szó.",
+        "q_type": "theory",
+        "difficulty_rating": 600,
+        "language": "python",
+        "concept": {
+            "oop": 1.0,
+            "basics": 0.8
+        },
+        "content": {
+            "options": [
+                "def",
+                "object",
+                "class",
+                "struct"
+            ],
+            "correct_answer": "class",
+            "explanation": "A 'class' kulcsszó jelöli az osztálydefiníció kezdetét Pythonban."
+        }
+    },
+    {
+        "title": "Példányosítás",
+        "description": "Hogyan hozunk létre egy új példányt a 'Kutya' osztályból?",
+        "hint": "Függvényhívásra hasonlít.",
+        "q_type": "theory",
+        "difficulty_rating": 600,
+        "language": "python",
+        "concept": {
+            "oop": 1.0,
+            "basics": 0.7
+        },
+        "content": {
+            "options": [
+                "new Kutya()",
+                "Kutya()",
+                "create Kutya",
+                "Kutya.new()"
+            ],
+            "correct_answer": "Kutya()",
+            "explanation": "Pythonban az osztály neve után tett zárójelekkel (pl. OsztalyNeve()) példányosítunk, nincs 'new' kulcsszó."
+        }
+    },
+    {
+        "title": "Self paraméter",
+        "description": "Mi az első paramétere általában egy példánymetódusnak?",
+        "hint": "Önmagára hivatkozik.",
+        "q_type": "theory",
+        "difficulty_rating": 650,
+        "language": "python",
+        "concept": {
+            "oop": 1.0,
+            "functions": 0.5
+        },
+        "content": {
+            "options": [
+                "this",
+                "self",
+                "me",
+                "instance"
+            ],
+            "correct_answer": "self",
+            "explanation": "Konvenció szerint a 'self' jelöli az aktuális objektumpéldányt, bár technikailag más nevet is adhatnánk neki."
+        }
+    },
+    {
+        "title": "Üres osztály",
+        "description": "Mit írunk az osztály törzsébe, ha egyelőre nem akarunk definiálni semmit?",
+        "hint": "Passz.",
+        "q_type": "theory",
+        "difficulty_rating": 700,
+        "language": "python",
+        "concept": {
+            "oop": 0.8,
+            "basics": 1.0
+        },
+        "content": {
+            "options": [
+                "nil",
+                "empty",
+                "void",
+                "pass"
+            ],
+            "correct_answer": "pass",
+            "explanation": "A 'pass' utasítás egy helykitöltő, amely lehetővé teszi, hogy szintaktikailag helyes, de üres osztályt hozzunk létre."
+        }
+    },
+    {
+        "title": "Metódus definíció",
+        "description": "Melyik kulcsszóval definiálunk metódust egy osztályon belül?",
+        "hint": "Ugyanaz, mint a függvényeknél.",
+        "q_type": "theory",
+        "difficulty_rating": 650,
+        "language": "python",
+        "concept": {
+            "oop": 1.0,
+            "basics": 0.8
+        },
+        "content": {
+            "options": [
+                "function",
+                "method",
+                "def",
+                "func"
+            ],
+            "correct_answer": "def",
+            "explanation": "Az osztályokon belüli metódusokat ugyanúgy a 'def' kulcsszóval hozzuk létre, mint a függvényeket."
+        }
+    },
+    {
+        "title": "Attribútum elérés",
+        "description": "Melyik operátorral érjük el egy objektum tulajdonságait (attribútumait)?",
+        "hint": "Pont.",
+        "q_type": "theory",
+        "difficulty_rating": 620,
+        "language": "python",
+        "concept": {
+            "oop": 1.0,
+            "basics": 0.5
+        },
+        "content": {
+            "options": [
+                "->",
+                "::",
+                ".",
+                ":"
+            ],
+            "correct_answer": ".",
+            "explanation": "A pont (.) operátor köti össze az objektumot és annak attribútumát vagy metódusát (pl. obj.nev)."
+        }
+    },
+    {
+        "title": "Osztálynév konvenció",
+        "description": "Mi a Pythonban az osztályok elnevezési konvenciója (PEP 8)?",
+        "hint": "MindenSzóNagybetű.",
+        "q_type": "theory",
+        "difficulty_rating": 750,
+        "language": "python",
+        "concept": {
+            "oop": 0.5,
+            "basics": 0.8
+        },
+        "content": {
+            "options": [
+                "snake_case",
+                "camelCase",
+                "CapWords (PascalCase)",
+                "UPPERCASE"
+            ],
+            "correct_answer": "CapWords (PascalCase)",
+            "explanation": "Az osztályneveket nagy kezdőbetűvel írjuk, és minden új szót nagybetűvel kezdünk (pl. MyClass)."
+        }
+    },
+    {
+        "title": "Objektum fogalma",
+        "description": "Mi a kapcsolat az osztály és az objektum között?",
+        "hint": "Tervrajz és Ház.",
+        "q_type": "theory",
+        "difficulty_rating": 700,
+        "language": "python",
+        "concept": {
+            "oop": 1.0,
+            "basics": 0.4
+        },
+        "content": {
+            "options": [
+                "Ugyanaz a kettő.",
+                "Az objektum az osztály típusa.",
+                "Az osztály a tervrajz, az objektum a példány.",
+                "Az osztály futásidejű, az objektum statikus."
+            ],
+            "correct_answer": "Az osztály a tervrajz, az objektum a példány.",
+            "explanation": "Az osztály definiálja a szerkezetet és viselkedést, az objektum pedig ennek egy konkrét megvalósulása a memóriában."
+        }
+    },
+    {
+        "title": "Konstruktor",
+        "description": "Mi a neve a Python osztályok speciális inicializáló metódusának (konstruktor)?",
+        "hint": "Dupla aláhúzás init.",
+        "q_type": "theory",
+        "difficulty_rating": 850,
+        "language": "python",
+        "concept": {
+            "oop": 1.0,
+            "functions": 0.4
+        },
+        "content": {
+            "options": [
+                "**construct**",
+                "**init**",
+                "init",
+                "**create**"
+            ],
+            "correct_answer": "**init**",
+            "explanation": "Az `__init__` metódus fut le automatikusan, amikor új példányt hozunk létre az osztályból."
+        }
+    },
+    {
+        "title": "Példányváltozó",
+        "description": "Hogyan hozunk létre példányváltozót az `__init__` metóduson belül?",
+        "hint": "A self-hez kell kötni.",
+        "q_type": "theory",
+        "difficulty_rating": 880,
+        "language": "python",
+        "concept": {
+            "oop": 1.0,
+            "basics": 0.6
+        },
+        "content": {
+            "options": [
+                "var x = 10",
+                "self.x = 10",
+                "class.x = 10",
+                "x = 10"
+            ],
+            "correct_answer": "self.x = 10",
+            "explanation": "A `self.valtozonev = ertek` szintaxis rendeli hozzá az adatot az adott példányhoz."
+        }
+    },
+    {
+        "title": "Öröklés szintaxisa",
+        "description": "Hogyan jelöljük, hogy a `Gyerek` osztály a `Szulo` osztályból öröklődik?",
+        "hint": "Zárójel az osztálynév után.",
+        "q_type": "theory",
+        "difficulty_rating": 900,
+        "language": "python",
+        "concept": {
+            "oop": 1.0
+        },
+        "content": {
+            "options": [
+                "class Gyerek extends Szulo:",
+                "class Gyerek(Szulo):",
+                "class Gyerek inherits Szulo:",
+                "class Gyerek : Szulo"
+            ],
+            "correct_answer": "class Gyerek(Szulo):",
+            "explanation": "Pythonban a szülő osztályt az osztálynév utáni zárójelben adjuk meg: `class Gyerek(Szulo):`."
+        }
+    },
+    {
+        "title": "String reprezentáció",
+        "description": "Melyik metódus felelős az objektum 'olvasható' stringgé alakításáért (pl. print-eléskor)?",
+        "hint": "String rövidítése.",
+        "q_type": "theory",
+        "difficulty_rating": 950,
+        "language": "python",
+        "concept": {
+            "oop": 1.0,
+            "basics": 0.5
+        },
+        "content": {
+            "options": [
+                "**string**",
+                "**repr**",
+                "**str**",
+                "**print**"
+            ],
+            "correct_answer": "**str**",
+            "explanation": "Az `__str__` metódust hívja meg a `print()` függvény és a `str()` konverzió."
+        }
+    },
+    {
+        "title": "Típusellenőrzés",
+        "description": "Melyik függvénnyel vizsgáljuk meg, hogy egy objektum egy adott osztály példánya-e?",
+        "hint": "is instance...",
+        "q_type": "theory",
+        "difficulty_rating": 920,
+        "language": "python",
+        "concept": {
+            "oop": 0.8,
+            "basics": 0.7
+        },
+        "content": {
+            "options": [
+                "typeof()",
+                "type()",
+                "is_class()",
+                "isinstance()"
+            ],
+            "correct_answer": "isinstance()",
+            "explanation": "Az `isinstance(obj, Osztaly)` True-t ad vissza, ha az objektum az osztály (vagy leszármazottjának) példánya."
+        }
+    },
+    {
+        "title": "Privát változó konvenció",
+        "description": "Hogyan jelöljük konvencionálisan a 'privát' (belső használatú) attribútumokat Pythonban?",
+        "hint": "Aláhúzás.",
+        "q_type": "theory",
+        "difficulty_rating": 980,
+        "language": "python",
+        "concept": {
+            "oop": 1.0,
+            "basics": 0.5
+        },
+        "content": {
+            "options": [
+                "private kulcsszóval",
+                "Egy aláhúzással a név előtt (_x)",
+                "Nagybetűvel",
+                "$ jellel"
+            ],
+            "correct_answer": "Egy aláhúzással a név előtt (_x)",
+            "explanation": "Bár a Python nem kényszeríti ki a privát láthatóságot, az egy aláhúzás (_var) jelzi a fejlesztőknek, hogy ne nyúljanak hozzá kívülről."
+        }
+    },
+    {
+        "title": "Osztályváltozó",
+        "description": "Hol definiáljuk azt a változót, amely közös az osztály minden példányára nézve?",
+        "hint": "Nem a metódusban.",
+        "q_type": "theory",
+        "difficulty_rating": 950,
+        "language": "python",
+        "concept": {
+            "oop": 1.0,
+            "basics": 0.6
+        },
+        "content": {
+            "options": [
+                "Az **init** metódusban.",
+                "A metódusokon kívül, az osztály törzsében.",
+                "A globális térben.",
+                "A self kulcsszóval."
+            ],
+            "correct_answer": "A metódusokon kívül, az osztály törzsében.",
+            "explanation": "Az osztály szintjén definiált változók (class variables) közösek minden példány számára."
+        }
+    },
+    {
+        "title": "Destruktor",
+        "description": "Mi a neve a metódusnak, amely akkor fut le, amikor az objektum törlődik a memóriából?",
+        "hint": "Delete rövidítése.",
+        "q_type": "theory",
+        "difficulty_rating": 990,
+        "language": "python",
+        "concept": {
+            "oop": 1.0,
+            "functions": 0.4
+        },
+        "content": {
+            "options": [
+                "**delete**",
+                "**destroy**",
+                "**del**",
+                "**remove**"
+            ],
+            "correct_answer": "**del**",
+            "explanation": "A `__del__` a destruktor, bár Pythonban ritkán használjuk közvetlenül a Garbage Collector miatt."
+        }
+    },
+    {
+        "title": "Szülő metódus hívása",
+        "description": "Melyik függvénnyel hívjuk meg a szülő osztály metódusát a gyermek osztályból?",
+        "hint": "Szuper.",
+        "q_type": "theory",
+        "difficulty_rating": 1050,
+        "language": "python",
+        "concept": {
+            "oop": 1.0
+        },
+        "content": {
+            "options": [
+                "parent()",
+                "super()",
+                "base()",
+                "this.parent"
+            ],
+            "correct_answer": "super()",
+            "explanation": "A `super()` függvény ideiglenes objektumot ad vissza a szülőosztályból, lehetővé téve annak metódushívását."
+        }
+    },
+    {
+        "title": "Init felüldefiniálása",
+        "description": "Ha a gyerekosztályban definiálunk `__init__`-et, mi történik a szülő `__init__`-jével?",
+        "hint": "Nem fut le magától.",
+        "q_type": "theory",
+        "difficulty_rating": 1100,
+        "language": "python",
+        "concept": {
+            "oop": 1.0,
+            "functions": 0.5
+        },
+        "content": {
+            "options": [
+                "Automatikusan lefut előtte.",
+                "Automatikusan lefut utána.",
+                "Felülíródik (override), nem fut le automatikusan.",
+                "Hibaüzenetet kapunk."
+            ],
+            "correct_answer": "Felülíródik (override), nem fut le automatikusan.",
+            "explanation": "Ha a gyerekosztálynak van saját konstruktora, explicit módon meg kell hívni benne a `super().__init__()`-t, ha szükséges a szülő inicializálása."
+        }
+    },
+    {
+        "title": "Repr metódus",
+        "description": "Mi a célja a `__repr__` metódusnak a `__str__`-rel szemben?",
+        "hint": "Developer vs User.",
+        "q_type": "theory",
+        "difficulty_rating": 1150,
+        "language": "python",
+        "concept": {
+            "oop": 1.0,
+            "basics": 0.4
+        },
+        "content": {
+            "options": [
+                "Nincs különbség.",
+                "A **repr** a fejlesztőknek szóló egyértelmű reprezentáció, a **str** a felhasználóknak szóló szép kiírás.",
+                "A **repr** csak számokat ad vissza.",
+                "A **str** a default."
+            ],
+            "correct_answer": "A **repr** a fejlesztőknek szóló egyértelmű reprezentáció, a **str** a felhasználóknak szóló szép kiírás.",
+            "explanation": "A `__repr__` célja, hogy (lehetőleg) érvényes Python kódot adjon vissza, amivel újra létrehozható az objektum."
+        }
+    },
+    {
+        "title": "Névtorzítás (Name Mangling)",
+        "description": "Mi történik a `__privat` (két aláhúzás) kezdetű attribútumokkal?",
+        "hint": "A Python átnevezi őket.",
+        "q_type": "theory",
+        "difficulty_rating": 1180,
+        "language": "python",
+        "concept": {
+            "oop": 1.0
+        },
+        "content": {
+            "options": [
+                "Teljesen elérhetetlenek kívülről.",
+                "Konstanssá válnak.",
+                "Automatikusan átneveződnek `_OsztalyNev__privat` formára.",
+                "Törlődnek."
+            ],
+            "correct_answer": "Automatikusan átneveződnek `_OsztalyNev__privat` formára.",
+            "explanation": "A name mangling célja az osztályon belüli nevek ütközésének elkerülése örökléskor, nem pedig a valódi biztonság."
+        }
+    },
+    {
+        "title": "Statikus metódus",
+        "description": "Melyik dekorátorral jelöljük a statikus metódust, ami nem kapja meg a `self`-et?",
+        "hint": "Static.",
+        "q_type": "theory",
+        "difficulty_rating": 1120,
+        "language": "python",
+        "concept": {
+            "oop": 1.0,
+            "functions": 0.6
+        },
+        "content": {
+            "options": [
+                "@classmethod",
+                "@staticmethod",
+                "@class",
+                "@static"
+            ],
+            "correct_answer": "@staticmethod",
+            "explanation": "A `@staticmethod` nem kap implicit első paramétert (sem self-et, sem cls-t), úgy viselkedik, mint egy sima függvény az osztályban."
+        }
+    },
+    {
+        "title": "Osztály metódus",
+        "description": "Mi az első paramétere egy `@classmethod`-dal jelölt metódusnak?",
+        "hint": "Az osztályra mutat, nem a példányra.",
+        "q_type": "theory",
+        "difficulty_rating": 1150,
+        "language": "python",
+        "concept": {
+            "oop": 1.0,
+            "functions": 0.6
+        },
+        "content": {
+            "options": [
+                "self",
+                "cls",
+                "static",
+                "None"
+            ],
+            "correct_answer": "cls",
+            "explanation": "A class method az osztályt kapja meg első paraméterként (konvenció szerint `cls`), így tudja pl. a konstruktort hívni."
+        }
+    },
+    {
+        "title": "Minden ősosztálya",
+        "description": "Melyik osztály a Python 3 minden osztályának közös őse?",
+        "hint": "Object.",
+        "q_type": "theory",
+        "difficulty_rating": 1050,
+        "language": "python",
+        "concept": {
+            "oop": 1.0
+        },
+        "content": {
+            "options": [
+                "Base",
+                "Root",
+                "object",
+                "type"
+            ],
+            "correct_answer": "object",
+            "explanation": "Python 3-ban minden osztály (implicit módon is) az `object` osztályból származik."
+        }
+    },
+    {
+        "title": "Többszörös öröklés",
+        "description": "Lehetséges-e Pythonban, hogy egy osztálynak több közvetlen szülője legyen?",
+        "hint": "C++ és Python engedi, Java nem.",
+        "q_type": "theory",
+        "difficulty_rating": 1190,
+        "language": "python",
+        "concept": {
+            "oop": 1.0
+        },
+        "content": {
+            "options": [
+                "Nem, csak egy szülője lehet.",
+                "Igen, vesszővel elválasztva felsorolhatók.",
+                "Csak interfészekből lehet többet.",
+                "Igen, de csak 2 szülőig."
+            ],
+            "correct_answer": "Igen, vesszővel elválasztva felsorolhatók.",
+            "explanation": "A Python támogatja a többszörös öröklést: `class C(A, B):`."
+        }
+    },
+    {
+        "title": "Operátor túlterhelés",
+        "description": "Melyik metódust kell megírni ahhoz, hogy a `+` operátor működjön a saját objektumainkon?",
+        "hint": "Add.",
+        "q_type": "theory",
+        "difficulty_rating": 1250,
+        "language": "python",
+        "concept": {
+            "oop": 1.0,
+            "functions": 0.4
+        },
+        "content": {
+            "options": [
+                "**plus**",
+                "**sum**",
+                "**add**",
+                "**append**"
+            ],
+            "correct_answer": "**add**",
+            "explanation": "Az `__add__(self, other)` magic method implementálja a `+` operátor működését."
+        }
+    },
+    {
+        "title": "Property dekorátor",
+        "description": "Mire használjuk a `@property` dekorátort?",
+        "hint": "Getter logika.",
+        "q_type": "theory",
+        "difficulty_rating": 1220,
+        "language": "python",
+        "concept": {
+            "oop": 1.0,
+            "functions": 0.5
+        },
+        "content": {
+            "options": [
+                "Statikus változókhoz.",
+                "Metódusok attribútumként való eléréséhez (getter).",
+                "Privát metódusokhoz.",
+                "Gyorsításhoz."
+            ],
+            "correct_answer": "Metódusok attribútumként való eléréséhez (getter).",
+            "explanation": "A `@property` lehetővé teszi, hogy egy metódust úgy hívjunk meg, mintha mező lenne (zárójelek nélkül), így logikát tehetünk az adatelérés mögé."
+        }
+    },
+    {
+        "title": "Setter definíció",
+        "description": "Hogyan definiálunk settert egy `@property`-vel ellátott `age` metódushoz?",
+        "hint": "@nev.setter",
+        "q_type": "theory",
+        "difficulty_rating": 1280,
+        "language": "python",
+        "concept": {
+            "oop": 1.0,
+            "functions": 0.5
+        },
+        "content": {
+            "options": [
+                "@age.setter",
+                "@setter.age",
+                "@age.set",
+                "def set_age(self):"
+            ],
+            "correct_answer": "@age.setter",
+            "explanation": "A setter dekorátor neve a property nevéből származik: `@property_nev.setter`."
+        }
+    },
+    {
+        "title": "New metódus",
+        "description": "Mi a különbség a `__new__` és az `__init__` között?",
+        "hint": "Létrehozás vs Inicializálás.",
+        "q_type": "theory",
+        "difficulty_rating": 1350,
+        "language": "python",
+        "concept": {
+            "oop": 1.0,
+            "basics": 0.3
+        },
+        "content": {
+            "options": [
+                "Nincs különbség.",
+                "A **new** hozza létre az objektumot (kiosztja a memóriát), az **init** inicializálja.",
+                "Az **init** fut előbb.",
+                "A **new** a destruktor."
+            ],
+            "correct_answer": "A **new** hozza létre az objektumot (kiosztja a memóriát), az **init** inicializálja.",
+            "explanation": "A `__new__` statikus metódus, ami visszaadja a példányt, az `__init__` pedig beállítja annak kezdőállapotát."
+        }
+    },
+    {
+        "title": "Absztrakt osztály modul",
+        "description": "Melyik modul szükséges absztrakt bázisosztályok (ABC) létrehozásához Pythonban?",
+        "hint": "Három betű.",
+        "q_type": "theory",
+        "difficulty_rating": 1300,
+        "language": "python",
+        "concept": {
+            "oop": 1.0,
+            "basics": 0.5
+        },
+        "content": {
+            "options": [
+                "abstract",
+                "interface",
+                "abc",
+                "oop"
+            ],
+            "correct_answer": "abc",
+            "explanation": "Az `abc` (Abstract Base Classes) modul biztosítja az `ABC` osztályt és az `@abstractmethod` dekorátort."
+        }
+    },
+    {
+        "title": "Callable objektum",
+        "description": "Melyik metódust kell implementálni, hogy egy objektum hívható legyen, mint egy függvény?",
+        "hint": "pl. obj(5).",
+        "q_type": "theory",
+        "difficulty_rating": 1320,
+        "language": "python",
+        "concept": {
+            "oop": 1.0,
+            "functions": 0.4
+        },
+        "content": {
+            "options": [
+                "**call**",
+                "**run**",
+                "**exec**",
+                "**do**"
+            ],
+            "correct_answer": "**call**",
+            "explanation": "Ha egy osztály implementálja a `__call__` metódust, a példányai függvényként hívhatók."
+        }
+    },
+    {
+        "title": "Objektum attribútumai (dict)",
+        "description": "Hol tárolja a Python alapértelmezetten az objektumok írható attribútumait?",
+        "hint": "Egy szótárban.",
+        "q_type": "theory",
+        "difficulty_rating": 1250,
+        "language": "python",
+        "concept": {
+            "oop": 1.0,
+            "arrays": 0.3
+        },
+        "content": {
+            "options": [
+                "**slots**",
+                "**dict**",
+                "**data**",
+                "**attr**"
+            ],
+            "correct_answer": "**dict**",
+            "explanation": "A legtöbb objektum a `__dict__` nevű szótárban tárolja a dinamikus attribútumait."
+        }
+    },
+    {
+        "title": "Hasattr függvény",
+        "description": "Mire való a `hasattr(obj, 'nev')` függvény?",
+        "hint": "Introspekció.",
+        "q_type": "theory",
+        "difficulty_rating": 1210,
+        "language": "python",
+        "concept": {
+            "oop": 0.9,
+            "basics": 0.5
+        },
+        "content": {
+            "options": [
+                "Hozzáad egy attribútumot.",
+                "Töröl egy attribútumot.",
+                "Ellenőrzi, hogy létezik-e az adott nevű attribútum/metódus.",
+                "Lekéri az attribútum értékét."
+            ],
+            "correct_answer": "Ellenőrzi, hogy létezik-e az adott nevű attribútum/metódus.",
+            "explanation": "A `hasattr` biztonságos módja annak ellenőrzésére, hogy egy objektum rendelkezik-e egy tulajdonsággal."
+        }
+    },
+    {
+        "title": "MRO jelentése",
+        "description": "Mit jelent az MRO rövidítés az öröklődés kapcsán?",
+        "hint": "Feloldási sorrend.",
+        "q_type": "theory",
+        "difficulty_rating": 1420,
+        "language": "python",
+        "concept": {
+            "oop": 1.0
+        },
+        "content": {
+            "options": [
+                "Method Return Object",
+                "Method Resolution Order",
+                "Multiple Recursive Object",
+                "Memory Read Operation"
+            ],
+            "correct_answer": "Method Resolution Order",
+            "explanation": "Az MRO határozza meg, hogy többszörös öröklés esetén milyen sorrendben keresse a Python a metódusokat az ősosztályokban."
+        }
+    },
+    {
+        "title": "Slots használata",
+        "description": "Mi a `__slots__` használatának fő előnye?",
+        "hint": "Memória.",
+        "q_type": "theory",
+        "difficulty_rating": 1450,
+        "language": "python",
+        "concept": {
+            "oop": 1.0,
+            "basics": 0.5
+        },
+        "content": {
+            "options": [
+                "Gyorsabb öröklődés.",
+                "Memóriaspórolás a `__dict__` mellőzésével és attribútumok rögzítése.",
+                "Többszörös öröklés tiltása.",
+                "Privát változók létrehozása."
+            ],
+            "correct_answer": "Memóriaspórolás a `__dict__` mellőzésével és attribútumok rögzítése.",
+            "explanation": "A `__slots__` használatával nem jön létre példányonkénti szótár, ami sok millió objektumnál jelentős memóriát takarít meg."
+        }
+    },
+    {
+        "title": "Metaosztály",
+        "description": "Mi a Pythonban az osztályok osztálya (metaclass)?",
+        "hint": "Minden osztály ebből van.",
+        "q_type": "theory",
+        "difficulty_rating": 1480,
+        "language": "python",
+        "concept": {
+            "oop": 1.0,
+            "basics": 0.5
+        },
+        "content": {
+            "options": [
+                "Class",
+                "object",
+                "type",
+                "meta"
+            ],
+            "correct_answer": "type",
+            "explanation": "Alapértelmezésben minden osztály a `type` metaosztály példánya. A `type(MyClass)` eredménye `type`."
+        }
+    },
+    {
+        "title": "Diamond Problem",
+        "description": "Hogyan oldja fel a Python a 'Diamond Problem' (gyémánt probléma) konfliktust többszörös öröklésnél?",
+        "hint": "C3 linearizáció.",
+        "q_type": "theory",
+        "difficulty_rating": 1500,
+        "language": "python",
+        "concept": {
+            "oop": 1.0,
+            "logic": 0.6
+        },
+        "content": {
+            "options": [
+                "Fordítási hibát dob.",
+                "Mindig a bal oldali szülőt választja.",
+                "A C3 linearizációs algoritmust használja az MRO kiszámítására.",
+                "Véletlenszerűen."
+            ],
+            "correct_answer": "A C3 linearizációs algoritmust használja az MRO kiszámítására.",
+            "explanation": "A Python 2.3 óta a C3 algoritmus biztosítja a konzisztens öröklési sorrendet, elkerülve a metódusok többszöri hívását."
+        }
+    },
+    {
+        "title": "Metaclass definíció",
+        "description": "Hogyan adhatunk meg egyéni metaosztályt egy osztály definíciójakor?",
+        "hint": "Argumentum az osztálydefinícióban.",
+        "q_type": "theory",
+        "difficulty_rating": 1520,
+        "language": "python",
+        "concept": {
+            "oop": 1.0
+        },
+        "content": {
+            "options": [
+                "class A(metaclass=MyMeta):",
+                "class A @MyMeta:",
+                "class A(MyMeta):",
+                "**metaclass** = MyMeta"
+            ],
+            "correct_answer": "class A(metaclass=MyMeta):",
+            "explanation": "Python 3-ban a `class Nev(metaclass=...)` szintaxist használjuk."
+        }
+    },
+    {
+        "title": "Mixin osztály",
+        "description": "Mi a Mixin osztály célja?",
+        "hint": "Keverés.",
+        "q_type": "theory",
+        "difficulty_rating": 1460,
+        "language": "python",
+        "concept": {
+            "oop": 1.0
+        },
+        "content": {
+            "options": [
+                "Hogy önállóan példányosítsuk.",
+                "Hogy extra funkcionalitást adjon más osztályokhoz örökléssel, anélkül, hogy 'is-a' kapcsolatot erőltetne.",
+                "Absztrakt metódusok tárolása.",
+                "Adatbázis kapcsolat."
+            ],
+            "correct_answer": "Hogy extra funkcionalitást adjon más osztályokhoz örökléssel, anélkül, hogy 'is-a' kapcsolatot erőltetne.",
+            "explanation": "A Mixin-ek kis, újrafelhasználható funkciócsomagok (pl. naplózás), amelyeket többszörös örökléssel 'keverünk' az osztályokhoz."
+        }
+    },
+    {
+        "title": "Monkey Patching",
+        "description": "Mit jelent a 'Monkey Patching' kifejezés?",
+        "hint": "Futásidejű módosítás.",
+        "q_type": "theory",
+        "difficulty_rating": 1490,
+        "language": "python",
+        "concept": {
+            "oop": 0.8,
+            "basics": 0.6
+        },
+        "content": {
+            "options": [
+                "A kód átírása.",
+                "Osztályok vagy modulok futásidejű módosítása/kiterjesztése.",
+                "Hibakeresési technika.",
+                "Gorilla tesztelés."
+            ],
+            "correct_answer": "Osztályok vagy modulok futásidejű módosítása/kiterjesztése.",
+            "explanation": "Mivel a Python dinamikus, futás közben is hozzáadhatunk vagy lecserélhetünk metódusokat egy osztályban."
+        }
+    },
+    {
+        "title": "Descriptor Protocol",
+        "description": "Melyik metódus NEM része a Descriptor protokollnak?",
+        "hint": "Init.",
+        "q_type": "theory",
+        "difficulty_rating": 1600,
+        "language": "python",
+        "concept": {
+            "oop": 1.0,
+            "functions": 0.5
+        },
+        "content": {
+            "options": [
+                "**get**",
+                "**set**",
+                "**delete**",
+                "**init**"
+            ],
+            "correct_answer": "**init**",
+            "explanation": "A Descriptor protokoll a `__get__`, `__set__` és `__delete__` metódusokból áll, amelyekkel szabályozható az attribútumok hozzáférése (ez az alapja a @property-nek is)."
+        }
+    }
+]

@@ -1,0 +1,878 @@
+[
+    {
+        "title": "Függvény definíció",
+        "description": "Melyik kulcsszóval hozunk létre függvényt Pythonban?",
+        "hint": "Define rövidítése.",
+        "q_type": "theory",
+        "difficulty_rating": 600,
+        "language": "python",
+        "concept": {
+            "functions": 1.0,
+            "basics": 0.8
+        },
+        "content": {
+            "options": [
+                "function",
+                "func",
+                "def",
+                "define"
+            ],
+            "correct_answer": "def",
+            "explanation": "A Pythonban a `def` kulcsszó vezeti be a függvény definícióját."
+        }
+    },
+    {
+        "title": "Visszatérés értéke",
+        "description": "Melyik utasítással küldünk vissza adatot a függvényből a hívó félnek?",
+        "hint": "Angolul: visszatér.",
+        "q_type": "theory",
+        "difficulty_rating": 600,
+        "language": "python",
+        "concept": {
+            "functions": 1.0,
+            "basics": 0.6
+        },
+        "content": {
+            "options": [
+                "send",
+                "return",
+                "output",
+                "back"
+            ],
+            "correct_answer": "return",
+            "explanation": "A `return` utasítás fejezi be a függvény futását és adja vissza a megadott értéket."
+        }
+    },
+    {
+        "title": "Függvényhívás szintaxisa",
+        "description": "Hogyan hívjuk meg helyesen a `kiir` nevű paraméter nélküli függvényt?",
+        "hint": "A zárójelek fontosak.",
+        "q_type": "theory",
+        "difficulty_rating": 650,
+        "language": "python",
+        "concept": {
+            "functions": 1.0,
+            "basics": 0.5
+        },
+        "content": {
+            "options": [
+                "kiir",
+                "kiir{}",
+                "call kiir",
+                "kiir()"
+            ],
+            "correct_answer": "kiir()",
+            "explanation": "Függvényhíváskor a függvény neve után kerek zárójeleket () kell tenni."
+        }
+    },
+    {
+        "title": "Paraméterek helye",
+        "description": "Hol soroljuk fel a függvény paramétereit a definícióban?",
+        "hint": "A név után.",
+        "q_type": "theory",
+        "difficulty_rating": 650,
+        "language": "python",
+        "concept": {
+            "functions": 1.0,
+            "basics": 0.5
+        },
+        "content": {
+            "options": [
+                "A függvény törzsében.",
+                "A `def` kulcsszó előtt.",
+                "A függvény neve utáni zárójelben.",
+                "A `return` után."
+            ],
+            "correct_answer": "A függvény neve utáni zárójelben.",
+            "explanation": "A paramétereket a definíció fejlécében, a kerek zárójelek között adjuk meg vesszővel elválasztva."
+        }
+    },
+    {
+        "title": "Függvény törzse",
+        "description": "Hogyan jelöljük a függvényhez tartozó kódblokkot?",
+        "hint": "Formázás.",
+        "q_type": "theory",
+        "difficulty_rating": 700,
+        "language": "python",
+        "concept": {
+            "functions": 1.0,
+            "basics": 0.9
+        },
+        "content": {
+            "options": [
+                "Kapcsos zárójellel {}",
+                "Behúzással (indentation)",
+                "Begin/End kulcsszavakkal",
+                "Pontosvesszővel"
+            ],
+            "correct_answer": "Behúzással (indentation)",
+            "explanation": "A Python a behúzást használja a blokkok, így a függvénytörzs jelölésére is."
+        }
+    },
+    {
+        "title": "Üres függvény",
+        "description": "Mit írunk a függvény törzsébe, ha szintaktikailag helyes, de üres függvényt akarunk?",
+        "hint": "Passz.",
+        "q_type": "theory",
+        "difficulty_rating": 750,
+        "language": "python",
+        "concept": {
+            "functions": 0.8,
+            "basics": 1.0
+        },
+        "content": {
+            "options": [
+                "empty",
+                "null",
+                "pass",
+                "void"
+            ],
+            "correct_answer": "pass",
+            "explanation": "A `pass` utasítás egy helykitöltő (no-op), amely lehetővé teszi az üres blokkok létrehozását hiba nélkül."
+        }
+    },
+    {
+        "title": "Beépített függvények",
+        "description": "Melyik az alábbiak közül egy beépített (built-in) Python függvény?",
+        "hint": "Hossz lekérdezése.",
+        "q_type": "theory",
+        "difficulty_rating": 750,
+        "language": "python",
+        "concept": {
+            "functions": 0.7,
+            "basics": 0.8
+        },
+        "content": {
+            "options": [
+                "size()",
+                "length()",
+                "len()",
+                "count()"
+            ],
+            "correct_answer": "len()",
+            "explanation": "A `len()` egy alapvető beépített függvény gyűjtemények hosszának lekérdezésére."
+        }
+    },
+    {
+        "title": "Dokumentáció",
+        "description": "Hogyan nevezzük a függvény első sorában álló, dokumentációs célú stringet?",
+        "hint": "Doc...",
+        "q_type": "theory",
+        "difficulty_rating": 780,
+        "language": "python",
+        "concept": {
+            "functions": 1.0,
+            "basics": 0.6
+        },
+        "content": {
+            "options": [
+                "Comment",
+                "Docstring",
+                "Manpage",
+                "Header"
+            ],
+            "correct_answer": "Docstring",
+            "explanation": "A Docstring (dokumentációs string) írja le a függvény működését, és a `help()`-pel érhető el."
+        }
+    },
+    {
+        "title": "Return hiánya",
+        "description": "Mit ad vissza egy függvény, ha nincs benne `return` utasítás (vagy üres `return`)?",
+        "hint": "A semmi objektuma.",
+        "q_type": "theory",
+        "difficulty_rating": 850,
+        "language": "python",
+        "concept": {
+            "functions": 1.0,
+            "basics": 0.8
+        },
+        "content": {
+            "options": [
+                "0",
+                "False",
+                "None",
+                "Hiba"
+            ],
+            "correct_answer": "None",
+            "explanation": "Pythonban minden függvény visszatér valamivel; ha nincs explicit return, akkor `None`-nal."
+        }
+    },
+    {
+        "title": "Alapértelmezett argumentum",
+        "description": "Hogyan adunk meg alapértelmezett értéket egy paraméternek?",
+        "hint": "Értékadás a definícióban.",
+        "q_type": "theory",
+        "difficulty_rating": 900,
+        "language": "python",
+        "concept": {
+            "functions": 1.0,
+            "basics": 0.7
+        },
+        "content": {
+            "options": [
+                "def f(x : 5)",
+                "def f(x = 5)",
+                "def f(x -> 5)",
+                "def f(x as 5)"
+            ],
+            "correct_answer": "def f(x = 5)",
+            "explanation": "A `paraméter=érték` szintaxissal állítjuk be a default értéket a függvényfejlécben."
+        }
+    },
+    {
+        "title": "Argumentumok sorrendje",
+        "description": "Hogyan kell elhelyezkedniük az alapértelmezett értékkel rendelkező paramétereknek?",
+        "hint": "A kötelezők jönnek előbb.",
+        "q_type": "theory",
+        "difficulty_rating": 950,
+        "language": "python",
+        "concept": {
+            "functions": 1.0,
+            "basics": 0.6
+        },
+        "content": {
+            "options": [
+                "Bárhol lehetnek.",
+                "A kötelező paraméterek UTÁN (a lista végén).",
+                "A kötelező paraméterek ELŐTT.",
+                "ABC sorrendben."
+            ],
+            "correct_answer": "A kötelező paraméterek UTÁN (a lista végén).",
+            "explanation": "A pozicionális (non-default) argumentumoknak mindig meg kell előzniük a kulcsszavas (default) argumentumokat."
+        }
+    },
+    {
+        "title": "Kulcsszavas hívás",
+        "description": "Mi az előnye a `func(nev='Anna', kor=20)` típusú hívásnak?",
+        "hint": "Sorrend.",
+        "q_type": "theory",
+        "difficulty_rating": 920,
+        "language": "python",
+        "concept": {
+            "functions": 1.0,
+            "basics": 0.7
+        },
+        "content": {
+            "options": [
+                "Gyorsabb.",
+                "Nem számít a paraméterek sorrendje.",
+                "Típusellenőrzést végez.",
+                "Privát változókat is elér."
+            ],
+            "correct_answer": "Nem számít a paraméterek sorrendje.",
+            "explanation": "Keyword argumentumok használatakor a név alapján történik a párosítás, így a sorrend tetszőleges lehet."
+        }
+    },
+    {
+        "title": "Lokális hatókör",
+        "description": "Hol érhető el egy függvényen BELÜL létrehozott változó?",
+        "hint": "Local scope.",
+        "q_type": "theory",
+        "difficulty_rating": 880,
+        "language": "python",
+        "concept": {
+            "functions": 1.0,
+            "basics": 0.8
+        },
+        "content": {
+            "options": [
+                "Az egész programban.",
+                "Csak abban a függvényben.",
+                "Csak a főprogramban.",
+                "Bármelyik másik függvényben."
+            ],
+            "correct_answer": "Csak abban a függvényben.",
+            "explanation": "A függvényben definiált változók lokálisak (local scope), kívülről nem láthatók."
+        }
+    },
+    {
+        "title": "Arbitrary Arguments (*args)",
+        "description": "Milyen típusú objektumként érkeznek meg a `*args` paraméterbe az értékek?",
+        "hint": "Immutable lista.",
+        "q_type": "theory",
+        "difficulty_rating": 980,
+        "language": "python",
+        "concept": {
+            "functions": 1.0,
+            "arrays": 0.6
+        },
+        "content": {
+            "options": [
+                "List (lista)",
+                "Dictionary (szótár)",
+                "Tuple (n-es)",
+                "Set (halmaz)"
+            ],
+            "correct_answer": "Tuple (n-es)",
+            "explanation": "A `*args` szintaxis egy Tuple-be gyűjti össze az összes átadott pozicionális argumentumot."
+        }
+    },
+    {
+        "title": "Print vs Return",
+        "description": "Mi a különbség a `print(x)` és a `return x` között?",
+        "hint": "Képernyőre írás vs Adatátadás.",
+        "q_type": "theory",
+        "difficulty_rating": 850,
+        "language": "python",
+        "concept": {
+            "functions": 1.0,
+            "basics": 0.5
+        },
+        "content": {
+            "options": [
+                "Nincs különbség.",
+                "A print kiírja a konzolra, de nem ad értéket a hívónak; a return értéket ad vissza.",
+                "A print csak szöveget kezel, a return számokat.",
+                "A return kiírja az értéket és kilép."
+            ],
+            "correct_answer": "A print kiírja a konzolra, de nem ad értéket a hívónak; a return értéket ad vissza.",
+            "explanation": "Gyakori tévhit kezdőknél: a print csak megjelenít (side effect), a return teszi lehetővé az eredmény további használatát (variable assignment)."
+        }
+    },
+    {
+        "title": "Paraméter vs Argumentum",
+        "description": "Technikailag mi a különbség a paraméter és az argumentum között?",
+        "hint": "Definíció vs Hívás.",
+        "q_type": "theory",
+        "difficulty_rating": 990,
+        "language": "python",
+        "concept": {
+            "functions": 1.0
+        },
+        "content": {
+            "options": [
+                "Szinonimák.",
+                "Paraméter a definícióban van, argumentum a híváskor átadott érték.",
+                "Argumentum a definícióban van, paraméter a híváskor.",
+                "Paraméter csak szám lehet."
+            ],
+            "correct_answer": "Paraméter a definícióban van, argumentum a híváskor átadott érték.",
+            "explanation": "Paraméter a változó neve a `def` sorban; Argumentum a konkrét adat, amit `call()`-kor átadunk."
+        }
+    },
+    {
+        "title": "Global kulcsszó",
+        "description": "Mikor kell használni a `global` kulcsszót egy függvényen belül?",
+        "hint": "Írás vs Olvasás.",
+        "q_type": "theory",
+        "difficulty_rating": 1050,
+        "language": "python",
+        "concept": {
+            "functions": 1.0,
+            "basics": 0.7
+        },
+        "content": {
+            "options": [
+                "Mindig, ha globális változót használunk.",
+                "Ha módosítani (írni) akarunk egy globális változót.",
+                "Ha importálni akarunk.",
+                "Függvények egymásba ágyazásakor."
+            ],
+            "correct_answer": "Ha módosítani (írni) akarunk egy globális változót.",
+            "explanation": "Olvasni `global` nélkül is lehet a külső változót, de értékadáskor (`x = 5`) új lokális változó jönne létre a `global` jelölés nélkül."
+        }
+    },
+    {
+        "title": "Arbitrary Keywords (**kwargs)",
+        "description": "Milyen típusú objektumot kapunk a `**kwargs` paraméterben?",
+        "hint": "Kulcs-érték párok.",
+        "q_type": "theory",
+        "difficulty_rating": 1020,
+        "language": "python",
+        "concept": {
+            "functions": 1.0,
+            "arrays": 0.7
+        },
+        "content": {
+            "options": [
+                "List",
+                "Tuple",
+                "Dictionary",
+                "Set"
+            ],
+            "correct_answer": "Dictionary",
+            "explanation": "A `**kwargs` (keyword arguments) egy szótárba (dictionary) gyűjti a névvel ellátott extra argumentumokat."
+        }
+    },
+    {
+        "title": "Lambda függvény",
+        "description": "Mi a `lambda` függvény fő jellemzője Pythonban?",
+        "hint": "Névtelen és rövid.",
+        "q_type": "theory",
+        "difficulty_rating": 1100,
+        "language": "python",
+        "concept": {
+            "functions": 1.0,
+            "basics": 0.5
+        },
+        "content": {
+            "options": [
+                "Soha nem térhet vissza értékkel.",
+                "Névtelen (anonim) függvény, amely egyetlen kifejezésből áll.",
+                "Gyorsabb, mint a `def`.",
+                "Több soros logikát tartalmazhat."
+            ],
+            "correct_answer": "Névtelen (anonim) függvény, amely egyetlen kifejezésből áll.",
+            "explanation": "A lambda egy kisméretű, névtelen függvény, szintaxisa: `lambda args: expression`."
+        }
+    },
+    {
+        "title": "Mutable argumentum módosítása",
+        "description": "Mi történik, ha egy függvényen belül módosítunk egy paraméterként kapott listát (pl. append)?",
+        "hint": "Pass-by-object-reference.",
+        "q_type": "theory",
+        "difficulty_rating": 1150,
+        "language": "python",
+        "concept": {
+            "functions": 1.0,
+            "arrays": 0.6
+        },
+        "content": {
+            "options": [
+                "Csak a függvényen belül változik.",
+                "Hibaüzenetet kapunk.",
+                "Az eredeti lista is megváltozik a hívó oldalon.",
+                "Létrejön egy másolat."
+            ],
+            "correct_answer": "Az eredeti lista is megváltozik a hívó oldalon.",
+            "explanation": "Mivel a listák mutable (módosítható) objektumok és referenciát adunk át, a módosítás globálisan látszik."
+        }
+    },
+    {
+        "title": "Paraméterek sorrendje (Definíció)",
+        "description": "Mi a helyes sorrend a paraméterlistában?",
+        "hint": "Standard -> *args -> Default -> **kwargs (kicsit bonyolultabb, de egyszerűsítve).",
+        "q_type": "theory",
+        "difficulty_rating": 1180,
+        "language": "python",
+        "concept": {
+            "functions": 1.0
+        },
+        "content": {
+            "options": [
+                "**kwargs, *args, standard",
+                "standard, *args, **kwargs",
+                "*args, standard, **kwargs",
+                "standard, **kwargs, *args"
+            ],
+            "correct_answer": "standard, *args, **kwargs",
+            "explanation": "A helyes sorrend: pozicionális, tetszőleges pozicionális (*args), (esetleg keyword-only), tetszőleges kulcsszavas (**kwargs)."
+        }
+    },
+    {
+        "title": "Rekurzió alapfeltétele",
+        "description": "Mi az a 'base case' (bázisfeltétel) a rekurzív függvényeknél?",
+        "hint": "Megállási feltétel.",
+        "q_type": "theory",
+        "difficulty_rating": 1120,
+        "language": "python",
+        "concept": {
+            "functions": 0.9,
+            "logic": 0.7
+        },
+        "content": {
+            "options": [
+                "Az első hívás.",
+                "A feltétel, ami megállítja a rekurziót.",
+                "A legnagyobb bemeneti érték.",
+                "A stack mérete."
+            ],
+            "correct_answer": "A feltétel, ami megállítja a rekurziót.",
+            "explanation": "Bázisfeltétel nélkül a rekurzió végtelen ciklusba (StackOverflow) futna."
+        }
+    },
+    {
+        "title": "Docstring elérése",
+        "description": "Melyik attribútumban tárolódik a függvény docstringje?",
+        "hint": "Dunder (double underscore) metódus.",
+        "q_type": "theory",
+        "difficulty_rating": 1080,
+        "language": "python",
+        "concept": {
+            "functions": 0.8,
+            "basics": 0.6
+        },
+        "content": {
+            "options": [
+                "func.doc",
+                "func.__doc__",
+                "func.help",
+                "func.text"
+            ],
+            "correct_answer": "func.__doc__",
+            "explanation": "A Python objektumok dokumentációja a `__doc__` attribútumban érhető el programozottan."
+        }
+    },
+    {
+        "title": "First-class citizen",
+        "description": "Mit jelent, hogy Pythonban a függvények 'First-class object'-ek?",
+        "hint": "Úgy viselkednek, mint egy változó.",
+        "q_type": "theory",
+        "difficulty_rating": 1190,
+        "language": "python",
+        "concept": {
+            "functions": 1.0,
+            "oop": 0.4
+        },
+        "content": {
+            "options": [
+                "Mindig elsőként futnak le.",
+                "Átadhatók változóként, argumentumként és visszatérési értékként.",
+                "Csak osztályon belül létezhetnek.",
+                "Nem lehet őket törölni."
+            ],
+            "correct_answer": "Átadhatók változóként, argumentumként és visszatérési értékként.",
+            "explanation": "A függvények is objektumok, így dinamikusan kezelhetők, mint bármely más adat (pl. int vagy string)."
+        }
+    },
+    {
+        "title": "Mutable Default Argument Csapda",
+        "description": "Mi a veszélye a `def f(l=[]):` definíciónak?",
+        "hint": "Az alapértelmezett érték csak egyszer jön létre.",
+        "q_type": "theory",
+        "difficulty_rating": 1250,
+        "language": "python",
+        "concept": {
+            "functions": 1.0,
+            "basics": 0.8
+        },
+        "content": {
+            "options": [
+                "Szintaktikai hiba.",
+                "Minden hívásnál új üres listát kap.",
+                "A lista megosztott marad a hívások között (statikus-szerű).",
+                "A lista None lesz."
+            ],
+            "correct_answer": "A lista megosztott marad a hívások között (statikus-szerű).",
+            "explanation": "A default argumentumok a definíciókor (compile time) értékelődnek ki, nem futáskor. Így a lista objektum közös minden híváshoz."
+        }
+    },
+    {
+        "title": "Unpacking híváskor",
+        "description": "Mit csinál a `*` operátor függvényhíváskor: `f(*lista)`?",
+        "hint": "Kicsomagolás.",
+        "q_type": "theory",
+        "difficulty_rating": 1220,
+        "language": "python",
+        "concept": {
+            "functions": 1.0,
+            "arrays": 0.6
+        },
+        "content": {
+            "options": [
+                "Pointert ad át.",
+                "A listát egyetlen argumentumként adja át.",
+                "Kicsomagolja a listát különálló pozicionális argumentumokra.",
+                "Megszorozza az elemeket."
+            ],
+            "correct_answer": "Kicsomagolja a listát különálló pozicionális argumentumokra.",
+            "explanation": "Ez az argument unpacking: a lista elemeit egyesével illeszti a függvény paramétereire."
+        }
+    },
+    {
+        "title": "Yield kulcsszó",
+        "description": "Mivé alakítja a függvényt a `yield` kulcsszó használata?",
+        "hint": "Lusta iteráció.",
+        "q_type": "theory",
+        "difficulty_rating": 1280,
+        "language": "python",
+        "concept": {
+            "functions": 1.0,
+            "loops": 0.5
+        },
+        "content": {
+            "options": [
+                "Konstruktorrá.",
+                "Generátorrá (Generator).",
+                "Rekurzív függvénnyé.",
+                "Aszinkron függvénnyé."
+            ],
+            "correct_answer": "Generátorrá (Generator).",
+            "explanation": "A `yield` lehetővé teszi, hogy a függvény felfüggessze a futását és értéket adjon vissza, majd onnan folytassa (állapotmegőrzés)."
+        }
+    },
+    {
+        "title": "Belső függvények (Nested functions)",
+        "description": "Mi a célja a függvényen belül definiált függvénynek?",
+        "hint": "Closure / Segédfüggvény / Encapsulation.",
+        "q_type": "theory",
+        "difficulty_rating": 1300,
+        "language": "python",
+        "concept": {
+            "functions": 1.0,
+            "oop": 0.3
+        },
+        "content": {
+            "options": [
+                "Nincs értelme, hiba.",
+                "Globálisan elérhetővé tenni a kódot.",
+                "Adatrejtés (encapsulation) és Closure (lezárás) létrehozása.",
+                "Gyorsabb futás."
+            ],
+            "correct_answer": "Adatrejtés (encapsulation) és Closure (lezárás) létrehozása.",
+            "explanation": "A belső függvények hozzáférnek a külső függvény változóihoz (non-local scope), és el vannak rejtve a globális tér elől."
+        }
+    },
+    {
+        "title": "Scope feloldás (LEGB)",
+        "description": "Milyen sorrendben keresi a Python a változóneveket (LEGB szabály)?",
+        "hint": "Local -> ...",
+        "q_type": "theory",
+        "difficulty_rating": 1350,
+        "language": "python",
+        "concept": {
+            "functions": 1.0,
+            "basics": 0.7
+        },
+        "content": {
+            "options": [
+                "Local, Global, Enclosing, Built-in",
+                "Local, Enclosing, Global, Built-in",
+                "Global, Local, Built-in, Enclosing",
+                "Built-in, Global, Enclosing, Local"
+            ],
+            "correct_answer": "Local, Enclosing, Global, Built-in",
+            "explanation": "Ez a standard scope feloldási sorrend: először helyben, majd a külső függvényben, majd globálisan, végül a beépített nevek között keres."
+        }
+    },
+    {
+        "title": "Lambda korlátja",
+        "description": "Mi a `lambda` függvények fő technikai korlátja Pythonban?",
+        "hint": "Expression vs Statement.",
+        "q_type": "theory",
+        "difficulty_rating": 1250,
+        "language": "python",
+        "concept": {
+            "functions": 1.0
+        },
+        "content": {
+            "options": [
+                "Csak 1 paramétere lehet.",
+                "Nem hívhat más függvényeket.",
+                "Csak egyetlen kifejezést (expression) tartalmazhat, utasításokat nem.",
+                "Lassabb, mint a def."
+            ],
+            "correct_answer": "Csak egyetlen kifejezésből (expression) tartalmazhat, utasításokat nem.",
+            "explanation": "A lambda 'body'-ja egyetlen expression lehet, nem tartalmazhat statement-eket (pl. while, try-except, return kulcsszó)."
+        }
+    },
+    {
+        "title": "Nonlocal kulcsszó",
+        "description": "Mire való a `nonlocal` kulcsszó?",
+        "hint": "Nem globális, de nem is lokális.",
+        "q_type": "theory",
+        "difficulty_rating": 1380,
+        "language": "python",
+        "concept": {
+            "functions": 1.0,
+            "basics": 0.7
+        },
+        "content": {
+            "options": [
+                "Globális változó módosítására.",
+                "A legközelebbi befoglaló (enclosing) scope változójának módosítására.",
+                "Változó törlésére.",
+                "Modul szintű változó elérésére."
+            ],
+            "correct_answer": "A legközelebbi befoglaló (enclosing) scope változójának módosítására.",
+            "explanation": "Beágyazott függvényeknél használjuk, ha a külső (de nem globális) függvény változóját akarjuk írni."
+        }
+    },
+    {
+        "title": "Argumentumok átadása (Pass by...)",
+        "description": "Hogyan adja át a Python az argumentumokat a függvényeknek?",
+        "hint": "Ez egy speciális mechanizmus.",
+        "q_type": "theory",
+        "difficulty_rating": 1320,
+        "language": "python",
+        "concept": {
+            "functions": 1.0,
+            "basics": 0.8
+        },
+        "content": {
+            "options": [
+                "Pass by value (csak érték).",
+                "Pass by reference (csak referencia).",
+                "Pass by assignment (Object reference).",
+                "Pass by pointer."
+            ],
+            "correct_answer": "Pass by assignment (Object reference).",
+            "explanation": "Az objektum referenciája adódik át érték szerint. Mutable objektumok módosíthatók, Immutable-ök nem."
+        }
+    },
+    {
+        "title": "Dekorátorok (Decorators)",
+        "description": "Mit csinál a `@decorator` szintaxis egy függvény felett?",
+        "hint": "Wrapper / Csomagolás.",
+        "q_type": "theory",
+        "difficulty_rating": 1450,
+        "language": "python",
+        "concept": {
+            "functions": 1.0,
+            "oop": 0.6
+        },
+        "content": {
+            "options": [
+                "Kommenteli a függvényt.",
+                "Módosítja vagy kiterjeszti a függvény működését egy másik függvénnyel becsomagolva azt.",
+                "Statikussá teszi a függvényt.",
+                "Automatikusan futtatja a függvényt."
+            ],
+            "correct_answer": "Módosítja vagy kiterjeszti a függvény működését egy másik függvénnyel becsomagolva azt.",
+            "explanation": "A dekorátor egy függvény, amely egy másik függvényt kap bemenetként, és egy (általában módosított) függvényt ad vissza."
+        }
+    },
+    {
+        "title": "Yield From",
+        "description": "Mire szolgál a `yield from` utasítás?",
+        "hint": "Delegálás.",
+        "q_type": "theory",
+        "difficulty_rating": 1480,
+        "language": "python",
+        "concept": {
+            "functions": 1.0,
+            "loops": 0.5
+        },
+        "content": {
+            "options": [
+                "Visszatér a generátorból.",
+                "Delegálja a generálást egy al-generátornak (sub-generator).",
+                "Importál egy generátort.",
+                "Hiba, ilyen nincs."
+            ],
+            "correct_answer": "Delegálja a generálást egy al-generátornak (sub-generator).",
+            "explanation": "Lehetővé teszi, hogy egy generátor transzparensen továbbítsa az értékeket egy másik iterálhatóból vagy generátorból."
+        }
+    },
+    {
+        "title": "Type Hinting hatása",
+        "description": "Befolyásolja-e a futást a `def f(x: int) -> int:` típusjelölés (annotation)?",
+        "hint": "Runtime check.",
+        "q_type": "theory",
+        "difficulty_rating": 1420,
+        "language": "python",
+        "concept": {
+            "functions": 0.8,
+            "basics": 0.7
+        },
+        "content": {
+            "options": [
+                "Igen, típushibát dob, ha rossz típust adunk.",
+                "Nem, a Python futásidőben figyelmen kívül hagyja (csak dokumentáció/linter).",
+                "Igen, gyorsítja a kódot.",
+                "Automatikusan konvertálja a típusokat."
+            ],
+            "correct_answer": "Nem, a Python futásidőben figyelmen kívül hagyja (csak dokumentáció/linter).",
+            "explanation": "A Type Hinting Pythonban alapértelmezésben nem végez runtime kényszerítést, csak statikus elemzők (mypy) használják."
+        }
+    },
+    {
+        "title": "Closure és Ciklusváltozó (Late binding)",
+        "description": "Mit ad vissza: `[f() for f in [lambda: i for i in range(3)]]`?",
+        "hint": "A lambda mikor olvassa ki i-t?",
+        "q_type": "theory",
+        "difficulty_rating": 1550,
+        "language": "python",
+        "concept": {
+            "functions": 1.0,
+            "loops": 0.8
+        },
+        "content": {
+            "options": [
+                "0, 1, 2",
+                "2, 2, 2",
+                "0, 0, 0",
+                "Hiba"
+            ],
+            "correct_answer": "2, 2, 2",
+            "explanation": "Klasszikus hiba (late binding): a closure-ök a változó *referenciáját* tárolják, nem az értékét. Mire a függvények lefutnak, az `i` értéke már 2."
+        }
+    },
+    {
+        "title": "Functools.partial",
+        "description": "Mire használjuk a `functools.partial` függvényt?",
+        "hint": "Paraméterek rögzítése.",
+        "q_type": "theory",
+        "difficulty_rating": 1500,
+        "language": "python",
+        "concept": {
+            "functions": 1.0,
+            "oop": 0.4
+        },
+        "content": {
+            "options": [
+                "Függvények részleges végrehajtására.",
+                "Egy függvény paramétereinek előre rögzítésére (új függvényt létrehozva).",
+                "Függvények felosztására.",
+                "Aszinkron hívásra."
+            ],
+            "correct_answer": "Egy függvény paramétereinek előre rögzítésére (új függvényt létrehozva).",
+            "explanation": "Segítségével rögzíthetünk bizonyos argumentumokat, így egy kevesebb paramétert váró függvényt kapunk."
+        }
+    },
+    {
+        "title": "Függvény introspekció",
+        "description": "Melyik attribútum tárolja a függvény lefordított bájtkódját?",
+        "hint": "Code object.",
+        "q_type": "theory",
+        "difficulty_rating": 1600,
+        "language": "python",
+        "concept": {
+            "functions": 1.0,
+            "basics": 0.3
+        },
+        "content": {
+            "options": [
+                "__bytecode__",
+                "__code__",
+                "__body__",
+                "__compiled__"
+            ],
+            "correct_answer": "__code__",
+            "explanation": "A `__code__` attribútum tartalmazza a függvény 'code object'-jét, amely a végrehajtható bájtkódot és változóneveket tárolja."
+        }
+    },
+    {
+        "title": "Async Def",
+        "description": "Mit hoz létre az `async def` kulcsszóval definiált függvény hívása?",
+        "hint": "Nem fut le azonnal.",
+        "q_type": "theory",
+        "difficulty_rating": 1520,
+        "language": "python",
+        "concept": {
+            "functions": 1.0,
+            "basics": 0.5
+        },
+        "content": {
+            "options": [
+                "Szálat (Thread).",
+                "Coroutine objektumot.",
+                "Generátort.",
+                "Párhuzamos folyamatot."
+            ],
+            "correct_answer": "Coroutine objektumot.",
+            "explanation": "Az `async` függvények coroutine-okat adnak vissza, amelyeket `await`-elni kell vagy eseményhurokban futtatni."
+        }
+    },
+    {
+        "title": "Keyword-only arguments",
+        "description": "Hogyan kényszeríthetünk ki 'keyword-only' argumentumokat Python 3-ban?",
+        "hint": "A csillag szerepe.",
+        "q_type": "theory",
+        "difficulty_rating": 1480,
+        "language": "python",
+        "concept": {
+            "functions": 1.0
+        },
+        "content": {
+            "options": [
+                "Nem lehetséges.",
+                "A paraméterlista elejére tett `*` jellel.",
+                "A `kw_only=True` dekorátorral.",
+                "Speciális típusjelöléssel."
+            ],
+            "correct_answer": "A paraméterlista elejére tett `*` jellel.",
+            "explanation": "A `*` után felsorolt paramétereknek (pl. `def f(a, *, b)`) kötelezően kulcsszavasnak kell lenniük híváskor."
+        }
+    }
+]

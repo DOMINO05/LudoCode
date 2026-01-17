@@ -8,6 +8,8 @@ import {
 import { UserSubmission } from './user-submission.entity';
 import { UserConceptMastery } from './user-concept-mastery.entity';
 import { UserInventory } from './user-inventory.entity';
+import { CustomQuiz } from './custom-quiz.entity';
+import { QuizAttempt } from './quiz-attempt.entity';
 
 @Entity('profiles')
 export class Profile {
@@ -16,6 +18,9 @@ export class Profile {
 
   @Column({ type: 'text', unique: true, nullable: true })
   username: string;
+
+  @Column({ type: 'varchar', length: 160, nullable: true })
+  bio: string;
 
   @Column({ type: 'int', default: 0 })
   xp: number;
@@ -55,4 +60,10 @@ export class Profile {
 
   @OneToMany(() => UserInventory, (ui) => ui.user)
   inventory: UserInventory[];
+
+  @OneToMany(() => CustomQuiz, (quiz) => quiz.creator)
+  createdQuizzes: CustomQuiz[];
+
+  @OneToMany(() => QuizAttempt, (attempt) => attempt.user)
+  quizAttempts: QuizAttempt[];
 }

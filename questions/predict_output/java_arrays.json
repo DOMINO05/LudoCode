@@ -1,0 +1,930 @@
+[
+    {
+        "title": "Tömb hossza",
+        "description": "Mi lesz a kimenet?",
+        "hint": "A length mező a tömb elemeinek számát adja.",
+        "q_type": "predict_output",
+        "difficulty_rating": 600,
+        "language": "java",
+        "concept": {
+            "arrays": 1.0,
+            "basics": 0.5
+        },
+        "content": {
+            "code_snippet": "int[] numbers = {10, 20, 30, 40};\nSystem.out.print(numbers.length);",
+            "options": [
+                "3",
+                "4",
+                "30",
+                "40"
+            ],
+            "correct_answer": "4",
+            "explanation": "A tömbben 4 elem található, a length tulajdonság ezt adja vissza."
+        }
+    },
+    {
+        "title": "Első elem elérése",
+        "description": "Mi lesz a kimenet?",
+        "hint": "Az indexelés 0-tól kezdődik.",
+        "q_type": "predict_output",
+        "difficulty_rating": 620,
+        "language": "java",
+        "concept": {
+            "arrays": 1.0,
+            "basics": 0.5
+        },
+        "content": {
+            "code_snippet": "int[] arr = {5, 10, 15};\nSystem.out.print(arr[0]);",
+            "options": [
+                "5",
+                "10",
+                "15",
+                "0"
+            ],
+            "correct_answer": "5",
+            "explanation": "A 0. indexű elem a tömb legelső eleme, ami itt az 5."
+        }
+    },
+    {
+        "title": "Utolsó elem elérése",
+        "description": "Mi lesz a kimenet?",
+        "hint": "A tömb utolsó elemének indexe length-1.",
+        "q_type": "predict_output",
+        "difficulty_rating": 650,
+        "language": "java",
+        "concept": {
+            "arrays": 1.0,
+            "basics": 0.5
+        },
+        "content": {
+            "code_snippet": "char[] letters = {'A', 'B', 'C'};\nSystem.out.print(letters[2]);",
+            "options": [
+                "A",
+                "B",
+                "C",
+                "Hiba"
+            ],
+            "correct_answer": "C",
+            "explanation": "A tömb 3 elemű, indexei: 0, 1, 2. A 2-es indexű elem a 'C'."
+        }
+    },
+    {
+        "title": "Üres tömb létrehozása",
+        "description": "Mit ír ki a kód?",
+        "hint": "Az int tömb elemei 0-ra inicializálódnak.",
+        "q_type": "predict_output",
+        "difficulty_rating": 700,
+        "language": "java",
+        "concept": {
+            "arrays": 1.0,
+            "basics": 0.8
+        },
+        "content": {
+            "code_snippet": "int[] nums = new int[3];\nSystem.out.print(nums[0]);",
+            "options": [
+                "0",
+                "null",
+                "1",
+                "undefined"
+            ],
+            "correct_answer": "0",
+            "explanation": "Java-ban az int tömbök elemei automatikusan 0 kezdőértéket kapnak."
+        }
+    },
+    {
+        "title": "String tömb eleme",
+        "description": "Mi jelenik meg a konzolon?",
+        "hint": "Szöveges tömb indexelése.",
+        "q_type": "predict_output",
+        "difficulty_rating": 680,
+        "language": "java",
+        "concept": {
+            "arrays": 1.0,
+            "basics": 0.5
+        },
+        "content": {
+            "code_snippet": "String[] names = {''Anna'', ''Bela''};\nSystem.out.print(names[1]);",
+            "options": [
+                "Anna",
+                "Bela",
+                "n",
+                "a"
+            ],
+            "correct_answer": "Bela",
+            "explanation": "Az 1-es index a második elemet jelöli, ami a ''Bela''."
+        }
+    },
+    {
+        "title": "Tömb módosítása",
+        "description": "Mi lesz a kimenet a módosítás után?",
+        "hint": "Az értékadás felülírja a régi értéket.",
+        "q_type": "predict_output",
+        "difficulty_rating": 720,
+        "language": "java",
+        "concept": {
+            "arrays": 1.0,
+            "basics": 0.6
+        },
+        "content": {
+            "code_snippet": "int[] x = {1, 2, 3};\nx[0] = 9;\nSystem.out.print(x[0]);",
+            "options": [
+                "1",
+                "2",
+                "3",
+                "9"
+            ],
+            "correct_answer": "9",
+            "explanation": "A 0. indexen lévő 1-es értéket felülírtuk 9-re."
+        }
+    },
+    {
+        "title": "Összeadás indexekkel",
+        "description": "Mennyi az eredmény?",
+        "hint": "Add össze a 0. és 1. index tartalmát.",
+        "q_type": "predict_output",
+        "difficulty_rating": 750,
+        "language": "java",
+        "concept": {
+            "arrays": 1.0,
+            "basics": 0.6
+        },
+        "content": {
+            "code_snippet": "int[] a = {2, 3, 4};\nSystem.out.print(a[0] + a[1]);",
+            "options": [
+                "5",
+                "6",
+                "7",
+                "23"
+            ],
+            "correct_answer": "5",
+            "explanation": "a[0] értéke 2, a[1] értéke 3. 2 + 3 = 5."
+        }
+    },
+    {
+        "title": "Boolean tömb",
+        "description": "Mi a kimenet?",
+        "hint": "A boolean alapértelmezett értéke false.",
+        "q_type": "predict_output",
+        "difficulty_rating": 780,
+        "language": "java",
+        "concept": {
+            "arrays": 1.0,
+            "basics": 0.7
+        },
+        "content": {
+            "code_snippet": "boolean[] b = new boolean[1];\nSystem.out.print(b[0]);",
+            "options": [
+                "true",
+                "false",
+                "0",
+                "null"
+            ],
+            "correct_answer": "false",
+            "explanation": "A boolean tömb elemei inicializáláskor false értéket kapnak."
+        }
+    },
+    {
+        "title": "Egyszerű iteráció",
+        "description": "Mit ír ki a ciklus?",
+        "hint": "Végigmegy a tömbön és kiírja az elemeket.",
+        "q_type": "predict_output",
+        "difficulty_rating": 850,
+        "language": "java",
+        "concept": {
+            "arrays": 0.7,
+            "loops": 0.8
+        },
+        "content": {
+            "code_snippet": "int[] arr = {1, 2};\nfor(int i=0; i<arr.length; i++) {\n System.out.print(arr[i]);\n}",
+            "options": [
+                "1",
+                "2",
+                "12",
+                "1 2"
+            ],
+            "correct_answer": "12",
+            "explanation": "A ciklus először kiírja az 1-et, majd a 2-t. Mivel print van (nem println), egymás mellé kerülnek."
+        }
+    },
+    {
+        "title": "Elemek szorzata",
+        "description": "Mi lesz az 's' értéke?",
+        "hint": "Helyben módosítjuk a változót.",
+        "q_type": "predict_output",
+        "difficulty_rating": 900,
+        "language": "java",
+        "concept": {
+            "arrays": 0.8,
+            "basics": 0.7
+        },
+        "content": {
+            "code_snippet": "int[] nums = {2, 4};\nint s = nums[0] * nums[1];\nSystem.out.print(s);",
+            "options": [
+                "6",
+                "8",
+                "24",
+                "2"
+            ],
+            "correct_answer": "8",
+            "explanation": "2 * 4 = 8."
+        }
+    },
+    {
+        "title": "For-each ciklus",
+        "description": "Mi a kimenet?",
+        "hint": "Az enhanced for ciklus minden elemen végigmegy.",
+        "q_type": "predict_output",
+        "difficulty_rating": 880,
+        "language": "java",
+        "concept": {
+            "arrays": 0.6,
+            "loops": 0.9
+        },
+        "content": {
+            "code_snippet": "String[] words = {''A'', ''B''};\nfor(String w : words) {\n System.out.print(w);\n}",
+            "options": [
+                "AB",
+                "BA",
+                "A B",
+                "A"
+            ],
+            "correct_answer": "AB",
+            "explanation": "A ciklus sorban összefűzi a tömb elemeit a kimeneten."
+        }
+    },
+    {
+        "title": "Feltétel tömbben",
+        "description": "Mit ír ki a kód?",
+        "hint": "Csak akkor ír ki, ha a feltétel igaz.",
+        "q_type": "predict_output",
+        "difficulty_rating": 950,
+        "language": "java",
+        "concept": {
+            "arrays": 0.7,
+            "loops": 0.7,
+            "logic": 0.5
+        },
+        "content": {
+            "code_snippet": "int[] x = {5, 12, 3};\nfor(int i : x) {\n if(i > 10) System.out.print(i);\n}",
+            "options": [
+                "5",
+                "12",
+                "3",
+                "5123"
+            ],
+            "correct_answer": "12",
+            "explanation": "Csak a 12 nagyobb 10-nél, így csak az kerül kiírásra."
+        }
+    },
+    {
+        "title": "Tömbmódosítás ciklussal",
+        "description": "Mi lesz a tömb 1. eleme a futás után?",
+        "hint": "Minden elemhez hozzáadunk 1-et.",
+        "q_type": "predict_output",
+        "difficulty_rating": 980,
+        "language": "java",
+        "concept": {
+            "arrays": 0.8,
+            "loops": 0.8
+        },
+        "content": {
+            "code_snippet": "int[] a = {0, 0};\nfor(int i=0; i<a.length; i++) {\n a[i] = 5;\n}\nSystem.out.print(a[1]);",
+            "options": [
+                "0",
+                "1",
+                "5",
+                "10"
+            ],
+            "correct_answer": "5",
+            "explanation": "A ciklus minden elemet 5-re állít, így az a[1] is 5 lesz."
+        }
+    },
+    {
+        "title": "Length property matek",
+        "description": "Mi az eredmény?",
+        "hint": "A tömb hossza 3.",
+        "q_type": "predict_output",
+        "difficulty_rating": 820,
+        "language": "java",
+        "concept": {
+            "arrays": 1.0,
+            "basics": 0.5
+        },
+        "content": {
+            "code_snippet": "int[] data = {1, 2, 3};\nSystem.out.print(data.length * 2);",
+            "options": [
+                "3",
+                "5",
+                "6",
+                "9"
+            ],
+            "correct_answer": "6",
+            "explanation": "A hossz 3, szorozva 2-vel az 6."
+        }
+    },
+    {
+        "title": "Karakter tömb",
+        "description": "Mit látunk a kimeneten?",
+        "hint": "A karakterek összefűzve jelennek meg.",
+        "q_type": "predict_output",
+        "difficulty_rating": 850,
+        "language": "java",
+        "concept": {
+            "arrays": 0.9,
+            "basics": 0.5
+        },
+        "content": {
+            "code_snippet": "char[] c = {'O', 'u', 't', 'p', 'u', 't'};\nSystem.out.print(c[0]);\nSystem.out.print(c[3]);",
+            "options": [
+                "Output",
+                "Op",
+                "Ot",
+                "Out"
+            ],
+            "correct_answer": "Op",
+            "explanation": "c[0] = 'O', c[3] = 'p'."
+        }
+    },
+    {
+        "title": "Túlindexelés veszélye",
+        "description": "Mi történik ennél a kódnál?",
+        "hint": "Csak 2 elem van.",
+        "q_type": "predict_output",
+        "difficulty_rating": 990,
+        "language": "java",
+        "concept": {
+            "arrays": 1.0,
+            "basics": 0.5
+        },
+        "content": {
+            "code_snippet": "int[] arr = {10, 20};\ntry {\n System.out.print(arr[2]);\n} catch(Exception e) {\n System.out.print(''E'');\n}",
+            "options": [
+                "20",
+                "0",
+                "null",
+                "E"
+            ],
+            "correct_answer": "E",
+            "explanation": "A tömb indexei 0 és 1. A 2-es index ArrayIndexOutOfBoundsException-t vált ki, amit elkapunk."
+        }
+    },
+    {
+        "title": "Összegzés (Accumulator)",
+        "description": "Mennyi lesz a sum értéke?",
+        "hint": "Összeadja az elemeket.",
+        "q_type": "predict_output",
+        "difficulty_rating": 1050,
+        "language": "java",
+        "concept": {
+            "arrays": 0.7,
+            "loops": 0.9
+        },
+        "content": {
+            "code_snippet": "int[] nums = {1, 2, 3, 4};\nint sum = 0;\nfor(int n : nums) sum += n;\nSystem.out.print(sum);",
+            "options": [
+                "4",
+                "10",
+                "24",
+                "0"
+            ],
+            "correct_answer": "10",
+            "explanation": "1+2+3+4 = 10."
+        }
+    },
+    {
+        "title": "Maximum keresés logikája",
+        "description": "Mit ír ki a kód?",
+        "hint": "A legnagyobb elemet keresi.",
+        "q_type": "predict_output",
+        "difficulty_rating": 1100,
+        "language": "java",
+        "concept": {
+            "arrays": 0.7,
+            "loops": 0.8,
+            "logic": 0.7
+        },
+        "content": {
+            "code_snippet": "int[] arr = {10, 50, 20};\nint m = arr[0];\nfor(int i=1; i<arr.length; i++) {\n if(arr[i] > m) m = arr[i];\n}\nSystem.out.print(m);",
+            "options": [
+                "10",
+                "20",
+                "50",
+                "80"
+            ],
+            "correct_answer": "50",
+            "explanation": "A ciklus végigmegy, és megtalálja a legnagyobb értéket (50)."
+        }
+    },
+    {
+        "title": "Tömbmódosítás indexekkel",
+        "description": "Mi lesz a kimenet?",
+        "hint": "i értéke 0-tól indul.",
+        "q_type": "predict_output",
+        "difficulty_rating": 1150,
+        "language": "java",
+        "concept": {
+            "arrays": 0.8,
+            "loops": 0.9
+        },
+        "content": {
+            "code_snippet": "int[] a = {1, 2, 3};\nfor(int i=0; i<3; i++) {\n a[i] = a[i] * 2;\n}\nSystem.out.print(a[2]);",
+            "options": [
+                "3",
+                "6",
+                "9",
+                "2"
+            ],
+            "correct_answer": "6",
+            "explanation": "Minden elemet megduplázunk. A 3-ból 6 lesz."
+        }
+    },
+    {
+        "title": "String összefűzés tömbből",
+        "description": "Mit rak össze a kód?",
+        "hint": "Kezdőbetű: üres string.",
+        "q_type": "predict_output",
+        "difficulty_rating": 1080,
+        "language": "java",
+        "concept": {
+            "arrays": 0.6,
+            "loops": 0.8,
+            "basics": 0.5
+        },
+        "content": {
+            "code_snippet": "String[] s = {''H'', ''i''};\nString res = '''';\nfor(String p : s) res += p;\nSystem.out.print(res);",
+            "options": [
+                "Hi",
+                "H i",
+                "iH",
+                "HH"
+            ],
+            "correct_answer": "Hi",
+            "explanation": "A res változóhoz sorban hozzáfűzzük a 'H'-t és az 'i'-t."
+        }
+    },
+    {
+        "title": "Egyszerű 2D tömb",
+        "description": "Melyik elemet éri el a kód?",
+        "hint": "Sor, Oszlop.",
+        "q_type": "predict_output",
+        "difficulty_rating": 1120,
+        "language": "java",
+        "concept": {
+            "arrays": 1.0,
+            "basics": 0.6
+        },
+        "content": {
+            "code_snippet": "int[][] m = { {1, 2}, {3, 4} };\nSystem.out.print(m[1][0]);",
+            "options": [
+                "1",
+                "2",
+                "3",
+                "4"
+            ],
+            "correct_answer": "3",
+            "explanation": "m[1] a második sort jelenti ({3, 4}), annak a 0. eleme a 3."
+        }
+    },
+    {
+        "title": "While ciklus tömbbel",
+        "description": "Meddig fut a ciklus?",
+        "hint": "Amíg i kisebb mint 3.",
+        "q_type": "predict_output",
+        "difficulty_rating": 1180,
+        "language": "java",
+        "concept": {
+            "arrays": 0.7,
+            "loops": 1.0
+        },
+        "content": {
+            "code_snippet": "int[] arr = {10, 20, 30};\nint i = 0;\nwhile(i < 2) {\n System.out.print(arr[i]);\n i++;\n}",
+            "options": [
+                "10",
+                "1020",
+                "102030",
+                "2030"
+            ],
+            "correct_answer": "1020",
+            "explanation": "A ciklus i=0 és i=1 esetén fut le. Kiírja a 10-et és 20-at. i=2-nél megáll."
+        }
+    },
+    {
+        "title": "Modulo az indexelésben",
+        "description": "Melyik elemre hivatkozunk?",
+        "hint": "5 maradéka 3-mal osztva.",
+        "q_type": "predict_output",
+        "difficulty_rating": 1190,
+        "language": "java",
+        "concept": {
+            "arrays": 0.8,
+            "logic": 0.6
+        },
+        "content": {
+            "code_snippet": "int[] n = {10, 20, 30, 40};\nint idx = 5 % 3;\nSystem.out.print(n[idx]);",
+            "options": [
+                "10",
+                "20",
+                "30",
+                "40"
+            ],
+            "correct_answer": "30",
+            "explanation": "5 % 3 = 2. A tömb 2-es indexű eleme a 30."
+        }
+    },
+    {
+        "title": "Csere (Swap)",
+        "description": "Mi lesz a tömb tartalma a csere után (az első elemet nézzük)?",
+        "hint": "Ideiglenes változót használunk.",
+        "q_type": "predict_output",
+        "difficulty_rating": 1160,
+        "language": "java",
+        "concept": {
+            "arrays": 0.9,
+            "logic": 0.5
+        },
+        "content": {
+            "code_snippet": "int[] x = {1, 9};\nint temp = x[0];\nx[0] = x[1];\nx[1] = temp;\nSystem.out.print(x[0]);",
+            "options": [
+                "1",
+                "9",
+                "0",
+                "temp"
+            ],
+            "correct_answer": "9",
+            "explanation": "A csere után az x[0] értéke 9, x[1] értéke 1 lesz."
+        }
+    },
+    {
+        "title": "Beágyazott ciklus 2D tömbön",
+        "description": "Hányszor fut le a print?",
+        "hint": "Külső * Belső.",
+        "q_type": "predict_output",
+        "difficulty_rating": 1250,
+        "language": "java",
+        "concept": {
+            "arrays": 0.8,
+            "loops": 1.0
+        },
+        "content": {
+            "code_snippet": "int[][] grid = { {1,2}, {3,4} };\nint count = 0;\nfor(int i=0; i<grid.length; i++) {\n for(int j=0; j<grid[i].length; j++) {\n count++;\n }\n}\nSystem.out.print(count);",
+            "options": [
+                "2",
+                "3",
+                "4",
+                "5"
+            ],
+            "correct_answer": "4",
+            "explanation": "A mátrix 2 soros, soronként 2 elemmel. Összesen 4 elem van."
+        }
+    },
+    {
+        "title": "Referencia másolás (Aliasing)",
+        "description": "Mi történik, ha két változó ugyanarra a tömbre mutat?",
+        "hint": "A változás mindkét helyen látszik.",
+        "q_type": "predict_output",
+        "difficulty_rating": 1300,
+        "language": "java",
+        "concept": {
+            "arrays": 0.8,
+            "oop": 0.8
+        },
+        "content": {
+            "code_snippet": "int[] a = {5};\nint[] b = a;\nb[0] = 10;\nSystem.out.print(a[0]);",
+            "options": [
+                "5",
+                "10",
+                "0",
+                "Hiba"
+            ],
+            "correct_answer": "10",
+            "explanation": "Mivel 'b' ugyanarra a memóriaterületre mutat mint 'a', a módosítás 'a'-t is érinti."
+        }
+    },
+    {
+        "title": "Break utasítás tömbben",
+        "description": "Mit ír ki a program?",
+        "hint": "Amint eléri a 0-t, kilép.",
+        "q_type": "predict_output",
+        "difficulty_rating": 1220,
+        "language": "java",
+        "concept": {
+            "arrays": 0.7,
+            "loops": 0.8,
+            "logic": 0.6
+        },
+        "content": {
+            "code_snippet": "int[] vals = {1, 2, 0, 3};\nfor(int v : vals) {\n if(v == 0) break;\n System.out.print(v);\n}",
+            "options": [
+                "12",
+                "120",
+                "123",
+                "1203"
+            ],
+            "correct_answer": "12",
+            "explanation": "A 0 értéknél a break megszakítja a ciklust, így a 0 és a 3 már nem íródik ki."
+        }
+    },
+    {
+        "title": "Index a tartalomból",
+        "description": "Mi a kimenet? (Trükkös indexelés)",
+        "hint": "Először a belső indexet értékeld ki.",
+        "q_type": "predict_output",
+        "difficulty_rating": 1350,
+        "language": "java",
+        "concept": {
+            "arrays": 1.0,
+            "logic": 0.8
+        },
+        "content": {
+            "code_snippet": "int[] arr = {2, 0, 1};\nSystem.out.print(arr[arr[0]]);",
+            "options": [
+                "2",
+                "0",
+                "1",
+                "Hiba"
+            ],
+            "correct_answer": "1",
+            "explanation": "arr[0] értéke 2. Tehát a kifejezés arr[2]-t jelent, aminek értéke 1."
+        }
+    },
+    {
+        "title": "Continue páratlanoknál",
+        "description": "Mit ad össze a kód?",
+        "hint": "A páratlan számokat átugorja.",
+        "q_type": "predict_output",
+        "difficulty_rating": 1280,
+        "language": "java",
+        "concept": {
+            "arrays": 0.7,
+            "loops": 0.9,
+            "logic": 0.7
+        },
+        "content": {
+            "code_snippet": "int[] nums = {1, 2, 3, 4};\nint s = 0;\nfor(int n : nums) {\n if(n % 2 != 0) continue;\n s += n;\n}\nSystem.out.print(s);",
+            "options": [
+                "4",
+                "6",
+                "10",
+                "3"
+            ],
+            "correct_answer": "6",
+            "explanation": "Csak a párosokat (2, 4) adja össze. 2+4=6."
+        }
+    },
+    {
+        "title": "Split és tömb",
+        "description": "Hány eleme lesz a tömbnek?",
+        "hint": "A szóköz mentén vág.",
+        "q_type": "predict_output",
+        "difficulty_rating": 1250,
+        "language": "java",
+        "concept": {
+            "arrays": 0.8,
+            "basics": 0.7
+        },
+        "content": {
+            "code_snippet": "String text = ''A B C'';\nString[] parts = text.split('''');\nSystem.out.print(parts.length);",
+            "options": [
+                "1",
+                "3",
+                "5",
+                "2"
+            ],
+            "correct_answer": "3",
+            "explanation": "A string 3 részből áll szóközökkel elválasztva."
+        }
+    },
+    {
+        "title": "Többdimenziós hossz",
+        "description": "Mit kérdezünk le pontosan?",
+        "hint": "A 0. sor hossza.",
+        "q_type": "predict_output",
+        "difficulty_rating": 1320,
+        "language": "java",
+        "concept": {
+            "arrays": 1.0,
+            "basics": 0.6
+        },
+        "content": {
+            "code_snippet": "int[][] jag = { {1}, {2, 3, 4} };\nSystem.out.print(jag[1].length);",
+            "options": [
+                "1",
+                "2",
+                "3",
+                "4"
+            ],
+            "correct_answer": "3",
+            "explanation": "A második sor ({2, 3, 4}) hossza 3."
+        }
+    },
+    {
+        "title": "Metódus paraméter (Referencia)",
+        "description": "Megváltozik-e az eredeti tömb?",
+        "hint": "Java pass-by-value, de a referencia értékét adja át.",
+        "q_type": "predict_output",
+        "difficulty_rating": 1380,
+        "language": "java",
+        "concept": {
+            "arrays": 0.7,
+            "functions": 0.9,
+            "oop": 0.7
+        },
+        "content": {
+            "code_snippet": "static void mod(int[] x) { x[0] = 99; }\npublic static void main(String[] args) {\n int[] a = {1};\n mod(a);\n System.out.print(a[0]);\n}",
+            "options": [
+                "1",
+                "99",
+                "0",
+                "Hiba"
+            ],
+            "correct_answer": "99",
+            "explanation": "A metódus megkapja a tömb referenciáját, így az eredeti tömböt módosítja."
+        }
+    },
+    {
+        "title": "Rekurzív tömb bejárás",
+        "description": "Mit ír ki a rekurzió?",
+        "hint": "Visszafelé halad vagy előre?",
+        "q_type": "predict_output",
+        "difficulty_rating": 1450,
+        "language": "java",
+        "concept": {
+            "arrays": 0.6,
+            "loops": 0.4,
+            "functions": 1.0
+        },
+        "content": {
+            "code_snippet": "static void rec(int[] a, int i) {\n if(i >= a.length) return;\n System.out.print(a[i]);\n rec(a, i+1);\n}\n// main: int[] x={1,2}; rec(x, 0);",
+            "options": [
+                "12",
+                "21",
+                "1",
+                "2"
+            ],
+            "correct_answer": "12",
+            "explanation": "A függvény kiírja az elemet, majd meghívja magát a következő indexre. Sorban halad."
+        }
+    },
+    {
+        "title": "Post-increment indexelés",
+        "description": "Melyik indexet éri el először?",
+        "hint": "i++ értéke a növelés ELŐTTI érték.",
+        "q_type": "predict_output",
+        "difficulty_rating": 1420,
+        "language": "java",
+        "concept": {
+            "arrays": 0.8,
+            "basics": 0.8,
+            "logic": 0.7
+        },
+        "content": {
+            "code_snippet": "int[] arr = {5, 6, 7};\nint i = 0;\nSystem.out.print(arr[i++]);",
+            "options": [
+                "5",
+                "6",
+                "7",
+                "Hiba"
+            ],
+            "correct_answer": "5",
+            "explanation": "Az i++ kifejezés értéke 0, így arr[0]-t írjuk ki. Csak utána lesz i=1."
+        }
+    },
+    {
+        "title": "Jagged array (Fűrészfogas)",
+        "description": "Létrehozáskor mi a default érték?",
+        "hint": "A 2D tömb sorai null-ra inicializálódnak.",
+        "q_type": "predict_output",
+        "difficulty_rating": 1500,
+        "language": "java",
+        "concept": {
+            "arrays": 1.0,
+            "basics": 0.8
+        },
+        "content": {
+            "code_snippet": "int[][] m = new int[2][];\nSystem.out.print(m[0]);",
+            "options": [
+                "0",
+                "null",
+                "Üres tömb",
+                "Hiba"
+            ],
+            "correct_answer": "null",
+            "explanation": "Csak a fő tömb jött létre, a belső tömbök még nincsenek példányosítva, értékük null."
+        }
+    },
+    {
+        "title": "Objektum tömb Null",
+        "description": "Mi történik a futáskor?",
+        "hint": "A tömb elemei null-ok.",
+        "q_type": "predict_output",
+        "difficulty_rating": 1480,
+        "language": "java",
+        "concept": {
+            "arrays": 0.9,
+            "oop": 0.8
+        },
+        "content": {
+            "code_snippet": "String[] s = new String[2];\ntry {\n System.out.print(s[0].length());\n} catch(Exception e) {\n System.out.print(''NPE'');\n}",
+            "options": [
+                "0",
+                "null",
+                "NPE",
+                "2"
+            ],
+            "correct_answer": "NPE",
+            "explanation": "s[0] értéke null. A null-on hívott metódus NullPointerException-t dob."
+        }
+    },
+    {
+        "title": "Bitművelet tömbbel",
+        "description": "Mi az eredmény?",
+        "hint": "XOR művelet önmagával.",
+        "q_type": "predict_output",
+        "difficulty_rating": 1550,
+        "language": "java",
+        "concept": {
+            "arrays": 0.6,
+            "logic": 1.0
+        },
+        "content": {
+            "code_snippet": "int[] b = {5};\nb[0] = b[0] ^ b[0];\nSystem.out.print(b[0]);",
+            "options": [
+                "5",
+                "0",
+                "1",
+                "10"
+            ],
+            "correct_answer": "0",
+            "explanation": "Bármely szám XOR-olva önmagával 0-t ad."
+        }
+    },
+    {
+        "title": "Ciklikus indexelés",
+        "description": "Melyik elemre mutat a (len+1) index modulo-val?",
+        "hint": "Körbeér.",
+        "q_type": "predict_output",
+        "difficulty_rating": 1460,
+        "language": "java",
+        "concept": {
+            "arrays": 0.9,
+            "logic": 0.8
+        },
+        "content": {
+            "code_snippet": "int[] a = {10, 20, 30};\nint i = 4;\nSystem.out.print(a[i % a.length]);",
+            "options": [
+                "10",
+                "20",
+                "30",
+                "Hiba"
+            ],
+            "correct_answer": "20",
+            "explanation": "4 % 3 = 1. Az a[1] értéke 20."
+        }
+    },
+    {
+        "title": "Bonyolult egymásba ágyazás",
+        "description": "Hányszor fut a belső mag?",
+        "hint": "A belső ciklus határa függ a külsőtől.",
+        "q_type": "predict_output",
+        "difficulty_rating": 1520,
+        "language": "java",
+        "concept": {
+            "arrays": 0.6,
+            "loops": 1.0
+        },
+        "content": {
+            "code_snippet": "int c = 0;\nfor(int i=0; i<3; i++) {\n for(int j=0; j<i; j++) c++;\n}\nSystem.out.print(c);",
+            "options": [
+                "3",
+                "6",
+                "9",
+                "3"
+            ],
+            "correct_answer": "3",
+            "explanation": "i=0: 0-szor. i=1: 1-szer. i=2: 2-szer. Összesen: 0+1+2=3."
+        }
+    },
+    {
+        "title": "Statikus tömb módosítás",
+        "description": "Látja-e a változást?",
+        "hint": "A 'final' csak a referenciát védi.",
+        "q_type": "predict_output",
+        "difficulty_rating": 1410,
+        "language": "java",
+        "concept": {
+            "arrays": 1.0,
+            "oop": 0.8
+        },
+        "content": {
+            "code_snippet": "final int[] f = {10};\nf[0] = 20;\nSystem.out.print(f[0]);",
+            "options": [
+                "10",
+                "20",
+                "Fordítási hiba",
+                "Runtime hiba"
+            ],
+            "correct_answer": "20",
+            "explanation": "A final tömb tartalmát lehet módosítani, csak magát az 'f' változót nem állíthatjuk át másik tömbre."
+        }
+    }
+]

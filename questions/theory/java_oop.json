@@ -1,0 +1,880 @@
+[
+    {
+        "title": "Osztály definíció",
+        "description": "Melyik kulcsszóval hozunk létre egy új osztályt Java-ban?",
+        "hint": "Angolul az 'osztály' szó.",
+        "q_type": "theory",
+        "difficulty_rating": 600,
+        "language": "java",
+        "concept": {
+            "oop": 1.0,
+            "basics": 0.8
+        },
+        "content": {
+            "options": [
+                "object",
+                "struct",
+                "class",
+                "define"
+            ],
+            "correct_answer": "class",
+            "explanation": "A 'class' kulcsszó jelöli az osztálydefiníció kezdetét, amely az objektumok tervrajza."
+        }
+    },
+    {
+        "title": "Példányosítás",
+        "description": "Melyik kulcsszó szükséges egy új objektumpéldány létrehozásához (memória foglaláshoz)?",
+        "hint": "Angolul 'új'.",
+        "q_type": "theory",
+        "difficulty_rating": 600,
+        "language": "java",
+        "concept": {
+            "oop": 1.0,
+            "basics": 0.8
+        },
+        "content": {
+            "options": [
+                "create",
+                "new",
+                "make",
+                "instance"
+            ],
+            "correct_answer": "new",
+            "explanation": "A 'new' kulcsszó hívja meg a konstruktort és foglal helyet a heap memóriában az új objektumnak."
+        }
+    },
+    {
+        "title": "Tag elérés operátor",
+        "description": "Melyik írásjellel érjük el egy objektum mezőit vagy metódusait?",
+        "hint": "Egyetlen pont.",
+        "q_type": "theory",
+        "difficulty_rating": 650,
+        "language": "java",
+        "concept": {
+            "oop": 1.0,
+            "basics": 0.6
+        },
+        "content": {
+            "options": [
+                "-> (nyíl)",
+                ":: (dupla kettőspont)",
+                ". (pont)",
+                "# (hash)"
+            ],
+            "correct_answer": ". (pont)",
+            "explanation": "A pont operátor (dot operator) köti össze az objektum referenciát a benne lévő tagokkal (pl. object.method())."
+        }
+    },
+    {
+        "title": "Konstruktor neve",
+        "description": "Minek kell megegyeznie a konstruktor nevével?",
+        "hint": "A definíció nevével.",
+        "q_type": "theory",
+        "difficulty_rating": 650,
+        "language": "java",
+        "concept": {
+            "oop": 1.0,
+            "basics": 0.5
+        },
+        "content": {
+            "options": [
+                "A fájl nevével.",
+                "Az osztály nevével.",
+                "A main metódussal.",
+                "Bármi lehet."
+            ],
+            "correct_answer": "Az osztály nevével.",
+            "explanation": "A konstruktor egy speciális metódus, amelynek a neve kötelezően megegyezik az osztály nevével (és nincs visszatérési típusa)."
+        }
+    },
+    {
+        "title": "Hiányzó referencia",
+        "description": "Mi az alapértelmezett értéke egy objektum referenciának, ha még nem mutat sehova?",
+        "hint": "A semmi neve.",
+        "q_type": "theory",
+        "difficulty_rating": 700,
+        "language": "java",
+        "concept": {
+            "oop": 1.0,
+            "basics": 0.5
+        },
+        "content": {
+            "options": [
+                "0",
+                "undefined",
+                "null",
+                "false"
+            ],
+            "correct_answer": "null",
+            "explanation": "A 'null' kulcsszó jelöli a hivatkozás hiányát referencia típusoknál."
+        }
+    },
+    {
+        "title": "Osztály elnevezés",
+        "description": "Mi a helyes elnevezési konvenció a Java osztályok nevére?",
+        "hint": "Minden Szó Nagybetű.",
+        "q_type": "theory",
+        "difficulty_rating": 700,
+        "language": "java",
+        "concept": {
+            "oop": 0.5,
+            "basics": 0.8
+        },
+        "content": {
+            "options": [
+                "camelCase",
+                "snake_case",
+                "PascalCase (UpperCamelCase)",
+                "kebab-case"
+            ],
+            "correct_answer": "PascalCase (UpperCamelCase)",
+            "explanation": "A Java konvenciók szerint az osztályok nagy kezdőbetűvel íródnak (pl. MyClass)."
+        }
+    },
+    {
+        "title": "Metódus definíció",
+        "description": "Mit csinálnak a metódusok egy osztályban?",
+        "hint": "Cselekvések, viselkedés.",
+        "q_type": "theory",
+        "difficulty_rating": 750,
+        "language": "java",
+        "concept": {
+            "oop": 1.0,
+            "functions": 0.8
+        },
+        "content": {
+            "options": [
+                "Adatot tárolnak.",
+                "Az objektum viselkedését írják le.",
+                "Csak a létrehozásért felelnek.",
+                "Összekötik az adatbázist."
+            ],
+            "correct_answer": "Az objektum viselkedését írják le.",
+            "explanation": "A mezők az állapotot (adatot), a metódusok a viselkedést (funkciókat) valósítják meg."
+        }
+    },
+    {
+        "title": "Objektum vs Osztály",
+        "description": "Mi a kapcsolat az osztály és az objektum között?",
+        "hint": "Tervrajz vs Ház.",
+        "q_type": "theory",
+        "difficulty_rating": 780,
+        "language": "java",
+        "concept": {
+            "oop": 1.0,
+            "basics": 0.3
+        },
+        "content": {
+            "options": [
+                "Ugyanaz a kettő.",
+                "Az objektum a tervrajz, az osztály a példány.",
+                "Az osztály a tervrajz (típus), az objektum a konkrét példány.",
+                "Az osztály futásidőben jön létre."
+            ],
+            "correct_answer": "Az osztály a tervrajz (típus), az objektum a konkrét példány.",
+            "explanation": "Az osztály a sablon (statikus kód), az objektum pedig a memóriában létrejött, működő entitás."
+        }
+    },
+    {
+        "title": "Öröklődés kulcsszó",
+        "description": "Melyik kulcsszóval származtatunk le egy osztályt egy másikból?",
+        "hint": "Kiterjeszt.",
+        "q_type": "theory",
+        "difficulty_rating": 850,
+        "language": "java",
+        "concept": {
+            "oop": 1.0
+        },
+        "content": {
+            "options": [
+                "inherits",
+                "extends",
+                "implements",
+                "super"
+            ],
+            "correct_answer": "extends",
+            "explanation": "Az 'extends' kulcsszó jelzi, hogy az osztály egy ősosztály kiterjesztése (gyermeke)."
+        }
+    },
+    {
+        "title": "Privát láthatóság",
+        "description": "Ki éri el a `private` módosítóval ellátott mezőket?",
+        "hint": "Csak 'házon belül'.",
+        "q_type": "theory",
+        "difficulty_rating": 850,
+        "language": "java",
+        "concept": {
+            "oop": 1.0,
+            "basics": 0.5
+        },
+        "content": {
+            "options": [
+                "Bárki.",
+                "Csak a leszármazottak.",
+                "Csak az adott osztályon belüli kód.",
+                "A csomagon belüli osztályok."
+            ],
+            "correct_answer": "Csak az adott osztályon belüli kód.",
+            "explanation": "A privát láthatóság a legszigorúbb, az adattagok elrejtésére szolgál (encapsulation)."
+        }
+    },
+    {
+        "title": "Static jelentése",
+        "description": "Mit jelent, ha egy mező `static`?",
+        "hint": "Nem példányhoz kötött.",
+        "q_type": "theory",
+        "difficulty_rating": 900,
+        "language": "java",
+        "concept": {
+            "oop": 1.0,
+            "basics": 0.7
+        },
+        "content": {
+            "options": [
+                "Konstans értékű.",
+                "Minden példánynak saját másolata van belőle.",
+                "Az osztályhoz tartozik, közös minden példányra.",
+                "Nem lehet elérni kívülről."
+            ],
+            "correct_answer": "Az osztályhoz tartozik, közös minden példányra.",
+            "explanation": "A statikus tagokból csak egy létezik a memóriában, függetlenül attól, hány objektumot hozunk létre."
+        }
+    },
+    {
+        "title": "Default konstruktor",
+        "description": "Mikor hoz létre a Java fordító automatikusan egy üres (default) konstruktort?",
+        "hint": "Ha mi lusták voltunk.",
+        "q_type": "theory",
+        "difficulty_rating": 950,
+        "language": "java",
+        "concept": {
+            "oop": 1.0,
+            "functions": 0.4
+        },
+        "content": {
+            "options": [
+                "Mindig.",
+                "Soha.",
+                "Ha nem írtunk semmilyen konstruktort az osztályba.",
+                "Ha az osztály abstract."
+            ],
+            "correct_answer": "Ha nem írtunk semmilyen konstruktort az osztályba.",
+            "explanation": "Ha a programozó definiál akár egyetlen paraméteres konstruktort is, a fordító már nem generálja le az automatikus üres konstruktort."
+        }
+    },
+    {
+        "title": "This kulcsszó",
+        "description": "Mire hivatkozik a `this` kulcsszó egy példánymetódusban?",
+        "hint": "Én, magam.",
+        "q_type": "theory",
+        "difficulty_rating": 920,
+        "language": "java",
+        "concept": {
+            "oop": 1.0,
+            "basics": 0.5
+        },
+        "content": {
+            "options": [
+                "Az ősosztályra.",
+                "Az aktuális objektum példányra.",
+                "A statikus környezetre.",
+                "A visszatérési értékre."
+            ],
+            "correct_answer": "Az aktuális objektum példányra.",
+            "explanation": "A 'this' referencia az éppen futó objektumra mutat, segítségével érhetjük el a saját mezőit névütközés esetén."
+        }
+    },
+    {
+        "title": "Enkapszuláció célja",
+        "description": "Mi az egységbezárás (encapsulation) fő célja?",
+        "hint": "Adatvédelem.",
+        "q_type": "theory",
+        "difficulty_rating": 980,
+        "language": "java",
+        "concept": {
+            "oop": 1.0,
+            "logic": 0.3
+        },
+        "content": {
+            "options": [
+                "A kód gyorsítása.",
+                "A belső állapot védelme és elrejtése a külvilág elől.",
+                "Több osztály összekapcsolása.",
+                "Az öröklődés megakadályozása."
+            ],
+            "correct_answer": "A belső állapot védelme és elrejtése a külvilág elől.",
+            "explanation": "A privát mezők és publikus getterek/setterek biztosítják, hogy az objektum állapota kontrollált maradjon."
+        }
+    },
+    {
+        "title": "Getter metódus",
+        "description": "Mire való egy 'getter' metódus?",
+        "hint": "Accesszor.",
+        "q_type": "theory",
+        "difficulty_rating": 880,
+        "language": "java",
+        "concept": {
+            "oop": 0.9,
+            "functions": 0.5
+        },
+        "content": {
+            "options": [
+                "Egy privát mező értékének beállítására.",
+                "Egy privát mező értékének lekérdezésére.",
+                "Új objektum létrehozására.",
+                "Memória törlésre."
+            ],
+            "correct_answer": "Egy privát mező értékének lekérdezésére.",
+            "explanation": "A getter teszi lehetővé az olvasási hozzáférést egy egyébként rejtett (privát) adathoz."
+        }
+    },
+    {
+        "title": "Csomag láthatóság",
+        "description": "Milyen láthatóságot kap egy tag, ha nem írunk elé semmilyen módosítót (pl. `int x;`)?",
+        "hint": "Package-private.",
+        "q_type": "theory",
+        "difficulty_rating": 990,
+        "language": "java",
+        "concept": {
+            "oop": 1.0,
+            "basics": 0.6
+        },
+        "content": {
+            "options": [
+                "public",
+                "private",
+                "protected",
+                "package-private (default)"
+            ],
+            "correct_answer": "package-private (default)",
+            "explanation": "Ha nincs módosító, a tag csak az ugyanabban a csomagban lévő osztályok számára látható."
+        }
+    },
+    {
+        "title": "Polimorfizmus alapja",
+        "description": "Mi teszi lehetővé, hogy egy `Allat` típusú változóba `Kutya` objektumot tegyünk (ha a Kutya az Allat leszármazottja)?",
+        "hint": "Sokalakúság.",
+        "q_type": "theory",
+        "difficulty_rating": 1050,
+        "language": "java",
+        "concept": {
+            "oop": 1.0,
+            "logic": 0.4
+        },
+        "content": {
+            "options": [
+                "Enkapszuláció",
+                "Polimorfizmus",
+                "Statikus kötés",
+                "Reflekció"
+            ],
+            "correct_answer": "Polimorfizmus",
+            "explanation": "A polimorfizmus révén a gyermek osztály objektuma kezelhető az ősosztály típusaként."
+        }
+    },
+    {
+        "title": "Interfész implementálás",
+        "description": "Melyik kulcsszóval valósít meg egy osztály egy interfészt?",
+        "hint": "Megvalósít.",
+        "q_type": "theory",
+        "difficulty_rating": 1020,
+        "language": "java",
+        "concept": {
+            "oop": 1.0
+        },
+        "content": {
+            "options": [
+                "extends",
+                "implements",
+                "uses",
+                "interfaces"
+            ],
+            "correct_answer": "implements",
+            "explanation": "Az interfészeket az 'implements' kulcsszóval kötjük az osztályhoz, vállalva a metódusok megvalósítását."
+        }
+    },
+    {
+        "title": "Overloading vs Overriding",
+        "description": "Mi a különbség a túlterhelés (overloading) és a felüldefiniálás (overriding) között?",
+        "hint": "Paraméterek vs Öröklés.",
+        "q_type": "theory",
+        "difficulty_rating": 1150,
+        "language": "java",
+        "concept": {
+            "oop": 1.0,
+            "functions": 0.7
+        },
+        "content": {
+            "options": [
+                "Semmi, szinonimák.",
+                "Overloading: azonos név, más paraméterek. Overriding: öröklött metódus lecserélése.",
+                "Overriding csak statikus metódusoknál van.",
+                "Overloading futásidőben dől el."
+            ],
+            "correct_answer": "Overloading: azonos név, más paraméterek. Overriding: öröklött metódus lecserélése.",
+            "explanation": "Overloading: ugyanaz a név, de más szignatúra (ugyanabban az osztályban). Overriding: ősosztály metódusának új implementációja a gyerekben."
+        }
+    },
+    {
+        "title": "Super kulcsszó",
+        "description": "Mire használjuk a `super` kulcsszót?",
+        "hint": "A szülő elérése.",
+        "q_type": "theory",
+        "difficulty_rating": 1080,
+        "language": "java",
+        "concept": {
+            "oop": 1.0,
+            "basics": 0.5
+        },
+        "content": {
+            "options": [
+                "A főosztály elérésére.",
+                "A szülő (ős) osztály konstruktorának vagy metódusainak hívására.",
+                "Objektum törlésére.",
+                "Statikus metódus hívására."
+            ],
+            "correct_answer": "A szülő (ős) osztály konstruktorának vagy metódusainak hívására.",
+            "explanation": "A 'super' referenciával érhetjük el azokat az ős-elemeket, amelyeket esetleg elfedtünk, vagy a konstruktorát."
+        }
+    },
+    {
+        "title": "Absztrakt osztály",
+        "description": "Lehet-e példányosítani (new-val létrehozni) egy `abstract` osztályt?",
+        "hint": "Ez egy félkész tervrajz.",
+        "q_type": "theory",
+        "difficulty_rating": 1100,
+        "language": "java",
+        "concept": {
+            "oop": 1.0,
+            "logic": 0.4
+        },
+        "content": {
+            "options": [
+                "Igen, mindig.",
+                "Csak ha van konstruktora.",
+                "Nem, soha.",
+                "Csak ha nincsenek absztrakt metódusai."
+            ],
+            "correct_answer": "Nem, soha.",
+            "explanation": "Az absztrakt osztályok arra valók, hogy származtassunk belőlük, önmagukban nem példányosíthatók."
+        }
+    },
+    {
+        "title": "Protected láthatóság",
+        "description": "Kik láthatják a `protected` tagokat?",
+        "hint": "Csomag + család.",
+        "q_type": "theory",
+        "difficulty_rating": 1180,
+        "language": "java",
+        "concept": {
+            "oop": 1.0,
+            "basics": 0.6
+        },
+        "content": {
+            "options": [
+                "Bárki.",
+                "Csak az osztály.",
+                "A csomagban lévők ÉS a leszármazottak (bárhol).",
+                "Csak a leszármazottak."
+            ],
+            "correct_answer": "A csomagban lévők ÉS a leszármazottak (bárhol).",
+            "explanation": "A protected egy köztes szint: engedi a hozzáférést a csomagon belül és az öröklési láncban."
+        }
+    },
+    {
+        "title": "Final osztály",
+        "description": "Mit jelent, ha egy osztály `final` (pl. String)?",
+        "hint": "Végleges, nem módosítható.",
+        "q_type": "theory",
+        "difficulty_rating": 1120,
+        "language": "java",
+        "concept": {
+            "oop": 1.0,
+            "basics": 0.5
+        },
+        "content": {
+            "options": [
+                "Nem lehet példányosítani.",
+                "Nem lehet örökölni belőle (nem lehet gyereke).",
+                "Minden mezője konstans.",
+                "Csak statikus metódusai vannak."
+            ],
+            "correct_answer": "Nem lehet örökölni belőle (nem lehet gyereke).",
+            "explanation": "A final osztály lezárja az öröklődési láncot, biztonsági vagy tervezési okokból (pl. immutability)."
+        }
+    },
+    {
+        "title": "Konstruktor láncolás",
+        "description": "Hogyan hívjuk meg ugyanazon osztály egy másik konstruktorát?",
+        "hint": "Ez(paraméterek).",
+        "q_type": "theory",
+        "difficulty_rating": 1190,
+        "language": "java",
+        "concept": {
+            "oop": 0.9,
+            "functions": 0.6
+        },
+        "content": {
+            "options": [
+                "super()",
+                "this()",
+                "construct()",
+                "new()"
+            ],
+            "correct_answer": "this()",
+            "explanation": "A `this(...)` hívással lehet átirányítani a vezérlést egy másik konstruktorhoz a kódduplikáció elkerülése végett."
+        }
+    },
+    {
+        "title": "Többszörös öröklődés",
+        "description": "Támogatja-e a Java az osztályok többszörös öröklődését (`extends A, B`)?",
+        "hint": "Diamond problem.",
+        "q_type": "theory",
+        "difficulty_rating": 1250,
+        "language": "java",
+        "concept": {
+            "oop": 1.0,
+            "logic": 0.5
+        },
+        "content": {
+            "options": [
+                "Igen, korlátlanul.",
+                "Nem, egy osztálynak csak egy ősosztálya lehet.",
+                "Csak absztrakt osztályoknál.",
+                "Igen, de csak protected módban."
+            ],
+            "correct_answer": "Nem, egy osztálynak csak egy ősosztálya lehet.",
+            "explanation": "A Java a 'diamond problem' elkerülése miatt tiltja osztályok többszörös öröklését, de interfészekből többet is implementálhatunk."
+        }
+    },
+    {
+        "title": "Instanceof operátor",
+        "description": "Mire való az `obj instanceof Class` kifejezés?",
+        "hint": "Típusellenőrzés.",
+        "q_type": "theory",
+        "difficulty_rating": 1220,
+        "language": "java",
+        "concept": {
+            "oop": 1.0,
+            "logic": 0.7
+        },
+        "content": {
+            "options": [
+                "Létrehoz egy példányt.",
+                "Megvizsgálja, hogy az objektum az adott osztály (vagy leszármazottja) példánya-e.",
+                "Kényszerített típuskonverziót végez.",
+                "Összehasonlítja két objektum tartalmát."
+            ],
+            "correct_answer": "Megvizsgálja, hogy az objektum az adott osztály (vagy leszármazottja) példánya-e.",
+            "explanation": "Futásidőben ellenőrizhetjük vele egy objektum típusát, mielőtt cast-olnánk, elkerülve a ClassCastException-t."
+        }
+    },
+    {
+        "title": "Interfész változók",
+        "description": "Milyen módosítókat kapnak automatikusan (implicit) az interfészben deklarált változók?",
+        "hint": "Globális konstansok.",
+        "q_type": "theory",
+        "difficulty_rating": 1300,
+        "language": "java",
+        "concept": {
+            "oop": 1.0,
+            "basics": 0.5
+        },
+        "content": {
+            "options": [
+                "private protected",
+                "public static final",
+                "default",
+                "volatile"
+            ],
+            "correct_answer": "public static final",
+            "explanation": "Az interfészek csak konstansokat tartalmazhatnak, így minden mező automatikusan publikus, statikus és végleges."
+        }
+    },
+    {
+        "title": "Anonim belső osztály",
+        "description": "Mikor használunk anonim belső osztályt?",
+        "hint": "Egyszer használatos implementáció.",
+        "q_type": "theory",
+        "difficulty_rating": 1350,
+        "language": "java",
+        "concept": {
+            "oop": 1.0,
+            "functions": 0.6
+        },
+        "content": {
+            "options": [
+                "Ha nincs nevünk az objektumnak.",
+                "Egy interfész vagy osztály gyors, helybeni, egyszeri implementálására.",
+                "Adatbázis kapcsolatokhoz.",
+                "Ha privát osztályt akarunk."
+            ],
+            "correct_answer": "Egy interfész vagy osztály gyors, helybeni, egyszeri implementálására.",
+            "explanation": "Gyakori pl. eseménykezelőknél (Listeners), ahol helyben definiáljuk és példányosítjuk az osztályt név nélkül."
+        }
+    },
+    {
+        "title": "Statikus kötés vs Dinamikus",
+        "description": "Melyik metódusok kötése történik fordítási időben (static binding)?",
+        "hint": "Amiket nem lehet felüldefiniálni.",
+        "q_type": "theory",
+        "difficulty_rating": 1380,
+        "language": "java",
+        "concept": {
+            "oop": 1.0,
+            "logic": 0.8
+        },
+        "content": {
+            "options": [
+                "Minden metódus.",
+                "Az instance metódusok.",
+                "A static, private és final metódusok.",
+                "Csak az abstract metódusok."
+            ],
+            "correct_answer": "A static, private és final metódusok.",
+            "explanation": "Mivel ezeket nem lehet felüldefiniálni (override), a fordító már fordításkor tudja, melyik kód fog lefutni. A többi dinamikus (late binding)."
+        }
+    },
+    {
+        "title": "Super() a konstruktorban",
+        "description": "Hol kell elhelyezkednie a `super()` hívásnak a konstruktorban?",
+        "hint": "A szülőnek előbb kell létrejönnie.",
+        "q_type": "theory",
+        "difficulty_rating": 1280,
+        "language": "java",
+        "concept": {
+            "oop": 1.0,
+            "basics": 0.6
+        },
+        "content": {
+            "options": [
+                "Bárhol.",
+                "Csak a végén.",
+                "Az első utasításnak kell lennie.",
+                "Csak try-catch blokkban."
+            ],
+            "correct_answer": "Az első utasításnak kell lennie.",
+            "explanation": "A Java megköveteli, hogy az ősosztály inicializálása történjen meg először, ezért a super() hívásnak legelöl kell állnia."
+        }
+    },
+    {
+        "title": "Default metódus (Java 8)",
+        "description": "Miért vezették be a `default` metódusokat az interfészekben?",
+        "hint": "Visszamenőleges kompatibilitás.",
+        "q_type": "theory",
+        "difficulty_rating": 1320,
+        "language": "java",
+        "concept": {
+            "oop": 1.0,
+            "functions": 0.7
+        },
+        "content": {
+            "options": [
+                "Hogy az interfésznek lehessen állapota.",
+                "Hogy bővíthetőek legyenek az interfészek a meglévő implementációk törése nélkül.",
+                "A többszörös öröklődés teljes támogatása miatt.",
+                "A statikus metódusok kiváltására."
+            ],
+            "correct_answer": "Hogy bővíthetőek legyenek az interfészek a meglévő implementációk törése nélkül.",
+            "explanation": "Így új funkciót adhattak pl. a List interfészhez (sort) anélkül, hogy minden implementáló osztályt módosítani kellett volna."
+        }
+    },
+    {
+        "title": "Hiding (Elfedés)",
+        "description": "Mi történik, ha egy leszármazott osztályban ugyanazt a `static` metódust definiáljuk, mint a szülőben?",
+        "hint": "Nem overriding.",
+        "q_type": "theory",
+        "difficulty_rating": 1390,
+        "language": "java",
+        "concept": {
+            "oop": 1.0,
+            "logic": 0.7
+        },
+        "content": {
+            "options": [
+                "Overriding (felüldefiniálás).",
+                "Method Hiding (elfedés).",
+                "Fordítási hiba.",
+                "Runtime hiba."
+            ],
+            "correct_answer": "Method Hiding (elfedés).",
+            "explanation": "Statikus metódusoknál nincs polimorfizmus. A gyerek 'elfedi' a szülő statikus metódusát, a hívás a referencia típusától függ, nem az objektumétól."
+        }
+    },
+    {
+        "title": "Inicializálási blokkok sorrendje",
+        "description": "Milyen sorrendben futnak le: 1. Konstruktor, 2. Statikus init blokk, 3. Instance init blokk?",
+        "hint": "Az osztály betöltése előbb van, mint a példányosítás.",
+        "q_type": "theory",
+        "difficulty_rating": 1450,
+        "language": "java",
+        "concept": {
+            "oop": 1.0,
+            "basics": 0.7
+        },
+        "content": {
+            "options": [
+                "1 -> 2 -> 3",
+                "3 -> 2 -> 1",
+                "2 -> 3 -> 1",
+                "2 -> 1 -> 3"
+            ],
+            "correct_answer": "2 -> 3 -> 1",
+            "explanation": "Először a statikus blokkok (osztálybetöltéskor egyszer), majd példányosításkor az instance blokkok, végül a konstruktor."
+        }
+    },
+    {
+        "title": "Kovariáns visszatérés",
+        "description": "Megváltozhat-e a metódus visszatérési típusa Overriding során?",
+        "hint": "Szűkítés megengedett.",
+        "q_type": "theory",
+        "difficulty_rating": 1420,
+        "language": "java",
+        "concept": {
+            "oop": 1.0,
+            "functions": 0.8
+        },
+        "content": {
+            "options": [
+                "Soha.",
+                "Igen, bármire.",
+                "Igen, de csak az eredeti típus leszármazottjára (szűkebb típusra).",
+                "Csak primitíveknél."
+            ],
+            "correct_answer": "Igen, de csak az eredeti típus leszármazottjára (szűkebb típusra).",
+            "explanation": "Ez a 'Covariant Return Type'. Ha az ős `Allat`-ot ad vissza, a gyerek `Override` metódusa visszaadhat `Kutya`-t."
+        }
+    },
+    {
+        "title": "Marker Interface",
+        "description": "Mi a célja az olyan interfészeknek, amelyeknek nincs metódusa (pl. Serializable, Cloneable)?",
+        "hint": "Címkézés.",
+        "q_type": "theory",
+        "difficulty_rating": 1410,
+        "language": "java",
+        "concept": {
+            "oop": 0.9,
+            "basics": 0.6
+        },
+        "content": {
+            "options": [
+                "Hibás tervezés.",
+                "Metaadat/jelölés a JVM vagy keretrendszer számára (Marker interface).",
+                "Titkosítás.",
+                "Memória spórolás."
+            ],
+            "correct_answer": "Metaadat/jelölés a JVM vagy keretrendszer számára (Marker interface).",
+            "explanation": "Ezek jelzik a rendszernek, hogy az osztály rendelkezik egy bizonyos képességgel (pl. szerializálható), futásidejű ellenőrzést téve lehetővé."
+        }
+    },
+    {
+        "title": "Deep vs Shallow copy",
+        "description": "Mit csinál az alapértelmezett `Object.clone()`?",
+        "hint": "Csak a referenciákat másolja.",
+        "q_type": "theory",
+        "difficulty_rating": 1480,
+        "language": "java",
+        "concept": {
+            "oop": 1.0,
+            "arrays": 0.5
+        },
+        "content": {
+            "options": [
+                "Deep copy (teljes mélységi másolat).",
+                "Shallow copy (sekély másolat).",
+                "Semmit, üres objektumot ad.",
+                "Szerializálja az objektumot."
+            ],
+            "correct_answer": "Shallow copy (sekély másolat).",
+            "explanation": "Az alap clone() csak a mezők értékeit másolja. Ha a mező egy objektumreferencia, akkor csak a referenciát másolja, nem a mögöttes objektumot."
+        }
+    },
+    {
+        "title": "Composition over Inheritance",
+        "description": "Mit javasol a 'Composition over Inheritance' elv?",
+        "hint": "Has-a vs Is-a kapcsolat.",
+        "q_type": "theory",
+        "difficulty_rating": 1500,
+        "language": "java",
+        "concept": {
+            "oop": 1.0,
+            "logic": 0.8
+        },
+        "content": {
+            "options": [
+                "Mindig öröklést használjunk.",
+                "Részesítsük előnyben a tartalmazást (objektum mezőként) az örökléssel szemben a rugalmasságért.",
+                "Soha ne használjunk interfészeket.",
+                "Az öröklés gyorsabb, mint a kompozíció."
+            ],
+            "correct_answer": "Részesítsük előnyben a tartalmazást (objektum mezőként) az örökléssel szemben a rugalmasságért.",
+            "explanation": "Az öröklés erős, statikus csatolást hoz létre. A kompozíció (tartalmazás) rugalmasabb, futásidőben cserélhető viselkedést tesz lehetővé."
+        }
+    },
+    {
+        "title": "Funkcionális Interfész",
+        "description": "Mi a definíciója a Functional Interface-nek (amit lambdákkal használunk)?",
+        "hint": "Egyetlen dolog.",
+        "q_type": "theory",
+        "difficulty_rating": 1460,
+        "language": "java",
+        "concept": {
+            "oop": 0.8,
+            "functions": 1.0
+        },
+        "content": {
+            "options": [
+                "Bármely interfész.",
+                "Olyan interfész, amelynek pontosan egy absztrakt metódusa van.",
+                "Statikus metódusokat tartalmazó interfész.",
+                "Marker interfész."
+            ],
+            "correct_answer": "Olyan interfész, amelynek pontosan egy absztrakt metódusa van.",
+            "explanation": "A Single Abstract Method (SAM) típusok teszik lehetővé a lambda kifejezések használatát (pl. Runnable, Comparator)."
+        }
+    },
+    {
+        "title": "Reflection API",
+        "description": "Mire tesz képessé a Reflection API?",
+        "hint": "Önvizsgálat.",
+        "q_type": "theory",
+        "difficulty_rating": 1550,
+        "language": "java",
+        "concept": {
+            "oop": 1.0,
+            "basics": 0.4
+        },
+        "content": {
+            "options": [
+                "A kód gyorsabb futtatására.",
+                "Futásidőben vizsgálni és módosítani az osztályok, metódusok és mezők szerkezetét.",
+                "Grafikus felület rajzolására.",
+                "Hálózati kommunikációra."
+            ],
+            "correct_answer": "Futásidőben vizsgálni és módosítani az osztályok, metódusok és mezők szerkezetét.",
+            "explanation": "A Reflection segítségével 'betörhetünk' az objektumokba, akár privát mezőket is írhatunk, vagy metódusokat hívhatunk nevük alapján."
+        }
+    },
+    {
+        "title": "Double-Checked Locking",
+        "description": "Melyik tervezési mintánál és kulcsszónál releváns a 'Double-Checked Locking'?",
+        "hint": "Egyke + szálbiztonság.",
+        "q_type": "theory",
+        "difficulty_rating": 1600,
+        "language": "java",
+        "concept": {
+            "oop": 1.0,
+            "logic": 0.9
+        },
+        "content": {
+            "options": [
+                "Observer pattern.",
+                "Singleton pattern (volatile kulcsszóval).",
+                "Factory pattern.",
+                "Builder pattern."
+            ],
+            "correct_answer": "Singleton pattern (volatile kulcsszóval).",
+            "explanation": "Ez egy optimalizáció a thread-safe Singleton lusta inicializálására. A volatile és a synchronized blokk kombinációja biztosítja a helyes működést."
+        }
+    }
+]

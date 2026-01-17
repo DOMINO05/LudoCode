@@ -251,4 +251,201 @@ export class QuestionsService {
 
     return question;
   }
+
+  async searchQuestions(
+    userId: string,
+    filter: {
+      title?: string;
+      qType?: string;
+      languageId?: string;
+      onlyMine?: boolean;
+    },
+  ): Promise<Question[]> {
+    let query = this.questionsRepository
+      .createQueryBuilder('question')
+      .leftJoinAndSelect('question.language', 'language');
+
+    if (filter.onlyMine) {
+      query = query.where('question.creatorId = :userId', { userId });
+    } else {
+      query = query.where(
+        '(question.creatorId IS NULL OR question.creatorId = :userId)',
+        { userId },
+      );
+    }
+
+    if (filter.title) {
+      query = query.andWhere('question.title ILIKE :title', {
+        title: `%${filter.title}%`,
+      });
+    }
+
+    if (filter.qType) {
+      query = query.andWhere('question.qType = :qType', {
+        qType: filter.qType,
+      });
+    }
+
+    if (filter.languageId) {
+      query = query.andWhere('question.languageId = :languageId', {
+        languageId: filter.languageId,
+      });
+    }
+
+    return query.getMany();
+  }
+
+  async createCustomQuestion(dto: any, userId: string): Promise<Question> {
+    const content = { ...dto.content };
+    const title = dto.title || `Saját kérdés - ${new Date().toLocaleDateString()}`;
+    const languageId = await this.resolveLanguageId(dto.languageId);
+
+    // Normalization: Ensure field names match what components expect
+    if (dto.qType === 'coding' && content.starter_code) {
+      content.initial_code = content.starter_code;
+    }
+    if (dto.qType === 'debug' && content.faulty_code) {
+      content.buggy_code = content.faulty_code;
+    }
+    if (dto.qType === 'predict_output' && content.code) {
+      content.code_snippet = content.code;
+    }
+    if (dto.qType === 'fill_in_blank' && content.code) {
+      content.initial_code = content.code;
+    }
+
+    // Auto-generate blocks if needed (Parsons or Coding with blocks)
+    if (
+      (dto.qType === 'parsons' || content.input_mode === 'blocks' || content.input_mode === 'both') &&
+      content.solution &&
+      !content.blocks
+    ) {
+      const lines = content.solution
+        .split('\n')
+        .map((line: string) => line.trim())
+        .filter((line: string) => line.length > 0);
+      
+      content.blocks = lines.map((line: string, index: number) => ({
+        id: `block-${index}`,
+        text: line,
+      }));
+
+      // Generate correct_order for Parsons
+      if (dto.qType === 'parsons') {
+        content.correct_order = content.blocks.map(b => b.id);
+      }
+    }
+
+    // Handle Debug type specific fields
+    if (dto.qType === 'debug' && content.options && typeof content.correct_answer === 'number') {
+        content.correct_code = content.options[content.correct_answer];
+    }
+
+    const question = this.questionsRepository.create({
+      title,
+      description: dto.description,
+      qType: dto.qType,
+      languageId: languageId,
+      content: content,
+      creatorId: userId,
+      // Default IRT params for new user questions
+      difficultyBeta: 0.0,
+      discriminationAlpha: 1.0,
+      difficultyDisplay: 1000,
+    });
+    return this.questionsRepository.save(question);
+  }
+
+  async updateCustomQuestion(
+    id: string,
+    dto: any,
+    userId: string,
+  ): Promise<Question> {
+    const question = await this.questionsRepository.findOne({
+      where: { id },
+    });
+
+    if (!question) {
+      throw new NotFoundException('Question not found');
+    }
+
+    if (question.creatorId !== userId) {
+      throw new Error('You can only edit your own questions');
+    }
+
+    const content = { ...dto.content };
+    const languageId = await this.resolveLanguageId(dto.languageId);
+
+    // Normalization
+    if (dto.qType === 'coding' && content.starter_code) {
+      content.initial_code = content.starter_code;
+    }
+    if (dto.qType === 'debug' && content.faulty_code) {
+      content.buggy_code = content.faulty_code;
+    }
+    if (dto.qType === 'predict_output' && content.code) {
+      content.code_snippet = content.code;
+    }
+    if (dto.qType === 'fill_in_blank' && content.code) {
+      content.initial_code = content.code;
+    }
+
+    // Parsons block generation
+    if (
+      (dto.qType === 'parsons' ||
+        content.input_mode === 'blocks' ||
+        content.input_mode === 'both') &&
+      content.solution &&
+      !content.blocks
+    ) {
+      const lines = content.solution
+        .split('\n')
+        .map((line: string) => line.trim())
+        .filter((line: string) => line.length > 0);
+
+      content.blocks = lines.map((line: string, index: number) => ({
+        id: `block-${index}`,
+        text: line,
+      }));
+
+      if (dto.qType === 'parsons') {
+        content.correct_order = content.blocks.map((b) => b.id);
+      }
+    }
+
+    // Debug correct_code
+    if (
+      dto.qType === 'debug' &&
+      content.options &&
+      typeof content.correct_answer === 'number'
+    ) {
+      content.correct_code = content.options[content.correct_answer];
+    }
+
+    Object.assign(question, {
+      title: dto.title,
+      description: dto.description,
+      qType: dto.qType,
+      languageId,
+      content,
+    });
+
+    return this.questionsRepository.save(question);
+  }
+
+  async findOne(id: string, userId: string): Promise<Question> {
+    const question = await this.questionsRepository.findOne({
+      where: { id },
+    });
+
+    if (!question) {
+      throw new NotFoundException('Question not found');
+    }
+
+    if (question.creatorId && question.creatorId !== userId) {
+      throw new Error('Access denied to this question');
+    }
+
+    return question;
+  }
 }

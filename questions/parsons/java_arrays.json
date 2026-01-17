@@ -1,0 +1,615 @@
+[
+    {
+        "title": "Tömb deklaráció és inicializálás",
+        "description": "Rendezze sorba a kódblokkokat, hogy létrehozzon egy 3 elemű, egész számokat tároló tömböt, majd kiírja az első elemét!",
+        "hint": "Először hozza létre a tömböt, aztán hivatkozzon rá.",
+        "q_type": "parsons",
+        "difficulty_rating": 600,
+        "language": "java",
+        "concept": {"arrays": 1.0, "basics": 0.5},
+        "content": {
+            "blocks": [
+                {"id": 1, "text": "System.out.println(numbers[0]);"},
+                {"id": 2, "text": "int[] numbers = {10, 20, 30};"}
+            ],
+            "correct_order": [2, 1],
+            "explanation": "Először deklarálnunk és inicializálnunk kell a 'numbers' tömböt, mielőtt elérhetnénk az elemeit."
+        }
+    },
+    {
+        "title": "Elem módosítása",
+        "description": "Rendezze sorba a blokkokat úgy, hogy létrehoz egy tömböt, módosítja a második elemét, majd kiírja azt!",
+        "hint": "Az indexelés 0-tól indul.",
+        "q_type": "parsons",
+        "difficulty_rating": 650,
+        "language": "java",
+        "concept": {"arrays": 1.0, "basics": 0.5},
+        "content": {
+            "blocks": [
+                {"id": 1, "text": "arr[1] = 50;"},
+                {"id": 2, "text": "int[] arr = {10, 20, 30};"},
+                {"id": 3, "text": "System.out.println(arr[1]);"}
+            ],
+            "correct_order": [2, 1, 3],
+            "explanation": "Létrehozás után módosítjuk az 1-es indexű (második) elemet, végül kiírjuk az új értéket."
+        }
+    },
+    {
+        "title": "Tömb hossza",
+        "description": "Készítsen programot, amely kiírja egy tömb méretét!",
+        "hint": "A length tulajdonság adja a méretet.",
+        "q_type": "parsons",
+        "difficulty_rating": 620,
+        "language": "java",
+        "concept": {"arrays": 1.0, "basics": 0.4},
+        "content": {
+            "blocks": [
+                {"id": 1, "text": "System.out.println(data.length);"},
+                {"id": 2, "text": "double[] data = new double[5];"}
+            ],
+            "correct_order": [2, 1],
+            "explanation": "A tömböt előbb példányosítani kell, utána kérdezhetjük le a hosszát."
+        }
+    },
+    {
+        "title": "String tömb",
+        "description": "Rendezze a sorokat, hogy létrehozzon egy String tömböt és kiírja az utolsó elemét!",
+        "hint": "Az utolsó elem indexe a hossz mínusz egy.",
+        "q_type": "parsons",
+        "difficulty_rating": 700,
+        "language": "java",
+        "concept": {"arrays": 1.0, "basics": 0.6},
+        "content": {
+            "blocks": [
+                {"id": 1, "text": "String[] names = {\"Anna\", \"Bela\", \"Cecil\"};"},
+                {"id": 2, "text": "System.out.println(names[2]);"}
+            ],
+            "correct_order": [1, 2],
+            "explanation": "A 3 elemű tömb utolsó indexe a 2."
+        }
+    },
+    {
+        "title": "Üres tömb feltöltése",
+        "description": "Hozzon létre egy üres int tömböt, majd töltse fel az első elemét!",
+        "hint": "A 'new' kulcsszó kell a létrehozáshoz.",
+        "q_type": "parsons",
+        "difficulty_rating": 750,
+        "language": "java",
+        "concept": {"arrays": 1.0, "basics": 0.6},
+        "content": {
+            "blocks": [
+                {"id": 1, "text": "nums[0] = 5;"},
+                {"id": 2, "text": "int[] nums = new int[3];"},
+                {"id": 3, "text": "System.out.println(nums[0]);"}
+            ],
+            "correct_order": [2, 1, 3],
+            "explanation": "Először allokáljuk a memóriát (csupa 0 lesz benne), aztán adunk értéket a 0. indexnek."
+        }
+    },
+    {
+        "title": "Összeadás tömb elemeivel",
+        "description": "Adja össze a tömb első két elemét és tárolja el egy változóban!",
+        "hint": "Először a tömb, aztán az összegzés.",
+        "q_type": "parsons",
+        "difficulty_rating": 780,
+        "language": "java",
+        "concept": {"arrays": 1.0, "basics": 0.5},
+        "content": {
+            "blocks": [
+                {"id": 1, "text": "int sum = x[0] + x[1];"},
+                {"id": 2, "text": "int[] x = {5, 7};"},
+                {"id": 3, "text": "System.out.println(sum);"}
+            ],
+            "correct_order": [2, 1, 3],
+            "explanation": "A tömböt definiáljuk, majd a tartalmát felhasználva számolunk."
+        }
+    },
+    {
+        "title": "Tömb deklaráció külön sorban",
+        "description": "Válassza szét a deklarációt és az értékadást!",
+        "hint": "Deklaráció -> inicializálás.",
+        "q_type": "parsons",
+        "difficulty_rating": 720,
+        "language": "java",
+        "concept": {"arrays": 1.0, "basics": 0.7},
+        "content": {
+            "blocks": [
+                {"id": 1, "text": "arr = new int[]{1, 2, 3};"},
+                {"id": 2, "text": "int[] arr;"}
+            ],
+            "correct_order": [2, 1],
+            "explanation": "Először létrehozzuk a referencia változót, majd hozzárendeljük az új tömb objektumot."
+        }
+    },
+    {
+        "title": "Indexelés változóval",
+        "description": "Használjon változót a tömb indexelésére!",
+        "hint": "Az i változó tárolja az indexet.",
+        "q_type": "parsons",
+        "difficulty_rating": 790,
+        "language": "java",
+        "concept": {"arrays": 1.0, "basics": 0.6},
+        "content": {
+            "blocks": [
+                {"id": 1, "text": "int[] vals = {10, 20, 30};"},
+                {"id": 2, "text": "int i = 1;"},
+                {"id": 3, "text": "System.out.println(vals[i]);"}
+            ],
+            "correct_order": [1, 2, 3],
+            "explanation": "Létrehozzuk a tömböt és az index változót, majd felhasználjuk az indexeléshez."
+        }
+    },
+    {
+        "title": "Tömb bejárása for ciklussal",
+        "description": "Állítsa sorrendbe a kódot egy tömb elemeinek kiírásához hagyományos for ciklussal!",
+        "hint": "A ciklusmag a for után jön.",
+        "q_type": "parsons",
+        "difficulty_rating": 850,
+        "language": "java",
+        "concept": {"arrays": 0.8, "loops": 0.8},
+        "content": {
+            "blocks": [
+                {"id": 1, "text": "for (int i = 0; i < arr.length; i++) {"},
+                {"id": 2, "text": "    System.out.println(arr[i]);"},
+                {"id": 3, "text": "}"},
+                {"id": 4, "text": "int[] arr = {1, 2, 3};"}
+            ],
+            "correct_order": [4, 1, 2, 3],
+            "explanation": "Tömb létrehozása -> ciklus fejléc -> ciklusmag -> lezárás."
+        }
+    },
+    {
+        "title": "For-each ciklus",
+        "description": "Használjon 'enhanced for' ciklust a tömb bejárására!",
+        "hint": "A legegyszerűbb bejárási mód.",
+        "q_type": "parsons",
+        "difficulty_rating": 880,
+        "language": "java",
+        "concept": {"arrays": 0.7, "loops": 0.9},
+        "content": {
+            "blocks": [
+                {"id": 1, "text": "String[] fruits = {\"Apple\", \"Banana\"};"},
+                {"id": 2, "text": "for (String f : fruits) {"},
+                {"id": 3, "text": "    System.out.println(f);"},
+                {"id": 4, "text": "}"}
+            ],
+            "correct_order": [1, 2, 3, 4],
+            "explanation": "Tömb definíció, majd a for-each szerkezet az elemeken való végighaladáshoz."
+        }
+    },
+    {
+        "title": "Összegzés ciklussal",
+        "description": "Számítsa ki a tömb elemeinek összegét!",
+        "hint": "Az összegző változót a ciklus előtt kell nullázni.",
+        "q_type": "parsons",
+        "difficulty_rating": 950,
+        "language": "java",
+        "concept": {"arrays": 0.8, "loops": 0.8},
+        "content": {
+            "blocks": [
+                {"id": 1, "text": "int sum = 0;"},
+                {"id": 2, "text": "for (int n : nums) {"},
+                {"id": 3, "text": "    sum += n;"},
+                {"id": 4, "text": "}"},
+                {"id": 5, "text": "int[] nums = {2, 4, 6};"}
+            ],
+            "correct_order": [5, 1, 2, 3, 4],
+            "explanation": "Adatok -> Akkumulátor init -> Ciklus -> Összegzés."
+        }
+    },
+    {
+        "title": "Maximum keresés",
+        "description": "Találja meg a legnagyobb számot a tömbben!",
+        "hint": "Feltételezzük, hogy az első a legnagyobb, majd végigellenőrizzük.",
+        "q_type": "parsons",
+        "difficulty_rating": 980,
+        "language": "java",
+        "concept": {"arrays": 0.8, "loops": 0.7, "logic": 0.7},
+        "content": {
+            "blocks": [
+                {"id": 1, "text": "int max = arr[0];"},
+                {"id": 2, "text": "for (int i = 1; i < arr.length; i++) {"},
+                {"id": 3, "text": "    if (arr[i] > max) max = arr[i];"},
+                {"id": 4, "text": "}"},
+                {"id": 5, "text": "int[] arr = {5, 9, 3};"}
+            ],
+            "correct_order": [5, 1, 2, 3, 4],
+            "explanation": "A tömb definiálása után az első elemet vesszük maximumnak, majd a többit hozzá hasonlítjuk."
+        }
+    },
+    {
+        "title": "Tömb feltöltése ciklussal",
+        "description": "Töltsön fel egy tömböt a 0, 1, 2... értékekkel!",
+        "hint": "Az indexet használjuk értékként is.",
+        "q_type": "parsons",
+        "difficulty_rating": 920,
+        "language": "java",
+        "concept": {"arrays": 0.9, "loops": 0.8},
+        "content": {
+            "blocks": [
+                {"id": 1, "text": "int[] data = new int[5];"},
+                {"id": 2, "text": "for (int i = 0; i < data.length; i++) {"},
+                {"id": 3, "text": "    data[i] = i;"},
+                {"id": 4, "text": "}"}
+            ],
+            "correct_order": [1, 2, 3, 4],
+            "explanation": "Először lefoglaljuk az üres tömböt, majd a cikluson belül minden indexre beírjuk az index értékét."
+        }
+    },
+    {
+        "title": "Páros számok kiírása",
+        "description": "Írassa ki a tömb páros elemeit!",
+        "hint": "If feltétel a cikluson belül.",
+        "q_type": "parsons",
+        "difficulty_rating": 960,
+        "language": "java",
+        "concept": {"arrays": 0.7, "loops": 0.7, "logic": 0.6},
+        "content": {
+            "blocks": [
+                {"id": 1, "text": "int[] nums = {1, 2, 3, 4};"},
+                {"id": 2, "text": "for (int n : nums) {"},
+                {"id": 3, "text": "    if (n % 2 == 0) {"},
+                {"id": 4, "text": "        System.out.println(n);"},
+                {"id": 5, "text": "    }"},
+                {"id": 6, "text": "}"}
+            ],
+            "correct_order": [1, 2, 3, 4, 5, 6],
+            "explanation": "A tömb bejárása közben egy if feltétellel szűrjük az elemeket."
+        }
+    },
+    {
+        "title": "Tömb másolása (kézi)",
+        "description": "Másolja át az egyik tömb tartalmát egy másikba!",
+        "hint": "Két tömb kell, és egy ciklus.",
+        "q_type": "parsons",
+        "difficulty_rating": 990,
+        "language": "java",
+        "concept": {"arrays": 1.0, "loops": 0.8},
+        "content": {
+            "blocks": [
+                {"id": 1, "text": "int[] source = {1, 2, 3};"},
+                {"id": 2, "text": "int[] dest = new int[source.length];"},
+                {"id": 3, "text": "for (int i = 0; i < source.length; i++) {"},
+                {"id": 4, "text": "    dest[i] = source[i];"},
+                {"id": 5, "text": "}"}
+            ],
+            "correct_order": [1, 2, 3, 4, 5],
+            "explanation": "Létrehozzuk a forrást, allokáljuk a célt, majd elemenként átmásoljuk az értékeket."
+        }
+    },
+    {
+        "title": "Fordított kiíratás",
+        "description": "Írja ki a tömb elemeit hátulról előre!",
+        "hint": "A ciklus a length-1-től indul és csökken.",
+        "q_type": "parsons",
+        "difficulty_rating": 970,
+        "language": "java",
+        "concept": {"arrays": 0.9, "loops": 0.9},
+        "content": {
+            "blocks": [
+                {"id": 1, "text": "int[] arr = {10, 20, 30};"},
+                {"id": 2, "text": "for (int i = arr.length - 1; i >= 0; i--) {"},
+                {"id": 3, "text": "    System.out.println(arr[i]);"},
+                {"id": 4, "text": "}"}
+            ],
+            "correct_order": [1, 2, 3, 4],
+            "explanation": "A visszafelé iteráláshoz a ciklusváltozót csökkenteni kell az utolsó indextől a 0-ig."
+        }
+    },
+    {
+        "title": "2D tömb létrehozása",
+        "description": "Hozzon létre egy 2 soros, 3 oszlopos mátrixot és írja ki az egyik elemét!",
+        "hint": "Dupla szögletes zárójel.",
+        "q_type": "parsons",
+        "difficulty_rating": 1050,
+        "language": "java",
+        "concept": {"arrays": 1.0, "basics": 0.6},
+        "content": {
+            "blocks": [
+                {"id": 1, "text": "int[][] matrix = new int[2][3];"},
+                {"id": 2, "text": "matrix[0][0] = 1;"},
+                {"id": 3, "text": "System.out.println(matrix[0][0]);"}
+            ],
+            "correct_order": [1, 2, 3],
+            "explanation": "Először deklaráljuk a 2D tömböt, értéket adunk egy cellának, majd felhasználjuk."
+        }
+    },
+    {
+        "title": "Mátrix bejárása (Nested loop)",
+        "description": "Járjon be egy 2D tömböt egymásba ágyazott ciklusokkal!",
+        "hint": "Külső ciklus a sorokon, belső az oszlopokon.",
+        "q_type": "parsons",
+        "difficulty_rating": 1150,
+        "language": "java",
+        "concept": {"arrays": 1.0, "loops": 1.0},
+        "content": {
+            "blocks": [
+                {"id": 1, "text": "int[][] m = {{1, 2}, {3, 4}};"},
+                {"id": 2, "text": "for (int i = 0; i < m.length; i++) {"},
+                {"id": 3, "text": "    for (int j = 0; j < m[i].length; j++) {"},
+                {"id": 4, "text": "        System.out.print(m[i][j]);"},
+                {"id": 5, "text": "    }"},
+                {"id": 6, "text": "}"}
+            ],
+            "correct_order": [1, 2, 3, 4, 5, 6],
+            "explanation": "A külső ciklus az 'i' sorindexet, a belső a 'j' oszlopindexet kezeli."
+        }
+    },
+    {
+        "title": "Keresés tömbben",
+        "description": "Döntse el, hogy szerepel-e a 7-es szám a tömbben!",
+        "hint": "Break utasítást használunk, ha megtaláltuk.",
+        "q_type": "parsons",
+        "difficulty_rating": 1100,
+        "language": "java",
+        "concept": {"arrays": 0.8, "loops": 0.8, "logic": 0.7},
+        "content": {
+            "blocks": [
+                {"id": 1, "text": "int[] nums = {5, 7, 9};"},
+                {"id": 2, "text": "boolean found = false;"},
+                {"id": 3, "text": "for (int n : nums) {"},
+                {"id": 4, "text": "    if (n == 7) {"},
+                {"id": 5, "text": "        found = true;"},
+                {"id": 6, "text": "        break;"},
+                {"id": 7, "text": "    }"},
+                {"id": 8, "text": "}"}
+            ],
+            "correct_order": [1, 2, 3, 4, 5, 6, 7, 8],
+            "explanation": "Bejárjuk a tömböt, ha egyezést találunk, a flag-et igazra állítjuk és kilépünk."
+        }
+    },
+    {
+        "title": "Tömb rendezése (Arrays.sort)",
+        "description": "Használja az Arrays osztályt a tömb rendezéséhez!",
+        "hint": "Importálni kell az Arrays osztályt.",
+        "q_type": "parsons",
+        "difficulty_rating": 1080,
+        "language": "java",
+        "concept": {"arrays": 1.0, "functions": 0.5},
+        "content": {
+            "blocks": [
+                {"id": 1, "text": "import java.util.Arrays;"},
+                {"id": 2, "text": "int[] arr = {3, 1, 2};"},
+                {"id": 3, "text": "Arrays.sort(arr);"},
+                {"id": 4, "text": "System.out.println(arr[0]);"}
+            ],
+            "correct_order": [1, 2, 3, 4],
+            "explanation": "Az import után létrehozunk egy tömböt, rendezzük, és kiírjuk a legkisebb (első) elemet."
+        }
+    },
+    {
+        "title": "Tömb elemeinek cseréje (Swap)",
+        "description": "Cserélje meg a tömb első és utolsó elemét!",
+        "hint": "Szükség van egy segédváltozóra.",
+        "q_type": "parsons",
+        "difficulty_rating": 1120,
+        "language": "java",
+        "concept": {"arrays": 1.0, "logic": 0.6},
+        "content": {
+            "blocks": [
+                {"id": 1, "text": "int[] a = {1, 2, 3};"},
+                {"id": 2, "text": "int temp = a[0];"},
+                {"id": 3, "text": "a[0] = a[a.length - 1];"},
+                {"id": 4, "text": "a[a.length - 1] = temp;"}
+            ],
+            "correct_order": [1, 2, 3, 4],
+            "explanation": "Kimentjük az első elemet, felülírjuk az utolsóval, majd az utolsó helyére visszatesszük a kimentettet."
+        }
+    },
+    {
+        "title": "Átlag számítás",
+        "description": "Számítsa ki a tömb elemeinek átlagát!",
+        "hint": "Összeg osztva a darabszámmal.",
+        "q_type": "parsons",
+        "difficulty_rating": 1180,
+        "language": "java",
+        "concept": {"arrays": 0.8, "loops": 0.7, "basics": 0.6},
+        "content": {
+            "blocks": [
+                {"id": 1, "text": "double sum = 0;"},
+                {"id": 2, "text": "for (double n : nums) sum += n;"},
+                {"id": 3, "text": "double avg = sum / nums.length;"},
+                {"id": 4, "text": "double[] nums = {1.5, 2.5, 3.0};"}
+            ],
+            "correct_order": [4, 1, 2, 3],
+            "explanation": "Adatok -> Összegzés -> Osztás a hosszal."
+        }
+    },
+    {
+        "title": "String to Char Array",
+        "description": "Alakítson át egy Stringet karaktertömbbé és járja be!",
+        "hint": "toCharArray metódus.",
+        "q_type": "parsons",
+        "difficulty_rating": 1020,
+        "language": "java",
+        "concept": {"arrays": 0.9, "basics": 0.7},
+        "content": {
+            "blocks": [
+                {"id": 1, "text": "String s = \"Java\";"},
+                {"id": 2, "text": "char[] chars = s.toCharArray();"},
+                {"id": 3, "text": "for (char c : chars) {"},
+                {"id": 4, "text": "    System.out.println(c);"},
+                {"id": 5, "text": "}"}
+            ],
+            "correct_order": [1, 2, 3, 4, 5],
+            "explanation": "A String objektumot karaktertömbbé konvertáljuk, majd bejárjuk."
+        }
+    },
+    {
+        "title": "Jagged Array (Fűrészfogas tömb)",
+        "description": "Hozzon létre egy olyan 2D tömböt, ahol a sorok hossza eltérő!",
+        "hint": "Külön-külön inicializáljuk a belső tömböket.",
+        "q_type": "parsons",
+        "difficulty_rating": 1190,
+        "language": "java",
+        "concept": {"arrays": 1.0, "basics": 0.5},
+        "content": {
+            "blocks": [
+                {"id": 1, "text": "int[][] jag = new int[2][];"},
+                {"id": 2, "text": "jag[0] = new int[2];"},
+                {"id": 3, "text": "jag[1] = new int[5];"}
+            ],
+            "correct_order": [1, 2, 3],
+            "explanation": "Először a fő tömböt hozzuk létre (csak az első dimenzióval), majd a belső tömböket tetszőleges mérettel."
+        }
+    },
+    {
+        "title": "Tömb elemek eltolása (Shift)",
+        "description": "Tolja el a tömb elemeit egy hellyel balra!",
+        "hint": "Az első elem elveszik, az utolsó duplázódik vagy 0 lesz.",
+        "q_type": "parsons",
+        "difficulty_rating": 1250,
+        "language": "java",
+        "concept": {"arrays": 1.0, "loops": 0.9},
+        "content": {
+            "blocks": [
+                {"id": 1, "text": "int[] arr = {1, 2, 3};"},
+                {"id": 2, "text": "for (int i = 0; i < arr.length - 1; i++) {"},
+                {"id": 3, "text": "    arr[i] = arr[i+1];"},
+                {"id": 4, "text": "}"},
+                {"id": 5, "text": "arr[arr.length - 1] = 0;"}
+            ],
+            "correct_order": [1, 2, 3, 4, 5],
+            "explanation": "Minden elemet felülírunk a rákövetkezővel, a végét pedig nullázzuk."
+        }
+    },
+    {
+        "title": "Tömbök egyenlősége",
+        "description": "Hasonlítson össze két tömböt tartalom szerint!",
+        "hint": "Az Arrays.equals metódus kell, nem a ==.",
+        "q_type": "parsons",
+        "difficulty_rating": 1280,
+        "language": "java",
+        "concept": {"arrays": 1.0, "logic": 0.6},
+        "content": {
+            "blocks": [
+                {"id": 1, "text": "int[] a = {1, 2};"},
+                {"id": 2, "text": "int[] b = {1, 2};"},
+                {"id": 3, "text": "if (Arrays.equals(a, b)) {"},
+                {"id": 4, "text": "    System.out.println(\"Egyforma\");"},
+                {"id": 5, "text": "}"}
+            ],
+            "correct_order": [1, 2, 3, 4, 5],
+            "explanation": "A tömbök referencia típusok, így a '==' csak a címeket hasonlítaná össze. A tartalomhoz segédfüggvény kell."
+        }
+    },
+    {
+        "title": "Változó hosszúságú argumentum (Varargs)",
+        "description": "Definiáljon egy metódust, amely tetszőleges számú int paramétert fogad (tömbként)!",
+        "hint": "A '...' szintaxis.",
+        "q_type": "parsons",
+        "difficulty_rating": 1220,
+        "language": "java",
+        "concept": {"arrays": 0.8, "functions": 1.0},
+        "content": {
+            "blocks": [
+                {"id": 1, "text": "public static void printAll(int... nums) {"},
+                {"id": 2, "text": "    for (int n : nums) {"},
+                {"id": 3, "text": "        System.out.print(n);"},
+                {"id": 4, "text": "    }"},
+                {"id": 5, "text": "}"}
+            ],
+            "correct_order": [1, 2, 3, 4, 5],
+            "explanation": "A varargs paraméter (int... nums) a metóduson belül tömbként viselkedik."
+        }
+    },
+    {
+        "title": "Mátrix transzponálás",
+        "description": "Cserélje fel a mátrix sorait és oszlopait!",
+        "hint": "Új mátrixba másolunk: dest[j][i] = src[i][j].",
+        "q_type": "parsons",
+        "difficulty_rating": 1350,
+        "language": "java",
+        "concept": {"arrays": 1.0, "loops": 1.0},
+        "content": {
+            "blocks": [
+                {"id": 1, "text": "int[][] src = {{1, 2}, {3, 4}};"},
+                {"id": 2, "text": "int[][] dest = new int[2][2];"},
+                {"id": 3, "text": "for (int i = 0; i < 2; i++) {"},
+                {"id": 4, "text": "    for (int j = 0; j < 2; j++) {"},
+                {"id": 5, "text": "        dest[j][i] = src[i][j];"},
+                {"id": 6, "text": "    }"},
+                {"id": 7, "text": "}"}
+            ],
+            "correct_order": [1, 2, 3, 4, 5, 6, 7],
+            "explanation": "A transzponálás során a sor- és oszlopindexek helyet cserélnek."
+        }
+    },
+    {
+        "title": "Bináris keresés",
+        "description": "Keressen meg egy elemet rendezett tömbben binarySearch segítségével!",
+        "hint": "A tömbnek rendezettnek kell lennie.",
+        "q_type": "parsons",
+        "difficulty_rating": 1300,
+        "language": "java",
+        "concept": {"arrays": 1.0, "functions": 0.7},
+        "content": {
+            "blocks": [
+                {"id": 1, "text": "int[] sorted = {10, 20, 30};"},
+                {"id": 2, "text": "int index = Arrays.binarySearch(sorted, 20);"},
+                {"id": 3, "text": "System.out.println(index);"}
+            ],
+            "correct_order": [1, 2, 3],
+            "explanation": "Az `Arrays.binarySearch` visszaadja a keresett elem indexét, ha megtalálható."
+        }
+    },
+    {
+        "title": "Tömb inicializálás Stream-mel (Java 8+)",
+        "description": "Töltsön fel egy tömböt 1-től 5-ig Stream használatával!",
+        "hint": "IntStream.range().",
+        "q_type": "parsons",
+        "difficulty_rating": 1400,
+        "language": "java",
+        "concept": {"arrays": 0.8, "functions": 0.8, "oop": 0.6},
+        "content": {
+            "blocks": [
+                {"id": 1, "text": "int[] arr = IntStream.rangeClosed(1, 5)"},
+                {"id": 2, "text": "    .toArray();"}
+            ],
+            "correct_order": [1, 2],
+            "explanation": "Az IntStream segítségével tömören generálhatunk számsorozatokat tömbbe."
+        }
+    },
+    {
+        "title": "Exception kezelés indexelésnél",
+        "description": "Védje ki a túlindexelést try-catch blokkal!",
+        "hint": "ArrayIndexOutOfBoundsException.",
+        "q_type": "parsons",
+        "difficulty_rating": 1320,
+        "language": "java",
+        "concept": {"arrays": 1.0, "oop": 0.5},
+        "content": {
+            "blocks": [
+                {"id": 1, "text": "int[] arr = {1};"},
+                {"id": 2, "text": "try {"},
+                {"id": 3, "text": "    System.out.println(arr[5]);"},
+                {"id": 4, "text": "} catch (ArrayIndexOutOfBoundsException e) {"},
+                {"id": 5, "text": "    System.out.println(\"Hiba\");"},
+                {"id": 6, "text": "}"}
+            ],
+            "correct_order": [1, 2, 3, 4, 5, 6],
+            "explanation": "A nem létező index elérése kivételt dob, amit elkapunk, hogy a program ne álljon le."
+        }
+    },
+    {
+        "title": "Tömb megfordítása helyben (In-place)",
+        "description": "Fordítsa meg a tömböt új tömb létrehozása nélkül!",
+        "hint": "Csere a két végéről befelé haladva.",
+        "q_type": "parsons",
+        "difficulty_rating": 1380,
+        "language": "java",
+        "concept": {"arrays": 1.0, "loops": 0.9, "logic": 0.8},
+        "content": {
+            "blocks": [
+                {"id": 1, "text": "for (int i = 0; i < arr.length / 2; i++) {"},
+                {"id": 2, "text": "    int temp = arr[i];"},
+                {"id": 3, "text": "    arr[i] = arr[arr.length - 1 - i];"},
+                {"id": 4, "text": "    arr[arr.length - 1 - i] = temp;"},
+                {"id": 5, "text": "}"},
+                {"id": 6, "text": "int[] arr = {1, 2, 3, 4};"}
+            ],
+            "correct_order": [6, 1, 2, 3, 4, 5],
+            "explanation": "A ciklus a feléig megy, és cserélgeti az i. elemet a (length-1-i). elemmel."
+        }
+    }
+]

@@ -1,0 +1,1358 @@
+[
+    {
+        "title": "Tömb létrehozása",
+        "description": "Hozz létre egy egész számokat tartalmazó tömböt 'arr' néven, amely a következő elemeket tartalmazza: 10, 20, 30. A függvény adja vissza ezt a tömböt.",
+        "hint": "Használd a kapcsos zárójeleket az inicializáláshoz.",
+        "q_type": "coding",
+        "difficulty_rating": 600,
+        "language": "java",
+        "concept": {
+            "arrays": 1.0,
+            "basics": 0.5
+        },
+        "content": {
+            "initial_code": "public class Solution {\n public static int[] createArray() {",
+            "test_cases": [
+                {
+                    "input": "",
+                    "expected_output": "[10, 20, 30]"
+                }
+            ],
+            "scaffolding_blocks": [
+                "int[] arr",
+                "10, 20, 30",
+                "return arr"
+            ],
+            "explanation": "Tömböt a típus[] név = {elemek}; szintaxissal hozunk létre."
+        }
+    },
+    {
+        "title": "Első elem",
+        "description": "A függvény kap egy tömböt. Térj vissza a tömb legelső elemével.",
+        "hint": "Az indexelés 0-tól kezdődik.",
+        "q_type": "coding",
+        "difficulty_rating": 620,
+        "language": "java",
+        "concept": {
+            "arrays": 1.0,
+            "basics": 0.5
+        },
+        "content": {
+            "initial_code": "public class Solution {\n public static int getFirst(int[] nums) {",
+            "test_cases": [
+                {
+                    "input": "[5, 10, 15]",
+                    "expected_output": "5"
+                },
+                {
+                    "input": "[100, 200]",
+                    "expected_output": "100"
+                }
+            ],
+            "scaffolding_blocks": [
+                "return",
+                "nums",
+                "0"
+            ],
+            "explanation": "A tömb első eleme a 0. indexen található: nums[0]."
+        }
+    },
+    {
+        "title": "Utolsó elem",
+        "description": "Térj vissza a kapott tömb legutolsó elemével. Feltételezheted, hogy a tömb nem üres.",
+        "hint": "Használd a tömb hosszát.",
+        "q_type": "coding",
+        "difficulty_rating": 650,
+        "language": "java",
+        "concept": {
+            "arrays": 1.0,
+            "basics": 0.6
+        },
+        "content": {
+            "initial_code": "public class Solution {\n public static int getLast(int[] nums) {",
+            "test_cases": [
+                {
+                    "input": "[1, 2, 3]",
+                    "expected_output": "3"
+                },
+                {
+                    "input": "[9]",
+                    "expected_output": "9"
+                }
+            ],
+            "scaffolding_blocks": [
+                "return",
+                "nums",
+                "length",
+                "- 1"
+            ],
+            "explanation": "Az utolsó elem indexe mindig a tömb hossza mínusz egy."
+        }
+    },
+    {
+        "title": "Tömb hossza",
+        "description": "Írj egy függvényt, ami visszaadja a kapott tömb elemszámát (hosszát).",
+        "hint": "A length tulajdonság segít.",
+        "q_type": "coding",
+        "difficulty_rating": 630,
+        "language": "java",
+        "concept": {
+            "arrays": 1.0,
+            "basics": 0.4
+        },
+        "content": {
+            "initial_code": "public class Solution {\n public static int getLength(int[] arr) {",
+            "test_cases": [
+                {
+                    "input": "[1, 2, 3, 4]",
+                    "expected_output": "4"
+                },
+                {
+                    "input": "[]",
+                    "expected_output": "0"
+                }
+            ],
+            "scaffolding_blocks": [
+                "return",
+                "arr",
+                "length"
+            ],
+            "explanation": "Java-ban a tömböknek van egy publikus 'length' mezője."
+        }
+    },
+    {
+        "title": "Elem módosítása",
+        "description": "A függvény kap egy 3 elemű tömböt. Változtasd meg a középső (második) elemét 99-re, majd térj vissza a módosított tömbbel.",
+        "hint": "A második elem indexe 1.",
+        "q_type": "coding",
+        "difficulty_rating": 700,
+        "language": "java",
+        "concept": {
+            "arrays": 1.0,
+            "basics": 0.6
+        },
+        "content": {
+            "initial_code": "public class Solution {\n public static int[] modify(int[] arr) {",
+            "test_cases": [
+                {
+                    "input": "[1, 2, 3]",
+                    "expected_output": "[1, 99, 3]"
+                },
+                {
+                    "input": "[0, 0, 0]",
+                    "expected_output": "[0, 99, 0]"
+                }
+            ],
+            "scaffolding_blocks": [
+                "arr",
+                "1",
+                "=",
+                "99",
+                "return"
+            ],
+            "explanation": "Az értékadás operátorral (=) felülírhatjuk az adott indexen lévő értéket."
+        }
+    },
+    {
+        "title": "Üres tömb",
+        "description": "Hozz létre és adj vissza egy üres (0 elemű) egész tömböt.",
+        "hint": "Használd a new kulcsszót.",
+        "q_type": "coding",
+        "difficulty_rating": 750,
+        "language": "java",
+        "concept": {
+            "arrays": 1.0,
+            "basics": 0.5
+        },
+        "content": {
+            "initial_code": "public class Solution {\n public static int[] emptyArray() {",
+            "test_cases": [
+                {
+                    "input": "",
+                    "expected_output": "[]"
+                }
+            ],
+            "scaffolding_blocks": [
+                "return",
+                "new int",
+                "0"
+            ],
+            "explanation": "A 'new int[0]' létrehoz egy üres tömböt."
+        }
+    },
+    {
+        "title": "Karakterek tömbje",
+        "description": "Készíts egy char tömböt, ami az 'a', 'b', 'c' betűket tartalmazza, és add vissza.",
+        "hint": "A karaktereket aposztróffal jelöljük.",
+        "q_type": "coding",
+        "difficulty_rating": 720,
+        "language": "java",
+        "concept": {
+            "arrays": 1.0,
+            "basics": 0.7
+        },
+        "content": {
+            "initial_code": "public class Solution {\n public static char[] abc() {",
+            "test_cases": [
+                {
+                    "input": "",
+                    "expected_output": "['a', 'b', 'c']"
+                }
+            ],
+            "scaffolding_blocks": [
+                "char[]",
+                "'a', 'b', 'c'",
+                "return"
+            ],
+            "explanation": "A char típusú tömb inicializálása: char[] c = {'a', 'b', 'c'}."
+        }
+    },
+    {
+        "title": "Összegzés fix indexekkel",
+        "description": "A függvény kap egy pontosan 2 elemű tömböt. Add vissza a két elem összegét.",
+        "hint": "Add össze a 0. és 1. indexet.",
+        "q_type": "coding",
+        "difficulty_rating": 780,
+        "language": "java",
+        "concept": {
+            "arrays": 1.0,
+            "basics": 0.5
+        },
+        "content": {
+            "initial_code": "public class Solution {\n public static int sumTwo(int[] nums) {",
+            "test_cases": [
+                {
+                    "input": "[10, 5]",
+                    "expected_output": "15"
+                },
+                {
+                    "input": "[1, 1]",
+                    "expected_output": "2"
+                }
+            ],
+            "scaffolding_blocks": [
+                "return",
+                "nums",
+                "0",
+                "+",
+                "1"
+            ],
+            "explanation": "Egyszerűen elérjük a 0. és 1. elemet és összeadjuk őket."
+        }
+    },
+    {
+        "title": "Tömb elemek összege",
+        "description": "Számítsd ki a kapott egész tömb elemeinek összegét ciklus segítségével.",
+        "hint": "Hozz létre egy változót az összegnek.",
+        "q_type": "coding",
+        "difficulty_rating": 850,
+        "language": "java",
+        "concept": {
+            "arrays": 0.7,
+            "loops": 0.8
+        },
+        "content": {
+            "initial_code": "public class Solution {\n public static int sumArray(int[] arr) {",
+            "test_cases": [
+                {
+                    "input": "[1, 2, 3]",
+                    "expected_output": "6"
+                },
+                {
+                    "input": "[10, -10]",
+                    "expected_output": "0"
+                }
+            ],
+            "scaffolding_blocks": [
+                "int sum = 0",
+                "for",
+                "int x : arr",
+                "sum += x",
+                "return sum"
+            ],
+            "explanation": "Egy for-each ciklussal végigiterálunk a tömbön és hozzáadjuk az elemeket egy gyűjtőváltozóhoz."
+        }
+    },
+    {
+        "title": "Páros számok száma",
+        "description": "Számold meg, hány páros szám található a tömbben.",
+        "hint": "A modulo operátor (%) segít eldönteni a párosságot.",
+        "q_type": "coding",
+        "difficulty_rating": 900,
+        "language": "java",
+        "concept": {
+            "arrays": 0.6,
+            "loops": 0.8,
+            "logic": 0.6
+        },
+        "content": {
+            "initial_code": "public class Solution {\n public static int countEvens(int[] nums) {",
+            "test_cases": [
+                {
+                    "input": "[1, 2, 3, 4]",
+                    "expected_output": "2"
+                },
+                {
+                    "input": "[1, 3, 5]",
+                    "expected_output": "0"
+                }
+            ],
+            "scaffolding_blocks": [
+                "int count = 0",
+                "for",
+                "if",
+                "n % 2 == 0",
+                "count++",
+                "return count"
+            ],
+            "explanation": "Ha egy szám 2-vel osztva 0 maradékot ad, akkor páros. Növeljük a számlálót ilyenkor."
+        }
+    },
+    {
+        "title": "Tartalmazza-e?",
+        "description": "Döntsd el, hogy a tömb tartalmazza-e a megadott target számot. Térj vissza true-val, ha igen, false-al, ha nem.",
+        "hint": "Ha megtalálod, azonnal térj vissza true-val.",
+        "q_type": "coding",
+        "difficulty_rating": 880,
+        "language": "java",
+        "concept": {
+            "arrays": 0.7,
+            "loops": 0.8,
+            "logic": 0.5
+        },
+        "content": {
+            "initial_code": "public class Solution {\n public static boolean contains(int[] arr, int target) {",
+            "test_cases": [
+                {
+                    "input": "[1, 2, 3], 2",
+                    "expected_output": "true"
+                },
+                {
+                    "input": "[1, 2, 3], 5",
+                    "expected_output": "false"
+                }
+            ],
+            "scaffolding_blocks": [
+                "for",
+                "int n : arr",
+                "if",
+                "n == target",
+                "return true",
+                "return false"
+            ],
+            "explanation": "Lineáris kereséssel végigmegyünk. Ha egyezést találunk, return true. Ha a ciklus lefutott találat nélkül, return false."
+        }
+    },
+    {
+        "title": "Tömb másolása",
+        "description": "Készíts egy másolatot a kapott tömbről, és térj vissza vele. (Ne használd a clone() metódust, írj ciklust!)",
+        "hint": "Hozz létre egy új tömböt ugyanakkora mérettel.",
+        "q_type": "coding",
+        "difficulty_rating": 950,
+        "language": "java",
+        "concept": {
+            "arrays": 1.0,
+            "loops": 0.8
+        },
+        "content": {
+            "initial_code": "public class Solution {\n public static int[] copyArray(int[] original) {",
+            "test_cases": [
+                {
+                    "input": "[5, 6]",
+                    "expected_output": "[5, 6]"
+                }
+            ],
+            "scaffolding_blocks": [
+                "int[] copy = new int[original.length]",
+                "for",
+                "int i = 0",
+                "i < original.length",
+                "copy[i] = original[i]",
+                "return copy"
+            ],
+            "explanation": "Létrehozunk egy új tömböt az eredeti hosszával, majd elemenként átmásoljuk az értékeket."
+        }
+    },
+    {
+        "title": "Utolsó elem indexe",
+        "description": "Keresd meg az utolsó előfordulását a target számnak a tömbben és add vissza az indexét. Ha nincs benne, térj vissza -1-gyel.",
+        "hint": "Vagy hátulról indulsz, vagy elmentered a találatot és továbbmész.",
+        "q_type": "coding",
+        "difficulty_rating": 980,
+        "language": "java",
+        "concept": {
+            "arrays": 0.8,
+            "loops": 0.8,
+            "logic": 0.5
+        },
+        "content": {
+            "initial_code": "public class Solution {\n public static int lastIndexOf(int[] nums, int target) {",
+            "test_cases": [
+                {
+                    "input": "[1, 2, 3, 2], 2",
+                    "expected_output": "3"
+                },
+                {
+                    "input": "[5, 5, 5], 5",
+                    "expected_output": "2"
+                },
+                {
+                    "input": "[1, 2], 9",
+                    "expected_output": "-1"
+                }
+            ],
+            "scaffolding_blocks": [
+                "for",
+                "int i = nums.length - 1",
+                "i >= 0",
+                "i--",
+                "if",
+                "nums[i] == target",
+                "return i",
+                "return -1"
+            ],
+            "explanation": "Hátulról (nums.length - 1) indulva az első találat lesz az utolsó előfordulás."
+        }
+    },
+    {
+        "title": "Minden elem duplázása",
+        "description": "Módosítsd a kapott tömböt úgy, hogy minden elemet megszorzol 2-vel. Térj vissza a módosított tömbbel.",
+        "hint": "Itt az indexre szükséged lesz a módosításhoz.",
+        "q_type": "coding",
+        "difficulty_rating": 920,
+        "language": "java",
+        "concept": {
+            "arrays": 1.0,
+            "loops": 0.8
+        },
+        "content": {
+            "initial_code": "public class Solution {\n public static int[] doubleElements(int[] arr) {",
+            "test_cases": [
+                {
+                    "input": "[1, 2, 3]",
+                    "expected_output": "[2, 4, 6]"
+                }
+            ],
+            "scaffolding_blocks": [
+                "for",
+                "int i = 0",
+                "arr[i] *= 2",
+                "return arr"
+            ],
+            "explanation": "Hagyományos for ciklussal (int i=0...) érjük el az elemeket, és felülírjuk őket a kétszeresükkel."
+        }
+    },
+    {
+        "title": "Csak a pozitívok",
+        "description": "Adott egy tömb. Írj egy függvényt, ami megszámolja, hány pozitív (>0) szám van benne.",
+        "hint": "Egy egyszerű if feltétel a ciklusban.",
+        "q_type": "coding",
+        "difficulty_rating": 820,
+        "language": "java",
+        "concept": {
+            "arrays": 0.6,
+            "loops": 0.7,
+            "logic": 0.5
+        },
+        "content": {
+            "initial_code": "public class Solution {\n public static int countPositives(int[] arr) {",
+            "test_cases": [
+                {
+                    "input": "[-1, 5, 0, 10]",
+                    "expected_output": "2"
+                },
+                {
+                    "input": "[-5, -1]",
+                    "expected_output": "0"
+                }
+            ],
+            "scaffolding_blocks": [
+                "int count = 0",
+                "for",
+                "x : arr",
+                "if",
+                "x > 0",
+                "count++",
+                "return count"
+            ],
+            "explanation": "Csak azokat az elemeket számoljuk, amelyek nagyobbak nullánál."
+        }
+    },
+    {
+        "title": "Nullázd ki",
+        "description": "Állítsd a tömb összes elemét 0-ra, majd térj vissza a tömbbel.",
+        "hint": "Ciklussal menj végig és írd felül az elemeket.",
+        "q_type": "coding",
+        "difficulty_rating": 850,
+        "language": "java",
+        "concept": {
+            "arrays": 1.0,
+            "loops": 0.8
+        },
+        "content": {
+            "initial_code": "public class Solution {\n public static int[] zeroOut(int[] nums) {",
+            "test_cases": [
+                {
+                    "input": "[1, 2, 3]",
+                    "expected_output": "[0, 0, 0]"
+                }
+            ],
+            "scaffolding_blocks": [
+                "for",
+                "int i = 0",
+                "nums[i] = 0",
+                "return nums"
+            ],
+            "explanation": "A tömb minden elemét egyesével 0-ra állítjuk."
+        }
+    },
+    {
+        "title": "Maximum keresése",
+        "description": "Keresd meg a legnagyobb számot a tömbben. Feltételezheted, hogy a tömb nem üres.",
+        "hint": "Kezdd azzal, hogy az első elemet kinevezed maximumnak.",
+        "q_type": "coding",
+        "difficulty_rating": 1050,
+        "language": "java",
+        "concept": {
+            "arrays": 0.8,
+            "loops": 0.8,
+            "logic": 0.7
+        },
+        "content": {
+            "initial_code": "public class Solution {\n public static int findMax(int[] arr) {",
+            "test_cases": [
+                {
+                    "input": "[1, 5, 3]",
+                    "expected_output": "5"
+                },
+                {
+                    "input": "[-10, -5, -20]",
+                    "expected_output": "-5"
+                }
+            ],
+            "scaffolding_blocks": [
+                "int max = arr[0]",
+                "for",
+                "if",
+                "x > max",
+                "max = x",
+                "return max"
+            ],
+            "explanation": "Feltételezzük, hogy a 0. elem a legnagyobb, majd végigmegyünk a többin. Ha nagyobbat találunk, frissítjük a max változót."
+        }
+    },
+    {
+        "title": "Minimum indexe",
+        "description": "Keresd meg a legkisebb szám indexét a tömbben. Ha több ilyen van, az első indexét add vissza.",
+        "hint": "Nem az értéket, hanem az indexet kell tárolni.",
+        "q_type": "coding",
+        "difficulty_rating": 1100,
+        "language": "java",
+        "concept": {
+            "arrays": 0.8,
+            "loops": 0.8,
+            "logic": 0.7
+        },
+        "content": {
+            "initial_code": "public class Solution {\n public static int minIndex(int[] nums) {",
+            "test_cases": [
+                {
+                    "input": "[10, 5, 20]",
+                    "expected_output": "1"
+                },
+                {
+                    "input": "[3, 3, 3]",
+                    "expected_output": "0"
+                }
+            ],
+            "scaffolding_blocks": [
+                "int minIdx = 0",
+                "for",
+                "int i = 1",
+                "if",
+                "nums[i] < nums[minIdx]",
+                "minIdx = i",
+                "return minIdx"
+            ],
+            "explanation": "Hasonló a maximum kereséshez, de itt az indexet mentjük el, amikor kisebb számot találunk."
+        }
+    },
+    {
+        "title": "Átlag számítás",
+        "description": "Számítsd ki a tömb elemeinek átlagát (double típusként).",
+        "hint": "Összeg osztva darabszámmal. Figyelj az egészosztásra!",
+        "q_type": "coding",
+        "difficulty_rating": 1020,
+        "language": "java",
+        "concept": {
+            "arrays": 0.7,
+            "loops": 0.7,
+            "basics": 0.6
+        },
+        "content": {
+            "initial_code": "public class Solution {\n public static double average(int[] arr) {",
+            "test_cases": [
+                {
+                    "input": "[1, 2, 3]",
+                    "expected_output": "2.0"
+                },
+                {
+                    "input": "[1, 2]",
+                    "expected_output": "1.5"
+                }
+            ],
+            "scaffolding_blocks": [
+                "double sum = 0",
+                "for",
+                "sum += x",
+                "return sum / arr.length"
+            ],
+            "explanation": "Összeadjuk az elemeket (double változóba, hogy elkerüljük az int osztást), majd elosztjuk a hosszal."
+        }
+    },
+    {
+        "title": "Rendezett-e?",
+        "description": "Döntsd el, hogy a tömb elemei növekvő sorrendben vannak-e. (Szigorúan nem csökkenő: 1, 2, 2, 3 is jó).",
+        "hint": "Hasonlítsd össze az egymás melletti elemeket.",
+        "q_type": "coding",
+        "difficulty_rating": 1150,
+        "language": "java",
+        "concept": {
+            "arrays": 0.8,
+            "loops": 0.9,
+            "logic": 0.8
+        },
+        "content": {
+            "initial_code": "public class Solution {\n public static boolean isSorted(int[] arr) {",
+            "test_cases": [
+                {
+                    "input": "[1, 2, 3]",
+                    "expected_output": "true"
+                },
+                {
+                    "input": "[1, 3, 2]",
+                    "expected_output": "false"
+                }
+            ],
+            "scaffolding_blocks": [
+                "for",
+                "int i = 0",
+                "i < arr.length - 1",
+                "if",
+                "arr[i] > arr[i+1]",
+                "return false",
+                "return true"
+            ],
+            "explanation": "Ha találunk egy olyan párt, ahol az előző elem nagyobb, mint a következő, akkor nem rendezett."
+        }
+    },
+    {
+        "title": "Elemek cseréje (Swap)",
+        "description": "Cseréld meg a tömb első és utolsó elemét, majd add vissza a tömböt. Feltételezheted, hogy van legalább 1 elem.",
+        "hint": "Használj egy ideiglenes (temp) változót.",
+        "q_type": "coding",
+        "difficulty_rating": 1080,
+        "language": "java",
+        "concept": {
+            "arrays": 1.0,
+            "basics": 0.7
+        },
+        "content": {
+            "initial_code": "public class Solution {\n public static int[] swapEnds(int[] arr) {",
+            "test_cases": [
+                {
+                    "input": "[1, 2, 3]",
+                    "expected_output": "[3, 2, 1]"
+                },
+                {
+                    "input": "[10]",
+                    "expected_output": "[10]"
+                }
+            ],
+            "scaffolding_blocks": [
+                "int temp = arr[0]",
+                "int lastIdx = arr.length - 1",
+                "arr[0] = arr[lastIdx]",
+                "arr[lastIdx] = temp",
+                "return arr"
+            ],
+            "explanation": "Az első elem értékét elmentjük temp-be, felülírjuk az elsőt az utolsóval, majd az utolsót a temp-pel."
+        }
+    },
+    {
+        "title": "Tömb megfordítása (Reverse copy)",
+        "description": "Készíts egy ÚJ tömböt, amely az eredeti tömb elemeit fordított sorrendben tartalmazza.",
+        "hint": "Iterálj hátulról előre az eredetin, vagy töltsd az újat fordítva.",
+        "q_type": "coding",
+        "difficulty_rating": 1180,
+        "language": "java",
+        "concept": {
+            "arrays": 1.0,
+            "loops": 0.9
+        },
+        "content": {
+            "initial_code": "public class Solution {\n public static int[] reverseCopy(int[] original) {",
+            "test_cases": [
+                {
+                    "input": "[1, 2, 3]",
+                    "expected_output": "[3, 2, 1]"
+                },
+                {
+                    "input": "[]",
+                    "expected_output": "[]"
+                }
+            ],
+            "scaffolding_blocks": [
+                "int[] result = new int[original.length]",
+                "for",
+                "int i = 0",
+                "result[i] = original[original.length - 1 - i]",
+                "return result"
+            ],
+            "explanation": "Létrehozunk egy új tömböt. A ciklusban az i-edik helyre az eredeti tömb (length-1-i)-edik eleme kerül."
+        }
+    },
+    {
+        "title": "Előfordulások száma",
+        "description": "Számold meg, hányszor szerepel a target érték a tömbben.",
+        "hint": "Egyszerű számláló ciklus.",
+        "q_type": "coding",
+        "difficulty_rating": 1010,
+        "language": "java",
+        "concept": {
+            "arrays": 0.7,
+            "loops": 0.8
+        },
+        "content": {
+            "initial_code": "public class Solution {\n public static int countOccurrences(int[] arr, int target) {",
+            "test_cases": [
+                {
+                    "input": "[1, 2, 1, 3], 1",
+                    "expected_output": "2"
+                },
+                {
+                    "input": "[5, 5, 5], 5",
+                    "expected_output": "3"
+                }
+            ],
+            "scaffolding_blocks": [
+                "int count = 0",
+                "for",
+                "if",
+                "x == target",
+                "count++",
+                "return count"
+            ],
+            "explanation": "Végigmegyünk a tömbön, és ha az elem egyenlő a keresett értékkel, növeljük a számlálót."
+        }
+    },
+    {
+        "title": "Két tömb egyenlősége",
+        "description": "Írj függvényt, amely összehasonlít két egész tömböt. Akkor egyenlőek, ha hosszuk megegyezik és minden elemük azonos.",
+        "hint": "Először a hosszt ellenőrizd.",
+        "q_type": "coding",
+        "difficulty_rating": 1190,
+        "language": "java",
+        "concept": {
+            "arrays": 0.8,
+            "loops": 0.8,
+            "logic": 0.8
+        },
+        "content": {
+            "initial_code": "public class Solution {\n public static boolean arraysEqual(int[] a, int[] b) {",
+            "test_cases": [
+                {
+                    "input": "[1, 2], [1, 2]",
+                    "expected_output": "true"
+                },
+                {
+                    "input": "[1, 2], [1, 3]",
+                    "expected_output": "false"
+                },
+                {
+                    "input": "[1], [1, 2]",
+                    "expected_output": "false"
+                }
+            ],
+            "scaffolding_blocks": [
+                "if (a.length != b.length) return false",
+                "for",
+                "int i = 0",
+                "if (a[i] != b[i]) return false",
+                "return true"
+            ],
+            "explanation": "Ha a hosszak eltérnek, nem egyenlők. Ha nem, végigmegyünk és összehasonlítjuk párban az elemeket."
+        }
+    },
+    {
+        "title": "Tömb megfordítása helyben (In-place)",
+        "description": "Fordítsd meg a tömb sorrendjét helyben (ne hozz létre új tömböt), és térj vissza vele.",
+        "hint": "Cserélgesd az elemeket kívülről befelé haladva.",
+        "q_type": "coding",
+        "difficulty_rating": 1250,
+        "language": "java",
+        "concept": {
+            "arrays": 1.0,
+            "loops": 0.9,
+            "logic": 0.8
+        },
+        "content": {
+            "initial_code": "public class Solution {\n public static int[] reverseInPlace(int[] arr) {",
+            "test_cases": [
+                {
+                    "input": "[1, 2, 3, 4]",
+                    "expected_output": "[4, 3, 2, 1]"
+                }
+            ],
+            "scaffolding_blocks": [
+                "for",
+                "i < arr.length / 2",
+                "int temp = arr[i]",
+                "arr[i] = arr[arr.length - 1 - i]",
+                "arr[arr.length - 1 - i] = temp",
+                "return arr"
+            ],
+            "explanation": "A tömb feléig iterálunk, és minden i. elemet kicserélünk a hátulról i. elemmel (length-1-i)."
+        }
+    },
+    {
+        "title": "Második legnagyobb elem",
+        "description": "Keresd meg a második legnagyobb elemet a tömbben. (Feltételezheted, hogy van legalább 2 elem és nem minden elem egyforma).",
+        "hint": "Tarts nyilván két változót: max és secondMax.",
+        "q_type": "coding",
+        "difficulty_rating": 1350,
+        "language": "java",
+        "concept": {
+            "arrays": 0.8,
+            "loops": 0.9,
+            "logic": 0.9
+        },
+        "content": {
+            "initial_code": "public class Solution {\n public static int secondMax(int[] arr) {",
+            "test_cases": [
+                {
+                    "input": "[10, 5, 20]",
+                    "expected_output": "10"
+                },
+                {
+                    "input": "[1, 2, 3, 4]",
+                    "expected_output": "3"
+                }
+            ],
+            "scaffolding_blocks": [
+                "int max = Integer.MIN_VALUE",
+                "int sec = Integer.MIN_VALUE",
+                "if (n > max)",
+                "sec = max; max = n",
+                "else if (n > sec && n != max)",
+                "sec = n",
+                "return sec"
+            ],
+            "explanation": "Ha találunk egy új maximumot, a régi maximum lesz a második legnagyobb. Ha a szám csak a másodiknál nagyobb, akkor frissítjük a másodikat."
+        }
+    },
+    {
+        "title": "Két rendezett tömb összefésülése",
+        "description": "Kapsz két rendezett tömböt. Fésüld össze őket egyetlen új, szintén rendezett tömbbe.",
+        "hint": "Használj két mutatót (indexet) a két tömbhöz.",
+        "q_type": "coding",
+        "difficulty_rating": 1380,
+        "language": "java",
+        "concept": {
+            "arrays": 1.0,
+            "loops": 1.0,
+            "logic": 0.9
+        },
+        "content": {
+            "initial_code": "public class Solution {\n public static int[] mergeSorted(int[] a, int[] b) {",
+            "test_cases": [
+                {
+                    "input": "[1, 3], [2, 4]",
+                    "expected_output": "[1, 2, 3, 4]"
+                },
+                {
+                    "input": "[1, 2], []",
+                    "expected_output": "[1, 2]"
+                }
+            ],
+            "scaffolding_blocks": [
+                "int[] res = new int[a.length + b.length]",
+                "while (i < a.length && j < b.length)",
+                "if (a[i] < b[j])",
+                "res[k++] = a[i++]",
+                "else res[k++] = b[j++]",
+                "while (i < a.length) res[k++] = a[i++]",
+                "return res"
+            ],
+            "explanation": "Mindkét tömb elején elindulunk. Amelyik kisebb, azt tesszük az új tömbbe és léptetjük a mutatót. A végén a maradékot átmásoljuk."
+        }
+    },
+    {
+        "title": "Balra csúsztatás (Shift Left)",
+        "description": "Csúsztasd a tömb elemeit egy hellyel balra. Az első elem kerüljön a végére (forgatás).",
+        "hint": "Mentsd el az első elemet, csúsztass, majd tedd vissza a végére.",
+        "q_type": "coding",
+        "difficulty_rating": 1280,
+        "language": "java",
+        "concept": {
+            "arrays": 1.0,
+            "loops": 0.9
+        },
+        "content": {
+            "initial_code": "public class Solution {\n public static int[] rotateLeft(int[] arr) {",
+            "test_cases": [
+                {
+                    "input": "[1, 2, 3]",
+                    "expected_output": "[2, 3, 1]"
+                }
+            ],
+            "scaffolding_blocks": [
+                "if (arr.length == 0) return arr",
+                "int first = arr[0]",
+                "for (int i = 0; i < arr.length - 1; i++)",
+                "arr[i] = arr[i+1]",
+                "arr[arr.length - 1] = first",
+                "return arr"
+            ],
+            "explanation": "Minden elemet felülírunk a jobbra lévő szomszédjával, végül az utolsó pozícióba beírjuk a lementett elsőt."
+        }
+    },
+    {
+        "title": "Duplikációk eltávolítása (Sorted)",
+        "description": "Adott egy rendezett tömb. Térj vissza egy új tömbbel, ami az egyedi elemeket tartalmazza.",
+        "hint": "Mivel rendezett, az egyforma elemek egymás mellett vannak.",
+        "q_type": "coding",
+        "difficulty_rating": 1320,
+        "language": "java",
+        "concept": {
+            "arrays": 1.0,
+            "loops": 0.9,
+            "logic": 0.8
+        },
+        "content": {
+            "initial_code": "public class Solution {\n public static int[] removeDuplicates(int[] arr) {",
+            "test_cases": [
+                {
+                    "input": "[1, 1, 2, 2, 3]",
+                    "expected_output": "[1, 2, 3]"
+                }
+            ],
+            "scaffolding_blocks": [
+                "if (arr.length == 0) return arr",
+                "temp[j++] = arr[i]",
+                "if (arr[i] != arr[i+1])",
+                "Arrays.copyOf(temp, j)",
+                "return"
+            ],
+            "explanation": "Végigmegyünk a tömbön, és csak akkor másoljuk az elemet egy ideiglenes tömbbe, ha különbözik a következőtől (vagy az utolsó elem)."
+        }
+    },
+    {
+        "title": "Mátrix átló összege",
+        "description": "Számítsd ki egy négyzetes mátrix (NxN) főátlójában lévő elemek összegét.",
+        "hint": "A főátlóban a sor és oszlop index megegyezik.",
+        "q_type": "coding",
+        "difficulty_rating": 1220,
+        "language": "java",
+        "concept": {
+            "arrays": 1.0,
+            "loops": 0.8
+        },
+        "content": {
+            "initial_code": "public class Solution {\n public static int diagonalSum(int[][] matrix) {",
+            "test_cases": [
+                {
+                    "input": "[[1, 2], [3, 4]]",
+                    "expected_output": "5"
+                },
+                {
+                    "input": "[[5]]",
+                    "expected_output": "5"
+                }
+            ],
+            "scaffolding_blocks": [
+                "int sum = 0",
+                "for (int i = 0; i < matrix.length; i++)",
+                "sum += matrix[i][i]",
+                "return sum"
+            ],
+            "explanation": "Csak egy ciklus kell, mivel a főátló elemei: matrix[0][0], matrix[1][1], matrix[2][2]..."
+        }
+    },
+    {
+        "title": "Palindrom tömb",
+        "description": "Döntsd el, hogy a tömb palindrom-e (eleje és vége ugyanaz, befelé haladva).",
+        "hint": "Hasonlítsd össze az i-edik és a (hossz-1-i)-edik elemet.",
+        "q_type": "coding",
+        "difficulty_rating": 1300,
+        "language": "java",
+        "concept": {
+            "arrays": 0.9,
+            "loops": 0.8,
+            "logic": 0.8
+        },
+        "content": {
+            "initial_code": "public class Solution {\n public static boolean isPalindrome(int[] arr) {",
+            "test_cases": [
+                {
+                    "input": "[1, 2, 2, 1]",
+                    "expected_output": "true"
+                },
+                {
+                    "input": "[1, 2, 3]",
+                    "expected_output": "false"
+                }
+            ],
+            "scaffolding_blocks": [
+                "for",
+                "i < arr.length / 2",
+                "if (arr[i] != arr[arr.length - 1 - i])",
+                "return false",
+                "return true"
+            ],
+            "explanation": "Ha bármelyik tükörkép-pár nem egyezik, akkor nem palindrom. Ha a ciklus végigmegy, akkor az."
+        }
+    },
+    {
+        "title": "Hiányzó szám keresése",
+        "description": "Adott egy tömb, ami 0-tól N-ig tartalmaz számokat, de egy hiányzik. Találd meg a hiányzót!",
+        "hint": "Használd az összegképletet (Gauss) vagy indexelést.",
+        "q_type": "coding",
+        "difficulty_rating": 1390,
+        "language": "java",
+        "concept": {
+            "arrays": 0.7,
+            "logic": 1.0
+        },
+        "content": {
+            "initial_code": "public class Solution {\n public static int missingNumber(int[] nums) {",
+            "test_cases": [
+                {
+                    "input": "[3, 0, 1]",
+                    "expected_output": "2"
+                },
+                {
+                    "input": "[0, 1]",
+                    "expected_output": "2"
+                }
+            ],
+            "scaffolding_blocks": [
+                "int n = nums.length",
+                "int expectedSum = n * (n + 1) / 2",
+                "int actualSum = 0",
+                "for (int x : nums) actualSum += x",
+                "return expectedSum - actualSum"
+            ],
+            "explanation": "Kiszámoljuk, mennyi lenne az összeg, ha minden szám meglenne, és kivonjuk belőle a tömb elemeinek valódi összegét."
+        }
+    },
+    {
+        "title": "Nullák mozgatása",
+        "description": "Mozgass minden 0-t a tömb végére, miközben a többi elem sorrendje megmarad. (In-place).",
+        "hint": "Tarts nyilván egy indexet, ahová a nem-nulla elemeket írod.",
+        "q_type": "coding",
+        "difficulty_rating": 1450,
+        "language": "java",
+        "concept": {
+            "arrays": 1.0,
+            "loops": 0.9,
+            "logic": 0.8
+        },
+        "content": {
+            "initial_code": "public class Solution {\n public static int[] moveZeroes(int[] nums) {",
+            "test_cases": [
+                {
+                    "input": "[0, 1, 0, 3, 12]",
+                    "expected_output": "[1, 3, 12, 0, 0]"
+                }
+            ],
+            "scaffolding_blocks": [
+                "int index = 0",
+                "for (int n : nums)",
+                "if (n != 0) nums[index++] = n",
+                "while (index < nums.length)",
+                "nums[index++] = 0",
+                "return nums"
+            ],
+            "explanation": "Először végigmegyünk és minden nem-nulla elemet beírunk az elejétől kezdve. A maradék helyeket 0-val töltjük fel."
+        }
+    },
+    {
+        "title": "Tömb forgatása K-szor",
+        "description": "Forgasd el a tömböt jobbra K lépéssel.",
+        "hint": "Használj egy segédtömböt vagy a tükrözéses trükköt.",
+        "q_type": "coding",
+        "difficulty_rating": 1420,
+        "language": "java",
+        "concept": {
+            "arrays": 1.0,
+            "loops": 0.8,
+            "logic": 0.9
+        },
+        "content": {
+            "initial_code": "public class Solution {\n public static int[] rotate(int[] nums, int k) {",
+            "test_cases": [
+                {
+                    "input": "[1, 2, 3, 4, 5], 2",
+                    "expected_output": "[4, 5, 1, 2, 3]"
+                }
+            ],
+            "scaffolding_blocks": [
+                "k = k % nums.length",
+                "int[] result = new int[nums.length]",
+                "for (int i = 0; i < nums.length; i++)",
+                "result[(i + k) % nums.length] = nums[i]",
+                "return result"
+            ],
+            "explanation": "Kiszámoljuk minden elem új pozícióját (i + k) % length képlettel egy új tömbbe."
+        }
+    },
+    {
+        "title": "Legtöbbször előforduló elem",
+        "description": "Találd meg azt az elemet, amely a legtöbbször szerepel (Majority Element). Feltételezheted, hogy a tömb rendezett.",
+        "hint": "Ha rendezett, az azonos elemek egymás mellett vannak.",
+        "q_type": "coding",
+        "difficulty_rating": 1410,
+        "language": "java",
+        "concept": {
+            "arrays": 0.9,
+            "loops": 0.8,
+            "logic": 0.7
+        },
+        "content": {
+            "initial_code": "public class Solution {\n public static int maxFrequencySorted(int[] arr) {",
+            "test_cases": [
+                {
+                    "input": "[1, 1, 2, 2, 2, 3]",
+                    "expected_output": "2"
+                }
+            ],
+            "scaffolding_blocks": [
+                "int maxCount = 0; int currentCount = 1",
+                "int bestVal = arr[0]",
+                "for (int i = 1; i < arr.length; i++)",
+                "if (arr[i] == arr[i-1]) currentCount++",
+                "else currentCount = 1",
+                "if (currentCount > maxCount)",
+                "return bestVal"
+            ],
+            "explanation": "Mivel rendezett, csak a szomszédokat kell nézni. Számoljuk a futamhosszt és frissítjük a maximumot."
+        }
+    },
+    {
+        "title": "Mátrix szorzása (egyszerűsített)",
+        "description": "Szorozz meg minden elemet a mátrixban egy k skalárral.",
+        "hint": "Nested loop.",
+        "q_type": "coding",
+        "difficulty_rating": 1400,
+        "language": "java",
+        "concept": {
+            "arrays": 1.0,
+            "loops": 1.0
+        },
+        "content": {
+            "initial_code": "public class Solution {\n public static int[][] scalarMult(int[][] matrix, int k) {",
+            "test_cases": [
+                {
+                    "input": "[[1, 2], [3, 4]], 2",
+                    "expected_output": "[[2, 4], [6, 8]]"
+                }
+            ],
+            "scaffolding_blocks": [
+                "for (int i = 0; i < matrix.length; i++)",
+                "for (int j = 0; j < matrix[i].length; j++)",
+                "matrix[i][j] *= k",
+                "return matrix"
+            ],
+            "explanation": "Két egymásba ágyazott ciklussal végigmegyünk minden cellán és megszorozzuk az értékét."
+        }
+    },
+    {
+        "title": "Spirál bejárás (Szimulált)",
+        "description": "Adott egy NxN mátrix. Térj vissza a legelső sorral és a legutolsó sorral összefűzve egyetlen tömbben.",
+        "hint": "Másold ki az első sort, majd az utolsót.",
+        "q_type": "coding",
+        "difficulty_rating": 1430,
+        "language": "java",
+        "concept": {
+            "arrays": 1.0,
+            "basics": 0.6
+        },
+        "content": {
+            "initial_code": "public class Solution {\n public static int[] firstAndLastRow(int[][] m) {",
+            "test_cases": [
+                {
+                    "input": "[[1, 2], [3, 4], [5, 6]]",
+                    "expected_output": "[1, 2, 5, 6]"
+                }
+            ],
+            "scaffolding_blocks": [
+                "int cols = m[0].length",
+                "int[] res = new int[cols * 2]",
+                "System.arraycopy(m[0], 0, res, 0, cols)",
+                "System.arraycopy(m[m.length-1], 0, res, cols, cols)",
+                "return res"
+            ],
+            "explanation": "Létrehozunk egy kétszer akkor tömböt, mint egy sor, és bemásoljuk az első és utolsó sort."
+        }
+    },
+    {
+        "title": "Metszet (Intersection)",
+        "description": "Keress közös elemeket két rendezett tömbben. (Az eredmény legyen lista vagy tömb).",
+        "hint": "Két mutató módszer.",
+        "q_type": "coding",
+        "difficulty_rating": 1480,
+        "language": "java",
+        "concept": {
+            "arrays": 1.0,
+            "loops": 0.9,
+            "logic": 0.9
+        },
+        "content": {
+            "initial_code": "public class Solution {\n public static ArrayList<Integer> intersection(int[] a, int[] b) {",
+            "test_cases": [
+                {
+                    "input": "[1, 2, 4], [2, 4, 5]",
+                    "expected_output": "[2, 4]"
+                }
+            ],
+            "scaffolding_blocks": [
+                "ArrayList<Integer> res = new ArrayList<>()",
+                "while (i < a.length && j < b.length)",
+                "if (a[i] == b[j]) { res.add(a[i]); i++; j++; }",
+                "else if (a[i] < b[j]) i++",
+                "else j++",
+                "return res"
+            ],
+            "explanation": "Ha egyeznek, hozzáadjuk. Ha nem, a kisebb értékű mutatót léptetjük előre, mert a tömbök rendezettek."
+        }
+    },
+    {
+        "title": "Csúcselem (Peak Element)",
+        "description": "Találj egy olyan elemet, amely nagyobb a szomszédainál. (Elég az első ilyet visszaadni, a széleken elég egy szomszédot nézni).",
+        "hint": "Lineáris kereséssel is megoldható.",
+        "q_type": "coding",
+        "difficulty_rating": 1460,
+        "language": "java",
+        "concept": {
+            "arrays": 0.8,
+            "loops": 0.8,
+            "logic": 0.9
+        },
+        "content": {
+            "initial_code": "public class Solution {\n public static int findPeak(int[] nums) {",
+            "test_cases": [
+                {
+                    "input": "[1, 3, 2, 4]",
+                    "expected_output": "3"
+                }
+            ],
+            "scaffolding_blocks": [
+                "for (int i = 1; i < nums.length - 1; i++)",
+                "if (nums[i] > nums[i-1] && nums[i] > nums[i+1])",
+                "return nums[i]",
+                "if (nums[0] > nums[1]) return nums[0]",
+                "return nums[nums.length-1]"
+            ],
+            "explanation": "Megvizsgáljuk a széleket külön, majd a belső elemeket, hogy nagyobbak-e mindkét szomszédnál."
+        }
+    },
+    {
+        "title": "Leghosszabb sorozat",
+        "description": "Keresd meg a leghosszabb azonos elemekből álló sorozat hosszát.",
+        "hint": "Iterálj és számold a szomszédos egyezéseket.",
+        "q_type": "coding",
+        "difficulty_rating": 1440,
+        "language": "java",
+        "concept": {
+            "arrays": 0.9,
+            "loops": 0.9,
+            "logic": 0.8
+        },
+        "content": {
+            "initial_code": "public class Solution {\n public static int longestSequence(int[] arr) {",
+            "test_cases": [
+                {
+                    "input": "[1, 2, 2, 2, 3]",
+                    "expected_output": "3"
+                },
+                {
+                    "input": "[1, 2]",
+                    "expected_output": "1"
+                }
+            ],
+            "scaffolding_blocks": [
+                "int max = 1; int current = 1",
+                "for (int i = 1; i < arr.length; i++)",
+                "if (arr[i] == arr[i-1]) current++",
+                "else { if (current > max) max = current; current = 1; }",
+                "return Math.max(max, current)"
+            ],
+            "explanation": "Ha az aktuális elem egyezik az előzővel, növeljük a jelenlegi hosszt. Ha nem, lezárjuk a sorozatot és összevetjük a maximummal."
+        }
+    },
+    {
+        "title": "Subarray Sum (Részletösszeg)",
+        "description": "Találd meg azt az összefüggő résztömböt, aminek az összege a legnagyobb (Kadane algoritmusa egyszerűsítve: csak pozitív számokkal, vagy brute force). Itt elég a brute force.",
+        "hint": "Két ciklus: start és end.",
+        "q_type": "coding",
+        "difficulty_rating": 1490,
+        "language": "java",
+        "concept": {
+            "arrays": 1.0,
+            "loops": 1.0
+        },
+        "content": {
+            "initial_code": "public class Solution {\n public static int maxSubArraySum(int[] nums) {",
+            "test_cases": [
+                {
+                    "input": "[1, -3, 2, 1, -1]",
+                    "expected_output": "3"
+                }
+            ],
+            "scaffolding_blocks": [
+                "int maxSoFar = Integer.MIN_VALUE",
+                "for (int i = 0; i < nums.length; i++)",
+                "int currentSum = 0",
+                "for (int j = i; j < nums.length; j++)",
+                "currentSum += nums[j]",
+                "if (currentSum > maxSoFar) maxSoFar = currentSum"
+            ],
+            "explanation": "Minden lehetséges kezdő- és végpontot kipróbálunk, összegezzük a közöttük lévő elemeket, és keressük a maximumot."
+        }
+    },
+    {
+        "title": "Hiányzó pozitív",
+        "description": "Adott egy rendezetlen tömb. Találd meg a legkisebb hiányzó pozitív egész számot (1-től kezdve).",
+        "hint": "Rendezd, majd keresd az 1-et, 2-t...",
+        "q_type": "coding",
+        "difficulty_rating": 1500,
+        "language": "java",
+        "concept": {
+            "arrays": 1.0,
+            "logic": 0.8
+        },
+        "content": {
+            "initial_code": "public class Solution {\n public static int firstMissingPositive(int[] nums) {",
+            "test_cases": [
+                {
+                    "input": "[3, 4, -1, 1]",
+                    "expected_output": "2"
+                },
+                {
+                    "input": "[1, 2, 0]",
+                    "expected_output": "3"
+                }
+            ],
+            "scaffolding_blocks": [
+                "Arrays.sort(nums)",
+                "int target = 1",
+                "for (int n : nums)",
+                "if (n == target) target++",
+                "else if (n > target) return target",
+                "return target"
+            ],
+            "explanation": "Rendezés után végigmegyünk. Ha megtaláljuk a 'target'-et (kezdetben 1), növeljük. Ha nagyobb számot találunk, a target hiányzik."
+        }
+    }
+]

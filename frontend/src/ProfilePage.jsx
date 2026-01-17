@@ -9,6 +9,7 @@ export default function ProfilePage() {
     const navigate = useNavigate();
     
     const [username, setUsername] = useState('');
+    const [bio, setBio] = useState('');
     const [avatarConfig, setAvatarConfig] = useState(null);
     const [inventory, setInventory] = useState([]);
     const [message, setMessage] = useState(null);
@@ -20,6 +21,7 @@ export default function ProfilePage() {
     useEffect(() => {
         if (profile) {
             setUsername(profile.username || '');
+            setBio(profile.bio || '');
             setAvatarConfig(profile.avatarConfig || {});
             fetchInventory();
         }
@@ -83,6 +85,7 @@ export default function ProfilePage() {
                 },
                 body: JSON.stringify({
                     username: username,
+                    bio: bio,
                     avatar_config: avatarConfig
                 })
             });
@@ -131,6 +134,31 @@ export default function ProfilePage() {
                         value={username} 
                         onChange={(e) => setUsername(e.target.value)}
                         style={{ width: '100%', boxSizing: 'border-box' }}
+                    />
+                </div>
+
+                <div style={{ marginBottom: '20px' }}>
+                    <label style={{ display: 'block', marginBottom: '10px', fontSize: '18px' }}>
+                        Bio
+                        <span style={{ float: 'right', fontSize: '14px', color: bio.length > 160 ? 'var(--error-color)' : 'var(--text-color)', opacity: 0.7 }}>
+                            {bio.length}/160
+                        </span>
+                    </label>
+                    <textarea 
+                        value={bio} 
+                        onChange={(e) => setBio(e.target.value)}
+                        placeholder="Mesélj magadról..."
+                        rows={3}
+                        style={{ 
+                            width: '100%', 
+                            boxSizing: 'border-box', 
+                            padding: '10px', 
+                            borderRadius: '8px',
+                            border: '1px solid var(--card-border)',
+                            backgroundColor: 'var(--bg-color)',
+                            color: 'var(--text-color)',
+                            resize: 'none'
+                        }}
                     />
                 </div>
 

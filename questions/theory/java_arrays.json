@@ -1,0 +1,882 @@
+[
+    {
+        "title": "Tömb deklaráció szintaxisa",
+        "description": "Melyik jelölés a legelterjedtebb (best practice) Java-ban egy egész számokat tartalmazó tömb deklarálására?",
+        "hint": "A típus után tesszük a zárójelet.",
+        "q_type": "theory",
+        "difficulty_rating": 600,
+        "language": "java",
+        "concept": {
+            "arrays": 1.0,
+            "basics": 0.5
+        },
+        "content": {
+            "options": [
+                "int arr[];",
+                "int[] arr;",
+                "array int arr;",
+                "int arr{};"
+            ],
+            "correct_answer": "int[] arr;",
+            "explanation": "Bár az 'int arr[]' is működik (C-stílus), Java-ban az 'int[] arr' a preferált, mert egyértelműen jelzi, hogy a típus egy int-tömb."
+        }
+    },
+    {
+        "title": "Tömb kezdő indexe",
+        "description": "Hányas indexen található egy Java tömb legelső eleme?",
+        "hint": "A számítástechnikában gyakran nem 1-től számolunk.",
+        "q_type": "theory",
+        "difficulty_rating": 600,
+        "language": "java",
+        "concept": {
+            "arrays": 1.0,
+            "basics": 0.8
+        },
+        "content": {
+            "options": [
+                "1",
+                "0",
+                "-1",
+                "null"
+            ],
+            "correct_answer": "0",
+            "explanation": "Java-ban (és a C-alapú nyelvekben) a tömbindexelés 0-tól kezdődik (zero-based indexing)."
+        }
+    },
+    {
+        "title": "Tömb létrehozása new kulcsszóval",
+        "description": "Hogyan hozunk létre helyesen egy 5 elemű, egész számokat tároló tömböt?",
+        "hint": "A méretet meg kell adni a létrehozáskor.",
+        "q_type": "theory",
+        "difficulty_rating": 650,
+        "language": "java",
+        "concept": {
+            "arrays": 1.0,
+            "basics": 0.6
+        },
+        "content": {
+            "options": [
+                "new int[5]",
+                "new int(5)",
+                "new Array<int>(5)",
+                "int[5]"
+            ],
+            "correct_answer": "new int[5]",
+            "explanation": "Tömb példányosításakor a 'new Típus[méret]' szintaxist használjuk."
+        }
+    },
+    {
+        "title": "Elem elérése indexszel",
+        "description": "Melyik operátorral érjük el a tömb egy konkrét elemét?",
+        "hint": "Szögletes zárójel.",
+        "q_type": "theory",
+        "difficulty_rating": 650,
+        "language": "java",
+        "concept": {
+            "arrays": 1.0,
+            "basics": 0.5
+        },
+        "content": {
+            "options": [
+                "arr(index)",
+                "arr.get(index)",
+                "arr[index]",
+                "arr->index"
+            ],
+            "correct_answer": "arr[index]",
+            "explanation": "A tömbök elemeire a szögletes zárójeles indexelő operátorral hivatkozunk: tomb[0]."
+        }
+    },
+    {
+        "title": "Tömb inicializáló lista",
+        "description": "Melyik a helyes forma egy tömb létrehozására és feltöltésére egy lépésben?",
+        "hint": "Kapcsos zárójelek között soroljuk fel az elemeket.",
+        "q_type": "theory",
+        "difficulty_rating": 700,
+        "language": "java",
+        "concept": {
+            "arrays": 1.0,
+            "basics": 0.6
+        },
+        "content": {
+            "options": [
+                "int[] a = (1, 2, 3);",
+                "int[] a = [1, 2, 3];",
+                "int[] a = {1, 2, 3};",
+                "int[] a = <1, 2, 3>;"
+            ],
+            "correct_answer": "int[] a = {1, 2, 3};",
+            "explanation": "A tömb literál (inicializáló lista) Java-ban kapcsos zárójeleket használ."
+        }
+    },
+    {
+        "title": "Tömb mérete",
+        "description": "Változtatható-e egy Java tömb mérete a létrehozása után?",
+        "hint": "A tömbök statikus adatszerkezetek.",
+        "q_type": "theory",
+        "difficulty_rating": 750,
+        "language": "java",
+        "concept": {
+            "arrays": 1.0,
+            "basics": 0.7
+        },
+        "content": {
+            "options": [
+                "Igen, az add() metódussal.",
+                "Nem, a méret fix.",
+                "Igen, a resize() függvénnyel.",
+                "Csak ha dinamikusnak deklaráljuk."
+            ],
+            "correct_answer": "Nem, a méret fix.",
+            "explanation": "A Java tömbök fix méretűek. Létrehozáskor eldől a hosszuk, ami később nem módosítható (ehhez ArrayList kell)."
+        }
+    },
+    {
+        "title": "Tömb default értéke",
+        "description": "Mi lesz az értéke egy `int[3]` tömb elemeinek közvetlenül a létrehozás után?",
+        "hint": "A számok alapértelmezett értéke.",
+        "q_type": "theory",
+        "difficulty_rating": 750,
+        "language": "java",
+        "concept": {
+            "arrays": 1.0,
+            "basics": 0.5
+        },
+        "content": {
+            "options": [
+                "null",
+                "Véletlenszerű memória szemét",
+                "0",
+                "undefined"
+            ],
+            "correct_answer": "0",
+            "explanation": "Java-ban a tömbök elemei automatikusan inicializálódnak a típus alapértelmezett értékére (int esetén 0)."
+        }
+    },
+    {
+        "title": "String tömb",
+        "description": "Mi a típusa a `main` metódus paraméterének (args)?",
+        "hint": "Szövegek tömbje.",
+        "q_type": "theory",
+        "difficulty_rating": 780,
+        "language": "java",
+        "concept": {
+            "arrays": 1.0,
+            "basics": 0.8
+        },
+        "content": {
+            "options": [
+                "String",
+                "char[]",
+                "String[]",
+                "List<String>"
+            ],
+            "correct_answer": "String[]",
+            "explanation": "A `public static void main(String[] args)` metódusban az args egy Stringeket tartalmazó tömb."
+        }
+    },
+    {
+        "title": "Length tulajdonság",
+        "description": "Hogyan kérdezzük le egy `tomb` nevű tömb elemeinek számát?",
+        "hint": "Nem metódus, hanem mező.",
+        "q_type": "theory",
+        "difficulty_rating": 850,
+        "language": "java",
+        "concept": {
+            "arrays": 1.0,
+            "basics": 0.6
+        },
+        "content": {
+            "options": [
+                "tomb.length()",
+                "tomb.size()",
+                "tomb.length",
+                "tomb.count"
+            ],
+            "correct_answer": "tomb.length",
+            "explanation": "A tömböknek `length` tulajdonsága (mezője) van, nem metódusa (mint a Stringnek a length())."
+        }
+    },
+    {
+        "title": "Indexhatár hiba",
+        "description": "Milyen kivételt dob a Java, ha egy 5 elemű tömb 10. indexére próbálunk hivatkozni?",
+        "hint": "Out of bounds...",
+        "q_type": "theory",
+        "difficulty_rating": 850,
+        "language": "java",
+        "concept": {
+            "arrays": 1.0,
+            "basics": 0.5
+        },
+        "content": {
+            "options": [
+                "NullPointerException",
+                "ArrayIndexOutOfBoundsException",
+                "IndexError",
+                "SegmentationFault"
+            ],
+            "correct_answer": "ArrayIndexOutOfBoundsException",
+            "explanation": "Ez a kivétel jelzi, hogy olyan indexet próbáltunk elérni, amely kívül esik a tömb érvényes tartományán."
+        }
+    },
+    {
+        "title": "Utolsó elem indexe",
+        "description": "Ha a tömb hossza `N`, mennyi az utolsó elemének indexe?",
+        "hint": "Mivel 0-tól indulunk...",
+        "q_type": "theory",
+        "difficulty_rating": 820,
+        "language": "java",
+        "concept": {
+            "arrays": 1.0,
+            "logic": 0.4
+        },
+        "content": {
+            "options": [
+                "N",
+                "N - 1",
+                "N + 1",
+                "N / 2"
+            ],
+            "correct_answer": "N - 1",
+            "explanation": "0-tól N-1-ig tartanak az indexek."
+        }
+    },
+    {
+        "title": "Tömb bejárása",
+        "description": "Melyik ciklus a legalkalmasabb egy tömb összes elemének módosítás nélküli végigolvasására (readonly)?",
+        "hint": "A legegyszerűbb, index nélküli bejárás.",
+        "q_type": "theory",
+        "difficulty_rating": 900,
+        "language": "java",
+        "concept": {
+            "arrays": 0.8,
+            "loops": 0.8
+        },
+        "content": {
+            "options": [
+                "while",
+                "do-while",
+                "for-each (enhanced for)",
+                "goto"
+            ],
+            "correct_answer": "for-each (enhanced for)",
+            "explanation": "A `for (Típus e : tomb)` szerkezet a legtömörebb és legbiztonságosabb módja a teljes bejárásnak, ha nem kell index."
+        }
+    },
+    {
+        "title": "Tömb vs ArrayList",
+        "description": "Mi a fő különbség a tömb (`[]`) és az `ArrayList` között méret szempontjából?",
+        "hint": "Statikus vs Dinamikus.",
+        "q_type": "theory",
+        "difficulty_rating": 950,
+        "language": "java",
+        "concept": {
+            "arrays": 0.8,
+            "oop": 0.5
+        },
+        "content": {
+            "options": [
+                "Nincs különbség.",
+                "A tömb dinamikusan nő, az ArrayList fix.",
+                "A tömb fix méretű, az ArrayList dinamikusan nő.",
+                "Az ArrayList csak számokat tárolhat."
+            ],
+            "correct_answer": "A tömb fix méretű, az ArrayList dinamikusan nő.",
+            "explanation": "Az ArrayList képes automatikusan átméretezni magát új elemek hozzáadásakor, míg a tömb nem."
+        }
+    },
+    {
+        "title": "Boolean tömb default",
+        "description": "Milyen értékkel töltődik fel alapértelmezetten egy `new boolean[5]` tömb?",
+        "hint": "A boolean típus alapértéke.",
+        "q_type": "theory",
+        "difficulty_rating": 920,
+        "language": "java",
+        "concept": {
+            "arrays": 1.0,
+            "basics": 0.6
+        },
+        "content": {
+            "options": [
+                "true",
+                "false",
+                "null",
+                "0"
+            ],
+            "correct_answer": "false",
+            "explanation": "A boolean primitív típus alapértelmezett értéke a false."
+        }
+    },
+    {
+        "title": "Objektum tömb elemei",
+        "description": "Mit tartalmaz egy `String[5]` tömb a létrehozás után közvetlenül (értékadás előtt)?",
+        "hint": "Referencia típusok alapértéke.",
+        "q_type": "theory",
+        "difficulty_rating": 980,
+        "language": "java",
+        "concept": {
+            "arrays": 1.0,
+            "oop": 0.4
+        },
+        "content": {
+            "options": [
+                "Üres stringeket ( )",
+                "null szöveget",
+                "null referenciákat",
+                "Memória szemetet"
+            ],
+            "correct_answer": "null referenciákat",
+            "explanation": "Minden objektumtömb (referencia típus) elemei alapértelmezetten `null` értékűek."
+        }
+    },
+    {
+        "title": "Többdimenziós tömb deklaráció",
+        "description": "Hogyan deklarálunk 2D mátrixot Java-ban?",
+        "hint": "Két pár zárójel.",
+        "q_type": "theory",
+        "difficulty_rating": 990,
+        "language": "java",
+        "concept": {
+            "arrays": 1.0,
+            "basics": 0.5
+        },
+        "content": {
+            "options": [
+                "int matrix[2];",
+                "int[,] matrix;",
+                "int[][] matrix;",
+                "int matrix(2,2);"
+            ],
+            "correct_answer": "int[][] matrix;",
+            "explanation": "Java-ban a többdimenziós tömb 'tömbök tömbje', jelölése `[][]`."
+        }
+    },
+    {
+        "title": "Arrays.toString()",
+        "description": "Mit ír ki a `System.out.println(tomb)` utasítás egy int tömbre, ha NEM használunk segédfüggvényt?",
+        "hint": "Nem a tartalmat...",
+        "q_type": "theory",
+        "difficulty_rating": 1050,
+        "language": "java",
+        "concept": {
+            "arrays": 0.9,
+            "basics": 0.6
+        },
+        "content": {
+            "options": [
+                "A tömb elemeit listázva.",
+                "Fordítási hibát.",
+                "A memóriacímet/hashkódot (pl. [I@15db9742).",
+                "Semmit."
+            ],
+            "correct_answer": "A memóriacímet/hashkódot (pl. [I@15db9742).",
+            "explanation": "A tömbök nem írják felül a toString() metódust, így az alapértelmezett Object.toString()-et hívják, ami a típust és a hashkódot adja vissza."
+        }
+    },
+    {
+        "title": "Tömb másolása",
+        "description": "Ha `int[] a = b;` értékadást teszünk, akkor...",
+        "hint": "Referencia másolás vs Deep copy.",
+        "q_type": "theory",
+        "difficulty_rating": 1100,
+        "language": "java",
+        "concept": {
+            "arrays": 1.0,
+            "oop": 0.7
+        },
+        "content": {
+            "options": [
+                "Létrejön a tömb másolata.",
+                "A két változó ugyanarra a tömbre mutat a memóriában.",
+                "Hiba, tömböt nem lehet így másolni.",
+                "Csak az első elem másolódik."
+            ],
+            "correct_answer": "A két változó ugyanarra a tömbre mutat a memóriában.",
+            "explanation": "Tömböknél az értékadás csak a referenciát másolja (shallow copy), így ha 'a'-t módosítjuk, 'b' is változik."
+        }
+    },
+    {
+        "title": "Jagged array (Fűrészfogas tömb)",
+        "description": "Lehetséges-e Java-ban olyan 2D tömb, ahol a sorok hossza eltérő?",
+        "hint": "Tömbök tömbje.",
+        "q_type": "theory",
+        "difficulty_rating": 1150,
+        "language": "java",
+        "concept": {
+            "arrays": 1.0,
+            "logic": 0.5
+        },
+        "content": {
+            "options": [
+                "Nem, a mátrixnak téglalap alakúnak kell lennie.",
+                "Igen, ezek a jagged array-ek.",
+                "Csak object tömböknél.",
+                "Csak 3. verziótól felfelé."
+            ],
+            "correct_answer": "Igen, ezek a jagged array-ek.",
+            "explanation": "Mivel a 2D tömb valójában egy 1D tömb, ami tömböket tartalmaz, a belső tömbök hossza független egymástól."
+        }
+    },
+    {
+        "title": "Arrays.sort() komplexitása",
+        "description": "Milyen rendező algoritmust használ primitívekre általában az `Arrays.sort()`?",
+        "hint": "Gyors rendezés egy változata.",
+        "q_type": "theory",
+        "difficulty_rating": 1180,
+        "language": "java",
+        "concept": {
+            "arrays": 0.6,
+            "basics": 0.4
+        },
+        "content": {
+            "options": [
+                "Bubble Sort",
+                "Dual-Pivot Quicksort",
+                "Merge Sort",
+                "Insertion Sort"
+            ],
+            "correct_answer": "Dual-Pivot Quicksort",
+            "explanation": "Primitív típusoknál a Java a Dual-Pivot Quicksort-ot használja (átlagos O(n log n)), míg objektumoknál stabil MergeSort-ot (vagy TimSort-ot)."
+        }
+    },
+    {
+        "title": "Varargs és tömbök",
+        "description": "Milyen típusnak látja a metódus a `void foo(int... numbers)` paraméterét belül?",
+        "hint": "A varargs csak szintaktikai cukorka.",
+        "q_type": "theory",
+        "difficulty_rating": 1120,
+        "language": "java",
+        "concept": {
+            "arrays": 0.8,
+            "functions": 0.8
+        },
+        "content": {
+            "options": [
+                "List<Integer>",
+                "int",
+                "int[] (tömb)",
+                "Iterator"
+            ],
+            "correct_answer": "int[] (tömb)",
+            "explanation": "A változó számú argumentum (varargs) a háttérben egy tömbbé fordul."
+        }
+    },
+    {
+        "title": "Final tömb",
+        "description": "Mit akadályoz meg a `final int[] arr` deklaráció?",
+        "hint": "A referencia állandósága vs a tartalom állandósága.",
+        "q_type": "theory",
+        "difficulty_rating": 1190,
+        "language": "java",
+        "concept": {
+            "arrays": 1.0,
+            "oop": 0.6
+        },
+        "content": {
+            "options": [
+                "A tömb elemeinek módosítását.",
+                "A tömb újra-inicializálását (másik tömbre mutatást).",
+                "Mindkettőt.",
+                "Egyiket sem."
+            ],
+            "correct_answer": "A tömb újra-inicializálását (másik tömbre mutatást).",
+            "explanation": "A `final` referencia csak azt tiltja, hogy az `arr` változóhoz új tömböt rendeljünk, de a meglévő tömb elemei módosíthatók."
+        }
+    },
+    {
+        "title": "Üres tömb",
+        "description": "Létrehozható-e 0 elemű tömb: `new int[0]`?",
+        "hint": "Van-e értelme?",
+        "q_type": "theory",
+        "difficulty_rating": 1080,
+        "language": "java",
+        "concept": {
+            "arrays": 1.0,
+            "logic": 0.4
+        },
+        "content": {
+            "options": [
+                "Nem, minimum 1 elem kell.",
+                "Igen, és ez egy valid objektum.",
+                "Fordítási hiba.",
+                "Runtime hiba."
+            ],
+            "correct_answer": "Igen, és ez egy valid objektum.",
+            "explanation": "Az üres tömb (length=0) teljesen valid, és gyakran használják null helyett a 'nincs eredmény' jelzésére."
+        }
+    },
+    {
+        "title": "Tömb bejárás indexszel",
+        "description": "Mi a helyes ciklusfeltétel egy tömb végigiterálásához `i` indexszel?",
+        "hint": "Szigorú egyenlőtlenség.",
+        "q_type": "theory",
+        "difficulty_rating": 1020,
+        "language": "java",
+        "concept": {
+            "arrays": 0.9,
+            "loops": 1.0
+        },
+        "content": {
+            "options": [
+                "i <= arr.length",
+                "i < arr.length",
+                "i < arr.size()",
+                "i <= arr.length - 1"
+            ],
+            "correct_answer": "i < arr.length",
+            "explanation": "Mivel az indexek 0-tól length-1-ig mennek, a helyes feltétel a szigorúan kisebb (<)."
+        }
+    },
+    {
+        "title": "System.arraycopy()",
+        "description": "Melyik módszer a leggyorsabb (native) egy tömb részének átmásolására egy másikba?",
+        "hint": "A System osztályban van.",
+        "q_type": "theory",
+        "difficulty_rating": 1250,
+        "language": "java",
+        "concept": {
+            "arrays": 1.0,
+            "basics": 0.5
+        },
+        "content": {
+            "options": [
+                "For ciklussal egyesével.",
+                "System.arraycopy()",
+                "Arrays.copyOf()",
+                "Clone()"
+            ],
+            "correct_answer": "System.arraycopy()",
+            "explanation": "A System.arraycopy() egy natív (C-ben implementált) metódus, ami közvetlen memóriaművelettel másol, így nagyon gyors."
+        }
+    },
+    {
+        "title": "Tömb kovariancia",
+        "description": "Helyes-e a következő kód: `Object[] objArr = new String[5];`?",
+        "hint": "A String az Object leszármazottja.",
+        "q_type": "theory",
+        "difficulty_rating": 1350,
+        "language": "java",
+        "concept": {
+            "arrays": 1.0,
+            "oop": 0.9
+        },
+        "content": {
+            "options": [
+                "Igen, a Java tömbök kovariánsak.",
+                "Nem, típusütközés.",
+                "Csak castolással működik.",
+                "Fordítási hiba."
+            ],
+            "correct_answer": "Igen, a Java tömbök kovariánsak.",
+            "explanation": "Mivel a String leszármazottja az Object-nek, a String[] is 'leszármazottja' (kompatibilis) az Object[]-nek, bár ez futásidejű hibákhoz (ArrayStoreException) vezethet."
+        }
+    },
+    {
+        "title": "ArrayStoreException",
+        "description": "Mikor dob a JVM `ArrayStoreException`-t?",
+        "hint": "Kovariancia veszélye: Kutyák tömbjébe Macskát teszel.",
+        "q_type": "theory",
+        "difficulty_rating": 1380,
+        "language": "java",
+        "concept": {
+            "arrays": 1.0,
+            "oop": 0.8
+        },
+        "content": {
+            "options": [
+                "Túlindexelésnél.",
+                "Ha null-t teszünk a tömbbe.",
+                "Ha nem megfelelő típusú objektumot teszünk egy tömbbe.",
+                "Ha negatív mérettel hozzuk létre."
+            ],
+            "correct_answer": "Ha nem megfelelő típusú objektumot teszünk egy tömbbe.",
+            "explanation": "Ha pl. egy `Object[]` hivatkozás valójában `String[]`-re mutat, és megpróbálunk bele `Integer`-t tenni, akkor kapjuk ezt a hibát."
+        }
+    },
+    {
+        "title": "Anonim tömb",
+        "description": "Hogyan hozhatunk létre egy tömböt 'on-the-fly' paraméterátadáskor, változó deklarálása nélkül?",
+        "hint": "new int[] { ... }",
+        "q_type": "theory",
+        "difficulty_rating": 1280,
+        "language": "java",
+        "concept": {
+            "arrays": 1.0,
+            "basics": 0.7
+        },
+        "content": {
+            "options": [
+                "{1, 2, 3}",
+                "[1, 2, 3]",
+                "new int[]{1, 2, 3}",
+                "new {1, 2, 3}"
+            ],
+            "correct_answer": "new int[]{1, 2, 3}",
+            "explanation": "Ha nem deklarációban használjuk, ki kell írni a `new Típus[]` részt az inicializáló lista előtt."
+        }
+    },
+    {
+        "title": "Memóriaelhelyezkedés",
+        "description": "Hol tárolódnak a Java tömbök objektumai a memóriában?",
+        "hint": "Minden objektum itt lakik.",
+        "q_type": "theory",
+        "difficulty_rating": 1300,
+        "language": "java",
+        "concept": {
+            "arrays": 0.7,
+            "basics": 0.8
+        },
+        "content": {
+            "options": [
+                "Stack",
+                "Heap",
+                "Register",
+                "Code Segment"
+            ],
+            "correct_answer": "Heap",
+            "explanation": "Mivel a tömbök objektumok, a Heap-en (kupac) jönnek létre, a Stack-en csak a rájuk mutató referencia van."
+        }
+    },
+    {
+        "title": "Arrays.deepToString()",
+        "description": "Mikor kell az `Arrays.toString()` helyett az `Arrays.deepToString()`-et használni?",
+        "hint": "Több dimenzió esetén.",
+        "q_type": "theory",
+        "difficulty_rating": 1250,
+        "language": "java",
+        "concept": {
+            "arrays": 1.0,
+            "basics": 0.6
+        },
+        "content": {
+            "options": [
+                "Mindig.",
+                "Ha a tömb objektumokat tartalmaz.",
+                "Többdimenziós tömbök (tömbök tömbje) kiírásakor.",
+                "Ha a tömb nagyon hosszú."
+            ],
+            "correct_answer": "Többdimenziós tömbök (tömbök tömbje) kiírásakor.",
+            "explanation": "A sima toString() a belső tömböknek csak a referenciáját írná ki, a deepToString() rekurzívan bejárja őket."
+        }
+    },
+    {
+        "title": "Generikus tömb létrehozása",
+        "description": "Létrehozható-e közvetlenül `new T[10]` típusú tömb egy generikus osztályban?",
+        "hint": "Type erasure probléma.",
+        "q_type": "theory",
+        "difficulty_rating": 1390,
+        "language": "java",
+        "concept": {
+            "arrays": 0.8,
+            "oop": 0.9
+        },
+        "content": {
+            "options": [
+                "Igen, simán.",
+                "Nem, a típustörlés miatt tilos.",
+                "Csak ha T extends Object.",
+                "Igen, de warningot ad."
+            ],
+            "correct_answer": "Nem, a típustörlés miatt tilos.",
+            "explanation": "Mivel futásidőben a 'T' típus nem ismert, a Java nem tudja, milyen típusú tömböt kellene a memóriában lefoglalni."
+        }
+    },
+    {
+        "title": "Arrays.asList() hátulütője",
+        "description": "Mi történik, ha módosítani próbáljuk (add/remove) az `Arrays.asList()` által visszaadott listát?",
+        "hint": "Fixed-size list.",
+        "q_type": "theory",
+        "difficulty_rating": 1220,
+        "language": "java",
+        "concept": {
+            "arrays": 0.9,
+            "oop": 0.8
+        },
+        "content": {
+            "options": [
+                "Sikeresen módosul.",
+                "Létrejön egy másolat.",
+                "UnsupportedOperationException-t dob.",
+                "NullPointerException."
+            ],
+            "correct_answer": "UnsupportedOperationException-t dob.",
+            "explanation": "Az `asList` egy fix méretű 'view'-t (nézetet) ad a tömbre. Az elemek értéke változtatható, de a lista mérete (add/remove) nem."
+        }
+    },
+    {
+        "title": "Tömbök maximális mérete",
+        "description": "Mi elméletileg a Java tömbök maximális indexe?",
+        "hint": "Az index típusa `int`.",
+        "q_type": "theory",
+        "difficulty_rating": 1450,
+        "language": "java",
+        "concept": {
+            "arrays": 0.8,
+            "basics": 0.7
+        },
+        "content": {
+            "options": [
+                "Integer.MAX_VALUE (kb 2 milliárd)",
+                "Long.MAX_VALUE",
+                "Korlátlan",
+                "A RAM mérete bájtban"
+            ],
+            "correct_answer": "Integer.MAX_VALUE (kb 2 milliárd)",
+            "explanation": "Mivel az indexelő operátor `int`-et vár, a tömb maximális mérete technikailag `Integer.MAX_VALUE` (bár a VM korlátok miatt picit kevesebb)."
+        }
+    },
+    {
+        "title": "Cache Locality (Gyorsítótár)",
+        "description": "Miért gyorsabb gyakran egy tömb bejárása, mint egy LinkedList-é?",
+        "hint": "A memória elrendezése számít.",
+        "q_type": "theory",
+        "difficulty_rating": 1500,
+        "language": "java",
+        "concept": {
+            "arrays": 1.0,
+            "logic": 0.8
+        },
+        "content": {
+            "options": [
+                "Mert a tömb kisebb.",
+                "A tömb elemei folytonosan helyezkednek el a memóriában (Spatial Locality).",
+                "Mert a LinkedList rekurzív.",
+                "Nincs sebességkülönbség."
+            ],
+            "correct_answer": "A tömb elemei folytonosan helyezkednek el a memóriában (Spatial Locality).",
+            "explanation": "A CPU cache hatékonyabban tölti be a folytonos memóriaterületeket, így a tömb bejárása sokkal kevesebb cache miss-t okoz."
+        }
+    },
+    {
+        "title": "Reflection Array létrehozás",
+        "description": "Hogyan lehet generikus tömböt létrehozni kerülőúton, Reflection segítségével?",
+        "hint": "Array.newInstance()...",
+        "q_type": "theory",
+        "difficulty_rating": 1550,
+        "language": "java",
+        "concept": {
+            "arrays": 0.7,
+            "oop": 1.0
+        },
+        "content": {
+            "options": [
+                "Nem lehet.",
+                "Array.newInstance(Class<?> componentType, int length)",
+                "new GenericArray<T>()",
+                "Object.createArray()"
+            ],
+            "correct_answer": "Array.newInstance(Class<?> componentType, int length)",
+            "explanation": "Ez a metódus lehetővé teszi futásidőben meghatározott típusú tömb létrehozását, ami megkerüli a `new T[]` korlátot."
+        }
+    },
+    {
+        "title": "Tömbklónozás mélysége",
+        "description": "Ha egy objektumokat tartalmazó tömböt a `.clone()` metódussal másolunk, milyen másolat készül?",
+        "hint": "Shallow vs Deep.",
+        "q_type": "theory",
+        "difficulty_rating": 1420,
+        "language": "java",
+        "concept": {
+            "arrays": 0.9,
+            "oop": 0.8
+        },
+        "content": {
+            "options": [
+                "Deep copy (mély másolat).",
+                "Shallow copy (sekély másolat).",
+                "Attól függ, hogy az objektumok Cloneable-k-e.",
+                "Nem lehet tömböt klónozni."
+            ],
+            "correct_answer": "Shallow copy (sekély másolat).",
+            "explanation": "A tömb `.clone()` metódusa új tömböt hoz létre, de az elemek (referenciák) másolatát teszi bele, nem az objektumokét."
+        }
+    },
+    {
+        "title": "Arrays.binarySearch() feltétele",
+        "description": "Mi a legfontosabb előfeltétele annak, hogy az `Arrays.binarySearch()` helyes eredményt adjon?",
+        "hint": "A bináris keresés csak speciális adaton működik.",
+        "q_type": "theory",
+        "difficulty_rating": 1410,
+        "language": "java",
+        "concept": {
+            "arrays": 1.0,
+            "logic": 0.9
+        },
+        "content": {
+            "options": [
+                "A tömb ne tartalmazzon null-t.",
+                "A tömbnek rendezettnek kell lennie.",
+                "A tömb mérete páros legyen.",
+                "Csak számokon működik."
+            ],
+            "correct_answer": "A tömbnek rendezettnek kell lennie.",
+            "explanation": "Rendezetlen tömbön a bináris keresés működése definiálatlan, hibás eredményt adhat."
+        }
+    },
+    {
+        "title": "Multi-dim tömb memóriaképe",
+        "description": "Igaz-e, hogy Java-ban a `matrix[i][j]` elemei fizikailag folytonosan helyezkednek el a memóriában?",
+        "hint": "Tömbök tömbje struktúra.",
+        "q_type": "theory",
+        "difficulty_rating": 1480,
+        "language": "java",
+        "concept": {
+            "arrays": 1.0,
+            "basics": 0.6
+        },
+        "content": {
+            "options": [
+                "Igen, mint C-ben.",
+                "Nem, mivel a sorok külön objektumok a Heap-en.",
+                "Csak ha primitív a típus.",
+                "Igen, a JVM optimalizálja."
+            ],
+            "correct_answer": "Nem, mivel a sorok külön objektumok a Heap-en.",
+            "explanation": "Mivel a 2D tömb sorai különálló tömbobjektumok, a memóriában bárhol szétszórva elhelyezkedhetnek."
+        }
+    },
+    {
+        "title": "Parallel Sort",
+        "description": "Mikor érdemes az `Arrays.parallelSort()`-ot használni a sima `sort()` helyett?",
+        "hint": "Többszálúság előnye.",
+        "q_type": "theory",
+        "difficulty_rating": 1520,
+        "language": "java",
+        "concept": {
+            "arrays": 0.8,
+            "basics": 0.7
+        },
+        "content": {
+            "options": [
+                "Mindig.",
+                "Kis tömböknél.",
+                "Nagyon nagy tömböknél, többmagos CPU-n.",
+                "Ha stabil rendezés kell."
+            ],
+            "correct_answer": "Nagyon nagy tömböknél, többmagos CPU-n.",
+            "explanation": "A parallelSort a Fork/Join keretrendszert használja. Kis adathalmaznál a szálkezelés overheadje miatt lassabb lehet, de nagy adatnál gyorsabb."
+        }
+    },
+    {
+        "title": "Volatile tömb referencia",
+        "description": "Ha egy tömböt `volatile`-ként deklarálunk, az elemei is volatile-k lesznek?",
+        "hint": "A referencia vs tartalom kérdése megint.",
+        "q_type": "theory",
+        "difficulty_rating": 1600,
+        "language": "java",
+        "concept": {
+            "arrays": 0.8,
+            "basics": 1.0
+        },
+        "content": {
+            "options": [
+                "Igen, minden eleme atomi lesz.",
+                "Nem, csak a tömbre mutató referencia volatile.",
+                "Fordítási hiba.",
+                "Csak primitív tömböknél."
+            ],
+            "correct_answer": "Nem, csak a tömbre mutató referencia volatile.",
+            "explanation": "A `volatile` kulcsszó tömbre alkalmazva csak a tömb referencia frissességét garantálja, az elemek módosítása nem lesz thread-safe."
+        }
+    }
+]

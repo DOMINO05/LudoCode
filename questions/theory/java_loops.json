@@ -1,0 +1,881 @@
+[
+    {
+        "title": "Hátultesztelő ciklus",
+        "description": "Melyik Java kulcsszóval hozunk létre hátultesztelő ciklust, amely legalább egyszer biztosan lefut?",
+        "hint": "A feltétel ellenőrzése a ciklusmag után történik.",
+        "q_type": "theory",
+        "difficulty_rating": 600,
+        "language": "java",
+        "concept": {
+            "loops": 1.0,
+            "basics": 0.5
+        },
+        "content": {
+            "options": [
+                "while",
+                "for",
+                "do-while",
+                "foreach"
+            ],
+            "correct_answer": "do-while",
+            "explanation": "A do-while ciklus a ciklusmag végrehajtása után értékeli ki a feltételt, így a mag egyszer mindenképpen lefut."
+        }
+    },
+    {
+        "title": "Ciklus megszakítása",
+        "description": "Melyik utasítás szolgál a ciklus futásának azonnali, feltétel nélküli befejezésére?",
+        "hint": "A switch szerkezetben is ezt használjuk a kilépésre.",
+        "q_type": "theory",
+        "difficulty_rating": 650,
+        "language": "java",
+        "concept": {
+            "loops": 1.0,
+            "basics": 0.4
+        },
+        "content": {
+            "options": [
+                "stop",
+                "return",
+                "continue",
+                "break"
+            ],
+            "correct_answer": "break",
+            "explanation": "A break utasítás azonnal megszakítja a ciklus futását, és a vezérlés a ciklus utáni utasításra kerül."
+        }
+    },
+    {
+        "title": "Iteráció átugrása",
+        "description": "Melyik utasítás hagyja ki a ciklusmag hátralévő részét és ugrik a következő iterációra?",
+        "hint": "Nem lép ki a ciklusból, csak a 'mostani kört' hagyja abba.",
+        "q_type": "theory",
+        "difficulty_rating": 650,
+        "language": "java",
+        "concept": {
+            "loops": 1.0,
+            "basics": 0.4
+        },
+        "content": {
+            "options": [
+                "skip",
+                "continue",
+                "next",
+                "break"
+            ],
+            "correct_answer": "continue",
+            "explanation": "A continue utasítás átugorja a ciklusmag maradék részét, és a következő iteráció (vagy a feltételvizsgálat) kezdődik."
+        }
+    },
+    {
+        "title": "For ciklus elválasztó",
+        "description": "Milyen karakter választja el a klasszikus 'for' ciklus három részét (inicializálás, feltétel, léptetés)?",
+        "hint": "Ez a karakter zárja le az utasításokat is általában.",
+        "q_type": "theory",
+        "difficulty_rating": 700,
+        "language": "java",
+        "concept": {
+            "loops": 1.0,
+            "basics": 0.8
+        },
+        "content": {
+            "options": [
+                ", (vessző)",
+                ": (kettőspont)",
+                "; (pontosvessző)",
+                ". (pont)"
+            ],
+            "correct_answer": "; (pontosvessző)",
+            "explanation": "A klasszikus for ciklus fejléce három kifejezésből áll, amelyeket pontosvesszővel választunk el: for(init; feltétel; léptetés)."
+        }
+    },
+    {
+        "title": "Enhanced for ciklus",
+        "description": "Melyik szimbólumot használjuk a Java 'for-each' (enhanced for) ciklusában az elem és a gyűjtemény elválasztására?",
+        "hint": "Nem pontosvessző, hanem egy másik írásjel.",
+        "q_type": "theory",
+        "difficulty_rating": 700,
+        "language": "java",
+        "concept": {
+            "loops": 1.0,
+            "arrays": 0.3
+        },
+        "content": {
+            "options": [
+                "->",
+                ":",
+                "in",
+                "="
+            ],
+            "correct_answer": ":",
+            "explanation": "A for-each ciklus szintaxisa: for (Típus változó : gyűjtemény)."
+        }
+    },
+    {
+        "title": "Elöltesztelő ciklus",
+        "description": "Mi a neve annak a ciklusfajtának, amely először ellenőrzi a feltételt, és csak igaz esetén fut le?",
+        "hint": "A leggyakrabban használt egyszerű ciklusfajta.",
+        "q_type": "theory",
+        "difficulty_rating": 750,
+        "language": "java",
+        "concept": {
+            "loops": 1.0
+        },
+        "content": {
+            "options": [
+                "do-while",
+                "repeat-until",
+                "while",
+                "if-loop"
+            ],
+            "correct_answer": "while",
+            "explanation": "A while ciklus elöltesztelő, azaz a ciklusmag csak akkor hajtódik végre, ha a feltétel már az elején igaz."
+        }
+    },
+    {
+        "title": "Végtelen ciklus",
+        "description": "Hogyan nevezzük azt a ciklust, amelynek a feltétele sosem válik hamissá?",
+        "hint": "A program sosem lép ki belőle magától.",
+        "q_type": "theory",
+        "difficulty_rating": 750,
+        "language": "java",
+        "concept": {
+            "loops": 1.0,
+            "logic": 0.2
+        },
+        "content": {
+            "options": [
+                "Dead loop",
+                "Infinite loop",
+                "Recursive loop",
+                "Nested loop"
+            ],
+            "correct_answer": "Infinite loop",
+            "explanation": "Az infinite loop (végtelen ciklus) olyan ciklus, amelyből a vezérlés nem tud kilépni a feltétel változása által."
+        }
+    },
+    {
+        "title": "Ciklusmag definíció",
+        "description": "Mivel jelöljük ki a ciklushoz tartozó utasításblokkot (a ciklus magját), ha több utasításból áll?",
+        "hint": "Ugyanaz, mint a metódusok vagy osztályok törzsének jelölője.",
+        "q_type": "theory",
+        "difficulty_rating": 780,
+        "language": "java",
+        "concept": {
+            "loops": 0.5,
+            "basics": 0.5
+        },
+        "content": {
+            "options": [
+                "() zárójel",
+                "[] zárójel",
+                "{} kapcsos zárójel",
+                "** jelek"
+            ],
+            "correct_answer": "{} kapcsos zárójel",
+            "explanation": "A Javaban a kapcsos zárójelek {} határolják a kódblokkokat, így a ciklusmagot is."
+        }
+    },
+    {
+        "title": "Ciklusváltozó láthatósága",
+        "description": "Meddig látható (scope) a 'for(int i=0; ...)' fejlécben deklarált 'i' változó?",
+        "hint": "Csak a cikluson belül vagy utána is?",
+        "q_type": "theory",
+        "difficulty_rating": 850,
+        "language": "java",
+        "concept": {
+            "loops": 0.8,
+            "basics": 0.5
+        },
+        "content": {
+            "options": [
+                "Az egész metódusban",
+                "Csak a ciklusblokkban",
+                "Az egész osztályban",
+                "A fájl végéig"
+            ],
+            "correct_answer": "Csak a ciklusblokkban",
+            "explanation": "A for ciklus fejlécében deklarált változó hatóköre (scope-ja) kizárólag a ciklus törzse."
+        }
+    },
+    {
+        "title": "Feltétel típusa",
+        "description": "Milyen típusú kifejezésnek KELL állnia a 'while' ciklus zárójelében?",
+        "hint": "Igaz vagy hamis értéket kell adnia.",
+        "q_type": "theory",
+        "difficulty_rating": 850,
+        "language": "java",
+        "concept": {
+            "loops": 0.8,
+            "basics": 0.4
+        },
+        "content": {
+            "options": [
+                "int",
+                "String",
+                "boolean",
+                "void"
+            ],
+            "correct_answer": "boolean",
+            "explanation": "Javaban a vezérlési szerkezetek feltételei (if, while) kötelezően boolean típusúak."
+        }
+    },
+    {
+        "title": "Ismert ismétlésszám",
+        "description": "Melyik ciklusfajtát javasolt használni, ha előre tudjuk, hányszor kell lefutnia a kódnak?",
+        "hint": "Például egy tömb bejárása indexekkel.",
+        "q_type": "theory",
+        "difficulty_rating": 900,
+        "language": "java",
+        "concept": {
+            "loops": 1.0,
+            "basics": 0.3
+        },
+        "content": {
+            "options": [
+                "while",
+                "do-while",
+                "for",
+                "recursion"
+            ],
+            "correct_answer": "for",
+            "explanation": "A for ciklus szerkezete (init, feltétel, léptetés) ideális az előre ismert lépésszámú iterációkhoz."
+        }
+    },
+    {
+        "title": "Do-while garancia",
+        "description": "Hányszor fut le MINIMUM egy do-while ciklus magja?",
+        "hint": "Gondolj a feltétel ellenőrzésének helyére.",
+        "q_type": "theory",
+        "difficulty_rating": 900,
+        "language": "java",
+        "concept": {
+            "loops": 1.0,
+            "logic": 0.4
+        },
+        "content": {
+            "options": [
+                "0",
+                "1",
+                "Végtelenszer",
+                "A feltételtől függ"
+            ],
+            "correct_answer": "1",
+            "explanation": "Mivel a feltételvizsgálat a ciklusmag után történik, az utasítások egyszer mindenképpen végrehajtódnak."
+        }
+    },
+    {
+        "title": "While ciklus minimum",
+        "description": "Hányszor fut le MINIMUM egy while ciklus magja?",
+        "hint": "Mi van, ha a feltétel már az elején hamis?",
+        "q_type": "theory",
+        "difficulty_rating": 920,
+        "language": "java",
+        "concept": {
+            "loops": 1.0,
+            "logic": 0.4
+        },
+        "content": {
+            "options": [
+                "0",
+                "1",
+                "2",
+                "Végtelenszer"
+            ],
+            "correct_answer": "0",
+            "explanation": "Ha a while ciklus feltétele kezdetben hamis, a ciklusmag egyszer sem fut le."
+        }
+    },
+    {
+        "title": "Ciklus üres maggal",
+        "description": "Szintaktikailag helyes-e a következő Java kód: `while(true);` ?",
+        "hint": "Van-e kötelezően kapcsos zárójel?",
+        "q_type": "theory",
+        "difficulty_rating": 950,
+        "language": "java",
+        "concept": {
+            "loops": 0.7,
+            "basics": 0.6
+        },
+        "content": {
+            "options": [
+                "Nem, szintaktikai hiba.",
+                "Igen, ez egy végtelen ciklus üres maggal.",
+                "Nem, hiányzik a {}",
+                "Csak warningot ad."
+            ],
+            "correct_answer": "Igen, ez egy végtelen ciklus üres maggal.",
+            "explanation": "A pontosvessző önmagában is érvényes utasítás (üres utasítás), így a ciklus érvényes, bár általában nem kívánt (vagy busy waiting)."
+        }
+    },
+    {
+        "title": "Tömb indexelés ciklusban",
+        "description": "Ha egy 5 elemű tömböt járunk be `for` ciklussal, mi a ciklusváltozó (i) maximális értéke a tömb eléréséhez?",
+        "hint": "Az indexelés 0-tól indul.",
+        "q_type": "theory",
+        "difficulty_rating": 980,
+        "language": "java",
+        "concept": {
+            "loops": 0.6,
+            "arrays": 0.8
+        },
+        "content": {
+            "options": [
+                "5",
+                "4",
+                "6",
+                "A tömb hossza"
+            ],
+            "correct_answer": "4",
+            "explanation": "Egy N elemű tömb indexei 0-tól N-1-ig tartanak. 5 elem esetén a legnagyobb index 4."
+        }
+    },
+    {
+        "title": "Unreachable code",
+        "description": "Mit jelez a fordító, ha egy `while(true) {...}` ciklus után közvetlenül utasítást írunk (break nélkül)?",
+        "hint": "Elérhető-e valaha az a kódrészlet?",
+        "q_type": "theory",
+        "difficulty_rating": 990,
+        "language": "java",
+        "concept": {
+            "loops": 0.8,
+            "basics": 0.5
+        },
+        "content": {
+            "options": [
+                "Semmit, minden rendben.",
+                "Unreachable code error",
+                "Warningot",
+                "Runtime error"
+            ],
+            "correct_answer": "Unreachable code error",
+            "explanation": "A fordító felismeri, hogy a végtelen ciklusból nincs kilépés, így a mögötte lévő kód sosem futhat le (unreachable)."
+        }
+    },
+    {
+        "title": "Beágyazott ciklus break",
+        "description": "Melyik ciklust szakítja meg a `break` utasítás egy egymásba ágyazott (nested) ciklus esetén?",
+        "hint": "Csak azt, amelyikben közvetlenül benne van.",
+        "q_type": "theory",
+        "difficulty_rating": 1050,
+        "language": "java",
+        "concept": {
+            "loops": 1.0,
+            "logic": 0.7
+        },
+        "content": {
+            "options": [
+                "Mindkettőt",
+                "Csak a külsőt",
+                "Csak a belsőt",
+                "Azt, amelyiknek a feltétele hamis"
+            ],
+            "correct_answer": "Csak a belsőt",
+            "explanation": "A break utasítás alapértelmezésben csak a legbelső, őt tartalmazó ciklust szakítja meg."
+        }
+    },
+    {
+        "title": "Címkézett break",
+        "description": "Hogyan lehet kilépni egyszerre több egymásba ágyazott ciklusból Javaban?",
+        "hint": "A goto helyett egy biztonságosabb megoldás van a break bővítésére.",
+        "q_type": "theory",
+        "difficulty_rating": 1080,
+        "language": "java",
+        "concept": {
+            "loops": 0.9,
+            "basics": 0.4
+        },
+        "content": {
+            "options": [
+                "break all;",
+                "goto;",
+                "Címkézett break-kel (break label;)",
+                "exit();"
+            ],
+            "correct_answer": "Címkézett break-kel (break label;)",
+            "explanation": "A ciklusok elé írt címke (label) segítségével a `break label;` utasítás a megjelölt külső ciklust is megszakíthatja."
+        }
+    },
+    {
+        "title": "For-each korlát",
+        "description": "Mi a `for-each` ciklus egyik fő korlátja a hagyományos `for` ciklussal szemben?",
+        "hint": "Tudjuk-e módosítani a bejárt lista szerkezetét vagy tudjuk-e az aktuális indexet?",
+        "q_type": "theory",
+        "difficulty_rating": 1100,
+        "language": "java",
+        "concept": {
+            "loops": 0.8,
+            "arrays": 0.6
+        },
+        "content": {
+            "options": [
+                "Lassabb a futása",
+                "Nincs hozzáférés az aktuális indexhez",
+                "Csak tömbökön működik",
+                "Nem használható objektumokra"
+            ],
+            "correct_answer": "Nincs hozzáférés az aktuális indexhez",
+            "explanation": "A for-each ciklus elrejti az iterátort/indexet, így nem tudjuk lekérdezni, hogy hanyadik elemnél tartunk."
+        }
+    },
+    {
+        "title": "Komplexitás becslés",
+        "description": "Ha van egy N-szer lefutó ciklusunk, és abban egy másik N-szer lefutó ciklus, mi a várható futásidő nagyságrendje?",
+        "hint": "N * N",
+        "q_type": "theory",
+        "difficulty_rating": 1120,
+        "language": "java",
+        "concept": {
+            "loops": 0.7,
+            "logic": 0.8
+        },
+        "content": {
+            "options": [
+                "O(N)",
+                "O(log N)",
+                "O(N^2)",
+                "O(1)"
+            ],
+            "correct_answer": "O(N^2)",
+            "explanation": "Egymásba ágyazott ciklusoknál, ahol mindkét ciklus a bemenet méretétől függ, a műveletek száma összeszorzódik."
+        }
+    },
+    {
+        "title": "Tömbmódosítás for-each-ben",
+        "description": "Működik-e az elemek értékének felülírása primitív tömb esetén for-each ciklussal? Pl: `for(int x : tomb) x = 0;`",
+        "hint": "Az 'x' itt egy másolat vagy referencia?",
+        "q_type": "theory",
+        "difficulty_rating": 1150,
+        "language": "java",
+        "concept": {
+            "loops": 0.8,
+            "basics": 0.7
+        },
+        "content": {
+            "options": [
+                "Igen, a tömb elemei nullázódnak.",
+                "Nem, csak a lokális másolat változik.",
+                "Fordítási hiba.",
+                "Kivételt dob."
+            ],
+            "correct_answer": "Nem, csak a lokális másolat változik.",
+            "explanation": "Primitív típusoknál a for-each ciklus változója csak az érték másolatát tartalmazza, így az eredeti tömb nem módosul."
+        }
+    },
+    {
+        "title": "Ciklus feltétel sorrend",
+        "description": "A `for(A; B; C)` ciklusban milyen sorrendben hajtódnak végre a részek az első iterációban?",
+        "hint": "Először inicializálunk, aztán...",
+        "q_type": "theory",
+        "difficulty_rating": 1150,
+        "language": "java",
+        "concept": {
+            "loops": 1.0,
+            "logic": 0.5
+        },
+        "content": {
+            "options": [
+                "A -> B -> C -> Mag",
+                "A -> Mag -> C -> B",
+                "A -> B -> Mag -> C",
+                "B -> A -> Mag -> C"
+            ],
+            "correct_answer": "A -> B -> Mag -> C",
+            "explanation": "Először az inicializálás (A), majd a feltétel (B), ha igaz, akkor a mag, és végül a léptetés (C)."
+        }
+    },
+    {
+        "title": "Continue a while ciklusban",
+        "description": "Milyen veszélye van a `continue` használatának egy `while` ciklusban, ha a léptetés a ciklusmag végén van?",
+        "hint": "Eljut-e a vezérlés a léptetésig?",
+        "q_type": "theory",
+        "difficulty_rating": 1180,
+        "language": "java",
+        "concept": {
+            "loops": 1.0,
+            "logic": 0.8
+        },
+        "content": {
+            "options": [
+                "Fordítási hiba",
+                "Végtelen ciklusba kerülhet",
+                "Kilép a ciklusból",
+                "Nincs veszély"
+            ],
+            "correct_answer": "Végtelen ciklusba kerülhet",
+            "explanation": "Ha a `continue` átugorja a léptető utasítást (pl. i++), a feltétel sosem változik, és végtelen ciklus alakul ki."
+        }
+    },
+    {
+        "title": "Ciklus vs Rekurzió",
+        "description": "Melyik állítás igaz a ciklusok és a rekurzió összehasonlításában Java-ban?",
+        "hint": "A memória használat a kulcs (Stack).",
+        "q_type": "theory",
+        "difficulty_rating": 1190,
+        "language": "java",
+        "concept": {
+            "loops": 0.5,
+            "logic": 0.8
+        },
+        "content": {
+            "options": [
+                "A rekurzió mindig gyorsabb.",
+                "A ciklusok hajlamosabbak a StackOverflowError-ra.",
+                "A rekurzió több stack memóriát használ.",
+                "Nincs különbség."
+            ],
+            "correct_answer": "A rekurzió több stack memóriát használ.",
+            "explanation": "Minden rekurzív hívás új stack frame-et foglal, míg a ciklus ugyanabban a scope-ban fut, így a rekurzió memóriaigényesebb."
+        }
+    },
+    {
+        "title": "Lebegőpontos ciklusváltozó",
+        "description": "Miért nem javasolt `double` típusú változót használni ciklusszámlálónak (pl. i += 0.1)?",
+        "hint": "Hogyan ábrázolja a gép a tizedes törteket?",
+        "q_type": "theory",
+        "difficulty_rating": 1250,
+        "language": "java",
+        "concept": {
+            "loops": 0.7,
+            "basics": 0.8
+        },
+        "content": {
+            "options": [
+                "Mert lassabb.",
+                "Mert szintaktikailag helytelen.",
+                "A kerekítési hibák miatt pontatlan lehet a futásszám.",
+                "A double nem lehet negatív."
+            ],
+            "correct_answer": "A kerekítési hibák miatt pontatlan lehet a futásszám.",
+            "explanation": "A lebegőpontos ábrázolás pontatlansága miatt a 0.1 összeadása nem mindig ad pontos eredményt, így a feltétel (pl. i < 1.0) váratlanul hamis lehet."
+        }
+    },
+    {
+        "title": "ConcurrentModification",
+        "description": "Mi történik, ha egy ArrayList-et `for-each` ciklussal járunk be, és közben törlünk belőle egy elemet (nem az iteratorral)?",
+        "hint": "A Java védekezik a párhuzamos módosítás ellen.",
+        "q_type": "theory",
+        "difficulty_rating": 1280,
+        "language": "java",
+        "concept": {
+            "loops": 0.8,
+            "arrays": 0.7
+        },
+        "content": {
+            "options": [
+                "A törlés sikeres.",
+                "ConcurrentModificationException kivétel.",
+                "NullPointerException.",
+                "A ciklus megáll hiba nélkül."
+            ],
+            "correct_answer": "ConcurrentModificationException kivétel.",
+            "explanation": "A for-each ciklus mögötti iterátor érzékeli, hogy a lista szerkezete megváltozott (modCount), és kivételt dob."
+        }
+    },
+    {
+        "title": "Rövidzár a ciklusban",
+        "description": "Ha a `while(A && B)` feltételben A hamis, kiértékelődik-e B?",
+        "hint": "Logikai ÉS művelet rövidzár (short-circuit) tulajdonsága.",
+        "q_type": "theory",
+        "difficulty_rating": 1300,
+        "language": "java",
+        "concept": {
+            "loops": 0.6,
+            "logic": 0.9
+        },
+        "content": {
+            "options": [
+                "Igen, mindig.",
+                "Nem, a rövidzár miatt.",
+                "Csak ha B függvényhívás.",
+                "Fordítófüggő."
+            ],
+            "correct_answer": "Nem, a rövidzár miatt.",
+            "explanation": "A && operátor rövidzár tulajdonsága miatt, ha az első tag hamis, a teljes kifejezés hamis, így a második tagot nem értékeli ki."
+        }
+    },
+    {
+        "title": "Ciklus invariáns",
+        "description": "Mit jelent a 'ciklus invariáns' (loop invariant) fogalma?",
+        "hint": "Valami, ami NEM változik.",
+        "q_type": "theory",
+        "difficulty_rating": 1350,
+        "language": "java",
+        "concept": {
+            "loops": 0.5,
+            "logic": 1.0
+        },
+        "content": {
+            "options": [
+                "A ciklusváltozó típusa.",
+                "Egy állítás, amely a ciklus minden iterációja előtt és után igaz.",
+                "A ciklusmagban lévő konstans.",
+                "A végtelen ciklus feltétele."
+            ],
+            "correct_answer": "Egy állítás, amely a ciklus minden iterációja előtt és után igaz.",
+            "explanation": "Az invariáns egy olyan logikai állítás, amely a ciklus helyességének bizonyítására szolgál, és minden lépésben igaz marad."
+        }
+    },
+    {
+        "title": "Őrszem (Sentinel) technika",
+        "description": "Mire használják az 'őrszem' (sentinel) értéket a ciklusokban?",
+        "hint": "Adatbevitel vagy keresés végének jelzése.",
+        "q_type": "theory",
+        "difficulty_rating": 1320,
+        "language": "java",
+        "concept": {
+            "loops": 0.8,
+            "logic": 0.7
+        },
+        "content": {
+            "options": [
+                "A memória felszabadítására.",
+                "A ciklus futási idejének mérésére.",
+                "A bemenet/adatfolyam végének jelzésére.",
+                "A kivételek elkapására."
+            ],
+            "correct_answer": "A bemenet/adatfolyam végének jelzésére.",
+            "explanation": "Az őrszem egy speciális érték (pl. -1 vagy null), amely nem valódi adat, hanem a feldolgozás végét jelzi a ciklus számára."
+        }
+    },
+    {
+        "title": "Üres ciklusmag használata",
+        "description": "Mikor lehet 'hasznos' (bár nem szép) egy üres törzsű `while(feltétel);` ciklus?",
+        "hint": "Amikor várni kell valamire, amit egy másik szál változtat.",
+        "q_type": "theory",
+        "difficulty_rating": 1380,
+        "language": "java",
+        "concept": {
+            "loops": 0.7,
+            "logic": 0.8
+        },
+        "content": {
+            "options": [
+                "Soha, mindig hiba.",
+                "Busy waiting (aktív várakozás) megvalósítására.",
+                "Memória törlésre.",
+                "Gyorsabb futás érdekében."
+            ],
+            "correct_answer": "Busy waiting (aktív várakozás) megvalósítására.",
+            "explanation": "Ritkán, alacsony szintű programozásnál használják arra, hogy a processzor várakozzon egy feltétel teljesülésére (bár ez CPU pazarló)."
+        }
+    },
+    {
+        "title": "Off-by-one hiba",
+        "description": "Mi az az 'off-by-one' (eggyel mellé) hiba a ciklusoknál?",
+        "hint": "A határok kezelésével kapcsolatos gyakori hiba.",
+        "q_type": "theory",
+        "difficulty_rating": 1250,
+        "language": "java",
+        "concept": {
+            "loops": 0.8,
+            "logic": 0.6
+        },
+        "content": {
+            "options": [
+                "Amikor a ciklus egyszer sem fut le.",
+                "Amikor a ciklus eggyel többször vagy kevesebbszer fut a kelleténél.",
+                "Amikor 1-gyel osztunk 0 helyett.",
+                "Szintaktikai hiba a léptetésnél."
+            ],
+            "correct_answer": "Amikor a ciklus eggyel többször vagy kevesebbszer fut a kelleténél.",
+            "explanation": "Gyakori logikai hiba, amikor a feltétel (pl. < vs <=) miatt a ciklus nem a pontosan szükséges alkalommal fut le."
+        }
+    },
+    {
+        "title": "Loop Switch (váltás)",
+        "description": "Elviekben átírható-e minden `for` ciklus `while` ciklussá?",
+        "hint": "Ekvivalensek-e?",
+        "q_type": "theory",
+        "difficulty_rating": 1220,
+        "language": "java",
+        "concept": {
+            "loops": 1.0,
+            "logic": 0.5
+        },
+        "content": {
+            "options": [
+                "Nem, a for erősebb.",
+                "Igen, minden for ciklus kifejezhető while ciklussal.",
+                "Csak ha nincs benne break.",
+                "Csak a végtelen ciklusok."
+            ],
+            "correct_answer": "Igen, minden for ciklus kifejezhető while ciklussal.",
+            "explanation": "A két ciklusfajta vezérlési szempontból ekvivalens; a `for(A;B;C){D}` megfeleltethető: `A; while(B){D; C;}` szerkezetnek."
+        }
+    },
+    {
+        "title": "Ciklus kifejtés (Unrolling)",
+        "description": "Mi a 'loop unrolling' (ciklus kifejtés) optimalizációs technika lényege?",
+        "hint": "A ciklusvezérlés költségének csökkentése.",
+        "q_type": "theory",
+        "difficulty_rating": 1450,
+        "language": "java",
+        "concept": {
+            "loops": 0.9,
+            "logic": 0.8
+        },
+        "content": {
+            "options": [
+                "A ciklusok egymásba ágyazása.",
+                "A ciklusmag többszörözése az iterációk számának csökkentéséért.",
+                "A ciklus feltételének törlése.",
+                "Rekurzióvá alakítás."
+            ],
+            "correct_answer": "A ciklusmag többszörözése az iterációk számának csökkentéséért.",
+            "explanation": "A fordító vagy a programozó több iterációt von össze egybe, így csökken a feltételvizsgálatok és ugrások (overhead) száma."
+        }
+    },
+    {
+        "title": "Volatile változó ciklusban",
+        "description": "Miért fontos a `volatile` kulcsszó, ha egy `while` ciklus feltétele egy másik szál által módosított flag?",
+        "hint": "Látja-e a szál a változást?",
+        "q_type": "theory",
+        "difficulty_rating": 1500,
+        "language": "java",
+        "concept": {
+            "loops": 0.6,
+            "basics": 0.9
+        },
+        "content": {
+            "options": [
+                "Gyorsítja a ciklust.",
+                "Biztosítja, hogy a változó értékét a főmemóriából olvassa ki a szál.",
+                "Megakadályozza a ciklus kilépését.",
+                "Szinkronizált blokkot hoz létre."
+            ],
+            "correct_answer": "Biztosítja, hogy a változó értékét a főmemóriából olvassa ki a szál.",
+            "explanation": "Volatile nélkül a JVM cache-elheti a változót, így a ciklus esetleg sosem érzékeli, hogy a másik szál átállította a flag-et (visibility problem)."
+        }
+    },
+    {
+        "title": "Branch Prediction",
+        "description": "Miért futhat gyorsabban egy ciklus rendezett tömbön, mint rendezetlenen, ha feltételes elágazás van benne?",
+        "hint": "A CPU megpróbálja kitalálni a jövőt.",
+        "q_type": "theory",
+        "difficulty_rating": 1550,
+        "language": "java",
+        "concept": {
+            "loops": 0.5,
+            "logic": 1.0
+        },
+        "content": {
+            "options": [
+                "A cache lokalitás miatt.",
+                "A Branch Prediction (ágazatbecslés) hatékonyabb rendezett adaton.",
+                "A Java optimalizálja a rendezett tömböket.",
+                "Nincs sebességkülönbség."
+            ],
+            "correct_answer": "A Branch Prediction (ágazatbecslés) hatékonyabb rendezett adaton.",
+            "explanation": "A CPU ágazatbecslője rendezett adatnál könnyebben eltalálja az if ág kimenetelét, így kevesebb a pipeline ürítés (misprediction penalty)."
+        }
+    },
+    {
+        "title": "Iterator vs For-Each",
+        "description": "Milyen műveletet tesz lehetővé az `Iterator` explicit használata, amit a `for-each` nem?",
+        "hint": "Elem eltávolítása bejárás közben.",
+        "q_type": "theory",
+        "difficulty_rating": 1420,
+        "language": "java",
+        "concept": {
+            "loops": 0.8,
+            "arrays": 0.6
+        },
+        "content": {
+            "options": [
+                "Visszafelé haladás.",
+                "Biztonságos elemtörlés (remove) bejárás közben.",
+                "Gyorsabb iteráció.",
+                "Index elérés."
+            ],
+            "correct_answer": "Biztonságos elemtörlés (remove) bejárás közben.",
+            "explanation": "Az Iterator.remove() metódussal biztonságosan törölhetünk elemet a kollekcióból iteráció közben, míg a for-each erre kivételt dobna."
+        }
+    },
+    {
+        "title": "Loop Fission",
+        "description": "Mi a 'loop fission' (ciklus szétvágás) optimalizáció célja?",
+        "hint": "Egy nagy ciklus helyett két kisebb.",
+        "q_type": "theory",
+        "difficulty_rating": 1480,
+        "language": "java",
+        "concept": {
+            "loops": 0.9,
+            "logic": 0.8
+        },
+        "content": {
+            "options": [
+                "A kód olvashatóságának rontása.",
+                "A cache lokalitás javítása (adott adathalmaz többszöri elérése).",
+                "A párhuzamosítás megakadályozása.",
+                "A ciklusmag növelése."
+            ],
+            "correct_answer": "A cache lokalitás javítása (adott adathalmaz többszöri elérése).",
+            "explanation": "A loop fission szétválasztja a független műveleteket külön ciklusokba, ami javíthatja a cache kihasználtságot (locality of reference)."
+        }
+    },
+    {
+        "title": "Iterable interface",
+        "description": "Melyik interfészt kell implementálnia egy osztálynak, hogy használható legyen a `for-each` ciklusban?",
+        "hint": "Nem az Iterator, hanem ami azt visszaadja.",
+        "q_type": "theory",
+        "difficulty_rating": 1410,
+        "language": "java",
+        "concept": {
+            "loops": 0.7,
+            "oop": 0.8
+        },
+        "content": {
+            "options": [
+                "Iterator",
+                "Iterable",
+                "Collection",
+                "Loopable"
+            ],
+            "correct_answer": "Iterable",
+            "explanation": "A `java.lang.Iterable` interfész (és annak iterator() metódusa) teszi lehetővé, hogy egy objektum a for-each ciklus célpontja legyen."
+        }
+    },
+    {
+        "title": "Loop Invariant Code Motion",
+        "description": "Mit csinál a fordító 'Loop Invariant Code Motion' optimalizáció során?",
+        "hint": "Mit kezd azzal a kóddal a ciklusban, ami nem függ a ciklusváltozótól?",
+        "q_type": "theory",
+        "difficulty_rating": 1520,
+        "language": "java",
+        "concept": {
+            "loops": 0.8,
+            "basics": 0.6
+        },
+        "content": {
+            "options": [
+                "Törli a kódot.",
+                "Kiemeli a ciklus elé, mivel az eredménye konstans a cikluson belül.",
+                "Új szálra helyezi.",
+                "Minden iterációban újraszámolja."
+            ],
+            "correct_answer": "Kiemeli a ciklus elé, mivel az eredménye konstans a cikluson belül.",
+            "explanation": "A fordító felismeri a ciklustól független számításokat, és kiemeli őket a ciklus elé, hogy csak egyszer fussanak le."
+        }
+    },
+    {
+        "title": "Tail Recursion Java",
+        "description": "Támogatja-e a Java fordító a 'Tail Call Optimization'-t (ami a rekurziót ciklussá alakítja)?",
+        "hint": "Más nyelvek (Scala, Kotlin) igen, de a sima Java?",
+        "q_type": "theory",
+        "difficulty_rating": 1460,
+        "language": "java",
+        "concept": {
+            "loops": 0.4,
+            "logic": 0.8
+        },
+        "content": {
+            "options": [
+                "Igen, minden esetben.",
+                "Nem támogatja (jelenleg).",
+                "Csak final metódusoknál.",
+                "Csak statikus metódusoknál."
+            ],
+            "correct_answer": "Nem támogatja (jelenleg).",
+            "explanation": "A standard Java fordító (javac) és a JVM jelenleg nem végzi el a farokrekurzió automatikus ciklussá alakítását, így a stack betelhet."
+        }
+    }
+]

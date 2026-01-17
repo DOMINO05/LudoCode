@@ -57,12 +57,16 @@ export class UsersService {
 
   async updateProfile(
     userId: string,
-    updates: { username?: string; avatar_config?: any },
+    updates: { username?: string; bio?: string; avatar_config?: any },
   ): Promise<Profile> {
     const profile = await this.profilesRepository.findOne({
       where: { id: userId },
     });
     if (!profile) throw new Error('User not found');
+
+    if (updates.bio !== undefined) {
+      profile.bio = updates.bio;
+    }
 
     if (updates.username && updates.username !== profile.username) {
       // Check uniqueness

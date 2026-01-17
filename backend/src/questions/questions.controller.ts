@@ -1,4 +1,14 @@
-import { Controller, Get, UseGuards, Request, Logger } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  Post,
+  Patch,
+  Param,
+  Body,
+  UseGuards,
+  Request,
+  Logger,
+} from '@nestjs/common';
 import { AuthGuard } from '@nestjs/passport';
 import { QuestionsService } from './questions.service';
 
@@ -40,5 +50,34 @@ export class QuestionsController {
       languageId,
     );
     return question;
+  }
+
+  @UseGuards(AuthGuard('jwt'))
+  @Post()
+  async create(@Request() req, @Body() body: any) {
+    return this.questionsService.createCustomQuestion(body, req.user.userId);
+  }
+
+  @UseGuards(AuthGuard('jwt'))
+  @Get(':id')
+  async findOne(@Param('id') id: string, @Request() req) {
+    return this.questionsService.findOne(id, req.user.userId);
+  }
+
+  @UseGuards(AuthGuard('jwt'))
+  @Patch(':id')
+  async update(@Param('id') id: string, @Request() req, @Body() body: any) {
+    return this.questionsService.updateCustomQuestion(id, body, req.user.userId);
+  }
+
+  @UseGuards(AuthGuard('jwt'))
+  @Get('search')
+  async search(@Request() req) {
+    return this.questionsService.searchQuestions(req.user.userId, {
+      title: req.query.title,
+      qType: req.query.qType,
+      languageId: req.query.languageId,
+      onlyMine: req.query.onlyMine === 'true',
+    });
   }
 }
