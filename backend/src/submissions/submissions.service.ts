@@ -8,6 +8,7 @@ import { UserConceptMastery } from '../entities/user-concept-mastery.entity';
 import { UserLanguageProgress } from '../entities/user-language-progress.entity';
 import { CodeRunnerService } from '../code-runner/code-runner.service';
 import { AIService } from '../common/services/ai.service';
+import { BadgesService } from '../badges/badges.service';
 
 interface QuestionContent {
   correct_order?: string[];
@@ -34,6 +35,7 @@ export class SubmissionsService {
     private languageProgressRepository: Repository<UserLanguageProgress>,
     private codeRunnerService: CodeRunnerService,
     private aiService: AIService,
+    private badgesService: BadgesService,
   ) {}
 
   async submit(
@@ -243,6 +245,9 @@ export class SubmissionsService {
 
     await this.submissionRepository.save(submission);
 
+    // Check for new badges
+    const newBadges = await this.badgesService.checkAndAwardBadges(userId);
+
     let aiExplanation = null;
     if (!isCorrect) {
       aiExplanation = await this.aiService.getErrorExplanation(
@@ -259,6 +264,7 @@ export class SubmissionsService {
       output,
       explanation: content.explanation,
       ai_explanation: aiExplanation,
+      newBadges: newBadges.map(ub => ub.badge),
       userUpdates: {
         xp: user?.xp,
         sanity: user?.sanityPoints,
@@ -267,6 +273,80 @@ export class SubmissionsService {
         multiplier: multiplier,
       },
     };
+  }
+
+  async getOldestUnresolvedMistake(userId: string) {
+    const submission = await this.submissionRepository
+      .createQueryBuilder('submission')
+      .leftJoinAndSelect('submission.question', 'question')
+      .leftJoinAndSelect('question.language', 'language')
+      .where('submission.userId = :userId', { userId })
+      .andWhere('submission.isCorrect = false')
+      .andWhere('submission.isResolved = false')
+      .andWhere('submission.questionId IS NOT NULL')
+      .orderBy('submission.createdAt', 'ASC')
+      .getOne();
+
+    if (!submission || !submission.question) {
+      throw new NotFoundException('Nincs több javítandó feladat.');
+    }
+
+    return submission;
+  }
+
+  async resolveMistake(userId: string, submissionId: string, submittedCode: string) {
+    const submission = await this.submissionRepository.findOne({
+      where: { id: submissionId, userId, isCorrect: false, isResolved: false },
+      relations: ['question', 'question.language'],
+    });
+
+    if (!submission) {
+      throw new NotFoundException('Hibás beküldés nem található.');
+    }
+
+    // Evaluate the new answer
+    const question = submission.question;
+    const content = question.content as QuestionContent;
+    let isCorrectNow = false;
+    let output = '';
+
+    if (question.qType === 'coding') {
+      const result = await this.handleCodingSubmission(question, submittedCode, content);
+      isCorrectNow = result.isCorrect;
+      output = result.output;
+    } else if (question.qType === 'parsons') {
+      const correctOrder = content.correct_order;
+      try {
+        const submittedOrder = JSON.parse(submittedCode) as string[];
+        if (Array.isArray(correctOrder) && Array.isArray(submittedOrder)) {
+          isCorrectNow = JSON.stringify(correctOrder) === JSON.stringify(submittedOrder);
+        }
+      } catch (e) { isCorrectNow = false; }
+    } else if (question.qType === 'debug') {
+      const expectedFullCode = (content.buggy_code || '').replace(content.error_location || '', content.correct_code || '');
+      isCorrectNow = submittedCode.trim() === expectedFullCode.trim();
+    } else {
+      let correctAnswer = content.correct_answer;
+      if (typeof correctAnswer === 'number' && content.options) correctAnswer = content.options[correctAnswer];
+      isCorrectNow = String(submittedCode).trim() === String(correctAnswer).trim();
+    }
+
+    if (isCorrectNow) {
+      // Mark as resolved
+      submission.isResolved = true;
+      await this.submissionRepository.save(submission);
+
+      // Restore 10% Sanity
+      const user = await this.profileRepository.findOne({ where: { id: userId } });
+      if (user) {
+        user.sanityPoints = Math.min(100, user.sanityPoints + 10);
+        await this.profileRepository.save(user);
+      }
+
+      return { success: true, message: 'Feladat sikeresen javítva! +10% Sanity.', newSanity: user?.sanityPoints };
+    } else {
+      return { success: false, message: 'Még mindig nem pontos a megoldás. Próbáld újra!', output };
+    }
   }
 
   private async handleCodingSubmission(

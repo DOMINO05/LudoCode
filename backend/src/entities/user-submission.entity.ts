@@ -47,6 +47,9 @@ export class UserSubmission {
   @Column({ name: 'mastery_after', type: 'float', nullable: true })
   masteryAfter: number;
 
+  @Column({ name: 'is_resolved', type: 'boolean', default: false })
+  isResolved: boolean;
+
   @CreateDateColumn({ name: 'created_at', type: 'timestamptz' })
   createdAt: Date;
 }

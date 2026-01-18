@@ -10,9 +10,11 @@ import { UserLanguageProgress } from '../entities/user-language-progress.entity'
 import { Concept } from '../entities/concept.entity';
 import { QuestionConcept } from '../entities/question-concept.entity';
 import { CodeRunnerModule } from '../code-runner/code-runner.module';
+import { BadgesModule } from '../badges/badges.module';
 
 @Module({
   imports: [
+    BadgesModule,
     TypeOrmModule.forFeature([
       UserSubmission,
       Question,

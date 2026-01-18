@@ -13,6 +13,7 @@ import { UserInventory } from './user-inventory.entity';
 import { CustomQuiz } from './custom-quiz.entity';
 import { QuizAttempt } from './quiz-attempt.entity';
 import { Quote } from './quote.entity';
+import { UserBadge } from './user-badge.entity';
 
 @Entity('profiles')
 export class Profile {
@@ -76,4 +77,7 @@ export class Profile {
 
   @OneToMany(() => QuizAttempt, (attempt) => attempt.user)
   quizAttempts: QuizAttempt[];
+
+  @OneToMany(() => UserBadge, (ub) => ub.user)
+  userBadges: UserBadge[];
 }

@@ -150,56 +150,31 @@ A fejlesztői élmény professzionálissá tétele.
 
 ---
 
-## 6. AI-alapú személyre szabott hiba magyarázat
-Személyre szabott, közérthető segítség a hibák gyorsabb megértéséhez.
+## 7. Hibák visszanézése funkció (Sanity Recovery)
+A hibákból való tanulás és az energia visszanyerése.
 
 ### Git Commit (Angolul)
-`feat: add AI-powered personalized error explanations for failed submissions`
+`feat: implement mistake review system for sanity recovery`
 
 ### Üzleti Logika és Felhasználói Útvonal
-- **Happy Path**: A felhasználó hibás választ ad be -> A rendszer elküldi a kódot az AI-nak -> Az AI max 2 mondatban elmagyarázza, miért volt hibás a kód és mi lett volna a jó megoldás (közérthetően) -> A felhasználó azonnal látja a választ a feladat alatt.
-- **Jogosultság**: Minden bejelentkezett felhasználó.
-- **Trigger**: Sikertelen feladatbeküldés (`isCorrect: false`).
-- **Mellékhatások**: A válaszadási sebesség növelése (timeout kezelés kötelező).
+- **Happy Path**: Ha a felhasználónak elfogyott a sanityja akkor egy hibás feladat megoldásával visszatölthet 10%-ot. feldobka az összes lejegyzett hibás kérdését, a legrégebbitől kezdve. ha a felhasználó sikeresen megoldja akkor törlődjön a hibás feladatok közül, hogy legközelebb ne dobja fel.
+- **Trigger**: Menüpont: "Elrontott feladataim", vagy automatikus modal, ha a Sanity eléri a 0-t.
+- **Mellékhatások**: Sanity növekedés (+10%), mastery frissítés, a hiba "resolved" állapotba kerülése.
 
 ### Frontend és UI/UX Tervezés
-- **Elhelyezés**: `CodingPage.jsx` visszajelző sáv (Feedback Area).
-- **State-ek**:
-    - *Loading*: "Az AI elemzi a megoldásodat..." felirat apró animációval.
-    - *Success*: A generált szöveg kiemelése stílusosan.
-    - *Fallback*: Ha az AI nem válaszol időben vagy nem elérhető, a statikus "explanation" mező jelenik meg.
-- **Reszponzivitás**: Rövid szöveg, mobilon is kényelmesen olvasható.
+- **Elhelyezés**: Speciális "Recovery Mode" felület vagy modal 0 HP esetén.
+- **UI elemek**: "Múltbéli hibák" lista, a legrégebbi kiemelve.
+- **Success State**: "Energia visszanyerve! +10% HP" animáció.
+- **Empty state**: "Nincsenek megoldatlan hibáid! Pihenj, amíg a Sanity magától visszatöltődik."
+
+### Adatbázis és Adatmodell
+- **Módosítás**: `user_submissions` tábla bővítése `is_resolved` (boolean, default false) oszloppal.
+- **Lekérdezés**: `SELECT * FROM user_submissions WHERE user_id = :uid AND is_correct = false AND is_resolved = false ORDER BY created_at ASC LIMIT 1`.
 
 ### API Interfész
-- **Végpont**: Bővített `POST /questions/:id/submit` válasz.
-- **Response**: `{ "isCorrect": false, "ai_explanation": "A tömb indexelése 0-tól indul, te viszont az 1. elemet kerested a 2. helyett. A helyes válasz a list[0] lett volna.", "explanation": "..." }`
-
-### Validáció és Biztonság
-- **Korlát**: Szigorú prompt engineering (max 2 mondat, egyszerű nyelvvezet).
-- **Biztonság**: Felhasználói azonosítók eltávolítása a promptból, Rate limiting az AI hívásokra.
-
-### Technikai Részletek
-- **Library**: Google Generative AI (Gemini 2.0 Flash) API hívás Axios-szal.
-- **Cache**: Az azonos típusú hibák (pl. elfelejtett pontosvessző) válaszainak gyorstárazása.
-
----
-
-## 7. Hibák visszanézése funkció
-A hibákból való tanulás elősegítése.
-
-### Git Commit (Angolul)
-`feat: implement mistake review system with side-by-side diff view`
-
-### Üzleti Logika és Felhasználói Útvonal
-- **Flow**: Felhasználó megnyitja a "Hibanaplót" -> Kiválaszt egy feladatot -> Látja a saját korábbi hibás kódját és a helyes megoldást egymás mellett.
-- **Trigger**: Menüpont: "Elrontott feladataim".
-
-### Frontend és UI/UX Tervezés
-- **UI**: Side-by-side diff view (mint a Git commitoknál).
-- **Empty state**: "Gratulálunk, nincsenek elrontott feladataid!" stílusos grafikával.
-
-### Adatbázis
-- **Lekérdezés**: A `user_submissions` táblából az `is_correct = false` sorok szűrése, de csak az utolsó próbálkozás minden kérdéshez.
+- **Végpont**: `GET /submissions/mistake-recovery` (visszaadja a legrégebbi megoldatlan hibát).
+- **Végpont**: `POST /submissions/resolve/:id` (beküldi a javított választ).
+- **Response**: `{ "success": true, "newSanity": 10, "isResolved": true }`
 
 ---
 
@@ -266,6 +241,9 @@ Real-time visszajelzés a fontos eseményekről.
 
 ## 12. Badge rendszer (Kitüntetések)
 A mérföldkövek vizuális elismerése.
+
+### Git Commit (Angolul)
+`feat: add badge achievement system for course completion and milestones`
 
 ### Üzleti Logika
 - **Feltételek**: "Mester" szint egy nyelvből, 30 napos streak, 100 hibátlan feladat, stb.

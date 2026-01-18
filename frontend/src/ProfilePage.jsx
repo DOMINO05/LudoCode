@@ -137,6 +137,29 @@ export default function ProfilePage() {
                     />
                 </div>
 
+                {profile.userBadges && profile.userBadges.length > 0 && (
+                    <div style={{ marginBottom: '20px' }}>
+                        <label style={{ display: 'block', marginBottom: '10px', fontSize: '18px' }}>Badges</label>
+                        <div style={{ display: 'flex', gap: '10px', flexWrap: 'wrap' }}>
+                            {profile.userBadges.map((ub) => (
+                                <div key={ub.badgeId} title={ub.badge.description} style={{
+                                    display: 'flex',
+                                    flexDirection: 'column',
+                                    alignItems: 'center',
+                                    padding: '10px',
+                                    backgroundColor: 'var(--surface-color)',
+                                    borderRadius: '12px',
+                                    border: '1px solid var(--card-border)',
+                                    minWidth: '80px'
+                                }}>
+                                    <span style={{ fontSize: '24px' }}>{ub.badge.iconPath}</span>
+                                    <span style={{ fontSize: '12px', fontWeight: 'bold', marginTop: '5px', textAlign: 'center' }}>{ub.badge.name}</span>
+                                </div>
+                            ))}
+                        </div>
+                    </div>
+                )}
+
                 <div style={{ marginBottom: '20px' }}>
                     <label style={{ display: 'block', marginBottom: '10px', fontSize: '18px' }}>
                         Bio

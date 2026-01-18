@@ -3,6 +3,8 @@ import { useOutletContext, useNavigate } from 'react-router-dom';
 import BonusModal from './components/BonusModal';
 import Leaderboard from './components/Leaderboard';
 import ProgressChart from './components/ProgressChart';
+import MistakeRecovery from './components/MistakeRecovery';
+import SanityWarningModal from './components/SanityWarningModal';
 
 const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:3000';
 
@@ -10,6 +12,8 @@ export default function Dashboard() {
   const { session, profile, refreshProfile } = useOutletContext();
   const navigate = useNavigate();
   const [showBonus, setShowBonus] = useState(false);
+  const [showRecovery, setShowRecovery] = useState(false);
+  const [showWarning, setShowWarning] = useState(false);
   const [bonusData, setBonusData] = useState({ message: '', bonus: 0, quote: null });
 
   useEffect(() => {
@@ -39,6 +43,14 @@ export default function Dashboard() {
 
   if (!profile) return <div className="p-8 text-center text-slate-500 animate-pulse">Loading dashboard...</div>;
 
+  const checkSanityAndNavigate = (path) => {
+    if (profile.sanityPoints === 0) {
+        setShowWarning(true);
+        return;
+    }
+    navigate(path);
+  };
+
   return (
     <div className="flex flex-col items-center min-h-full p-4 md:p-8 gap-8 max-w-7xl mx-auto w-full">
       <h1 className="text-3xl md:text-5xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-slate-700 to-slate-900 dark:from-slate-100 dark:to-slate-300 mb-4 animate-fade-in">
@@ -67,9 +79,14 @@ export default function Dashboard() {
               <div className="text-3xl font-black text-slate-800 dark:text-slate-100">💎 {profile.gems}</div>
           </div>
 
-          <div className="bg-surface-light dark:bg-surface-dark border-l-4 border-blue-500 p-6 rounded-xl shadow-sm flex flex-col items-center justify-center transition-transform hover:-translate-y-1">
+          <div 
+            className={`bg-surface-light dark:bg-surface-dark border-l-4 border-blue-500 p-6 rounded-xl shadow-sm flex flex-col items-center justify-center transition-transform hover:-translate-y-1 cursor-pointer ${profile.sanityPoints === 0 ? 'animate-pulse bg-red-50 dark:bg-red-900/10' : ''}`}
+            onClick={() => setShowRecovery(true)}
+            title="Kattints a javításhoz!"
+          >
               <h3 className="text-sm font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400 mb-2">Sanity</h3>
               <div className="text-3xl font-black text-slate-800 dark:text-slate-100">🧠 {profile.sanityPoints}%</div>
+              {profile.sanityPoints < 100 && <span className="text-[10px] text-blue-500 font-bold mt-1">JAVÍTÁS ➕</span>}
           </div>
       </div>
 
@@ -78,7 +95,7 @@ export default function Dashboard() {
           {/* Quick Play */}
           <div 
             className="group bg-surface-light dark:bg-surface-dark p-8 rounded-2xl border border-slate-200 dark:border-slate-700 shadow-md hover:shadow-xl transition-all cursor-pointer flex flex-col items-center text-center relative overflow-hidden" 
-            onClick={() => navigate('/solve')}
+            onClick={() => checkSanityAndNavigate('/solve')}
           >
               <div className="absolute top-0 left-0 w-full h-1 bg-primary transform scale-x-0 group-hover:scale-x-100 transition-transform duration-300"></div>
               <div className="text-6xl mb-6 transform group-hover:scale-110 transition-transform duration-300">⚡</div>
@@ -92,7 +109,7 @@ export default function Dashboard() {
           {/* Task Type Selector */}
           <div 
             className="group bg-surface-light dark:bg-surface-dark p-8 rounded-2xl border border-slate-200 dark:border-slate-700 shadow-md hover:shadow-xl transition-all cursor-pointer flex flex-col items-center text-center relative overflow-hidden" 
-            onClick={() => navigate('/courses')}
+            onClick={() => checkSanityAndNavigate('/courses')}
           >
               <div className="absolute top-0 left-0 w-full h-1 bg-secondary transform scale-x-0 group-hover:scale-x-100 transition-transform duration-300"></div>
               <div className="text-6xl mb-6 transform group-hover:scale-110 transition-transform duration-300">🧩</div>
@@ -163,6 +180,27 @@ export default function Dashboard() {
           bonus={bonusData.bonus} 
           quote={bonusData.quote}
         />
+      )}
+
+      {showRecovery && (
+          <MistakeRecovery 
+            session={session} 
+            onResolved={async (newSanity) => {
+                await refreshProfile();
+                setShowRecovery(false);
+            }} 
+            onCancel={() => setShowRecovery(false)} 
+          />
+      )}
+
+      {showWarning && (
+          <SanityWarningModal 
+            onClose={() => setShowWarning(false)}
+            onRecover={() => {
+                setShowWarning(false);
+                setShowRecovery(true);
+            }}
+          />
       )}
     </div>
   );

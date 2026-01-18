@@ -58,7 +58,7 @@ export class UsersService {
   async getProfile(userId: string): Promise<Profile> {
     const profile = await this.profilesRepository.findOne({
       where: { id: userId },
-      relations: ['lastQuote'],
+      relations: ['lastQuote', 'userBadges', 'userBadges.badge'],
     });
     if (!profile) {
       // Auto-sync/create profile if missing (e.g. after DB reset)

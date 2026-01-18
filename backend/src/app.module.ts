@@ -13,6 +13,7 @@ import { LanguagesModule } from './languages/languages.module';
 import { QuizzesModule } from './quizzes/quizzes.module';
 import { QuotesModule } from './quotes/quotes.module';
 import { AIModule } from './common/ai.module';
+import { BadgesModule } from './badges/badges.module';
 
 @Module({
   imports: [
@@ -43,6 +44,7 @@ import { AIModule } from './common/ai.module';
     QuizzesModule,
     QuotesModule,
     AIModule,
+    BadgesModule,
   ],
   controllers: [AppController],
   providers: [AppService],

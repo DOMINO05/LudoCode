@@ -5,6 +5,7 @@ import {
   Param,
   UseGuards,
   Logger,
+  Get,
 } from '@nestjs/common';
 import { AuthGuard } from '@nestjs/passport';
 import { SubmissionsService } from './submissions.service';
@@ -43,5 +44,25 @@ export class SubmissionsController {
       `Submission result for user ${userId}, question ${questionId}: ${JSON.stringify(result)}`,
     );
     return result;
+  }
+
+  @UseGuards(AuthGuard('jwt'))
+  @Get('mistake-recovery')
+  async getMistakeRecovery(@User() user: UserPayload) {
+    return this.submissionsService.getOldestUnresolvedMistake(user.userId);
+  }
+
+  @UseGuards(AuthGuard('jwt'))
+  @Post('resolve/:id')
+  async resolveMistake(
+    @User() user: UserPayload,
+    @Param('id') submissionId: string,
+    @Body() body: { code: string },
+  ) {
+    return this.submissionsService.resolveMistake(
+      user.userId,
+      submissionId,
+      body.code,
+    );
   }
 }
