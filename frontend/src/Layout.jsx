@@ -9,6 +9,7 @@ const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:3000';
 
 export default function Layout({ session }) {
   const [profile, setProfile] = useState(null);
+  const [badgeNotification, setBadgeNotification] = useState(null);
   const navigate = useNavigate();
   const { isDark, toggleTheme } = useTheme();
   const { languages, currentLanguage, changeLanguage } = useLanguage();
@@ -38,13 +39,32 @@ export default function Layout({ session }) {
       navigate('/');
   };
 
+  const showBadgeNotification = (badge) => {
+      console.log('Showing badge notification:', badge);
+      setBadgeNotification(badge);
+      setTimeout(() => setBadgeNotification(null), 5000);
+  };
+
   return (
     <div className="flex flex-col h-screen bg-background-light dark:bg-background-dark text-slate-700 dark:text-slate-100 font-nunito transition-colors duration-300">
-      <header className="bg-surface-light dark:bg-surface-dark border-b border-slate-200 dark:border-slate-700 p-4 flex justify-between items-center shrink-0 transition-colors duration-300 z-40 sticky top-0">
+      <header className="bg-surface-light dark:bg-surface-dark border-b border-slate-200 dark:border-slate-700 p-4 flex justify-between items-center shrink-0 transition-colors duration-300 z-40 sticky top-0 relative">
         <div className="font-extrabold text-2xl cursor-pointer text-transparent bg-clip-text bg-gradient-to-r from-primary to-accent tracking-tighter" onClick={() => navigate('/dashboard')}>
             LudoCode
         </div>
         
+        {/* Badge Notification Overlay (Top Center - Fixed) */}
+        {badgeNotification && (
+            <div className="fixed left-1/2 top-6 transform -translate-x-1/2 z-[9999] pointer-events-none w-full max-w-sm flex justify-center transition-all duration-500">
+               <div className="bg-yellow-100 dark:bg-yellow-900/95 border-2 border-yellow-400 text-yellow-800 dark:text-yellow-100 px-6 py-3 rounded-xl shadow-2xl flex items-center gap-4 backdrop-blur-sm">
+                   <div className="text-3xl filter drop-shadow-md">{badgeNotification.iconPath || '🏆'}</div>
+                   <div>
+                       <div className="font-bold text-[10px] uppercase tracking-wider text-yellow-600 dark:text-yellow-300">Új Jelvény Megszerezve!</div>
+                       <div className="font-extrabold text-sm whitespace-nowrap">{badgeNotification.name || 'Jelvény'}</div>
+                   </div>
+               </div>
+            </div>
+        )}
+
         <div className="flex items-center gap-4">
             <select 
                 value={currentLanguage?.id || ''} 
@@ -94,7 +114,7 @@ export default function Layout({ session }) {
       </header>
       
       <main className="flex-1 overflow-y-auto">
-        <Outlet context={{ session, profile, refreshProfile: fetchProfile, handleLogout }} />
+        <Outlet context={{ session, profile, refreshProfile: fetchProfile, handleLogout, showBadgeNotification }} />
       </main>
     </div>
   );

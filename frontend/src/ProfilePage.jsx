@@ -138,22 +138,63 @@ export default function ProfilePage() {
                 </div>
 
                 {profile.userBadges && profile.userBadges.length > 0 && (
-                    <div style={{ marginBottom: '20px' }}>
-                        <label style={{ display: 'block', marginBottom: '10px', fontSize: '18px' }}>Badges</label>
-                        <div style={{ display: 'flex', gap: '10px', flexWrap: 'wrap' }}>
+                    <div style={{ marginBottom: '30px' }}>
+                        <label style={{ display: 'block', marginBottom: '15px', fontSize: '18px', fontWeight: '800', color: 'var(--primary-color)', textTransform: 'uppercase', letterSpacing: '1px' }}>
+                            Jelvények & Kitüntetések
+                        </label>
+                        <div style={{ 
+                            display: 'grid', 
+                            gridTemplateColumns: 'repeat(auto-fill, minmax(100px, 1fr))', 
+                            gap: '15px' 
+                        }}>
                             {profile.userBadges.map((ub) => (
-                                <div key={ub.badgeId} title={ub.badge.description} style={{
-                                    display: 'flex',
-                                    flexDirection: 'column',
-                                    alignItems: 'center',
-                                    padding: '10px',
-                                    backgroundColor: 'var(--surface-color)',
-                                    borderRadius: '12px',
-                                    border: '1px solid var(--card-border)',
-                                    minWidth: '80px'
-                                }}>
-                                    <span style={{ fontSize: '24px' }}>{ub.badge.iconPath}</span>
-                                    <span style={{ fontSize: '12px', fontWeight: 'bold', marginTop: '5px', textAlign: 'center' }}>{ub.badge.name}</span>
+                                <div 
+                                    key={ub.badgeId} 
+                                    title={ub.badge.description} 
+                                    className="badge-card"
+                                    style={{
+                                        display: 'flex',
+                                        flexDirection: 'column',
+                                        alignItems: 'center',
+                                        justifyContent: 'center',
+                                        padding: '15px 10px',
+                                        backgroundColor: 'rgba(var(--primary-rgb), 0.05)',
+                                        borderRadius: '20px',
+                                        border: '2px solid rgba(var(--primary-rgb), 0.1)',
+                                        transition: 'all 0.3s ease',
+                                        cursor: 'help',
+                                        position: 'relative',
+                                        overflow: 'hidden'
+                                    }}
+                                >
+                                    <div style={{ 
+                                        fontSize: '32px', 
+                                        marginBottom: '8px',
+                                        filter: 'drop-shadow(0 4px 6px rgba(0,0,0,0.1))'
+                                    }}>
+                                        {ub.badge.iconPath}
+                                    </div>
+                                    <span style={{ 
+                                        fontSize: '11px', 
+                                        fontWeight: '900', 
+                                        textAlign: 'center',
+                                        lineHeight: '1.2',
+                                        color: 'var(--text-color)',
+                                        textTransform: 'uppercase'
+                                    }}>
+                                        {ub.badge.name}
+                                    </span>
+                                    {/* Subtle shine effect */}
+                                    <div style={{
+                                        position: 'absolute',
+                                        top: '-50%',
+                                        left: '-50%',
+                                        width: '200%',
+                                        height: '200%',
+                                        background: 'linear-gradient(45deg, transparent, rgba(255,255,255,0.1), transparent)',
+                                        transform: 'rotate(45deg)',
+                                        pointerEvents: 'none'
+                                    }}></div>
                                 </div>
                             ))}
                         </div>

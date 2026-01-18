@@ -39,32 +39,32 @@ const CATEGORIES = [
   { id: 'extras', label: 'Extrák', icon: <Star size={20} />, swipeParam: null, colorParam: null }, // Inventory items
 ];
 
+const INITIAL_DEFAULTS = {
+  skinColor: 'f5d0a9',
+  hair: 'short01',
+  hairColor: '6a4e23',
+  eyes: 'variant01',
+  mouth: 'variant01',
+  clothing: 'variant01',
+  backgroundColor: 'b6e3f4',
+  seed: 'user'
+};
+
 export default function AvatarEditor({ config, onChange, inventory = [] }) {
   const [activeTab, setActiveTab] = useState('hair');
-  // const [darkMode, setDarkMode] = useState(false); // Removed unused state setter
-  const darkMode = false; // Hardcoded for now as toggle was unused
+  const darkMode = false; 
 
-  // Local state for immediate feedback, synced with parent via useEffect
-  const [localConfig, setLocalConfig] = useState(config || {
-    skinColor: 'f5d0a9',
-    hair: 'short01',
-    hairColor: '6a4e23',
-    eyes: 'variant01',
-    mouth: 'variant01',
-    clothing: 'variant01',
-    backgroundColor: 'b6e3f4',
-    seed: 'user'
-  });
+  // Local state for immediate feedback, synced with parent
+  const [localConfig, setLocalConfig] = useState(() => ({
+    ...INITIAL_DEFAULTS,
+    ...config
+  }));
 
+  // Robust sync: update local state if props change significantly
   useEffect(() => {
-    if (config) {
-        setLocalConfig(prev => {
-             // Only update if different to avoid potential loops/renders
-             if (JSON.stringify(prev) !== JSON.stringify({ ...prev, ...config })) {
-                 return { ...prev, ...config };
-             }
-             return prev;
-        });
+    const merged = { ...INITIAL_DEFAULTS, ...config };
+    if (JSON.stringify(localConfig) !== JSON.stringify(merged)) {
+        setLocalConfig(merged);
     }
   }, [config]);
 

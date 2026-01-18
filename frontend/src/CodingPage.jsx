@@ -17,7 +17,7 @@ import Editor from '@monaco-editor/react';
 const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:3000';
 
 export default function CodingPage() {
-  const { session, profile, refreshProfile } = useOutletContext();
+  const { session, profile, refreshProfile, showBadgeNotification } = useOutletContext();
   const { isDark } = useTheme();
   const { currentLanguage } = useLanguage();
   const navigate = useNavigate();
@@ -205,6 +205,16 @@ export default function CodingPage() {
         console.log(`[Frontend] Submission response:`, data);
         setResult(data);
         setShowFeedback(true);
+
+        // Check for new badges
+        if (data.newBadges && data.newBadges.length > 0 && showBadgeNotification) {
+            console.log("Triggering badge notification for:", data.newBadges);
+            data.newBadges.forEach((badge, index) => {
+                setTimeout(() => {
+                    showBadgeNotification(badge);
+                }, index * 5500); // 5000ms is duration + 500ms buffer
+            });
+        }
 
         if (data.isCorrect) {
             setSessionStreak(prev => prev + 1);

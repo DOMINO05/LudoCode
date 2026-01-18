@@ -10,7 +10,7 @@ import ConstructionComponent from './question-types/ConstructionComponent';
 const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:3000';
 
 export default function QuizPlayerPage() {
-  const { session, refreshProfile } = useOutletContext();
+  const { session, refreshProfile, showBadgeNotification } = useOutletContext();
   const { code: shareCode } = useParams();
   const navigate = useNavigate();
   
@@ -89,6 +89,13 @@ export default function QuizPlayerPage() {
       const data = await res.json();
       setResult(data);
       setShowFeedback(true);
+
+      if (data.newBadges && data.newBadges.length > 0 && showBadgeNotification) {
+          data.newBadges.forEach((badge, index) => {
+             setTimeout(() => showBadgeNotification(badge), index * 5500);
+          });
+      }
+
       if (data.isCorrect) {
           setScore(s => s + 1);
       }

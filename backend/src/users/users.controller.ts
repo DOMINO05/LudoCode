@@ -22,7 +22,7 @@ export class UsersController {
   @UseGuards(AuthGuard('jwt'))
   @Post('sync')
   async syncUser(@User() user: UserPayload, @Body() body: SyncUserDto) {
-    return this.usersService.syncProfile(user.userId, body.level);
+    return this.usersService.syncProfile(user.userId, body.level, body.username);
   }
 
   @UseGuards(AuthGuard('jwt'))

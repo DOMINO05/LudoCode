@@ -148,33 +148,6 @@ A fejlesztői élmény professzionálissá tétele.
 - **Auto-save**: `lodash.debounce` használata a felesleges API hívások vagy localStorage írások elkerülésére.
 - **Sharing**: Egy dedikált `/share/:token` útvonal, ahol a kód csak olvasható (ReadOnly) módban jelenik meg.
 
----
-
-## 7. Hibák visszanézése funkció (Sanity Recovery)
-A hibákból való tanulás és az energia visszanyerése.
-
-### Git Commit (Angolul)
-`feat: implement mistake review system for sanity recovery`
-
-### Üzleti Logika és Felhasználói Útvonal
-- **Happy Path**: Ha a felhasználónak elfogyott a sanityja akkor egy hibás feladat megoldásával visszatölthet 10%-ot. feldobka az összes lejegyzett hibás kérdését, a legrégebbitől kezdve. ha a felhasználó sikeresen megoldja akkor törlődjön a hibás feladatok közül, hogy legközelebb ne dobja fel.
-- **Trigger**: Menüpont: "Elrontott feladataim", vagy automatikus modal, ha a Sanity eléri a 0-t.
-- **Mellékhatások**: Sanity növekedés (+10%), mastery frissítés, a hiba "resolved" állapotba kerülése.
-
-### Frontend és UI/UX Tervezés
-- **Elhelyezés**: Speciális "Recovery Mode" felület vagy modal 0 HP esetén.
-- **UI elemek**: "Múltbéli hibák" lista, a legrégebbi kiemelve.
-- **Success State**: "Energia visszanyerve! +10% HP" animáció.
-- **Empty state**: "Nincsenek megoldatlan hibáid! Pihenj, amíg a Sanity magától visszatöltődik."
-
-### Adatbázis és Adatmodell
-- **Módosítás**: `user_submissions` tábla bővítése `is_resolved` (boolean, default false) oszloppal.
-- **Lekérdezés**: `SELECT * FROM user_submissions WHERE user_id = :uid AND is_correct = false AND is_resolved = false ORDER BY created_at ASC LIMIT 1`.
-
-### API Interfész
-- **Végpont**: `GET /submissions/mistake-recovery` (visszaadja a legrégebbi megoldatlan hibát).
-- **Végpont**: `POST /submissions/resolve/:id` (beküldi a javított választ).
-- **Response**: `{ "success": true, "newSanity": 10, "isResolved": true }`
 
 ---
 

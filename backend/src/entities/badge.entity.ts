@@ -16,7 +16,7 @@ export class Badge {
   iconPath: string;
 
   @Column({ name: 'criteria_type', type: 'varchar', length: 50 })
-  criteriaType: 'XP' | 'PROFICIENCY' | 'STREAK' | 'GEMS';
+  criteriaType: 'XP' | 'PROFICIENCY' | 'STREAK' | 'GEMS' | 'SUBMISSIONS';
 
   @Column({ name: 'criteria_value', type: 'float' })
   criteriaValue: number;

@@ -4,6 +4,7 @@ import { Repository } from 'typeorm';
 import { Badge } from '../entities/badge.entity';
 import { UserBadge } from '../entities/user-badge.entity';
 import { Profile } from '../entities/profile.entity';
+import { UserSubmission } from '../entities/user-submission.entity';
 
 @Injectable()
 export class BadgesService {
@@ -14,6 +15,8 @@ export class BadgesService {
     private userBadgesRepository: Repository<UserBadge>,
     @InjectRepository(Profile)
     private profileRepository: Repository<Profile>,
+    @InjectRepository(UserSubmission)
+    private userSubmissionRepository: Repository<UserSubmission>,
   ) {}
 
   async findAll(): Promise<Badge[]> {
@@ -60,6 +63,12 @@ export class BadgesService {
         case 'PROFICIENCY':
           qualified = profile.globalProficiency >= badge.criteriaValue;
           break;
+        case 'SUBMISSIONS':
+          const submissionCount = await this.userSubmissionRepository.count({
+            where: { userId, isCorrect: true },
+          });
+          qualified = submissionCount >= badge.criteriaValue;
+          break;
       }
 
       if (qualified) {
@@ -68,6 +77,7 @@ export class BadgesService {
           badgeId: badge.id,
         });
         await this.userBadgesRepository.save(ub);
+        ub.badge = badge; // Manually assign the badge relation so it's available in the return value
         newlyAwarded.push(ub);
       }
     }

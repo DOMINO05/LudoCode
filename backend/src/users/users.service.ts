@@ -6,6 +6,29 @@ import { UserSubmission } from '../entities/user-submission.entity';
 import { Friendship } from '../entities/friendship.entity';
 import { QuotesService } from '../quotes/quotes.service';
 
+const AVATAR_OPTIONS = {
+  skinColor: ['ffe4c0', 'f5d0a9', 'e8b88d', 'd49d7b', 'b67b5e', '8d5441', '5d3428'],
+  hairColor: ['000000', '4a4a4a', 'ffffff', 'b8b8b8', '8d2a2a', 'c54b29', 'e2ba4f', '6a4e23', '3b6e85'],
+  backgroundColor: ['b6e3f4', 'c0aede', 'd1d4f9', 'ffd5dc', 'ffdfbf', 'ffffff', '65c9ff', '58cc02', '1a1a1a', 'transparent'],
+  hair: [
+    'short01', 'short02', 'short03', 'short04', 'short05', 'short06', 'short07', 'short08',
+    'short09', 'short10', 'short11', 'short12', 'short13', 'short14', 'short15', 'short16',
+    'short17', 'short18', 'short19', 'short20', 'short21', 'short22', 'short23', 'short24',
+    'long01', 'long02', 'long03', 'long04', 'long05', 'long06', 'long07', 'long08',
+    'long09', 'long10', 'long11', 'long12', 'long13', 'long14', 'long15', 'long16',
+    'long17', 'long18', 'long19', 'long20', 'long21'
+  ],
+  eyes: [
+    'variant01', 'variant02', 'variant03', 'variant04', 'variant05', 'variant06',
+    'variant07', 'variant08', 'variant09', 'variant10', 'variant11', 'variant12'
+  ],
+  mouth: [
+    'happy01', 'happy02', 'happy03', 'happy04', 'happy05', 'happy06', 'happy07',
+    'happy08', 'happy09', 'happy10', 'happy11', 'happy12', 'happy13',
+    'sad01', 'sad02', 'sad03', 'sad04', 'sad05', 'sad06', 'sad07', 'sad08', 'sad09', 'sad10'
+  ],
+};
+
 @Injectable()
 export class UsersService {
   constructor(
@@ -21,11 +44,26 @@ export class UsersService {
   async syncProfile(
     userId: string,
     level: 'Beginner' | 'Intermediate' | 'Pro' = 'Beginner',
+    username?: string,
   ): Promise<Profile> {
     const existingProfile = await this.profilesRepository.findOne({
       where: { id: userId },
     });
     if (existingProfile) {
+      // Check if we need to backfill data (e.g. if created by trigger without details)
+      let changed = false;
+      if (!existingProfile.avatarConfig) {
+        existingProfile.avatarConfig = this.generateRandomAvatarConfig(userId);
+        changed = true;
+      }
+      if (username && username.trim().length > 0 && existingProfile.username !== username.trim()) {
+        existingProfile.username = username.trim();
+        changed = true;
+      }
+
+      if (changed) {
+        return await this.profilesRepository.save(existingProfile);
+      }
       return existingProfile;
     }
 
@@ -36,11 +74,13 @@ export class UsersService {
 
     const newProfile = this.profilesRepository.create({
       id: userId,
+      username: username ? username.trim() : null,
       globalProficiency: initialProficiency,
       sanityPoints: 100,
       gems: 0,
       xp: 0,
       currentStreak: 0,
+      avatarConfig: this.generateRandomAvatarConfig(userId),
     });
 
     try {
@@ -332,6 +372,21 @@ export class UsersService {
     return {
       activity,
       proficiencyHistory,
+    };
+  }
+
+  private generateRandomAvatarConfig(userId: string) {
+    const getRandom = (arr: string[]) => arr[Math.floor(Math.random() * arr.length)];
+    
+    return {
+      skinColor: getRandom(AVATAR_OPTIONS.skinColor),
+      hairColor: getRandom(AVATAR_OPTIONS.hairColor),
+      backgroundColor: getRandom(AVATAR_OPTIONS.backgroundColor),
+      hair: getRandom(AVATAR_OPTIONS.hair),
+      eyes: getRandom(AVATAR_OPTIONS.eyes),
+      mouth: getRandom(AVATAR_OPTIONS.mouth),
+      clothing: 'variant01', // Default basic clothing
+      seed: userId,
     };
   }
 

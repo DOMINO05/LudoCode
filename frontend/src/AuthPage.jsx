@@ -5,7 +5,7 @@ const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:3000';
 
 export default function AuthPage() {
   const [isLogin, setIsLogin] = useState(true);
-  const [email, setEmail] = useState('');
+  const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [level, setLevel] = useState('Beginner');
   const [message, setMessage] = useState('');
@@ -16,17 +16,23 @@ export default function AuthPage() {
     setMessage('');
     setIsLoading(true);
     
+    // Supabase requires email, so we use a dummy domain for username-only auth
+    const internalEmail = username.includes('@') ? username : `${username.toLowerCase().trim()}@ludocode.local`;
+
     try {
       if (isLogin) {
         const { error } = await supabase.auth.signInWithPassword({
-          email,
+          email: internalEmail,
           password,
         });
         if (error) throw error;
       } else {
         const { data, error } = await supabase.auth.signUp({
-          email,
+          email: internalEmail,
           password,
+          options: {
+            data: { username: username.trim() }
+          }
         });
         if (error) throw error;
         
@@ -35,7 +41,7 @@ export default function AuthPage() {
         } else {
            // If session is missing, try to login immediately (assuming confirmation is disabled)
            const { data: loginData, error: loginError } = await supabase.auth.signInWithPassword({
-              email,
+              email: internalEmail,
               password,
            });
            
@@ -66,7 +72,7 @@ export default function AuthPage() {
                 'Content-Type': 'application/json',
                 'Authorization': `Bearer ${token}`
             },
-            body: JSON.stringify({ level })
+            body: JSON.stringify({ level, username })
         });
         if (!response.ok) throw new Error('Failed to sync profile');
         setMessage('Registration and profile creation successful!');
@@ -90,14 +96,14 @@ export default function AuthPage() {
         
         <form onSubmit={handleAuth} className="flex flex-col gap-5">
           <div>
-            <label className="block text-sm font-bold text-slate-700 dark:text-slate-300 mb-2 ml-1">Email</label>
+            <label className="block text-sm font-bold text-slate-700 dark:text-slate-300 mb-2 ml-1">Username</label>
             <input 
-              type="email" 
-              value={email} 
-              onChange={(e) => setEmail(e.target.value)} 
+              type="text" 
+              value={username} 
+              onChange={(e) => setUsername(e.target.value)} 
               required 
               className="w-full px-4 py-3 rounded-lg border border-slate-300 dark:border-slate-600 bg-white dark:bg-slate-800 text-slate-900 dark:text-slate-100 focus:ring-2 focus:ring-primary/50 focus:border-primary transition-all outline-none"
-              placeholder="name@example.com"
+              placeholder="Your awesome username"
             />
           </div>
           
