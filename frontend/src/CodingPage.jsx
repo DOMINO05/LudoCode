@@ -225,6 +225,7 @@ export default function CodingPage() {
                 setTimeout(() => {
                     showBadgeNotification({
                         name: ch.description,
+                        title: 'Kihívás Teljesítve!',
                         iconPath: '🎯' 
                     });
                 }, badgeDelay + index * 5500);

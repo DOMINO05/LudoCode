@@ -10,6 +10,8 @@ import { UpdateQuizDto } from './dto/update-quiz.dto';
 import { AddQuestionDto } from './dto/add-question.dto';
 import { UpdateOrderDto } from './dto/update-order.dto';
 import { SubmitAttemptDto } from './dto/submit-attempt.dto';
+import { ChallengesService } from '../challenges/challenges.service';
+import { BadgesService } from '../badges/badges.service';
 
 @Injectable()
 export class QuizzesService {
@@ -22,6 +24,8 @@ export class QuizzesService {
     private quizAttemptsRepository: Repository<QuizAttempt>,
     @InjectRepository(Question)
     private questionsRepository: Repository<Question>,
+    private challengesService: ChallengesService,
+    private badgesService: BadgesService,
   ) {}
 
   private generateCode(): string {
@@ -264,7 +268,7 @@ export class QuizzesService {
     }
   }
 
-  async submitAttempt(quizId: string, submitAttemptDto: SubmitAttemptDto, userId: string): Promise<QuizAttempt> {
+  async submitAttempt(quizId: string, submitAttemptDto: SubmitAttemptDto, userId: string) {
     const quiz = await this.quizzesRepository.findOne({ where: { id: quizId } });
 
     if (!quiz) {
@@ -279,7 +283,19 @@ export class QuizzesService {
       completedAt: new Date(),
     });
 
-    return this.quizAttemptsRepository.save(attempt);
+    const savedAttempt = await this.quizAttemptsRepository.save(attempt);
+
+    // Update Challenges
+    const completedChallenges = await this.challengesService.updateProgress(userId, 'PLAY_QUIZ', 1);
+
+    // Check for new badges
+    const newBadges = await this.badgesService.checkAndAwardBadges(userId);
+
+    return {
+      ...savedAttempt,
+      completedChallenges,
+      newBadges: newBadges.map(ub => ub.badge),
+    };
   }
 
   async getQuizResults(quizId: string, userId: string): Promise<QuizAttempt[]> {

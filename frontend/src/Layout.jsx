@@ -58,7 +58,7 @@ export default function Layout({ session }) {
                <div className="bg-yellow-100 dark:bg-yellow-900/95 border-2 border-yellow-400 text-yellow-800 dark:text-yellow-100 px-6 py-3 rounded-xl shadow-2xl flex items-center gap-4 backdrop-blur-sm">
                    <div className="text-3xl filter drop-shadow-md">{badgeNotification.iconPath || '🏆'}</div>
                    <div>
-                       <div className="font-bold text-[10px] uppercase tracking-wider text-yellow-600 dark:text-yellow-300">Új Jelvény Megszerezve!</div>
+                       <div className="font-bold text-[10px] uppercase tracking-wider text-yellow-600 dark:text-yellow-300">{badgeNotification.title || 'Új Jelvény Megszerezve!'}</div>
                        <div className="font-extrabold text-sm whitespace-nowrap">{badgeNotification.name || 'Jelvény'}</div>
                    </div>
                </div>

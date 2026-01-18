@@ -17,7 +17,6 @@ export class ChallengesService {
   ) {}
 
   async getActiveChallenges(userId: string) {
-    // Check and generate if needed
     await this.ensureDailyChallenges(userId);
     await this.ensureWeeklyChallenges(userId);
 
@@ -27,6 +26,7 @@ export class ChallengesService {
         userId, 
         expiresAt: MoreThanOrEqual(now)
       },
+      relations: ['template'],
       order: { isCompleted: 'ASC', isClaimed: 'ASC', expiresAt: 'ASC' }
     });
   }
@@ -48,12 +48,19 @@ export class ChallengesService {
 
     if (existing > 0) return;
 
-    // Generate 3 random daily challenges
+    // Generate 3 deterministic daily challenges (same for everyone)
     const dailyTemplates = await this.templatesRepository.find({ where: { period: 'DAILY' } });
     if (dailyTemplates.length === 0) return;
 
-    const shuffled = dailyTemplates.sort(() => 0.5 - Math.random());
-    const selected = shuffled.slice(0, 3);
+    const sorted = dailyTemplates.sort((a, b) => a.id.localeCompare(b.id));
+    const dayIndex = Math.floor(now.getTime() / (1000 * 60 * 60 * 24));
+    const count = 3;
+    const startIndex = (dayIndex * count) % sorted.length;
+    
+    const selected = [];
+    for (let i = 0; i < count; i++) {
+        selected.push(sorted[(startIndex + i) % sorted.length]);
+    }
 
     const challenges = selected.map(tpl => this.userChallengesRepository.create({
       userId,
@@ -91,12 +98,20 @@ export class ChallengesService {
 
     if (existing > 0) return;
 
-    // Generate 2 random weekly challenges
+    // Generate 3 deterministic weekly challenges (same for everyone)
     const weeklyTemplates = await this.templatesRepository.find({ where: { period: 'WEEKLY' } });
     if (weeklyTemplates.length === 0) return;
 
-    const shuffled = weeklyTemplates.sort(() => 0.5 - Math.random());
-    const selected = shuffled.slice(0, 2);
+    const sorted = weeklyTemplates.sort((a, b) => a.id.localeCompare(b.id));
+    // Week index (approximate, good enough for rotation)
+    const weekIndex = Math.floor(now.getTime() / (1000 * 60 * 60 * 24 * 7));
+    const count = 3;
+    const startIndex = (weekIndex * count) % sorted.length;
+
+    const selected = [];
+    for (let i = 0; i < count; i++) {
+        selected.push(sorted[(startIndex + i) % sorted.length]);
+    }
 
     const challenges = selected.map(tpl => this.userChallengesRepository.create({
       userId,

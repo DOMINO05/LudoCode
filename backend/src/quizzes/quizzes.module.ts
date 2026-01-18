@@ -7,11 +7,15 @@ import { QuizQuestion } from '../entities/quiz-question.entity';
 import { QuizAttempt } from '../entities/quiz-attempt.entity';
 import { Question } from '../entities/question.entity';
 import { AuthModule } from '../auth/auth.module';
+import { ChallengesModule } from '../challenges/challenges.module';
+import { BadgesModule } from '../badges/badges.module';
 
 @Module({
   imports: [
     TypeOrmModule.forFeature([CustomQuiz, QuizQuestion, QuizAttempt, Question]),
     AuthModule,
+    ChallengesModule,
+    BadgesModule,
   ],
   controllers: [QuizzesController],
   providers: [QuizzesService],

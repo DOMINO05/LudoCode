@@ -96,6 +96,19 @@ export default function QuizPlayerPage() {
           });
       }
 
+      if (data.completedChallenges && data.completedChallenges.length > 0 && showBadgeNotification) {
+          const badgeDelay = (data.newBadges?.length || 0) * 5500;
+          data.completedChallenges.forEach((ch, index) => {
+             setTimeout(() => {
+                 showBadgeNotification({
+                     name: ch.description,
+                     title: 'Kihívás Teljesítve!',
+                     iconPath: '🎯' 
+                 });
+             }, badgeDelay + index * 5500);
+          });
+      }
+
       if (data.isCorrect) {
           setScore(s => s + 1);
       }
@@ -122,7 +135,7 @@ export default function QuizPlayerPage() {
 
       // Submit final attempt to quiz results
       try {
-        await fetch(`${API_URL}/quizzes/${quiz.id}/attempt`, {
+        const res = await fetch(`${API_URL}/quizzes/${quiz.id}/attempt`, {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
@@ -133,6 +146,33 @@ export default function QuizPlayerPage() {
             maxScore: quiz.questions.length,
           }),
         });
+
+        if (res.ok) {
+            const data = await res.json();
+            
+            // Show notifications for new badges
+            if (data.newBadges && data.newBadges.length > 0 && showBadgeNotification) {
+                data.newBadges.forEach((badge, index) => {
+                   setTimeout(() => showBadgeNotification(badge), index * 5500);
+                });
+            }
+
+            // Show notifications for completed challenges
+            if (data.completedChallenges && data.completedChallenges.length > 0 && showBadgeNotification) {
+                const badgeDelay = (data.newBadges?.length || 0) * 5500;
+                data.completedChallenges.forEach((ch, index) => {
+                   setTimeout(() => {
+                       showBadgeNotification({
+                           name: ch.description,
+                           title: 'Kihívás Teljesítve!',
+                           iconPath: '🎯' 
+                       });
+                   }, badgeDelay + index * 5500);
+                });
+            }
+
+            refreshProfile();
+        }
       } catch (err) {
         console.error('Failed to submit attempt', err);
       }

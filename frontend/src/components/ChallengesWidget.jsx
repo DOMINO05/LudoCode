@@ -5,6 +5,7 @@ const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:3000';
 export default function ChallengesWidget({ session, refreshProfile }) {
   const [challenges, setChallenges] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [activeTab, setActiveTab] = useState('DAILY');
 
   useEffect(() => {
     fetchChallenges();
@@ -36,8 +37,6 @@ export default function ChallengesWidget({ session, refreshProfile }) {
         // Refresh challenges and profile (XP/Gems)
         await fetchChallenges();
         await refreshProfile();
-        // Maybe show confetti or toast?
-        alert("Jutalom begyűjtve!");
       } else {
           alert("Hiba a begyűjtéskor");
       }
@@ -48,23 +47,41 @@ export default function ChallengesWidget({ session, refreshProfile }) {
 
   if (loading) return <div className="animate-pulse h-40 bg-surface-light rounded-xl"></div>;
 
+  const filteredChallenges = challenges.filter(ch => 
+      (ch.template?.period === activeTab) || (!ch.template && activeTab === 'DAILY')
+  );
+
   return (
     <div className="bg-surface-light dark:bg-surface-dark p-6 rounded-xl shadow-sm border border-slate-200 dark:border-slate-700 h-full">
       <div className="flex justify-between items-center mb-4">
         <h3 className="text-xl font-bold text-slate-800 dark:text-slate-100 flex items-center gap-2">
           🎯 Kihívások
         </h3>
-        <span className="text-xs font-bold text-slate-400 uppercase tracking-wider">{challenges.length} Aktív</span>
+        
+        <div className="flex bg-slate-100 dark:bg-slate-800 rounded-lg p-1">
+            <button 
+                onClick={() => setActiveTab('DAILY')}
+                className={`px-3 py-1 text-xs font-bold rounded-md transition-all ${activeTab === 'DAILY' ? 'bg-white dark:bg-slate-600 text-blue-600 dark:text-blue-400 shadow-sm' : 'text-slate-500 hover:text-slate-700 dark:text-slate-400 dark:hover:text-slate-300'}`}
+            >
+                Napi
+            </button>
+            <button 
+                onClick={() => setActiveTab('WEEKLY')}
+                className={`px-3 py-1 text-xs font-bold rounded-md transition-all ${activeTab === 'WEEKLY' ? 'bg-white dark:bg-slate-600 text-blue-600 dark:text-blue-400 shadow-sm' : 'text-slate-500 hover:text-slate-700 dark:text-slate-400 dark:hover:text-slate-300'}`}
+            >
+                Heti
+            </button>
+        </div>
       </div>
 
       <div className="space-y-4">
-        {challenges.length === 0 && (
+        {filteredChallenges.length === 0 && (
             <div className="text-center text-slate-500 py-8 italic">
-                Nincs aktív kihívás mára.
+                Nincs aktív {activeTab === 'DAILY' ? 'napi' : 'heti'} kihívás.
             </div>
         )}
 
-        {challenges.map(ch => {
+        {filteredChallenges.map(ch => {
             const progress = Math.min(100, (ch.currentValue / ch.goalValue) * 100);
             const isCompleted = ch.isCompleted;
             const isClaimed = ch.isClaimed;
