@@ -28,7 +28,7 @@ Az alábbi funkciók még nincsenek, vagy csak részben vannak implementálva. M
 > 3. Frontend `Leaderboard.jsx`: Adj hozzá tabokat: "Globális" és "Barátok". A "Barátok" nézet csak azokat a felhasználókat listázza, akiket a bejelentkezett felhasználó követ.
 
 ### 3. Saját kvíz létrehozása
-**Státusz**: Hiányzik
+**Státusz**: Megvalósítva
 **Leírás**: A felhasználók saját kérdéssorokat állíthatnak össze.
 **Prompt**:
 > Implementáld a saját kvíz létrehozásának lehetőségét.

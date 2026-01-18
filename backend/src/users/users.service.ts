@@ -4,6 +4,7 @@ import { Repository, MoreThanOrEqual, Not, In, Like } from 'typeorm';
 import { Profile } from '../entities/profile.entity';
 import { UserSubmission } from '../entities/user-submission.entity';
 import { Friendship } from '../entities/friendship.entity';
+import { QuotesService } from '../quotes/quotes.service';
 
 @Injectable()
 export class UsersService {
@@ -14,6 +15,7 @@ export class UsersService {
     private userSubmissionsRepository: Repository<UserSubmission>,
     @InjectRepository(Friendship)
     private friendshipRepository: Repository<Friendship>,
+    private quotesService: QuotesService,
   ) {}
 
   async syncProfile(
@@ -41,12 +43,22 @@ export class UsersService {
       currentStreak: 0,
     });
 
-    return this.profilesRepository.save(newProfile);
+    try {
+      return await this.profilesRepository.save(newProfile);
+    } catch (err) {
+      // Handle race condition: if another request created it just now
+      if (err.code === '23505') {
+        const p = await this.profilesRepository.findOne({ where: { id: userId } });
+        if (p) return p;
+      }
+      throw err;
+    }
   }
 
   async getProfile(userId: string): Promise<Profile> {
     const profile = await this.profilesRepository.findOne({
       where: { id: userId },
+      relations: ['lastQuote'],
     });
     if (!profile) {
       // Auto-sync/create profile if missing (e.g. after DB reset)
@@ -88,7 +100,7 @@ export class UsersService {
 
   async claimDailyBonus(
     userId: string,
-  ): Promise<{ claimed: boolean; bonus?: number; message?: string }> {
+  ): Promise<{ claimed: boolean; bonus?: number; message?: string; quote?: any }> {
     const today = new Date().toISOString().split('T')[0];
 
     // Ensure profile exists first
@@ -132,9 +144,12 @@ export class UsersService {
     profile.gems += gemBonus;
     profile.sanityPoints = Math.min(100, profile.sanityPoints + 20); // Restore Sanity
 
+    const quote = await this.quotesService.getRandomQuote();
+    profile.lastQuoteId = quote.id;
+
     await this.profilesRepository.save(profile);
 
-    return { claimed: true, bonus: xpBonus, message };
+    return { claimed: true, bonus: xpBonus, message, quote };
   }
 
   async getLeaderboard(

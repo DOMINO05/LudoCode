@@ -10,7 +10,7 @@ export default function Dashboard() {
   const { session, profile, refreshProfile } = useOutletContext();
   const navigate = useNavigate();
   const [showBonus, setShowBonus] = useState(false);
-  const [bonusData, setBonusData] = useState({ message: '', bonus: 0 });
+  const [bonusData, setBonusData] = useState({ message: '', bonus: 0, quote: null });
 
   useEffect(() => {
     const claimDailyBonus = async () => {
@@ -24,7 +24,7 @@ export default function Dashboard() {
         if (res.ok) {
           const data = await res.json();
           if (data.claimed) {
-            setBonusData({ message: data.message, bonus: data.bonus });
+            setBonusData({ message: data.message, bonus: data.bonus, quote: data.quote });
             setShowBonus(true);
             refreshProfile(); // Update XP in TopBar and Dashboard
           }
@@ -132,13 +132,38 @@ export default function Dashboard() {
           </div>
       </div>
       
+      {/* Napi Inspiráció */}
+      {profile.lastQuote && (
+        <div className="w-full max-w-4xl bg-surface-light dark:bg-surface-dark p-8 rounded-3xl border border-slate-200 dark:border-slate-700 shadow-sm text-center relative overflow-hidden group">
+            <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-primary to-secondary opacity-50"></div>
+            <div className="text-4xl opacity-20 mb-2 group-hover:scale-125 transition-transform duration-500">“</div>
+            <p className="text-xl md:text-2xl font-medium italic text-slate-700 dark:text-slate-200 mb-4 px-4">
+                {profile.lastQuote.text}
+            </p>
+            <div className="flex items-center justify-center gap-2">
+                <span className="h-px w-8 bg-slate-300 dark:bg-slate-600"></span>
+                <cite className="not-italic font-bold text-primary tracking-wide uppercase text-sm">
+                    {profile.lastQuote.author}
+                </cite>
+                <span className="h-px w-8 bg-slate-300 dark:bg-slate-600"></span>
+            </div>
+        </div>
+      )}
+
       {/* Lower Section: Charts & Leaderboard */}
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 w-full items-start">
           <ProgressChart session={session} />
           <Leaderboard session={session} currentUserId={profile.id} />
       </div>
 
-      {showBonus && <BonusModal onClose={() => setShowBonus(false)} message={bonusData.message} bonus={bonusData.bonus} />}
+      {showBonus && (
+        <BonusModal 
+          onClose={() => setShowBonus(false)} 
+          message={bonusData.message} 
+          bonus={bonusData.bonus} 
+          quote={bonusData.quote}
+        />
+      )}
     </div>
   );
 }

@@ -4,12 +4,15 @@ import {
   PrimaryColumn,
   CreateDateColumn,
   OneToMany,
+  ManyToOne,
+  JoinColumn,
 } from 'typeorm';
 import { UserSubmission } from './user-submission.entity';
 import { UserConceptMastery } from './user-concept-mastery.entity';
 import { UserInventory } from './user-inventory.entity';
 import { CustomQuiz } from './custom-quiz.entity';
 import { QuizAttempt } from './quiz-attempt.entity';
+import { Quote } from './quote.entity';
 
 @Entity('profiles')
 export class Profile {
@@ -51,6 +54,13 @@ export class Profile {
 
   @Column({ name: 'last_daily_bonus', type: 'date', nullable: true })
   lastDailyBonus: string;
+
+  @Column({ name: 'last_quote_id', type: 'uuid', nullable: true })
+  lastQuoteId: string;
+
+  @ManyToOne(() => Quote)
+  @JoinColumn({ name: 'last_quote_id' })
+  lastQuote: Quote;
 
   @Column({ name: 'avatar_config', type: 'jsonb', nullable: true })
   avatarConfig: any;

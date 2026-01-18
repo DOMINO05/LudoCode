@@ -11,6 +11,7 @@ import { CoursesModule } from './courses/courses.module';
 import { ShopModule } from './shop/shop.module';
 import { LanguagesModule } from './languages/languages.module';
 import { QuizzesModule } from './quizzes/quizzes.module';
+import { QuotesModule } from './quotes/quotes.module';
 
 @Module({
   imports: [
@@ -39,6 +40,7 @@ import { QuizzesModule } from './quizzes/quizzes.module';
     ShopModule,
     LanguagesModule,
     QuizzesModule,
+    QuotesModule,
   ],
   controllers: [AppController],
   providers: [AppService],

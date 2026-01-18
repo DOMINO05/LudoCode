@@ -7,6 +7,9 @@ Ez a dokumentum a Ludocode projekt még meg nem valósított funkcióinak kimer�
 ## 1. Profil beállítás: Rövid leírás (Bio)
 A felhasználók személyiségének és céljainak bemutatására szolgáló rövid szöveges mező.
 
+### Git Commit (Angolul)
+`feat: add bio field to user profile with character limit and community display`
+
 ### Üzleti Logika és Felhasználói Útvonal
 - **Happy Path**: Felhasználó megnyitja a Profil oldalt -> Beírja a leírást -> Mentés gombra kattint -> A rendszer visszajelzést ad -> A leírás megjelenik a profilján mások számára is.
 - **Jogosultság**: Minden bejelentkezett felhasználó szerkesztheti a saját leírását.
@@ -38,6 +41,9 @@ A felhasználók személyiségének és céljainak bemutatására szolgáló rö
 ## 2. Motivációs idézetek
 Napi belépéskor megjelenő inspiráló gondolatok a programozás világából.
 
+### Git Commit (Angolul)
+`feat: implement daily motivational quotes system for user dashboard`
+
 ### Üzleti Logika és Felhasználói Útvonal
 - **Happy Path**: Felhasználó belép -> Megkapja a napi bónuszt -> A felugró ablakban (vagy a Dashboardon) megjelenik egy véletlenszerű programozói idézet.
 - **Trigger**: `claimDailyBonus` végpont hívása vagy a Dashboard betöltése naponta először.
@@ -67,6 +73,9 @@ Napi belépéskor megjelenő inspiráló gondolatok a programozás világából.
 ## 3. Kezdeti szintfelmérő teszt
 Az adaptív algoritmus (IRT/BKT) inicializálása a felhasználó meglévő tudása alapján.
 
+### Git Commit (Angolul)
+`feat: add initial placement test to initialize adaptive learning parameters`
+
 ### Üzleti Logika és Felhasználói Útvonal
 - **Happy Path**: Regisztráció után felugrik egy modal: "Szeretnél szintfelmérőt?" -> 10 vegyes nehézségű kérdés megválaszolása -> A rendszer kiszámítja a kezdő `global_proficiency` értéket -> A tanulási útvonal ehhez igazodik.
 - **Trigger**: Az első sikeres belépés (ha a `global_proficiency` még default értéken van).
@@ -91,6 +100,9 @@ Az adaptív algoritmus (IRT/BKT) inicializálása a felhasználó meglévő tud�
 
 ## 4. Napi és Heti kihívások
 Rendszeres célok a felhasználói aktivitás fenntartásához.
+
+### Git Commit (Angolul)
+`feat: implement daily and weekly challenge system with rewards`
 
 ### Üzleti Logika és Felhasználói Útvonal
 - **Happy Path**: Felhasználó látja a kihívást ("Oldj meg 3 Python feladatot") -> Teljesíti -> Megkapja a jutalmat (XP/Gems).
@@ -118,6 +130,9 @@ Rendszeres célok a felhasználói aktivitás fenntartásához.
 ## 5. Kódírási környezet fejlesztése (Formatter, Auto-save, Sharing)
 A fejlesztői élmény professzionálissá tétele.
 
+### Git Commit (Angolul)
+`feat: enhance coding environment with prettier formatter, auto-save and code sharing`
+
 ### Üzleti Logika és Felhasználói Útvonal
 - **Formatter**: Gombnyomásra a kód olvashatóvá válik.
 - **Auto-save**: Minden billentyűleütés után 2 másodperccel a kód mentődik lokálisan.
@@ -138,6 +153,9 @@ A fejlesztői élmény professzionálissá tétele.
 ## 6. AI-alapú személyre szabott ajánlások
 Intelligens segítség a tanulási sorrendhez.
 
+### Git Commit (Angolul)
+`feat: add AI-driven personalized study recommendations and progress explanations`
+
 ### Üzleti Logika és Felhasználói Útvonal
 - **Happy Path**: A Dashboardon megjelenik: "Úgy látjuk, a Listák jól mennek, de a Ciklusoknál sokat hibáztál. Próbáld ki ezt a feladatot!"
 - **Jogosultság**: Minden tanuló.
@@ -151,6 +169,9 @@ Intelligens segítség a tanulási sorrendhez.
 
 ## 7. Hibák visszanézése funkció
 A hibákból való tanulás elősegítése.
+
+### Git Commit (Angolul)
+`feat: implement mistake review system with side-by-side diff view`
 
 ### Üzleti Logika és Felhasználói Útvonal
 - **Flow**: Felhasználó megnyitja a "Hibanaplót" -> Kiválaszt egy feladatot -> Látja a saját korábbi hibás kódját és a helyes megoldást egymás mellett.
@@ -168,6 +189,9 @@ A hibákból való tanulás elősegítése.
 ## 8. Beépített szakzsargon szótár
 Azonnali segítség az ismeretlen kifejezésekhez.
 
+### Git Commit (Angolul)
+`feat: add programming jargon dictionary with interactive tooltips`
+
 ### Frontend és UI/UX Tervezés
 - **UI**: A feladatleírásokban a szótárban szereplő szavak (pl. "rekurzió") aláhúzva jelennek meg. Fölé vive az egeret (hover) egy kis buborékban (Tooltip) megjelenik a definíció.
 - **Kereső**: Külön oldal `/dictionary` keresőmezővel és ABC szerinti navigációval.
@@ -180,6 +204,9 @@ Azonnali segítség az ismeretlen kifejezésekhez.
 
 ## 9. Virtuális mentor karakter
 Érzelmi és szakmai támogatás a tanulás során.
+
+### Git Commit (Angolul)
+`feat: implement virtual mentor character with dynamic emotional states`
 
 ### Üzleti Logika
 - **Trigger**: HP csökkenés esetén bíztatás, sorozatos jó válaszoknál dicséret.
@@ -194,6 +221,9 @@ Azonnali segítség az ismeretlen kifejezésekhez.
 ## 10. Desktop élmény figyelmeztetés
 A kódolási élmény minőségének biztosítása.
 
+### Git Commit (Angolul)
+`feat: add desktop experience warning for mobile users on coding pages`
+
 ### Frontend
 - **Logika**: `useEffect`-ben figyelni a `window.innerWidth` értéket.
 - **Küszöb**: 768px alatt.
@@ -203,6 +233,9 @@ A kódolási élmény minőségének biztosítása.
 
 ## 11. Értesítési rendszer
 Real-time visszajelzés a fontos eseményekről.
+
+### Git Commit (Angolul)
+`feat: implement real-time notification system using websockets`
 
 ### API Interfész
 - **Technológia**: WebSocket (NestJS Gateways / Socket.io).
@@ -216,6 +249,9 @@ Real-time visszajelzés a fontos eseményekről.
 
 ## 12. Badge rendszer (Kitüntetések)
 A mérföldkövek vizuális elismerése.
+
+### Git Commit (Angolul)
+`feat: add badge achievement system for course completion and milestones`
 
 ### Üzleti Logika
 - **Feltételek**: "Mester" szint egy nyelvből, 30 napos streak, 100 hibátlan feladat, stb.
