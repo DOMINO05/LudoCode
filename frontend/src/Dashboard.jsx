@@ -5,6 +5,7 @@ import Leaderboard from './components/Leaderboard';
 import ProgressChart from './components/ProgressChart';
 import MistakeRecovery from './components/MistakeRecovery';
 import SanityWarningModal from './components/SanityWarningModal';
+import ChallengesWidget from './components/ChallengesWidget';
 
 const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:3000';
 
@@ -167,9 +168,14 @@ export default function Dashboard() {
         </div>
       )}
 
-      {/* Lower Section: Charts & Leaderboard */}
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 w-full items-start">
-          <ProgressChart session={session} />
+      {/* Lower Section: Charts, Challenges & Leaderboard */}
+      <div className="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-8 w-full items-start">
+          <div className="xl:col-span-2 space-y-8">
+             <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+                 <ProgressChart session={session} />
+                 <ChallengesWidget session={session} refreshProfile={refreshProfile} />
+             </div>
+          </div>
           <Leaderboard session={session} currentUserId={profile.id} />
       </div>
 

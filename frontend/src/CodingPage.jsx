@@ -216,6 +216,21 @@ export default function CodingPage() {
             });
         }
 
+        // Check for completed challenges
+        if (data.completedChallenges && data.completedChallenges.length > 0 && showBadgeNotification) {
+             console.log("Triggering challenge notification for:", data.completedChallenges);
+             const badgeDelay = (data.newBadges?.length || 0) * 5500;
+             
+             data.completedChallenges.forEach((ch, index) => {
+                setTimeout(() => {
+                    showBadgeNotification({
+                        name: ch.description,
+                        iconPath: '🎯' 
+                    });
+                }, badgeDelay + index * 5500);
+             });
+        }
+
         if (data.isCorrect) {
             setSessionStreak(prev => prev + 1);
         } else {

@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import UserProfileModal from './UserProfileModal';
 
 const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:3000';
 
@@ -8,6 +9,7 @@ const Leaderboard = ({ session, currentUserId }) => {
     const [tab, setTab] = useState('global'); // 'global' | 'friends'
     const [searchQuery, setSearchQuery] = useState('');
     const [isSearching, setIsSearching] = useState(false);
+    const [selectedUserId, setSelectedUserId] = useState(null);
 
     useEffect(() => {
         if (!isSearching) {
@@ -63,6 +65,7 @@ const Leaderboard = ({ session, currentUserId }) => {
         setIsSearching(false);
     };
 
+    // Kept for potential future use or if we add callbacks from modal
     const handleFollow = async (userId) => {
         try {
             const res = await fetch(`${API_URL}/users/follow/${userId}`, {
@@ -85,7 +88,6 @@ const Leaderboard = ({ session, currentUserId }) => {
             });
             if (res.ok) {
                 if (tab === 'friends' && !isSearching) {
-                    // Remove directly if in friends tab and NOT searching
                     setUsers(users.filter(u => u.id !== userId));
                 } else {
                     setUsers(users.map(u => u.id === userId ? { ...u, isFollowing: false } : u));
@@ -158,8 +160,6 @@ const Leaderboard = ({ session, currentUserId }) => {
                                     <th className="p-3 text-left">#</th>
                                     <th className="p-3 text-left w-full">Felhasználó</th>
                                     <th className="p-3 text-right">XP</th>
-                                    <th className="p-3 text-right">Proficiency</th>
-                                    <th className="p-3 text-center">Művelet</th>
                                 </tr>
                             </thead>
                             <tbody className="text-slate-700 dark:text-slate-200">
@@ -168,8 +168,9 @@ const Leaderboard = ({ session, currentUserId }) => {
                                     return (
                                         <tr 
                                             key={user.id} 
+                                            onClick={() => setSelectedUserId(user.id)}
                                             className={`
-                                                border-b border-slate-100 dark:border-slate-800 last:border-0 transition-colors
+                                                border-b border-slate-100 dark:border-slate-800 last:border-0 transition-colors cursor-pointer
                                                 ${isCurrentUser ? 'bg-yellow-50 dark:bg-yellow-900/20 font-bold' : 'hover:bg-slate-50 dark:hover:bg-slate-800/50'}
                                             `}
                                         >
@@ -182,25 +183,6 @@ const Leaderboard = ({ session, currentUserId }) => {
                                             <td className="p-3 text-right text-success font-mono">
                                                 {user.xp}
                                             </td>
-                                            <td className="p-3 text-right text-primary font-mono">
-                                                {user.globalProficiency?.toFixed(2)}
-                                            </td>
-                                            <td className="p-3 text-center">
-                                                {!isCurrentUser && (
-                                                    <button 
-                                                        onClick={() => user.isFollowing ? handleUnfollow(user.id) : handleFollow(user.id)}
-                                                        className={`
-                                                            text-xs px-3 py-1.5 rounded-full font-bold transition-all
-                                                            ${user.isFollowing 
-                                                                ? 'bg-slate-200 text-slate-600 hover:bg-red-100 hover:text-red-600 dark:bg-slate-700 dark:text-slate-300' 
-                                                                : 'bg-primary/10 text-primary hover:bg-primary hover:text-white'
-                                                            }
-                                                        `}
-                                                    >
-                                                        {user.isFollowing ? 'Kikövetés' : 'Bekövetés'}
-                                                    </button>
-                                                )}
-                                            </td>
                                         </tr>
                                     );
                                 })}
@@ -208,6 +190,14 @@ const Leaderboard = ({ session, currentUserId }) => {
                         </table>
                     )}
                 </div>
+            )}
+            
+            {selectedUserId && (
+                <UserProfileModal 
+                    userId={selectedUserId} 
+                    session={session} 
+                    onClose={() => setSelectedUserId(null)} 
+                />
             )}
         </div>
     );

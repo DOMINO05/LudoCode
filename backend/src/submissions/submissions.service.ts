@@ -9,6 +9,7 @@ import { UserLanguageProgress } from '../entities/user-language-progress.entity'
 import { CodeRunnerService } from '../code-runner/code-runner.service';
 import { AIService } from '../common/services/ai.service';
 import { BadgesService } from '../badges/badges.service';
+import { ChallengesService } from '../challenges/challenges.service';
 
 interface QuestionContent {
   correct_order?: string[];
@@ -36,6 +37,7 @@ export class SubmissionsService {
     private codeRunnerService: CodeRunnerService,
     private aiService: AIService,
     private badgesService: BadgesService,
+    private challengesService: ChallengesService,
   ) {}
 
   async submit(
@@ -213,6 +215,7 @@ export class SubmissionsService {
       if (isCorrect) {
         user.xp += Math.round(10 * multiplier); // Global XP accumulation
         user.gems += Math.round(1 * multiplier);
+        
         // user.currentStreak is reserved for Daily Streak (Login Streak). 
         // Question streak is handled via maxCombo and client-side session streak.
         
@@ -248,6 +251,17 @@ export class SubmissionsService {
     // Check for new badges
     const newBadges = await this.badgesService.checkAndAwardBadges(userId);
 
+    // Update Challenges
+    let completedChallenges = [];
+    if (isCorrect) {
+        const solved = await this.challengesService.updateProgress(userId, 'SOLVE_QUESTION', 1);
+        completedChallenges = [...completedChallenges, ...solved];
+
+        const earnedGems = Math.round(1 * multiplier);
+        const gemChallenges = await this.challengesService.updateProgress(userId, 'EARN_GEMS', earnedGems);
+        completedChallenges = [...completedChallenges, ...gemChallenges];
+    }
+
     let aiExplanation = null;
     if (!isCorrect) {
       aiExplanation = await this.aiService.getErrorExplanation(
@@ -265,6 +279,7 @@ export class SubmissionsService {
       explanation: content.explanation,
       ai_explanation: aiExplanation,
       newBadges: newBadges.map(ub => ub.badge),
+      completedChallenges,
       userUpdates: {
         xp: user?.xp,
         sanity: user?.sanityPoints,
@@ -342,6 +357,8 @@ export class SubmissionsService {
         user.sanityPoints = Math.min(100, user.sanityPoints + 10);
         await this.profileRepository.save(user);
       }
+
+      await this.challengesService.updateProgress(userId, 'RESOLVE_MISTAKE', 1);
 
       return { success: true, message: 'Feladat sikeresen javítva! +10% Sanity.', newSanity: user?.sanityPoints };
     } else {

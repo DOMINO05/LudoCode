@@ -5,6 +5,7 @@ import { Profile } from '../entities/profile.entity';
 import { UserSubmission } from '../entities/user-submission.entity';
 import { Friendship } from '../entities/friendship.entity';
 import { QuotesService } from '../quotes/quotes.service';
+import { ChallengesService } from '../challenges/challenges.service';
 
 const AVATAR_OPTIONS = {
   skinColor: ['ffe4c0', 'f5d0a9', 'e8b88d', 'd49d7b', 'b67b5e', '8d5441', '5d3428'],
@@ -39,6 +40,7 @@ export class UsersService {
     @InjectRepository(Friendship)
     private friendshipRepository: Repository<Friendship>,
     private quotesService: QuotesService,
+    private challengesService: ChallengesService,
   ) {}
 
   async syncProfile(
@@ -133,6 +135,7 @@ export class UsersService {
 
     if (updates.avatar_config) {
       profile.avatarConfig = updates.avatar_config;
+      await this.challengesService.updateProgress(userId, 'CUSTOMIZE_AVATAR', 1);
     }
 
     return this.profilesRepository.save(profile);
@@ -167,6 +170,9 @@ export class UsersService {
     } else {
       profile.currentStreak = 1;
     }
+
+    // Update Challenges (Streak)
+    await this.challengesService.updateProgress(userId, 'STREAK', profile.currentStreak);
 
     let xpBonus = 50;
     let gemBonus = 5;
@@ -294,6 +300,42 @@ export class UsersService {
 
   async unfollowUser(followerId: string, followingId: string) {
     await this.friendshipRepository.delete({ followerId, followingId });
+  }
+
+  async getPublicProfile(targetUserId: string, requesterId: string) {
+    const profile = await this.profilesRepository.findOne({
+      where: { id: targetUserId },
+      relations: ['userBadges', 'userBadges.badge'],
+    });
+
+    if (!profile) {
+       throw new NotFoundException('User not found');
+    }
+
+    const followersCount = await this.friendshipRepository.count({
+      where: { followingId: targetUserId },
+    });
+    const followingCount = await this.friendshipRepository.count({
+      where: { followerId: targetUserId },
+    });
+
+    let isFollowing = false;
+    if (requesterId && requesterId !== targetUserId) {
+        const friendship = await this.friendshipRepository.findOne({
+            where: { followerId: requesterId, followingId: targetUserId }
+        });
+        isFollowing = !!friendship;
+    }
+
+    const stats = await this.getUserStats(targetUserId);
+
+    return {
+      ...profile,
+      followersCount,
+      followingCount,
+      isFollowing,
+      stats
+    };
   }
 
   async getUserStats(userId: string) {

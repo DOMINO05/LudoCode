@@ -32,6 +32,12 @@ export class UsersController {
   }
 
   @UseGuards(AuthGuard('jwt'))
+  @Get('public-profile/:id')
+  async getPublicProfile(@User() user: UserPayload, @Param('id') id: string) {
+    return this.usersService.getPublicProfile(id, user.userId);
+  }
+
+  @UseGuards(AuthGuard('jwt'))
   @Post('daily-claim')
   async claimDailyBonus(@User() user: UserPayload) {
     return this.usersService.claimDailyBonus(user.userId);

@@ -2,73 +2,6 @@
 
 Ez a dokumentum a Ludocode projekt még meg nem valósított funkcióinak kimerítően részletes tervezete, figyelembe véve az üzleti logikát, UI/UX szempontokat, adatmodellt és API specifikációkat.
 
----
-
-## 1. Profil beállítás: Rövid leírás (Bio)
-A felhasználók személyiségének és céljainak bemutatására szolgáló rövid szöveges mező.
-
-### Git Commit (Angolul)
-`feat: add bio field to user profile with character limit and community display`
-
-### Üzleti Logika és Felhasználói Útvonal
-- **Happy Path**: Felhasználó megnyitja a Profil oldalt -> Beírja a leírást -> Mentés gombra kattint -> A rendszer visszajelzést ad -> A leírás megjelenik a profilján mások számára is.
-- **Jogosultság**: Minden bejelentkezett felhasználó szerkesztheti a saját leírását.
-- **Trigger**: "Mentés" gomb megnyomása a profil szerkesztése oldalon.
-- **Mellékhatások**: Nincsenek kritikus mellékhatások; opcionálisan logolható a változtatás.
-
-### Frontend és UI/UX Tervezés
-- **Elhelyezés**: `ProfilePage.jsx`, a felhasználónév alatt, egy többsoros szövegbeviteli mező (Textarea).
-- **State-ek**:
-    - *Loading*: Mentés közben a gomb inaktív, "Mentés..." felirat.
-    - *Error*: Piros keret a mező körül, hibaüzenet a gomb felett.
-    - *Success*: Zöld toast üzenet: "Profil sikeresen frissítve!"
-- **Input occupations**: Textarea, max. 160 karakter, számlálóval a jobb alsó sarokban.
-- **Reszponzivitás**: Mobilon teljes szélességű, asztali nézetben a kártya középső részén helyezkedik el.
-
-### Adatbázis és Adatmodell
-- **Módosítás**: `profiles` tábla bővítése `bio TEXT` oszloppal.
-- **Kényszerek**: Max 160 karakter (alkalmazási szinten és adatbázis szinten is ellenőrizve).
-- **Migráció**: `ALTER TABLE profiles ADD COLUMN bio VARCHAR(160);`
-
-### API Interfész
-- **Végpont**: `PATCH /users/profile`
-- **Request**: `{ "bio": "Szia, a Python a mindenem!" }`
-- **Response**: `{ "id": "...", "username": "...", "bio": "...", ... }`
-- **Státuszkódok**: 200 (OK), 400 (Bad Request - túl hosszú), 401 (Unauthorized).
-
----
-
-## 2. Motivációs idézetek
-Napi belépéskor megjelenő inspiráló gondolatok a programozás világából.
-
-### Git Commit (Angolul)
-`feat: implement daily motivational quotes system for user dashboard`
-
-### Üzleti Logika és Felhasználói Útvonal
-- **Happy Path**: Felhasználó belép -> Megkapja a napi bónuszt -> A felugró ablakban (vagy a Dashboardon) megjelenik egy véletlenszerű programozói idézet.
-- **Trigger**: `claimDailyBonus` végpont hívása vagy a Dashboard betöltése naponta először.
-- **Mellékhatások**: Pozitív pszichológiai hatás, növekvő megtartás (retention).
-
-### Frontend és UI/UX Tervezés
-- **Elhelyezés**: A `Dashboard`-on egy "Napi Inspiráció" kártya, dőlt betűkkel, stílusos idézőjelekkel.
-- **State-ek**:
-    - *Empty*: Ha nincs több idézet (fallback: egy fix alapértelmezett idézet).
-    - *Loading*: Csontváz (skeleton) animáció a szöveg helyén.
-- **Reszponzivitás**: Rugalmas kártyamagasság a szöveg hosszától függően.
-
-### Adatbázis és Adatmodell
-- **Új tábla**: `quotes`
-    - `id` (UUID, PK)
-    - `text` (TEXT, NOT NULL)
-    - `author` (VARCHAR(100), DEFAULT 'Ismeretlen')
-- **Kapcsolatok**: Nincsenek közvetlen kapcsolatok más táblákkal.
-
-### API Interfész
-- **Végpont**: `GET /quotes/random`
-- **Response**: `{ "text": "Talk is cheap. Show me the code.", "author": "Linus Torvalds" }`
-- **Státuszkódok**: 200 (OK), 500 (Internal Server Error).
-
----
 
 ## 3. Kezdeti szintfelmérő teszt
 Az adaptív algoritmus (IRT/BKT) inicializálása a felhasználó meglévő tudása alapján.
@@ -99,21 +32,23 @@ Az adaptív algoritmus (IRT/BKT) inicializálása a felhasználó meglévő tud�
 ---
 
 ## 4. Napi és Heti kihívások
-Rendszeres célok a felhasználói aktivitás fenntartásához.
+Rendszeres célok a felhasználói aktivitás fenntartásához. Minden nap és minden héten más feladatok (
+a napi célok egyszerűen teljesíthetőek legyenek, pl oldj meg helyesen 5 feladatot, vegyél részt egy kvízben, módosítsd a karaktered, javítsd ki 3 hibádat, stb
+a heti kihívásokat több időbe teljen megcsinálni, pl érj el 4-os streak-et, gyűjts 20 gemet, stb.
 
 ### Git Commit (Angolul)
 `feat: implement daily and weekly challenge system with rewards`
 
 ### Üzleti Logika és Felhasználói Útvonal
-- **Happy Path**: Felhasználó látja a kihívást ("Oldj meg 3 Python feladatot") -> Teljesíti -> Megkapja a jutalmat (XP/Gems).
+- **Happy Path**: Felhasználó látja a kihívást ("Oldj meg 3 Python feladatot") -> Teljesíti -> Ilyenkor a feladat mellet "Begyüjtés" gombra nyomva megkapja a jutalmat (xp/gem)".
 - **Trigger**: Minden megoldott feladat (`submit` API) után a backend ellenőrzi az aktív kihívásokat.
-- **Side effects**: Értesítés küldése ("Kihívás teljesítve!").
+- **Side effects**: Értesítés küldése ("Kihívás teljesítve!"), ugyan úgy mint a badge megszerzésénél.
 
 ### Frontend és UI/UX Tervezés
-- **Elhelyezés**: Dashboard jobb oldali sáv vagy külön "Kihívások" kártya.
-- **UI elemek**: Kör alakú vagy horizontális progress bar-ok.
+- **Elhelyezés**: Széles kijelzőn a Dashboard jobb oldali sávjában, telefonon külön "Kihívások" kártya.
+- **UI elemek**: Horizontális progress bar-ok.
 - **State-ek**:
-    - *Success*: Csillogó effekt a teljesített kihívás körül és egy "Claim" gomb.
+    - *Success*: Csillogó effekt a teljesített kihívás körül és egy "Begyüjtés" gomb.
 
 ### Adatbázis és Adatmodell
 - **Új tábla**: `challenges` (id, title, type, goal_value, reward_xp, reward_gems).
@@ -181,6 +116,14 @@ Azonnali segítség az ismeretlen kifejezésekhez.
 - **UI**: Egy kis animált SVG vagy WebGL karakter a képernyő sarkában.
 - **State-ek**: "Thinking", "Happy", "Sad", "Encouraging".
 
+
+
+
+
+
+---
+---
+---
 ---
 
 ## 10. Desktop élmény figyelmeztetés
@@ -193,38 +136,3 @@ A kódolási élmény minőségének biztosítása.
 - **Logika**: `useEffect`-ben figyelni a `window.innerWidth` értéket.
 - **Küszöb**: 768px alatt.
 - **UI**: Egy sárga információs sáv a képernyő tetején: "A kódolási feladatokhoz billentyűzet és nagyobb képernyő javasolt." (X-el bezárható, session-ben elmentve).
-
----
-
-## 11. Értesítési rendszer
-Real-time visszajelzés a fontos eseményekről.
-
-### Git Commit (Angolul)
-`feat: implement real-time notification system using websockets`
-
-### API Interfész
-- **Technológia**: WebSocket (NestJS Gateways / Socket.io).
-- **Események**: `NEW_FOLLOWER`, `CHALLENGE_COMPLETED`, `DAILY_STREAK_REMINDER`.
-
-### Frontend
-- **UI**: Csengő ikon a headerben piros körrel.
-- **Success State**: "Push" értesítés (ha a user engedélyezi).
-
----
-
-## 12. Badge rendszer (Kitüntetések)
-A mérföldkövek vizuális elismerése.
-
-### Git Commit (Angolul)
-`feat: add badge achievement system for course completion and milestones`
-
-### Üzleti Logika
-- **Feltételek**: "Mester" szint egy nyelvből, 30 napos streak, 100 hibátlan feladat, stb.
-- **Side effects**: A profilkép körül megjelenő speciális keretek vagy a név melletti ikonok.
-
-### Adatbázis
-- **Tábla**: `badges` (id, name, description, icon_path, criteria_json).
-- **Tábla**: `user_badges` (user_id, badge_id, awarded_at).
-
-### Validáció
-- A backend minden `submit` után ellenőrzi a kritériumokat egy `BadgeService`-ben.

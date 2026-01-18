@@ -14,6 +14,7 @@ import { QuizzesModule } from './quizzes/quizzes.module';
 import { QuotesModule } from './quotes/quotes.module';
 import { AIModule } from './common/ai.module';
 import { BadgesModule } from './badges/badges.module';
+import { ChallengesModule } from './challenges/challenges.module';
 
 @Module({
   imports: [
@@ -45,6 +46,7 @@ import { BadgesModule } from './badges/badges.module';
     QuotesModule,
     AIModule,
     BadgesModule,
+    ChallengesModule,
   ],
   controllers: [AppController],
   providers: [AppService],
