@@ -22,7 +22,7 @@ A felhasználók személyiségének és céljainak bemutatására szolgáló rö
     - *Loading*: Mentés közben a gomb inaktív, "Mentés..." felirat.
     - *Error*: Piros keret a mező körül, hibaüzenet a gomb felett.
     - *Success*: Zöld toast üzenet: "Profil sikeresen frissítve!"
-- **Inputok**: Textarea, max. 160 karakter, számlálóval a jobb alsó sarokban.
+- **Input occupations**: Textarea, max. 160 karakter, számlálóval a jobb alsó sarokban.
 - **Reszponzivitás**: Mobilon teljes szélességű, asztali nézetben a kártya középső részén helyezkedik el.
 
 ### Adatbázis és Adatmodell
@@ -150,20 +150,37 @@ A fejlesztői élmény professzionálissá tétele.
 
 ---
 
-## 6. AI-alapú személyre szabott ajánlások
-Intelligens segítség a tanulási sorrendhez.
+## 6. AI-alapú személyre szabott hiba magyarázat
+Személyre szabott, közérthető segítség a hibák gyorsabb megértéséhez.
 
 ### Git Commit (Angolul)
-`feat: add AI-driven personalized study recommendations and progress explanations`
+`feat: add AI-powered personalized error explanations for failed submissions`
 
 ### Üzleti Logika és Felhasználói Útvonal
-- **Happy Path**: A Dashboardon megjelenik: "Úgy látjuk, a Listák jól mennek, de a Ciklusoknál sokat hibáztál. Próbáld ki ezt a feladatot!"
-- **Jogosultság**: Minden tanuló.
-- **Biztonság**: Ha LLM-et használunk, a felhasználó kódját anonimizálva küldjük ki.
+- **Happy Path**: A felhasználó hibás választ ad be -> A rendszer elküldi a kódot az AI-nak -> Az AI max 2 mondatban elmagyarázza, miért volt hibás a kód és mi lett volna a jó megoldás (közérthetően) -> A felhasználó azonnal látja a választ a feladat alatt.
+- **Jogosultság**: Minden bejelentkezett felhasználó.
+- **Trigger**: Sikertelen feladatbeküldés (`isCorrect: false`).
+- **Mellékhatások**: A válaszadási sebesség növelése (timeout kezelés kötelező).
+
+### Frontend és UI/UX Tervezés
+- **Elhelyezés**: `CodingPage.jsx` visszajelző sáv (Feedback Area).
+- **State-ek**:
+    - *Loading*: "Az AI elemzi a megoldásodat..." felirat apró animációval.
+    - *Success*: A generált szöveg kiemelése stílusosan.
+    - *Fallback*: Ha az AI nem válaszol időben vagy nem elérhető, a statikus "explanation" mező jelenik meg.
+- **Reszponzivitás**: Rövid szöveg, mobilon is kényelmesen olvasható.
 
 ### API Interfész
-- **Végpont**: `GET /recommendations/explanation`
-- **Response**: `{ "reason": "A hibáid alapján a logikai operátorok gyakorlása javasolt.", "targetQuestionId": "..." }`
+- **Végpont**: Bővített `POST /questions/:id/submit` válasz.
+- **Response**: `{ "isCorrect": false, "ai_explanation": "A tömb indexelése 0-tól indul, te viszont az 1. elemet kerested a 2. helyett. A helyes válasz a list[0] lett volna.", "explanation": "..." }`
+
+### Validáció és Biztonság
+- **Korlát**: Szigorú prompt engineering (max 2 mondat, egyszerű nyelvvezet).
+- **Biztonság**: Felhasználói azonosítók eltávolítása a promptból, Rate limiting az AI hívásokra.
+
+### Technikai Részletek
+- **Library**: Google Generative AI (Gemini 2.0 Flash) API hívás Axios-szal.
+- **Cache**: Az azonos típusú hibák (pl. elfelejtett pontosvessző) válaszainak gyorstárazása.
 
 ---
 
@@ -249,9 +266,6 @@ Real-time visszajelzés a fontos eseményekről.
 
 ## 12. Badge rendszer (Kitüntetések)
 A mérföldkövek vizuális elismerése.
-
-### Git Commit (Angolul)
-`feat: add badge achievement system for course completion and milestones`
 
 ### Üzleti Logika
 - **Feltételek**: "Mester" szint egy nyelvből, 30 napos streak, 100 hibátlan feladat, stb.

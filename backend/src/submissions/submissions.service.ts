@@ -7,6 +7,7 @@ import { Profile } from '../entities/profile.entity';
 import { UserConceptMastery } from '../entities/user-concept-mastery.entity';
 import { UserLanguageProgress } from '../entities/user-language-progress.entity';
 import { CodeRunnerService } from '../code-runner/code-runner.service';
+import { AIService } from '../common/services/ai.service';
 
 interface QuestionContent {
   correct_order?: string[];
@@ -32,6 +33,7 @@ export class SubmissionsService {
     @InjectRepository(UserLanguageProgress)
     private languageProgressRepository: Repository<UserLanguageProgress>,
     private codeRunnerService: CodeRunnerService,
+    private aiService: AIService,
   ) {}
 
   async submit(
@@ -241,9 +243,22 @@ export class SubmissionsService {
 
     await this.submissionRepository.save(submission);
 
+    let aiExplanation = null;
+    if (!isCorrect) {
+      aiExplanation = await this.aiService.getErrorExplanation(
+        question.title,
+        question.description,
+        content.correct_answer || content.correct_code || 'N/A',
+        submittedCode,
+        question.language.name,
+      );
+    }
+
     return {
       ...submission,
       output,
+      explanation: content.explanation,
+      ai_explanation: aiExplanation,
       userUpdates: {
         xp: user?.xp,
         sanity: user?.sanityPoints,

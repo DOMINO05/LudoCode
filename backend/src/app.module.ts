@@ -12,6 +12,7 @@ import { ShopModule } from './shop/shop.module';
 import { LanguagesModule } from './languages/languages.module';
 import { QuizzesModule } from './quizzes/quizzes.module';
 import { QuotesModule } from './quotes/quotes.module';
+import { AIModule } from './common/ai.module';
 
 @Module({
   imports: [
@@ -41,6 +42,7 @@ import { QuotesModule } from './quotes/quotes.module';
     LanguagesModule,
     QuizzesModule,
     QuotesModule,
+    AIModule,
   ],
   controllers: [AppController],
   providers: [AppService],

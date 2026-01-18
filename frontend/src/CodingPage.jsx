@@ -378,9 +378,22 @@ export default function CodingPage() {
                 {showFeedback && result && (
                     <div className={`rounded-xl p-4 flex items-start gap-3 animate-in fade-in slide-in-from-bottom-2 ${result.isCorrect ? 'bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-100' : 'bg-red-100 text-red-800 dark:bg-red-900 dark:text-red-100'}`}>
                         <div className="text-3xl">{result.isCorrect ? '🎉' : '⚠️'}</div>
-                        <div>
+                        <div className="flex-1">
                             <div className="font-bold text-lg">{result.isCorrect ? 'Tökéletes!' : 'Nem egészen...'}</div>
-                            <div className="text-sm opacity-90">{result.isCorrect ? 'Helyes válasz. Csak így tovább!' : (result.compile_message || result.output || 'Próbáld újra átgondolni a logikát.')}</div>
+                            {!result.isCorrect && result.ai_explanation ? (
+                                <div className="mt-1">
+                                    <div className="text-xs font-black uppercase tracking-wider text-red-600/50 dark:text-red-400/50 mb-1 flex items-center gap-1">
+                                        <span className="animate-pulse">✨</span> AI Mentor Magyarázata
+                                    </div>
+                                    <div className="text-sm leading-relaxed font-medium">
+                                        {result.ai_explanation}
+                                    </div>
+                                </div>
+                            ) : (
+                                <div className="text-sm opacity-90">
+                                    {result.isCorrect ? 'Helyes válasz. Csak így tovább!' : (result.explanation || result.compile_message || result.output || 'Próbáld újra átgondolni a logikát.')}
+                                </div>
+                            )}
                         </div>
                     </div>
                 )}
