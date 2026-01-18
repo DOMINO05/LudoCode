@@ -46,6 +46,7 @@ export class SubmissionsService {
     submittedCode: string,
     executionTimeMs: number,
     streak: number = 0,
+    isPlacement: boolean = false,
   ) {
     const question = await this.questionRepository.findOne({
       where: { id: questionId },
@@ -102,6 +103,14 @@ export class SubmissionsService {
       } else {
         isCorrect = false;
       }
+    }
+
+    if (isPlacement) {
+      return {
+        isCorrect,
+        output,
+        explanation: content.explanation,
+      };
     }
 
     // --- BKT (Bayesian Knowledge Tracing) Logic ---

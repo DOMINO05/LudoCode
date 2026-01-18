@@ -38,6 +38,7 @@ export class SubmissionsController {
       body.code,
       executionTimeMs,
       streak,
+      body.isPlacement,
     );
 
     this.logger.log(

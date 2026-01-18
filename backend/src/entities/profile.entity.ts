@@ -44,6 +44,9 @@ export class Profile {
   @Column({ name: 'global_proficiency', type: 'float', default: 0.0 })
   globalProficiency: number;
 
+  @Column({ name: 'has_completed_placement', type: 'boolean', default: false })
+  hasCompletedPlacement: boolean;
+
   @CreateDateColumn({ name: 'created_at', type: 'timestamptz' })
   createdAt: Date;
 

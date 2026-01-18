@@ -78,6 +78,7 @@ export class UsersService {
       id: userId,
       username: username ? username.trim() : null,
       globalProficiency: initialProficiency,
+      hasCompletedPlacement: false,
       sanityPoints: 100,
       gems: 0,
       xp: 0,
@@ -430,6 +431,17 @@ export class UsersService {
       clothing: 'variant01', // Default basic clothing
       seed: userId,
     };
+  }
+
+  async completePlacement(userId: string, proficiency?: number): Promise<Profile> {
+    const profile = await this.profilesRepository.findOne({ where: { id: userId } });
+    if (!profile) throw new NotFoundException('User not found');
+
+    profile.hasCompletedPlacement = true;
+    if (proficiency !== undefined) {
+      profile.globalProficiency = proficiency;
+    }
+    return this.profilesRepository.save(profile);
   }
 
   async checkEasterEgg(

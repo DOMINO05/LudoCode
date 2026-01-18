@@ -1,6 +1,6 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Repository } from 'typeorm';
+import { Repository, In } from 'typeorm';
 import { Question } from '../entities/question.entity';
 import { Profile } from '../entities/profile.entity';
 import { UserSubmission } from '../entities/user-submission.entity';
@@ -40,6 +40,68 @@ export class QuestionsService {
       throw new NotFoundException(`Language not found: ${lang}`);
     }
     return language.id;
+  }
+
+  async getPlacementQuestions(languageIdentifier: string): Promise<Question[]> {
+    const languageId = await this.resolveLanguageId(languageIdentifier);
+    
+    const fetchBatch = async (betaMin: number, betaMax: number, count: number) => {
+      let questions = await this.questionsRepository
+        .createQueryBuilder('question')
+        .where('question.languageId = :languageId', { languageId })
+        .andWhere('question.difficultyBeta BETWEEN :betaMin AND :betaMax', { betaMin, betaMax })
+        .andWhere('question.qType != :codingType', { codingType: 'coding' })
+        .orderBy('RANDOM()')
+        .take(count)
+        .getMany();
+      
+      // Fallback: If not enough in range, just take any non-coding
+      if (questions.length < count) {
+          const excludeIds = questions.map(q => q.id);
+          let query = this.questionsRepository
+            .createQueryBuilder('question')
+            .where('question.languageId = :languageId', { languageId })
+            .andWhere('question.qType != :codingType', { codingType: 'coding' });
+            
+          if (excludeIds.length > 0) {
+              query = query.andWhere('question.id NOT IN (:...excludeIds)', { excludeIds });
+          }
+
+          const extra = await query
+            .orderBy('RANDOM()')
+            .take(count - questions.length)
+            .getMany();
+          questions = [...questions, ...extra];
+      }
+      return questions;
+    };
+
+    const beginners = await fetchBatch(-4.0, -1.0, 3);
+    const intermediates = await fetchBatch(-1.0, 1.0, 4);
+    const pros = await fetchBatch(1.0, 4.0, 3);
+
+    let result = [...beginners, ...intermediates, ...pros];
+
+    // Final safety: ensure exactly 10 questions
+    if (result.length < 10) {
+        const excludeIds = result.map(q => q.id);
+        let query = this.questionsRepository
+            .createQueryBuilder('question')
+            .where('question.languageId = :languageId', { languageId })
+            .andWhere('question.qType != :codingType', { codingType: 'coding' });
+
+        if (excludeIds.length > 0) {
+            query = query.andWhere('question.id NOT IN (:...excludeIds)', { excludeIds });
+        }
+
+        const extra = await query
+            .orderBy('RANDOM()')
+            .take(10 - result.length)
+            .getMany();
+        result = [...result, ...extra];
+    }
+
+    return result;
   }
 
   async getNextQuestion(

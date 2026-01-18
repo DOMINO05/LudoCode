@@ -19,6 +19,14 @@ export class QuestionsController {
   constructor(private readonly questionsService: QuestionsService) {}
 
   @UseGuards(AuthGuard('jwt'))
+  @Get('placement')
+  async getPlacement(@Request() req) {
+    const languageId = req.query.languageId;
+    if (!languageId) throw new Error('Language ID required');
+    return this.questionsService.getPlacementQuestions(languageId);
+  }
+
+  @UseGuards(AuthGuard('jwt'))
   @Get('next')
   async getNext(@Request() req) {
     const languageId = req.query.languageId;

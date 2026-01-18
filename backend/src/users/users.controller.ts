@@ -88,6 +88,15 @@ export class UsersController {
   }
 
   @UseGuards(AuthGuard('jwt'))
+  @Post('complete-placement')
+  async completePlacement(
+    @User() user: UserPayload,
+    @Body('proficiency') proficiency?: number,
+  ) {
+    return this.usersService.completePlacement(user.userId, proficiency);
+  }
+
+  @UseGuards(AuthGuard('jwt'))
   @Post('easter-egg')
   async easterEgg(@User() user: UserPayload, @Body() body: EasterEggDto) {
     return this.usersService.checkEasterEgg(user.userId, body.code);

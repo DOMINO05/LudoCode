@@ -12,4 +12,7 @@ export class SubmitAnswerDto {
   @IsNumber()
   @IsOptional()
   streak?: number;
+
+  @IsOptional()
+  isPlacement?: boolean;
 }
