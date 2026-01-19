@@ -28,11 +28,21 @@ export class SubmissionsController {
     const userId = user.userId;
     const executionTimeMs = body.executionTimeMs || 0;
     const streak = body.streak || 0;
+
+    let codeLog = body.code;
+    if (body.code && typeof body.code === 'string' && body.code.length > 100) {
+      codeLog = `${body.code.substring(0, 100)}...`;
+    }
+
     this.logger.log(
-      `User ${userId} submitting answer for question ${questionId}. Code: ${body.code}, Streak: ${streak}`,
+      `--- Submission ---\n` +
+        `User: ${userId}\n` +
+        `Question: ${questionId}\n` +
+        `Streak: ${streak}\n` +
+        `Code: ${codeLog}`,
     );
 
-    const result = await this.submissionsService.submit(
+    const result: any = await this.submissionsService.submit(
       userId,
       questionId,
       body.code,
@@ -41,9 +51,33 @@ export class SubmissionsController {
       body.isPlacement,
     );
 
-    this.logger.log(
-      `Submission result for user ${userId}, question ${questionId}: ${JSON.stringify(result)}`,
-    );
+    let resultLog = `--- Result ---\n` + `Correct: ${result.isCorrect}\n`;
+
+    if (result.isCorrect) {
+      if (result.userUpdates) {
+        resultLog += `XP: ${result.userUpdates.xp}\n`;
+      }
+      if (result.newBadges?.length) {
+        resultLog += `New Badges: ${result.newBadges.map((b) => b.name).join(', ')}\n`;
+      }
+    } else {
+      resultLog += `Output: ${result.output || 'N/A'}\n`;
+      if (result.explanation) {
+        resultLog += `Explanation: ${result.explanation}\n`;
+      }
+      if (result.correct_answer) {
+        resultLog += `Correct Answer: ${result.correct_answer}\n`;
+      }
+      if (result.ai_explanation) {
+        resultLog += `AI Explanation: ${result.ai_explanation}\n`;
+      }
+      if (result.hint) {
+        resultLog += `Hint: ${result.hint}\n`;
+      }
+    }
+    resultLog += `--------------`;
+
+    this.logger.log(resultLog);
     return result;
   }
 

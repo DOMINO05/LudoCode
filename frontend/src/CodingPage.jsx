@@ -78,15 +78,15 @@ export default function CodingPage() {
         url = `${API_URL}/questions/random?type=${type}&languageId=${currentLanguage.id}`;
     }
 
-    console.log(`[Frontend] Fetching question from: ${url}`);
-    console.log(`[Frontend] Params: mode=${mode}, type=${type}, conceptId=${conceptId}`);
+    // console.log(`[Frontend] Fetching question from: ${url}`);
+    // console.log(`[Frontend] Params: mode=${mode}, type=${type}, conceptId=${conceptId}`);
 
     try {
       const res = await fetch(url, {
         headers: { 'Authorization': `Bearer ${session.access_token}` }
       });
       
-      console.log(`[Frontend] Response status: ${res.status}`);
+      // console.log(`[Frontend] Response status: ${res.status}`);
 
       if (!res.ok) {
           if (res.status === 404) {
@@ -190,8 +190,8 @@ export default function CodingPage() {
       }
 
     try {
-        console.log(`[Frontend] Submitting answer to ${API_URL}/questions/${question.id}/submit`);
-        console.log(`[Frontend] Submission data:`, { code: submissionData, streak: sessionStreak });
+        // console.log(`[Frontend] Submitting answer to ${API_URL}/questions/${question.id}/submit`);
+        // console.log(`[Frontend] Submission data:`, { code: submissionData, streak: sessionStreak });
 
         const res = await fetch(`${API_URL}/questions/${question.id}/submit`, {
             method: 'POST',
@@ -202,13 +202,13 @@ export default function CodingPage() {
             body: JSON.stringify({ code: submissionData, streak: sessionStreak })
         });
         const data = await res.json();
-        console.log(`[Frontend] Submission response:`, data);
+        // console.log(`[Frontend] Submission response:`, data);
         setResult(data);
         setShowFeedback(true);
 
         // Check for new badges
         if (data.newBadges && data.newBadges.length > 0 && showBadgeNotification) {
-            console.log("Triggering badge notification for:", data.newBadges);
+            // console.log("Triggering badge notification for:", data.newBadges);
             data.newBadges.forEach((badge, index) => {
                 setTimeout(() => {
                     showBadgeNotification(badge);
@@ -218,7 +218,7 @@ export default function CodingPage() {
 
         // Check for completed challenges
         if (data.completedChallenges && data.completedChallenges.length > 0 && showBadgeNotification) {
-             console.log("Triggering challenge notification for:", data.completedChallenges);
+             // console.log("Triggering challenge notification for:", data.completedChallenges);
              const badgeDelay = (data.newBadges?.length || 0) * 5500;
              
              data.completedChallenges.forEach((ch, index) => {

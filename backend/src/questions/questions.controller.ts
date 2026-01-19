@@ -42,9 +42,20 @@ export class QuestionsController {
       languageId,
       type,
     );
-    this.logger.log(
-      `Serving question to user ${req.user.userId} (Lang: ${languageId}): ${JSON.stringify(question)}`,
-    );
+    if (question) {
+      const content = question.content as any;
+      this.logger.log(
+        `--- Serving Question ---\n` +
+          `User: ${req.user.userId}\n` +
+          `Question ID: ${question.id}\n` +
+          `Title: ${question.title}\n` +
+          `Type: ${question.qType}\n` +
+          `Correct Answer: ${content?.correct_answer || content?.correct_code || content?.correct_order || 'N/A'}\n` +
+          `Explanation: ${content?.explanation || 'N/A'}\n` +
+          `Hint: ${content?.hint || 'N/A'}\n` +
+          `------------------------`,
+      );
+    }
     return question;
   }
 

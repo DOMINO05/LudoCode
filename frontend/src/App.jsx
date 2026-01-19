@@ -8,6 +8,7 @@ import ProfilePage from './ProfilePage'
 import CoursesPage from './CoursesPage'
 import ShopPage from './ShopPage'
 import Layout from './Layout'
+import PlacementPage from './PlacementPage'
 import QuizManagerPage from './QuizManagerPage'
 import QuizEditorPage from './QuizEditorPage'
 import QuestionCreatorPage from './QuestionCreatorPage'
@@ -44,6 +45,7 @@ function App() {
       {session && (
         <Route element={<Layout session={session} />}>
           <Route path="/dashboard" element={<Dashboard />} />
+          <Route path="/placement" element={<PlacementPage />} />
           <Route path="/solve" element={<CodingPage />} />
           <Route path="/courses" element={<CoursesPage />} />
           <Route path="/shop" element={<ShopPage />} />

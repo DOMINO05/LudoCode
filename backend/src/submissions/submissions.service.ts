@@ -224,23 +224,16 @@ export class SubmissionsService {
       if (isCorrect) {
         user.xp += Math.round(10 * multiplier); // Global XP accumulation
         user.gems += Math.round(1 * multiplier);
-        
-        // user.currentStreak is reserved for Daily Streak (Login Streak). 
-        // Question streak is handled via maxCombo and client-side session streak.
-        
+
         // Update Max Combo (High Score)
-        // streak passed is previous streak. New streak is streak + 1.
         const currentSessionStreak = streak + 1;
         if (currentSessionStreak > (user.maxCombo || 0)) {
-            user.maxCombo = currentSessionStreak;
+          user.maxCombo = currentSessionStreak;
         }
 
-        // Global proficiency might be average of languages? Or just leave it as general.
-        // Let's increment it too for now.
         user.globalProficiency = Math.min(3.0, user.globalProficiency + 0.02);
       } else {
         user.sanityPoints = Math.max(0, user.sanityPoints - 10);
-        // Do not reset Daily Streak on incorrect answer
       }
       await this.profileRepository.save(user);
     }
@@ -286,8 +279,10 @@ export class SubmissionsService {
       ...submission,
       output,
       explanation: content.explanation,
+      correct_answer: content.correct_answer || content.correct_code || content.correct_order,
+      hint: question.hint,
       ai_explanation: aiExplanation,
-      newBadges: newBadges.map(ub => ub.badge),
+      newBadges: newBadges.map((ub) => ub.badge),
       completedChallenges,
       userUpdates: {
         xp: user?.xp,
@@ -356,11 +351,18 @@ export class SubmissionsService {
     }
 
     if (isCorrectNow) {
-      // Mark as resolved
-      submission.isResolved = true;
-      await this.submissionRepository.save(submission);
+      // Mark all previous incorrect, unresolved submissions for this question as resolved
+      await this.submissionRepository.update(
+        {
+          userId,
+          questionId: submission.questionId,
+          isCorrect: false,
+          isResolved: false,
+        },
+        { isResolved: true },
+      );
 
-      // Restore 10% Sanity
+      // Restore Sanity: Always 10% regardless of number of mistakes
       const user = await this.profileRepository.findOne({ where: { id: userId } });
       if (user) {
         user.sanityPoints = Math.min(100, user.sanityPoints + 10);
@@ -409,26 +411,46 @@ export class SubmissionsService {
       } else if (langName === 'java') {
         if (!userCode.includes('class ')) {
           const match = userCode.match(
-            /(?:public|private|protected)?\s*(?:static\s+)?[\w<>]+\s+(\w+)\s*\(/,
+            /(?:public|private|protected)?\s*(?:static\s+)?[\w<>\[\]]+\s+(\w+)\s*\(/,
           );
           if (match) {
             const funcName = match[1];
-            let input = testCase.input;
-            if (
-              typeof input === 'string' &&
-              input.startsWith("'") &&
-              input.endsWith("'") &&
-              input.length > 3
-            ) {
-              input = `"${input.slice(1, -1)}"`;
+            let input = String(testCase.input);
+            
+            // Convert Python-style list [1, 2] to Java-style new int[]{1, 2}.
+            if (input.includes('[[')) {
+                input = input.replace(/\[\[/g, 'new int[][]{{')
+                             .replace(/\]\s*,\s*\[/g, '}, {')
+                             .replace(/\]\]/g, '}}');
+            } else {
+                input = input.replace(/\[(.*?)\]/g, 'new int[]{$1}');
             }
+
+            if (typeof testCase.input === 'string' && testCase.input.startsWith("'") && testCase.input.endsWith("'")) {
+               input = `"${testCase.input.slice(1, -1)}"`;
+            }
+
             codeToRun = `
+import java.util.Arrays;
 public class Main {
     ${userCode}
 
     public static void main(String[] args) {
         Main obj = new Main();
-        System.out.println(obj.${funcName}(${input}));
+        Object result = obj.${funcName}(${input});
+        if (result instanceof int[]) {
+            System.out.println(Arrays.toString((int[])result));
+        } else if (result instanceof double[]) {
+            System.out.println(Arrays.toString((double[])result));
+        } else if (result instanceof Object[]) {
+            System.out.println(Arrays.deepToString((Object[])result));
+        } else if (result instanceof char[]) {
+            System.out.println(Arrays.toString((char[])result));
+        } else if (result instanceof boolean[]) {
+            System.out.println(Arrays.toString((boolean[])result));
+        } else {
+            System.out.println(result);
+        }
     }
 }`;
           } else {

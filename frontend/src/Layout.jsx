@@ -1,9 +1,10 @@
 import React, { useState, useEffect } from 'react';
-import { Outlet, useNavigate } from 'react-router-dom';
+import { Outlet, useNavigate, useLocation } from 'react-router-dom';
 import { supabase } from './supabaseClient';
 import { useTheme } from './ThemeContext';
 import { useLanguage } from './LanguageContext';
 import Avatar from './Avatar';
+import PlacementIntro from './components/PlacementIntro';
 
 const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:3000';
 
@@ -45,8 +46,18 @@ export default function Layout({ session }) {
       setTimeout(() => setBadgeNotification(null), 5000);
   };
 
+  const location = useLocation();
+  const isPlacementPage = location.pathname === '/placement';
+
   return (
     <div className="flex flex-col h-screen bg-background-light dark:bg-background-dark text-slate-700 dark:text-slate-100 font-nunito transition-colors duration-300">
+      {profile && !profile.hasCompletedPlacement && !isPlacementPage && (
+          <PlacementIntro 
+            session={session} 
+            onStart={() => navigate('/placement')} 
+            onSkip={fetchProfile} 
+          />
+      )}
       <header className="bg-surface-light dark:bg-surface-dark border-b border-slate-200 dark:border-slate-700 p-4 flex justify-between items-center shrink-0 transition-colors duration-300 z-40 sticky top-0 relative">
         <div className="font-extrabold text-2xl cursor-pointer text-transparent bg-clip-text bg-gradient-to-r from-primary to-accent tracking-tighter" onClick={() => navigate('/dashboard')}>
             LudoCode
