@@ -1,6 +1,7 @@
 import React from 'react';
 import Editor from '@monaco-editor/react';
 import { useTheme } from '../ThemeContext';
+import RichText from '../components/RichText';
 
 const PredictionComponent = ({ question, selectedAnswer, onSelect }) => {
     const { isDark } = useTheme();
@@ -9,7 +10,7 @@ const PredictionComponent = ({ question, selectedAnswer, onSelect }) => {
         <div className="w-full fade-in flex flex-col h-full">
             {/* Question Text */}
             <h2 className="text-xl font-bold mb-4 text-slate-800 dark:text-slate-100">
-                {question.description || "What will be the output of this code?"}
+                <RichText content={question.description || "What will be the output of this code?"} />
             </h2>
 
             {/* Code Block */}
@@ -65,7 +66,7 @@ const PredictionComponent = ({ question, selectedAnswer, onSelect }) => {
                                 <span className={`code-font text-lg font-bold tracking-widest ${
                                     isSelected ? 'text-blue-800 dark:text-blue-100' : 'text-slate-700 dark:text-slate-300'
                                 }`}>
-                                    {option}
+                                    <RichText content={option} />
                                 </span>
                             </button>
                         );

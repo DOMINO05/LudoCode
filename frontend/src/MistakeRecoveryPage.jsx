@@ -1,8 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import { useOutletContext, useNavigate, useSearchParams } from 'react-router-dom';
+import { useOutletContext, useNavigate } from 'react-router-dom';
 import { useTheme } from './ThemeContext';
-import { useLanguage } from './LanguageContext';
-import RichText from './components/RichText';
 
 // Import New Question Components
 import TheoryComponent from './question-types/TheoryComponent';
@@ -12,56 +10,44 @@ import ParsonsComponent from './question-types/ParsonsComponent';
 import DebugComponent from './question-types/DebugComponent';
 import ConstructionComponent from './question-types/ConstructionComponent';
 
-// Fallback for types not yet fully implemented or standard 'coding'
 import Editor from '@monaco-editor/react';
 
 const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:3000';
 
-export default function CodingPage() {
+export default function MistakeRecoveryPage() {
   const { session, profile, refreshProfile, showBadgeNotification } = useOutletContext();
   const { isDark } = useTheme();
-  const { currentLanguage } = useLanguage();
   const navigate = useNavigate();
-  const [searchParams] = useSearchParams();
-  const conceptId = searchParams.get('conceptId');
-  const mode = searchParams.get('mode');
-  const type = searchParams.get('type');
 
   // State
+  const [submissionId, setSubmissionId] = useState(null);
   const [question, setQuestion] = useState(null);
   const [loading, setLoading] = useState(true);
-  const [noQuestions, setNoQuestions] = useState(false);
-  const [isCourseFinished, setIsCourseFinished] = useState(false);
+  const [isFinished, setIsFinished] = useState(false);
+  const [message, setMessage] = useState('');
 
   // Answers State
-  const [code, setCode] = useState(''); // For Coding, FillBlank, Debug, Construction
-  const [parsonsSolution, setParsonsSolution] = useState([]); // For Parsons
-  const [selectedOption, setSelectedOption] = useState(null); // For Theory, Prediction
+  const [code, setCode] = useState('');
+  const [parsonsSolution, setParsonsSolution] = useState([]);
+  const [selectedOption, setSelectedOption] = useState(null);
 
   // Debug Specific State
-  const [debugPhase, setDebugPhase] = useState('identify'); // 'identify' | 'fix'
-  const [debugSelections, setDebugSelections] = useState([]); // Array of { lineIndex, tokenIndex, text }
+  const [debugPhase, setDebugPhase] = useState('identify');
+  const [debugSelections, setDebugSelections] = useState([]);
 
   // Result & Feedback
   const [result, setResult] = useState(null);
   const [showFeedback, setShowFeedback] = useState(false);
-  const [sessionStreak, setSessionStreak] = useState(0);
-
-  const comboMultiplier = sessionStreak >= 2 ? 1.3 + (sessionStreak - 2) * 0.1 : 1.0;
 
   useEffect(() => {
-    if (currentLanguage) {
-        fetchNextQuestion();
-    }
-  }, [currentLanguage]);
+    fetchMistake();
+  }, []);
 
-  const fetchNextQuestion = async () => {
-    if (!currentLanguage) return;
+  const fetchMistake = async () => {
     setLoading(true);
     setResult(null);
     setShowFeedback(false);
-    setNoQuestions(false);
-    setIsCourseFinished(false);
+    setIsFinished(false);
     
     // Reset answer states
     setCode('');
@@ -70,75 +56,53 @@ export default function CodingPage() {
     setDebugPhase('identify');
     setDebugSelections([]);
 
-    let url = `${API_URL}/questions/next?languageId=${currentLanguage.id}`;
-    if (conceptId) {
-        url = `${API_URL}/courses/${conceptId}/next-question?languageId=${currentLanguage.id}`;
-    } else if (type) {
-        url = `${API_URL}/questions/next?languageId=${currentLanguage.id}&type=${type}`;
-    } else if (mode === 'dev') {
-        url = `${API_URL}/questions/random?type=${type}&languageId=${currentLanguage.id}`;
-    }
-
-    // console.log(`[Frontend] Fetching question from: ${url}`);
-    // console.log(`[Frontend] Params: mode=${mode}, type=${type}, conceptId=${conceptId}`);
-
     try {
-      const res = await fetch(url, {
+      const res = await fetch(`${API_URL}/questions/mistake-recovery`, {
         headers: { 'Authorization': `Bearer ${session.access_token}` }
       });
-      
-      // console.log(`[Frontend] Response status: ${res.status}`);
 
       if (!res.ok) {
           if (res.status === 404) {
               setQuestion(null);
-              setNoQuestions(true);
+              setIsFinished(true);
+              setMessage("Nincs több javítandó feladat!");
               return;
           }
-          const errorText = await res.text();
-          throw new Error(`Failed to fetch question: ${res.status} ${res.statusText} - ${errorText}`);
+          throw new Error('Failed to fetch mistake');
       }
       
-      const text = await res.text();
-      if (!text) {
-          if (conceptId) {
-              setIsCourseFinished(true);
-          } else {
-              setNoQuestions(true); 
+      const data = await res.json();
+      
+      if (data && data.question) {
+          setSubmissionId(data.id);
+          setQuestion(data.question);
+          if (data.question.content && data.question.content.initial_code) {
+               setCode(data.question.content.initial_code);
           }
-          setQuestion(null);
-          return;
-      }
-
-      const data = JSON.parse(text);
-      setQuestion(data);
-      
-      // Initial Setup
-      if (data.qType === 'debug') {
-          // Debug initial setup if needed
-      } else if (data.content.initial_code) {
-          setCode(data.content.initial_code);
+      } else {
+          setIsFinished(true);
+          setMessage("Nincs több javítandó feladat!");
       }
       
     } catch (err) {
       console.error(err);
-      alert('Could not load question. ' + err.message);
+      setMessage('Hiba történt a betöltés közben.');
+      setIsFinished(true);
     } finally {
       setLoading(false);
     }
   };
 
-  const handleCheck = async () => {
-      if (!question) return;
+  const handleResolve = async () => {
+      if (!question || !submissionId) return;
 
-      // Handle Debug Phase A locally first
+      // Handle Debug Phase A locally
       if (question.qType === 'debug' && debugPhase === 'identify') {
           if (debugSelections.length === 0) {
               alert("Kérlek válassz ki legalább egy elemet!");
               return;
           }
           
-          // Construct selected text from tokens, sorting them first to be safe
           const sortedSelections = [...debugSelections].sort((a, b) => {
               if (a.lineIndex !== b.lineIndex) return a.lineIndex - b.lineIndex;
               return a.tokenIndex - b.tokenIndex;
@@ -147,23 +111,17 @@ export default function CodingPage() {
           const selectedText = sortedSelections.map(s => s.text).join('');
           const errorLocation = question.content.error_location ? question.content.error_location.trim() : "";
           
-          // Compare ignoring whitespace to be more forgiving
           const normalizedSelected = selectedText.replace(/\s+/g, '');
           const normalizedError = errorLocation.replace(/\s+/g, '');
 
           if (normalizedSelected === normalizedError || normalizedError.includes(normalizedSelected)) {
-               // Correct Phase A
                setDebugPhase('fix');
-               
-               // If the user has already selected a fix (code is modified), proceed to submission immediately
-               // to avoid requiring a second click.
                if (code && question.content.buggy_code && code.trim() !== question.content.buggy_code.trim()) {
-                   // Fall through to submission logic below
+                   // Fall through to submission logic
                } else {
                    return; // Wait for user to select a fix
                }
           } else {
-              // Incorrect Phase A
                setResult({ 
                    isCorrect: false, 
                    correct_answer: `A hiba itt található:\n${errorLocation}`, 
@@ -181,7 +139,6 @@ export default function CodingPage() {
       } else if (question.qType === 'parsons') {
           submissionData = JSON.stringify(parsonsSolution.map(b => b.id));
       } else {
-          // Coding, FillBlank, Construction, Debug (Fix Phase)
           submissionData = code;
       }
 
@@ -191,55 +148,41 @@ export default function CodingPage() {
       }
 
     try {
-        // console.log(`[Frontend] Submitting answer to ${API_URL}/questions/${question.id}/submit`);
-        // console.log(`[Frontend] Submission data:`, { code: submissionData, streak: sessionStreak });
-
-        const res = await fetch(`${API_URL}/questions/${question.id}/submit`, {
+        const res = await fetch(`${API_URL}/questions/resolve/${submissionId}`, {
             method: 'POST',
             headers: {
             'Content-Type': 'application/json',
             'Authorization': `Bearer ${session.access_token}`
             },
-            body: JSON.stringify({ code: submissionData, streak: sessionStreak })
+            body: JSON.stringify({ code: submissionData })
         });
+        
         const data = await res.json();
-        // console.log(`[Frontend] Submission response:`, data);
-        setResult(data);
+        
+        // Map response to match CodingPage result structure for feedback display
+        const feedbackResult = {
+             isCorrect: data.success,
+             output: data.message,
+             ai_explanation: !data.success ? "Próbáld újra a megoldást!" : null,
+             explanation: data.output // backend returns output if incorrect
+        };
+        
+        setResult(feedbackResult);
         setShowFeedback(true);
 
-        // Check for new badges
-        if (data.newBadges && data.newBadges.length > 0 && showBadgeNotification) {
-            // console.log("Triggering badge notification for:", data.newBadges);
-            data.newBadges.forEach((badge, index) => {
-                setTimeout(() => {
-                    showBadgeNotification(badge);
-                }, index * 5500); // 5000ms is duration + 500ms buffer
-            });
-        }
-
-        // Check for completed challenges
-        if (data.completedChallenges && data.completedChallenges.length > 0 && showBadgeNotification) {
-             // console.log("Triggering challenge notification for:", data.completedChallenges);
-             const badgeDelay = (data.newBadges?.length || 0) * 5500;
+        if (data.success) {
+             await refreshProfile();
              
-             data.completedChallenges.forEach((ch, index) => {
-                setTimeout(() => {
-                    showBadgeNotification({
-                        name: ch.description,
-                        title: 'Kihívás Teljesítve!',
-                        iconPath: '🎯' 
-                    });
-                }, badgeDelay + index * 5500);
-             });
+             // Check if Sanity is full or close to full
+             // We can check profile.sanityPoints (but it might be stale until refresh completes and propagates)
+             // The backend returns 'newSanity' in data
+             if (data.newSanity >= 100) {
+                 setTimeout(() => {
+                     setIsFinished(true);
+                     setMessage("Sikeresen feltöltötted a Sanity-d!");
+                 }, 1500);
+             }
         }
-
-        if (data.isCorrect) {
-            setSessionStreak(prev => prev + 1);
-        } else {
-            setSessionStreak(0);
-        }
-        
-        refreshProfile();
 
       } catch (err) {
         console.error(err);
@@ -249,11 +192,10 @@ export default function CodingPage() {
 
   const handleNext = () => {
       if (result && result.isCorrect) {
-          fetchNextQuestion();
+          fetchMistake();
       } else {
           // If incorrect, check if we should transition Debug phase
           if (question.qType === 'debug' && debugPhase === 'identify') {
-              // User failed identification, move to fix phase automatically
               setDebugPhase('fix');
           }
           setShowFeedback(false);
@@ -267,7 +209,7 @@ export default function CodingPage() {
       if (question.qType === 'parsons') return parsonsSolution.length === 0;
       if (question.qType === 'debug') {
           if (debugPhase === 'identify') return debugSelections.length === 0;
-          return !code || code === question.content.buggy_code; // Ideally check if code changed
+          return !code || code === question.content.buggy_code;
       }
       if (question.qType === 'coding' || question.qType === 'construction') return !code;
       return false;
@@ -322,13 +264,11 @@ export default function CodingPage() {
                return (
                   <div style={{ padding: '20px', display: 'flex', flexDirection: 'column', height: '100%' }}>
                       <h2>{question.title}</h2>
-                      <div className="mb-4 text-lg text-slate-600 dark:text-slate-300">
-                          <RichText content={question.description} />
-                      </div>
+                      <p>{question.description}</p>
                       <div style={{ flex: 1, border: '1px solid var(--card-border)', marginTop: '20px' }}>
                         <Editor
                             height="100%"
-                            defaultLanguage={question.language || 'python'}
+                            defaultLanguage={question.language?.name || 'python'}
                             value={code}
                             onChange={(val) => setCode(val)}
                             theme={isDark ? "vs-dark" : "light"}
@@ -341,33 +281,16 @@ export default function CodingPage() {
 
   if (loading) return <div className="flex justify-center items-center h-screen">Loading...</div>;
 
-  if (isCourseFinished) {
+  if (isFinished) {
       return (
-          <div className="flex flex-col items-center justify-center h-screen text-center text-slate-700">
-              <div className="text-6xl mb-5">🎓</div>
-              <h1 className="text-green-500 text-3xl font-bold">Témakör Teljesítve!</h1>
-              <p className="text-lg max-w-xl mb-10 mt-4">
-                  Sikeresen megoldottad az összes feladatot ebben a témakörben.
-              </p>
-              <button onClick={() => navigate('/courses')} className="bg-blue-500 text-white font-bold py-3 px-8 rounded-full shadow-md hover:bg-blue-600 transition">
-                  Vissza a Tanuló Ösvényre
-              </button>
-          </div>
-      );
-  }
-
-  if (noQuestions) {
-      return (
-          <div className="flex flex-col items-center justify-center h-screen text-center text-slate-700">
+          <div className="flex flex-col items-center justify-center h-screen text-center text-slate-700 bg-[#f7f7f7] dark:bg-slate-900 dark:text-slate-100 transition-colors duration-300">
               <div className="text-6xl mb-5">🎉</div>
               <h1 className="text-green-500 text-3xl font-bold">Gratulálunk!</h1>
               <p className="text-lg max-w-xl mb-10 mt-4">
-                  {mode === 'dev' 
-                      ? "Nincs ilyen típusú feladat az adatbázisban." 
-                      : "Jelenleg nincs több feladat a szintednek megfelelően."}
+                  {message || "Sikeresen feltöltötted a Sanity-d!"}
               </p>
-              <button onClick={() => navigate(type ? '/courses' : '/dashboard')} className="bg-blue-500 text-white font-bold py-3 px-8 rounded-full shadow-md hover:bg-blue-600 transition">
-                  {type ? "Vissza a választóhoz" : "Vissza a Dashboardra"}
+              <button onClick={() => navigate('/dashboard')} className="bg-blue-500 text-white font-bold py-3 px-8 rounded-full shadow-md hover:bg-blue-600 transition">
+                  Vissza a Dashboardra
               </button>
           </div>
       );
@@ -378,19 +301,15 @@ export default function CodingPage() {
         {/* Progress Bar Area */}
         <div className="px-4 pt-4 pb-2 shrink-0 max-w-md mx-auto w-full">
             <div className="flex items-center gap-4">
-                <span className="text-2xl cursor-pointer text-slate-400 hover:text-slate-600 dark:hover:text-slate-300 transition-colors" onClick={() => navigate(type ? '/courses' : '/dashboard')}>✕</span>
+                <span className="text-2xl cursor-pointer text-slate-400 hover:text-slate-600 dark:hover:text-slate-300 transition-colors" onClick={() => navigate('/dashboard')}>✕</span>
                 <div className="h-4 bg-slate-200 dark:bg-slate-700 rounded-full flex-grow overflow-hidden">
                     <div className={`h-full transition-all duration-500 ${(profile?.sanityPoints || 0) <= 20 ? 'bg-red-500' : (profile?.sanityPoints || 0) <= 50 ? 'bg-yellow-500' : 'bg-green-500'}`} style={{ width: `${profile?.sanityPoints || 0}%` }}></div>
                 </div>
                 <span className="text-blue-500 font-bold flex items-center" title="Sanity">🧠 {profile?.sanityPoints}%</span>
             </div>
-            {comboMultiplier > 1 && (
-                <div className="flex justify-center mt-2 animate-in slide-in-from-top-1 fade-in duration-300">
-                    <span className="bg-gradient-to-r from-orange-400 to-red-500 text-white font-bold py-1 px-4 rounded-full text-sm shadow-lg border border-orange-200 flex items-center gap-2">
-                        🔥 Combo: {comboMultiplier.toFixed(1)}x
-                    </span>
-                </div>
-            )}
+            <div className="text-center mt-2 text-sm text-slate-500 font-bold uppercase tracking-wider">
+                Mistake Recovery Mode
+            </div>
         </div>
 
         {/* Main Content */}
@@ -422,7 +341,7 @@ export default function CodingPage() {
                                 </div>
                             ) : (
                                 <div className="text-sm opacity-90">
-                                    {result.isCorrect ? 'Helyes válasz. Csak így tovább!' : (result.explanation || result.compile_message || result.output || 'Próbáld újra átgondolni a logikát.')}
+                                    {result.isCorrect ? 'Helyes válasz. Sanity +10%' : (result.explanation || result.output || 'Próbáld újra!')}
                                 </div>
                             )}
                         </div>
@@ -430,7 +349,7 @@ export default function CodingPage() {
                 )}
                 
                 <button 
-                    onClick={showFeedback ? handleNext : handleCheck}
+                    onClick={showFeedback ? handleNext : handleResolve}
                     disabled={!showFeedback && isCheckDisabled()}
                     className={`w-full font-bold py-3 px-8 rounded-xl uppercase tracking-wider btn-shadow transition-colors ${
                         showFeedback 
@@ -438,7 +357,7 @@ export default function CodingPage() {
                             : (isCheckDisabled() ? 'bg-slate-200 text-slate-400 cursor-not-allowed dark:bg-slate-700 dark:text-slate-500' : 'bg-green-500 text-white hover:bg-green-600')
                     }`}
                 >
-                    {showFeedback ? (result?.isCorrect ? 'TOVÁBB' : 'ÉRTEM') : 'ELLENŐRZÉS'}
+                    {showFeedback ? (result?.isCorrect ? 'KÖVETKEZŐ' : 'ÉRTEM') : 'JAVÍTÁS BEKÜLDÉSE'}
                 </button>
             </div>
         </footer>

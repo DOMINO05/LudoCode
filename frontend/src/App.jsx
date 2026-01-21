@@ -3,6 +3,7 @@ import { Routes, Route, Navigate } from 'react-router-dom'
 import { supabase } from './supabaseClient'
 import AuthPage from './AuthPage'
 import CodingPage from './CodingPage'
+import MistakeRecoveryPage from './MistakeRecoveryPage'
 import Dashboard from './Dashboard'
 import ProfilePage from './ProfilePage'
 import CoursesPage from './CoursesPage'
@@ -15,6 +16,7 @@ import QuestionCreatorPage from './QuestionCreatorPage'
 import QuizPlayerPage from './QuizPlayerPage'
 import QuizResultsPage from './QuizResultsPage'
 import CommunityPage from './CommunityPage'
+import DictionaryPage from './DictionaryPage'
 
 function App() {
   const [session, setSession] = useState(null)
@@ -47,6 +49,7 @@ function App() {
           <Route path="/dashboard" element={<Dashboard />} />
           <Route path="/placement" element={<PlacementPage />} />
           <Route path="/solve" element={<CodingPage />} />
+          <Route path="/mistake-recovery" element={<MistakeRecoveryPage />} />
           <Route path="/courses" element={<CoursesPage />} />
           <Route path="/shop" element={<ShopPage />} />
           <Route path="/profile" element={<ProfilePage />} />
@@ -57,6 +60,7 @@ function App() {
           <Route path="/quizzes/results/:id" element={<QuizResultsPage />} />
           <Route path="/quiz/:code" element={<QuizPlayerPage />} />
           <Route path="/community" element={<CommunityPage />} />
+          <Route path="/dictionary" element={<DictionaryPage />} />
         </Route>
       )}
 

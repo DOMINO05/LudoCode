@@ -3,6 +3,7 @@ import { Outlet, useNavigate, useLocation } from 'react-router-dom';
 import { supabase } from './supabaseClient';
 import { useTheme } from './ThemeContext';
 import { useLanguage } from './LanguageContext';
+import { DictionaryProvider } from './DictionaryContext';
 import Avatar from './Avatar';
 import PlacementIntro from './components/PlacementIntro';
 
@@ -50,6 +51,7 @@ export default function Layout({ session }) {
   const isPlacementPage = location.pathname === '/placement';
 
   return (
+    <DictionaryProvider session={session}>
     <div className="flex flex-col h-screen bg-background-light dark:bg-background-dark text-slate-700 dark:text-slate-100 font-nunito transition-colors duration-300">
       {profile && !profile.hasCompletedPlacement && !isPlacementPage && (
           <PlacementIntro 
@@ -90,6 +92,13 @@ export default function Layout({ session }) {
             </select>
 
             <button 
+                onClick={() => navigate('/dictionary')} 
+                className="p-2 rounded-lg bg-slate-100 dark:bg-slate-700 text-slate-600 dark:text-slate-300 hover:bg-slate-200 dark:hover:bg-slate-600 transition-colors"
+                title="Szótár"
+            >
+                📚
+            </button>
+            <button 
                 onClick={() => navigate('/shop')} 
                 className="p-2 rounded-lg bg-slate-100 dark:bg-slate-700 text-slate-600 dark:text-slate-300 hover:bg-slate-200 dark:hover:bg-slate-600 transition-colors"
                 title="Shop"
@@ -128,5 +137,6 @@ export default function Layout({ session }) {
         <Outlet context={{ session, profile, refreshProfile: fetchProfile, handleLogout, showBadgeNotification }} />
       </main>
     </div>
+    </DictionaryProvider>
   );
 }

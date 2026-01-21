@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useTheme } from '../ThemeContext';
+import RichText from '../components/RichText';
 
 const ParsonsComponent = ({ question, onSolutionChange }) => {
     const { isDark } = useTheme();
@@ -32,7 +33,7 @@ const ParsonsComponent = ({ question, onSolutionChange }) => {
         <div className="w-full fade-in flex flex-col h-full">
             {/* Question Text */}
             <h2 className="text-xl font-bold mb-2 text-slate-800 dark:text-slate-100">
-                {question.description}
+                <RichText content={question.description} />
             </h2>
 
             {/* Drop Zone */}

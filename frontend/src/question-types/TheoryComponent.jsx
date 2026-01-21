@@ -1,6 +1,7 @@
 import React from 'react';
 import Editor from '@monaco-editor/react';
 import { useTheme } from '../ThemeContext';
+import RichText from '../components/RichText';
 
 const TheoryComponent = ({ question, selectedAnswer, onSelect }) => {
     const { isDark } = useTheme();
@@ -9,7 +10,7 @@ const TheoryComponent = ({ question, selectedAnswer, onSelect }) => {
         <div className="w-full fade-in flex flex-col h-full">
             {/* Question Text */}
             <h2 className="text-2xl font-bold mb-6 text-slate-800 dark:text-slate-100">
-                {question.description}
+                <RichText content={question.description} />
             </h2>
 
             {/* Code Snippet (if any) */}
@@ -67,7 +68,7 @@ const TheoryComponent = ({ question, selectedAnswer, onSelect }) => {
                                     {String.fromCharCode(65 + idx)}
                                 </div>
                                 <div className={`code-font text-base font-medium ${isSelected ? 'text-blue-900 dark:text-blue-100' : 'text-slate-600 dark:text-slate-300'}`}>
-                                    {option}
+                                    <RichText content={option} />
                                 </div>
                             </div>
                         </div>

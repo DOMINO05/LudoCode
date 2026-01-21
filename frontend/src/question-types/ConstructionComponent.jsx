@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useTheme } from '../ThemeContext';
 import Editor from '@monaco-editor/react';
+import RichText from '../components/RichText';
 
 const ConstructionComponent = ({ question, onCodeChange }) => {
     const { isDark } = useTheme();
@@ -128,7 +129,7 @@ const ConstructionComponent = ({ question, onCodeChange }) => {
             <div className="flex justify-between items-start mb-4">
                 <div>
                     <h2 className="text-xl font-bold text-slate-800 dark:text-slate-100">
-                        {question.description}
+                        <RichText content={question.description} />
                     </h2>
                 </div>
                 <button 

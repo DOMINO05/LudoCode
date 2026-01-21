@@ -3,7 +3,6 @@ import { useOutletContext, useNavigate } from 'react-router-dom';
 import BonusModal from './components/BonusModal';
 import Leaderboard from './components/Leaderboard';
 import ProgressChart from './components/ProgressChart';
-import MistakeRecovery from './components/MistakeRecovery';
 import SanityWarningModal from './components/SanityWarningModal';
 import ChallengesWidget from './components/ChallengesWidget';
 
@@ -189,14 +188,49 @@ export default function Dashboard() {
       )}
 
       {showRecovery && (
-          <MistakeRecovery 
-            session={session} 
-            onResolved={async (newSanity) => {
-                await refreshProfile();
-                setShowRecovery(false);
-            }} 
-            onCancel={() => setShowRecovery(false)} 
-          />
+        <div className="fixed inset-0 bg-black/80 backdrop-blur-sm flex items-center justify-center z-50 p-4">
+            <div className="bg-surface-light dark:bg-surface-dark p-8 rounded-3xl shadow-2xl max-w-md w-full text-center border border-slate-200 dark:border-slate-700 animate-in fade-in zoom-in duration-300">
+                <div className="text-6xl mb-6">🧠</div>
+                <h2 className="text-2xl font-bold text-slate-800 dark:text-slate-100 mb-2">Sanity Helyreállítása</h2>
+                
+                {profile.sanityPoints >= 100 ? (
+                    <>
+                         <p className="text-slate-600 dark:text-slate-400 mb-8">
+                            A Sanity-d teljesen fel van töltve! Nincs szükség javításra.
+                        </p>
+                        <button 
+                            onClick={() => setShowRecovery(false)}
+                            className="w-full py-3 bg-slate-200 hover:bg-slate-300 dark:bg-slate-700 dark:hover:bg-slate-600 text-slate-800 dark:text-slate-100 font-bold rounded-xl transition-colors"
+                        >
+                            RENDBEN
+                        </button>
+                    </>
+                ) : (
+                    <>
+                        <p className="text-slate-600 dark:text-slate-400 mb-8">
+                            A teljes gyógyuláshoz <strong className="text-primary">{Math.ceil((100 - profile.sanityPoints) / 10)} feladatot</strong> kell sikeresen megoldanod a korábbi hibáidból.
+                        </p>
+                        <div className="flex gap-4">
+                            <button 
+                                onClick={() => setShowRecovery(false)}
+                                className="flex-1 py-3 font-bold text-slate-500 hover:bg-slate-100 dark:hover:bg-slate-800 rounded-xl transition-colors"
+                            >
+                                MÉGSEM
+                            </button>
+                            <button 
+                                onClick={() => {
+                                    setShowRecovery(false);
+                                    navigate('/mistake-recovery');
+                                }}
+                                className="flex-1 py-3 bg-primary hover:bg-primary-dark text-white font-bold rounded-xl shadow-lg transition-all"
+                            >
+                                INDÍTÁS
+                            </button>
+                        </div>
+                    </>
+                )}
+            </div>
+        </div>
       )}
 
       {showWarning && (

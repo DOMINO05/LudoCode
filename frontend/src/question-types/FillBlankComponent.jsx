@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useTheme } from '../ThemeContext';
+import RichText from '../components/RichText';
 
 const FillBlankComponent = ({ question, onCodeChange }) => {
     // We expect question.content.initial_code to contain blanks like "___" or "???"
@@ -88,7 +89,7 @@ const FillBlankComponent = ({ question, onCodeChange }) => {
         <div className="w-full fade-in flex flex-col h-full">
              {/* Question Description */}
              <h2 className="text-xl font-bold mb-6 text-slate-800 dark:text-slate-100">
-                {question.description}
+                <RichText content={question.description} />
             </h2>
 
             {/* Code Display Area */}

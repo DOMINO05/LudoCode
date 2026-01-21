@@ -59,7 +59,10 @@ Azonnali segítség az ismeretlen kifejezésekhez.
 
 
 
+Ne legyen a kódrészletekben // comment.
 
+szótárba:
+interfész
 
 ---
 ---
