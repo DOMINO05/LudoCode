@@ -12,6 +12,17 @@ RUN npm run build
 # Production Stage
 FROM node:18-alpine
 
+# Install additional compilers and tools for the playground
+RUN apk add --no-cache \
+    python3 \
+    openjdk17-jdk \
+    g++ \
+    sqlite \
+    bash
+
+# Link python3 to python
+RUN ln -sf python3 /usr/bin/python
+
 WORKDIR /app
 
 COPY --from=builder /app/dist ./dist

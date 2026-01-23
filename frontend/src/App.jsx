@@ -17,6 +17,7 @@ import QuizPlayerPage from './QuizPlayerPage'
 import QuizResultsPage from './QuizResultsPage'
 import CommunityPage from './CommunityPage'
 import DictionaryPage from './DictionaryPage'
+import PlaygroundPage from './PlaygroundPage'
 
 function App() {
   const [session, setSession] = useState(null)
@@ -61,6 +62,8 @@ function App() {
           <Route path="/quiz/:code" element={<QuizPlayerPage />} />
           <Route path="/community" element={<CommunityPage />} />
           <Route path="/dictionary" element={<DictionaryPage />} />
+          <Route path="/playground" element={<PlaygroundPage />} />
+          <Route path="/share/:token" element={<PlaygroundPage />} />
         </Route>
       )}
 

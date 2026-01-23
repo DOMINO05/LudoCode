@@ -16,6 +16,8 @@ import { AIModule } from './common/ai.module';
 import { BadgesModule } from './badges/badges.module';
 import { ChallengesModule } from './challenges/challenges.module';
 import { DictionaryModule } from './dictionary/dictionary.module';
+import { SnippetsModule } from './snippets/snippets.module';
+import { TerminalModule } from './terminal/terminal.module';
 
 @Module({
   imports: [
@@ -49,6 +51,8 @@ import { DictionaryModule } from './dictionary/dictionary.module';
     BadgesModule,
     ChallengesModule,
     DictionaryModule,
+    SnippetsModule,
+    TerminalModule,
   ],
   controllers: [AppController],
   providers: [AppService],

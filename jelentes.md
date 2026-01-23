@@ -12,33 +12,17 @@ A fejlesztői élmény professzionálissá tétele.
 ### Üzleti Logika és Felhasználói Útvonal
 - **Formatter**: Gombnyomásra a kód olvashatóvá válik.
 - **Auto-save**: Minden billentyűleütés után 2 másodperccel a kód mentődik lokálisan.
-- **Sharing**: A felhasználó generálhat egy publikus linket a megoldásához.
+- **Sharing**: A felhasználó generálhat egy publikus kódot ugyan úgy mint a kvízeknél. A community oldalon ugyan abba az input mezőbe lehessen beírni a kódírási környezet megosztási kódját (placeholder="6 karakteres kód..." ).
 
 ### Frontend és UI/UX Tervezés
 - **Placement**: A Monaco editor feletti eszköztár (Toolbar).
-- **Sharing**: Egy "Megosztás" ikon, ami másolható linket generál egy popupban.
+- **Sharing**: Egy "Megosztás" ikon, ami másolható linket generál és állítható hogy csak read only vagy szerkeszthető is legyen.
 - **Auto-save visszajelzés**: Apró "Mentve" felirat az editor sarkában.
 
 ### Technikai Részletek
 - **Library**: `prettier` a frontend oldalon a formázáshoz.
 - **Auto-save**: `lodash.debounce` használata a felesleges API hívások vagy localStorage írások elkerülésére.
-- **Sharing**: Egy dedikált `/share/:token` útvonal, ahol a kód csak olvasható (ReadOnly) módban jelenik meg.
-
----
-
-## 8. Beépített szakzsargon szótár
-Azonnali segítség az ismeretlen kifejezésekhez.
-
-### Git Commit (Angolul)
-`feat: add programming jargon dictionary with interactive tooltips`
-
-### Frontend és UI/UX Tervezés
-- **UI**: A feladatleírásokban a szótárban szereplő szavak (pl. "rekurzió") aláhúzva jelennek meg. Fölé vive az egeret (hover) egy kis buborékban (Tooltip) megjelenik a definíció.
-- **Kereső**: Külön oldal `/dictionary` keresőmezővel és ABC szerinti navigációval.
-
-### Adatbázis
-- **Tábla**: `dictionary` (id, word, definition, lang_id).
-- **Teljesítmény**: A frontend az indításkor letöltheti a teljes szótárat (ha nem túl nagy), hogy a tooltip azonnali legyen.
+- **Sharing**: Egy dedikált `/share/:token` útvonal, ahol a kód csak olvasható (ReadOnly) módban jelenik meg vagy Szerkesző módban.
 
 ---
 
@@ -60,10 +44,12 @@ Azonnali segítség az ismeretlen kifejezésekhez.
 
 
 Ne legyen a kódrészletekben // comment.
+A dashboardon a háttérben csíkok jelennek meg.
+Felhasználók által hozzáadott kódok ne jelenjenek meg a tananyagban.
+A válaszok kiértékelése nem elég gyors.
 
 szótárba:
-interfész
-
+iterácio
 ---
 ---
 ---

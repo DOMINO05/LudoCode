@@ -32,11 +32,27 @@ export default function CommunityPage() {
     }
   };
 
-  const handleJoinByCode = (e) => {
+  const handleJoinByCode = async (e) => {
     e.preventDefault();
-    if (shareCode.length === 6) {
-      navigate(`/quiz/${shareCode.toUpperCase()}`);
+    if (shareCode.length !== 6) return;
+    
+    const code = shareCode.toUpperCase();
+    
+    // Check if it's a snippet first
+    try {
+        const res = await fetch(`${API_URL}/snippets/${code}`, {
+             headers: { 'Authorization': `Bearer ${session.access_token}` }
+        });
+        if (res.ok) {
+            navigate(`/share/${code}`);
+            return;
+        }
+    } catch (err) {
+        console.error("Error checking snippet:", err);
     }
+
+    // Fallback to quiz
+    navigate(`/quiz/${code}`);
   };
 
   if (loading) return <div className="p-8 text-center">Loading community...</div>;

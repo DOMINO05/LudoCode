@@ -1,0 +1,1 @@
+& "C:\Program Files\Microsoft\jdk-17.0.17.10-hotspot\bin\javac.exe" Main.java; if ($?) { & "C:\Program Files\Microsoft\jdk-17.0.17.10-hotspot\bin\java.exe" Main }
