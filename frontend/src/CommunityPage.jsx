@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useOutletContext, useNavigate } from 'react-router-dom';
+import { Users, Search, BookOpen, Trophy } from 'lucide-react';
 
 const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:3000';
 
@@ -58,27 +59,41 @@ export default function CommunityPage() {
   if (loading) return <div className="p-8 text-center">Loading community...</div>;
 
   return (
-    <div className="p-4 sm:p-8 max-w-6xl mx-auto">
+    <div className="p-4 sm:p-8 max-w-6xl mx-auto animate-in fade-in duration-500">
       <div className="text-center mb-12">
-        <h1 className="text-4xl font-black mb-4 tracking-tight">Közösségi Kvízek</h1>
-        <p className="text-slate-500 text-lg mb-8">Tanulj másoktól, vagy oszd meg saját tudásodat!</p>
+        <div className="inline-block p-4 bg-blue-100 dark:bg-blue-900/30 rounded-full mb-4">
+            <Users className="text-blue-500 w-12 h-12" />
+        </div>
+        <h1 className="text-4xl font-black mb-4 tracking-tight uppercase">Közösség</h1>
+        <p className="text-slate-500 text-lg mb-8 font-medium">Tanulj másoktól, vagy oszd meg saját tudásodat!</p>
         
         <form onSubmit={handleJoinByCode} className="max-w-md mx-auto flex gap-2">
-            <input 
-                type="text" 
-                placeholder="6 karakteres kód..." 
-                maxLength={6}
-                value={shareCode}
-                onChange={(e) => setShareCode(e.target.value)}
-                className="flex-1 p-4 rounded-2xl bg-slate-100 dark:bg-slate-800 outline-none focus:ring-4 focus:ring-primary/20 transition-all font-mono font-bold text-center tracking-widest text-xl uppercase"
-            />
+            <div className="relative flex-1">
+                <Search className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400" size={20} />
+                <input 
+                    type="text" 
+                    placeholder="6 KARAKTERES KÓD..." 
+                    maxLength={6}
+                    value={shareCode}
+                    onChange={(e) => setShareCode(e.target.value)}
+                    className="w-full p-4 pl-12 rounded-2xl bg-slate-100 dark:bg-slate-800 border-2 border-transparent focus:border-blue-500 outline-none transition-all font-mono font-bold text-center tracking-widest text-xl uppercase"
+                />
+            </div>
             <button 
                 type="submit"
-                className="bg-primary hover:bg-primary-dark text-white px-8 rounded-2xl font-bold transition-all shadow-lg"
+                className="bg-blue-500 hover:bg-blue-400 text-white px-8 rounded-2xl font-bold transition-all shadow-lg border-b-4 border-blue-700 active:border-b-0 active:translate-y-[4px] uppercase tracking-wider"
             >
                 Ugrás
             </button>
         </form>
+      </div>
+
+      <div className="flex items-center gap-3 mb-8 border-b-2 border-slate-100 dark:border-slate-800 pb-4">
+          <button 
+            className="px-6 py-2 bg-blue-500 text-white font-bold rounded-xl shadow-md border-b-4 border-blue-700 uppercase tracking-wider text-sm"
+          >
+            Publikus Kvízek
+          </button>
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">

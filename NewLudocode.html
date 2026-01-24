@@ -1,0 +1,654 @@
+import React, { useState, useEffect } from 'react';
+import { 
+  Home, 
+  Trophy, 
+  Store, 
+  Zap, 
+  Gem, 
+  Flame, 
+  BookOpen, 
+  ChevronDown,
+  Heart, 
+  Star,
+  Snowflake, // Shop: Streak Freeze
+  Clock, // Quest: Time
+  CheckCircle2, // Quest: Done
+  Crown, // Shop: Avatar Item
+  Glasses, // Shop: Avatar Item
+  Shirt, // Shop: Avatar Item
+  Shield, // Shop: Shield
+  Lock
+} from 'lucide-react';
+
+// --- Komponensek ---
+
+// Gomb komponens a Duolingo stílusú "nyomható" effekttel
+const Button = ({ children, variant = 'primary', className = '', onClick, fullWidth, disabled }) => {
+  const baseStyle = "font-bold py-3 px-6 rounded-2xl transition-all active:translate-y-[4px] active:border-b-0 border-b-4 uppercase tracking-wider text-sm md:text-base flex items-center justify-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed disabled:transform-none disabled:border-b-4";
+  
+  const variants = {
+    primary: "bg-blue-500 hover:bg-blue-400 text-white border-blue-700",
+    secondary: "bg-green-500 hover:bg-green-400 text-white border-green-700",
+    accent: "bg-purple-500 hover:bg-purple-400 text-white border-purple-700",
+    orange: "bg-orange-500 hover:bg-orange-400 text-white border-orange-700",
+    outline: "bg-white dark:bg-slate-800 text-slate-500 border-slate-300 dark:border-slate-700 hover:bg-slate-50 dark:hover:bg-slate-700",
+    ghost: "bg-transparent text-slate-500 border-transparent hover:bg-slate-100 dark:hover:bg-slate-800 active:translate-y-0 active:border-b-0",
+    shop: "bg-white dark:bg-slate-800 text-slate-700 dark:text-slate-200 border-slate-200 dark:border-slate-700 hover:border-slate-300 dark:hover:border-slate-600", // Külön stílus a bolti kártyáknak
+  };
+
+  return (
+    <button 
+      onClick={onClick}
+      disabled={disabled}
+      className={`${baseStyle} ${variants[variant]} ${fullWidth ? 'w-full' : ''} ${className}`}
+    >
+      {children}
+    </button>
+  );
+};
+
+// Kártya komponens
+const Card = ({ children, className = '' }) => (
+  <div className={`bg-white dark:bg-slate-900 border-2 border-slate-200 dark:border-slate-700 rounded-2xl p-4 ${className}`}>
+    {children}
+  </div>
+);
+
+// Progress Bar
+const ProgressBar = ({ value, max, color = "bg-yellow-400", height = "h-4" }) => {
+  const percentage = Math.min(100, Math.max(0, (value / max) * 100));
+  return (
+    <div className={`${height} w-full bg-slate-200 dark:bg-slate-700 rounded-full overflow-hidden`}>
+      <div 
+        className={`h-full ${color} transition-all duration-500 ease-out`} 
+        style={{ width: `${percentage}%` }}
+      />
+    </div>
+  );
+};
+
+// --- Fő Alkalmazás ---
+
+export default function LudoCodeApp() {
+  const [activeTab, setActiveTab] = useState('home');
+  const [darkMode, setDarkMode] = useState(true);
+  const [selectedLanguage, setSelectedLanguage] = useState("Python");
+
+  // Toggle Dark Mode
+  useEffect(() => {
+    if (darkMode) {
+      document.documentElement.classList.add('dark');
+    } else {
+      document.documentElement.classList.remove('dark');
+    }
+  }, [darkMode]);
+
+  // Mock Adatok
+  const user = {
+    name: "dasdadad",
+    xp: 50,
+    gems: 1250, // Több gem a teszteléshez
+    hp: 100, 
+    streak: 1,
+  };
+
+  // Frissített Navigáció
+  const navItems = [
+    { id: 'home', label: 'Tanulás', icon: Home, color: 'text-blue-500' },
+    { id: 'dictionary', label: 'Szótár', icon: BookOpen, color: 'text-orange-500' },
+    { id: 'leaderboard', label: 'Ranglista', icon: Trophy, color: 'text-yellow-500' },
+    { id: 'quests', label: 'Küldetések', icon: Zap, color: 'text-purple-500' },
+    { id: 'shop', label: 'Bolt', icon: Store, color: 'text-red-500' },
+  ];
+
+  const renderContent = () => {
+    switch (activeTab) {
+      case 'home':
+        return (
+          <HomeSection 
+            user={user} 
+            selectedLanguage={selectedLanguage} 
+            setSelectedLanguage={setSelectedLanguage} 
+          />
+        );
+      case 'leaderboard':
+        return <LeaderboardSection />;
+      case 'shop':
+        return <ShopSection user={user} />;
+      case 'quests':
+        return <QuestsSection />;
+      default:
+        return (
+          <div className="flex flex-col items-center justify-center h-64 text-center">
+            <div className="text-6xl mb-4">🚧</div>
+            <h2 className="text-2xl font-bold text-slate-700 dark:text-slate-200">Fejlesztés alatt</h2>
+            <p className="text-slate-500">Ez az oldal hamarosan elkészül!</p>
+          </div>
+        );
+    }
+  };
+
+  return (
+    <div className={`min-h-screen bg-white dark:bg-[#131f24] text-slate-700 dark:text-slate-300 font-sans transition-colors duration-300`}>
+      
+      {/* --- MOBIL FELSŐ SÁV (Top Bar) --- */}
+      <div className="md:hidden fixed top-0 w-full bg-[#131f24] border-b border-slate-700 z-50 px-4 py-2 flex justify-between items-center h-16">
+        <div className="flex gap-4">
+           {/* Mobilon is mutatjuk az új statokat */}
+           <div className="flex items-center gap-1 text-red-500 font-bold">
+             <Heart size={20} fill="currentColor" /> <span>{user.hp}</span>
+           </div>
+           <div className="flex items-center gap-1 text-blue-400 font-bold">
+             <Gem size={20} /> <span>{user.gems}</span>
+           </div>
+        </div>
+        <button onClick={() => setDarkMode(!darkMode)} className="p-2">
+           {darkMode ? '☀️' : '🌙'}
+        </button>
+      </div>
+
+      <div className="flex max-w-7xl mx-auto pt-16 md:pt-0 pb-20 md:pb-0">
+        
+        {/* --- BAL OLDALI SÁV (Desktop Nav) --- */}
+        <nav className="hidden md:flex flex-col w-64 fixed h-screen border-r-2 border-slate-200 dark:border-slate-800 px-4 py-6 overflow-y-auto bg-white dark:bg-[#131f24] z-40">
+          <div className="mb-8 px-4">
+            <h1 className="text-3xl font-extrabold text-blue-500 tracking-tighter">LudoCode</h1>
+          </div>
+          
+          <div className="flex flex-col gap-2 flex-1">
+            {navItems.map((item) => (
+              <button
+                key={item.id}
+                onClick={() => setActiveTab(item.id)}
+                className={`flex items-center gap-4 p-3 rounded-xl font-bold uppercase tracking-wider text-sm transition-colors border-2 border-transparent hover:bg-slate-100 dark:hover:bg-slate-800 ${
+                  activeTab === item.id 
+                    ? `bg-blue-50/50 dark:bg-slate-800 text-blue-500 border-blue-200 dark:border-slate-700` 
+                    : 'text-slate-500 dark:text-slate-400'
+                }`}
+              >
+                <item.icon size={24} className={activeTab === item.id ? item.color : ''} />
+                {item.label}
+              </button>
+            ))}
+          </div>
+
+          <div className="mt-auto pt-6 border-t border-slate-200 dark:border-slate-700">
+             <div className="flex items-center gap-3 p-2 rounded-xl hover:bg-slate-100 dark:hover:bg-slate-800 cursor-pointer">
+                <div className="w-10 h-10 rounded-lg bg-green-500 flex items-center justify-center text-white font-bold text-lg overflow-hidden border-2 border-green-600">
+                  D
+                </div>
+                <div className="flex flex-col">
+                  <span className="font-bold text-slate-700 dark:text-slate-200">{user.name}</span>
+                  <span className="text-xs text-slate-500">View Profile</span>
+                </div>
+             </div>
+          </div>
+        </nav>
+
+        {/* --- KÖZÉPSŐ TARTALOM (Main Content) --- */}
+        <main className="flex-1 md:ml-64 md:mr-80 p-4 md:p-8 min-h-screen">
+          {renderContent()}
+        </main>
+
+        {/* --- JOBB OLDALI SÁV (Stats & Quests) --- */}
+        <aside className="hidden lg:block w-80 fixed right-0 h-screen overflow-y-auto p-6 border-l-2 border-slate-200 dark:border-slate-800 bg-white dark:bg-[#131f24] z-40">
+          
+          <div className="flex items-center justify-between gap-4 mb-8">
+            <div className="flex items-center gap-1 text-orange-500 font-bold group relative cursor-help border-2 border-slate-200 dark:border-slate-700 rounded-xl px-4 py-2 w-full justify-center">
+                 <Flame size={24} fill="currentColor" /> <span>Streak: {user.streak}</span>
+            </div>
+          </div>
+
+          {/* Daily Quests Widget (Compact for Sidebar) */}
+          <div className="bg-white dark:bg-slate-900 border-2 border-slate-200 dark:border-slate-700 rounded-2xl p-4 mb-6">
+             <div className="flex justify-between items-center mb-4">
+               <h3 className="font-bold text-lg text-slate-700 dark:text-slate-200">Napi küldetések</h3>
+               <button onClick={() => setActiveTab('quests')} className="text-blue-500 text-sm font-bold cursor-pointer uppercase hover:text-blue-400">Összes</button>
+             </div>
+             
+             <div className="space-y-4">
+               <QuestItem title="Javíts ki 3 hibát" current={0} target={3} reward="40 XP" icon="🔧" compact />
+               <QuestItem title="Nyerj egy kvízt" current={0} target={1} reward="20 XP" icon="🎯" compact />
+             </div>
+          </div>
+
+          {/* Leaderboard Teaser */}
+          <div className="bg-white dark:bg-slate-900 border-2 border-slate-200 dark:border-slate-700 rounded-2xl p-4">
+             <h3 className="font-bold text-lg text-slate-700 dark:text-slate-200 mb-4">Ranglista</h3>
+             <div className="flex items-center gap-3 mb-4">
+                <div className="w-10 h-10 rounded-full bg-yellow-100 dark:bg-yellow-900/30 flex items-center justify-center text-xl">🥇</div>
+                <div className="flex-1">
+                  <div className="font-bold text-slate-700 dark:text-slate-200">jdjjdjd</div>
+                  <div className="text-xs text-slate-500">4010 XP</div>
+                </div>
+             </div>
+             <Button variant="outline" fullWidth onClick={() => setActiveTab('leaderboard')}>Teljes lista</Button>
+          </div>
+
+           {/* Footer / Quote */}
+           <div className="mt-8 text-center px-4">
+              <p className="text-slate-400 text-sm italic">
+                "In order to be irreplaceable, one must always be different."
+              </p>
+              <p className="text-slate-500 text-xs font-bold uppercase mt-2">- Coco Chanel</p>
+           </div>
+        </aside>
+
+        {/* --- MOBIL ALSÓ SÁV (Bottom Nav) --- */}
+        <div className="md:hidden fixed bottom-0 w-full bg-[#131f24] border-t border-slate-800 z-50 px-2 py-1 flex justify-around items-center h-20 pb-4">
+            {navItems.map((item) => (
+              <button
+                key={item.id}
+                onClick={() => setActiveTab(item.id)}
+                className={`flex flex-col items-center justify-center p-2 rounded-xl transition-all ${
+                  activeTab === item.id 
+                    ? `text-blue-400 -translate-y-2` 
+                    : 'text-slate-500'
+                }`}
+              >
+                <item.icon size={26} fill={activeTab === item.id ? "currentColor" : "none"} />
+              </button>
+            ))}
+        </div>
+
+      </div>
+    </div>
+  );
+}
+
+// --- ÚJ SZEKCIÓK: Bolt és Küldetések ---
+
+const ShopSection = ({ user }) => {
+  const powerUps = [
+    { 
+      id: 1, 
+      name: "Széria Fagyasztó", 
+      desc: "Megvédi a szériádat egy teljes napig, ha kihagynád a gyakorlást.", 
+      price: 200, 
+      icon: Snowflake, 
+      color: "bg-blue-500",
+      purchased: false 
+    },
+    { 
+      id: 2, 
+      name: "Dupla XP Ital", 
+      desc: "A következő 30 percben minden lecke duplán ad XP-t.", 
+      price: 150, 
+      icon: Zap, 
+      color: "bg-yellow-500",
+      purchased: false 
+    },
+  ];
+
+  const avatarItems = [
+    { 
+      id: 3, 
+      name: "Menő Napszemüveg", 
+      desc: "Csak lazán, kódolj stílusosan.", 
+      price: 500, 
+      icon: Glasses, 
+      color: "bg-purple-500",
+      purchased: true 
+    },
+    { 
+      id: 4, 
+      name: "Varázsló Kalap", 
+      desc: "Növeli az IQ-t (legalábbis így érzed).", 
+      price: 1000, 
+      icon: Crown, 
+      color: "bg-orange-500",
+      purchased: false 
+    },
+    { 
+      id: 5, 
+      name: "Arany Póló", 
+      desc: "A ranglista királyainak kötelező darab.", 
+      price: 2000, 
+      icon: Shirt, 
+      color: "bg-yellow-400",
+      purchased: false 
+    },
+  ];
+
+  return (
+    <div className="max-w-3xl mx-auto space-y-10 animate-in fade-in zoom-in duration-300">
+      
+      {/* Banner */}
+      <div className="bg-surface-light dark:bg-slate-900 border-2 border-slate-200 dark:border-slate-700 rounded-2xl p-6 flex items-center justify-between">
+         <div>
+            <h2 className="text-3xl font-extrabold text-slate-700 dark:text-slate-100 mb-2">Bolt</h2>
+            <p className="text-slate-500">Költsd el a kemény munkával szerzett drágaköveidet!</p>
+         </div>
+         <div className="flex items-center gap-2 text-blue-400 border-2 border-slate-200 dark:border-slate-700 px-4 py-2 rounded-xl bg-slate-50 dark:bg-slate-800">
+            <Gem size={28} /> <span className="text-xl font-black">{user.gems}</span>
+         </div>
+      </div>
+
+      {/* Power-ups Section */}
+      <div>
+        <h3 className="text-xl font-bold text-slate-400 uppercase tracking-widest mb-6 border-b-2 border-slate-200 dark:border-slate-700 pb-2">Power-upok</h3>
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+          {powerUps.map(item => (
+            <ShopItem key={item.id} item={item} userGems={user.gems} />
+          ))}
+        </div>
+      </div>
+
+      {/* Avatar Accessories Section */}
+      <div>
+        <h3 className="text-xl font-bold text-slate-400 uppercase tracking-widest mb-6 border-b-2 border-slate-200 dark:border-slate-700 pb-2">Kiegészítők az avatarra</h3>
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+          {avatarItems.map(item => (
+            <ShopItem key={item.id} item={item} userGems={user.gems} />
+          ))}
+        </div>
+      </div>
+    </div>
+  );
+};
+
+const ShopItem = ({ item, userGems }) => {
+  const canAfford = userGems >= item.price;
+  
+  return (
+    <div className="bg-white dark:bg-slate-900 border-2 border-slate-200 dark:border-slate-700 rounded-2xl p-4 flex flex-col items-center text-center hover:border-slate-300 dark:hover:border-slate-600 transition-all">
+      <div className={`w-24 h-24 mb-4 rounded-xl ${item.color} flex items-center justify-center text-white shadow-lg`}>
+        <item.icon size={48} />
+      </div>
+      <h4 className="font-bold text-lg text-slate-700 dark:text-slate-200 mb-2">{item.name}</h4>
+      <p className="text-slate-500 text-sm mb-6 flex-1">{item.desc}</p>
+      
+      {item.purchased ? (
+        <Button variant="outline" fullWidth disabled>
+          <CheckCircle2 size={18} /> Megvéve
+        </Button>
+      ) : (
+        <Button 
+          variant={canAfford ? "primary" : "outline"} 
+          fullWidth 
+          disabled={!canAfford}
+          className={!canAfford ? "opacity-50" : "bg-blue-500 text-white border-blue-600"}
+        >
+          <Gem size={18} className="text-blue-200" /> {item.price}
+        </Button>
+      )}
+    </div>
+  );
+};
+
+const QuestsSection = () => {
+  const dailyQuests = [
+    { title: "Befejezni 1 leckét", current: 0, target: 1, reward: "10 XP", icon: "📚", progress: 0 },
+    { title: "Szerezni 50 XP-t", current: 30, target: 50, reward: "5 Gem", icon: "⚡", progress: 60 },
+    { title: "100% egy kvízen", current: 0, target: 1, reward: "20 XP", icon: "🎯", progress: 0 },
+  ];
+
+  const weeklyQuests = [
+    { title: "3 napos streak", current: 1, target: 3, reward: "50 XP", icon: "🔥", progress: 33 },
+    { title: "Befejezni 5 leckét", current: 2, target: 5, reward: "100 XP", icon: "🎓", progress: 40 },
+    { title: "Top 10 a ranglistán", current: 13, target: 10, reward: "20 Gem", icon: "🏆", progress: 0, inverse: true }, // Inverse logic (lower rank is better) but keeping simple for UI
+  ];
+
+  return (
+    <div className="max-w-3xl mx-auto space-y-10 animate-in slide-in-from-bottom-2 fade-in duration-500">
+      
+       {/* Banner */}
+       <div className="bg-gradient-to-r from-purple-500 to-indigo-600 border-none rounded-2xl p-8 text-white shadow-lg flex items-center justify-between">
+         <div>
+            <h2 className="text-3xl font-extrabold mb-2">Küldetések</h2>
+            <p className="text-purple-100 max-w-md">Teljesítsd a kihívásokat, hogy extra XP-t és drágaköveket szerezz!</p>
+         </div>
+         <div className="hidden md:block">
+            <Zap size={80} className="text-purple-300 opacity-50 rotate-12" />
+         </div>
+      </div>
+
+      {/* Daily Quests */}
+      <div>
+        <div className="flex items-center gap-2 mb-6">
+           <Clock className="text-orange-500" />
+           <h3 className="text-xl font-bold text-slate-700 dark:text-slate-200 uppercase tracking-widest">Napi Küldetések</h3>
+        </div>
+        <div className="space-y-4">
+          {dailyQuests.map((q, i) => (
+            <QuestCard key={i} quest={q} />
+          ))}
+        </div>
+      </div>
+
+      {/* Weekly Quests */}
+      <div>
+        <div className="flex items-center gap-2 mb-6">
+           <Shield className="text-blue-500" />
+           <h3 className="text-xl font-bold text-slate-700 dark:text-slate-200 uppercase tracking-widest">Heti Küldetések</h3>
+        </div>
+        <div className="space-y-4">
+          {weeklyQuests.map((q, i) => (
+            <QuestCard key={i} quest={q} />
+          ))}
+        </div>
+      </div>
+
+    </div>
+  );
+};
+
+const QuestCard = ({ quest }) => (
+  <div className="bg-white dark:bg-slate-900 border-2 border-slate-200 dark:border-slate-700 rounded-2xl p-4 flex items-center gap-4">
+    <div className="text-4xl">{quest.icon}</div>
+    <div className="flex-1">
+      <div className="flex justify-between mb-2">
+        <h4 className="font-bold text-slate-700 dark:text-slate-200">{quest.title}</h4>
+        <span className="font-bold text-slate-400 text-sm">{quest.current} / {quest.target}</span>
+      </div>
+      <ProgressBar value={quest.current} max={quest.target} height="h-6" color={quest.progress >= 100 ? "bg-green-500" : "bg-yellow-400"} />
+    </div>
+    <div className="flex flex-col items-center justify-center min-w-[80px] border-l-2 border-slate-100 dark:border-slate-800 pl-4">
+       <span className="text-xs font-bold text-slate-400 uppercase mb-1">Jutalom</span>
+       <div className="font-extrabold text-orange-500">{quest.reward}</div>
+    </div>
+  </div>
+);
+
+// --- Szekciók (Meglévőek) ---
+
+const HomeSection = ({ user, selectedLanguage, setSelectedLanguage }) => {
+  return (
+    <div className="max-w-2xl mx-auto space-y-6 animate-in slide-in-from-bottom-2 fade-in duration-500">
+      
+      {/* 🟢 ÚJ FEJLÉC: Nyelvválasztó és Szintek (HP, XP, Gem) */}
+      <div className="flex flex-col md:flex-row items-center justify-between gap-4 bg-white dark:bg-slate-900 border-2 border-slate-200 dark:border-slate-700 rounded-2xl p-4 mb-2 sticky top-4 z-30 shadow-sm">
+        
+        {/* Nyelvválasztó */}
+        <div className="relative group w-full md:w-auto">
+           <div className="flex items-center gap-2 bg-slate-100 dark:bg-slate-800 px-4 py-2 rounded-xl cursor-pointer hover:bg-slate-200 dark:hover:bg-slate-700 transition-colors">
+              <span className="text-2xl">{selectedLanguage === 'Python' ? '🐍' : selectedLanguage === 'Java' ? '☕' : '📜'}</span>
+              <select 
+                value={selectedLanguage}
+                onChange={(e) => setSelectedLanguage(e.target.value)}
+                className="bg-transparent font-bold text-slate-700 dark:text-slate-200 outline-none appearance-none cursor-pointer w-full"
+              >
+                <option value="Python">Python</option>
+                <option value="Java">Java</option>
+                <option value="JavaScript">JavaScript</option>
+                <option value="C++">C++</option>
+              </select>
+              <ChevronDown size={16} className="text-slate-500" />
+           </div>
+        </div>
+
+        {/* Szintek / Statisztikák */}
+        <div className="flex items-center gap-4 md:gap-8 w-full md:w-auto justify-around md:justify-end">
+           {/* HP */}
+           <div className="flex items-center gap-2" title="HP Szint">
+              <Heart className="text-red-500 fill-current" size={24} /> 
+              <span className="font-extrabold text-red-500 text-lg">{user.hp}</span>
+           </div>
+           
+           {/* XP */}
+           <div className="flex items-center gap-2" title="XP Szint">
+              <Star className="text-yellow-400 fill-current" size={24} /> 
+              <span className="font-extrabold text-yellow-400 text-lg">{user.xp} XP</span>
+           </div>
+
+           {/* Gems */}
+           <div className="flex items-center gap-2" title="Gem Szint">
+              <Gem className="text-blue-500 fill-current" size={24} /> 
+              <span className="font-extrabold text-blue-500 text-lg">{user.gems}</span>
+           </div>
+        </div>
+      </div>
+
+      {/* Hero / Quick Practice */}
+      <div className="relative group">
+         <div className="absolute inset-0 bg-blue-500 rounded-3xl transform rotate-1 group-hover:rotate-2 transition-transform opacity-20 dark:opacity-40"></div>
+         <Card className="relative bg-gradient-to-br from-blue-500 to-blue-600 border-none p-6 md:p-8 text-white overflow-hidden">
+            <div className="relative z-10 flex flex-col md:flex-row items-center gap-6 text-center md:text-left">
+               <div className="text-6xl md:text-8xl animate-bounce">⚡</div>
+               <div className="flex-1">
+                 <h2 className="text-2xl md:text-3xl font-extrabold mb-2 uppercase tracking-wide">Gyors Gyakorlás</h2>
+                 <p className="text-blue-100 mb-6 font-medium">Folytasd a {selectedLanguage} tanulást ott, ahol abbahagytad!</p>
+                 <Button variant="outline" className="text-blue-600 border-blue-200 hover:bg-blue-50 w-full md:w-auto">
+                   Indítás (+10 XP)
+                 </Button>
+               </div>
+            </div>
+         </Card>
+      </div>
+
+      {/* Categories Grid */}
+      <div>
+        <h3 className="text-xl font-bold text-slate-400 uppercase tracking-widest mb-4 ml-2">Felfedezés</h3>
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+          
+          <ActionCard 
+            title="Gyakorlás Típusok" 
+            desc="Válassz 6 típus közül" 
+            icon="🧩" 
+            color="green"
+            buttonText="Kiválasztás"
+          />
+          
+          <ActionCard 
+            title="Saját Kvízek" 
+            desc="Készíts és ossz meg" 
+            icon="📝" 
+            color="yellow"
+            buttonText="Kezelés"
+          />
+
+          <ActionCard 
+            title="Közösségi Kvízek" 
+            desc="Mások feladványai" 
+            icon="🌍" 
+            color="purple"
+            buttonText="Böngészés"
+          />
+
+          <ActionCard 
+            title="Playground" 
+            desc="Szabad kódolás" 
+            icon="🧪" 
+            color="indigo"
+            buttonText="Kódolás"
+          />
+
+        </div>
+      </div>
+    </div>
+  );
+};
+
+const LeaderboardSection = () => {
+  const users = [
+    { rank: 1, name: "jdjjdjd", xp: 4010 },
+    { rank: 2, name: "domino", xp: 2844 },
+    { rank: 3, name: "asaasa", xp: 403 },
+    { rank: 4, name: "dasdasdasd", xp: 318 },
+    { rank: 13, name: "dasdadad (Te)", xp: 50, isMe: true },
+  ];
+
+  return (
+    <div className="max-w-2xl mx-auto space-y-6">
+      <div className="text-center mb-8">
+        <h2 className="text-3xl font-extrabold text-slate-700 dark:text-slate-100 mb-2">Ranglista</h2>
+        <p className="text-slate-500">Versenyezz a barátaiddal és a világgal!</p>
+      </div>
+
+      <div className="flex justify-center gap-2 mb-6">
+         <Button variant="primary" className="py-2 px-4 text-sm">Globális</Button>
+         <Button variant="ghost" className="py-2 px-4 text-sm">Barátok</Button>
+      </div>
+
+      <Card className="p-0 overflow-hidden">
+        {users.map((u, i) => (
+          <div 
+            key={i} 
+            className={`flex items-center p-4 border-b border-slate-100 dark:border-slate-800 last:border-0 hover:bg-slate-50 dark:hover:bg-slate-800/50 transition-colors ${u.isMe ? 'bg-blue-50 dark:bg-blue-900/20' : ''}`}
+          >
+            <div className={`w-12 font-bold text-center ${u.rank <= 3 ? 'text-2xl' : 'text-slate-400'}`}>
+              {u.rank === 1 ? '🥇' : u.rank === 2 ? '🥈' : u.rank === 3 ? '🥉' : u.rank}
+            </div>
+            
+            <div className="mx-4">
+              <div className="w-10 h-10 rounded-full bg-slate-200 dark:bg-slate-700 flex items-center justify-center overflow-hidden">
+                 <img src={`https://api.dicebear.com/7.x/avataaars/svg?seed=${u.name}`} alt="avatar" />
+              </div>
+            </div>
+
+            <div className="flex-1 font-bold text-slate-700 dark:text-slate-200">
+              {u.name}
+            </div>
+
+            <div className="font-mono text-slate-500 dark:text-slate-400">
+              {u.xp} XP
+            </div>
+          </div>
+        ))}
+      </Card>
+    </div>
+  );
+};
+
+// --- Kisebb komponensek ---
+
+const ActionCard = ({ title, desc, icon, color, buttonText }) => {
+  const colorMap = {
+    green: "bg-green-500 border-green-700",
+    yellow: "bg-yellow-500 border-yellow-700",
+    purple: "bg-purple-500 border-purple-700",
+    indigo: "bg-indigo-500 border-indigo-700",
+  };
+  
+  const textColors = {
+     green: "text-green-500",
+     yellow: "text-yellow-500",
+     purple: "text-purple-500",
+     indigo: "text-indigo-500"
+  }
+
+  return (
+    <div className="bg-white dark:bg-slate-900 border-2 border-slate-200 dark:border-slate-700 rounded-2xl p-6 flex flex-col items-center text-center hover:border-slate-300 dark:hover:border-slate-600 transition-all cursor-pointer group">
+      <div className="text-5xl mb-4 transform group-hover:scale-110 transition-transform duration-200">{icon}</div>
+      <h3 className="font-extrabold text-lg text-slate-700 dark:text-slate-200 mb-1">{title}</h3>
+      <p className="text-slate-500 text-sm mb-6">{desc}</p>
+      <button className={`w-full py-2 rounded-xl font-bold text-white uppercase tracking-wider text-sm border-b-4 active:border-b-0 active:translate-y-[4px] transition-all ${colorMap[color] || colorMap.green}`}>
+        {buttonText}
+      </button>
+    </div>
+  );
+};
+
+const QuestItem = ({ title, current, target, reward, icon, compact = false }) => (
+  <div className="flex items-center gap-4">
+    <div className="text-2xl">{icon}</div>
+    <div className="flex-1">
+      <div className="flex justify-between mb-1">
+        <span className="font-bold text-sm text-slate-700 dark:text-slate-200">{title}</span>
+        {!compact && <span className="text-xs font-bold text-slate-400">{current}/{target}</span>}
+      </div>
+      <ProgressBar value={current} max={target} />
+    </div>
+    <div className="text-xs font-bold text-yellow-500 whitespace-nowrap">{reward}</div>
+  </div>
+);

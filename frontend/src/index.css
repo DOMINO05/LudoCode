@@ -1,5 +1,7 @@
 @import "tailwindcss";
 
+@custom-variant dark (&:where(.dark, .dark *));
+
 @theme {
   --color-primary: #0070f3;
   --color-primary-dark: #2196f3;
@@ -18,6 +20,21 @@
   
   --font-nunito: 'Nunito', sans-serif;
   --font-code: 'Fira Code', monospace;
+}
+
+/* Global Reset & Theme Transitions */
+@layer base {
+  html, body {
+    @apply transition-colors duration-300;
+  }
+  
+  body {
+    @apply bg-white text-slate-700;
+  }
+
+  .dark body {
+    @apply bg-[#131f24] text-slate-300;
+  }
 }
 
 /* Custom Utilities */
@@ -98,7 +115,11 @@
   background-color: #94a3b8; /* slate-400 */
 }
 
-/* Dark mode scrollbar support */
+/* Dark mode support */
+.dark {
+  color-scheme: dark;
+}
+
 .dark ::-webkit-scrollbar-thumb {
   background-color: #475569; /* slate-600 */
 }

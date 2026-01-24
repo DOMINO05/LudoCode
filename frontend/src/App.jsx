@@ -8,6 +8,9 @@ import Dashboard from './Dashboard'
 import ProfilePage from './ProfilePage'
 import CoursesPage from './CoursesPage'
 import ShopPage from './ShopPage'
+import QuestsPage from './QuestsPage'
+import LeaderboardPage from './LeaderboardPage'
+import StatsPage from './StatsPage'
 import Layout from './Layout'
 import PlacementPage from './PlacementPage'
 import QuizManagerPage from './QuizManagerPage'
@@ -53,6 +56,9 @@ function App() {
           <Route path="/mistake-recovery" element={<MistakeRecoveryPage />} />
           <Route path="/courses" element={<CoursesPage />} />
           <Route path="/shop" element={<ShopPage />} />
+          <Route path="/quests" element={<QuestsPage />} />
+          <Route path="/leaderboard" element={<LeaderboardPage />} />
+          <Route path="/stats" element={<StatsPage />} />
           <Route path="/profile" element={<ProfilePage />} />
           <Route path="/quizzes" element={<QuizManagerPage />} />
           <Route path="/quizzes/edit/:id" element={<QuizEditorPage />} />

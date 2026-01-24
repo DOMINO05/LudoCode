@@ -2,28 +2,6 @@
 
 Ez a dokumentum a Ludocode projekt még meg nem valósított funkcióinak kimerítően részletes tervezete, figyelembe véve az üzleti logikát, UI/UX szempontokat, adatmodellt és API specifikációkat.
 
-
-## 5. Kódírási környezet fejlesztése (Formatter, Auto-save, Sharing)
-A fejlesztői élmény professzionálissá tétele.
-
-### Git Commit (Angolul)
-`feat: enhance coding environment with prettier formatter, auto-save and code sharing`
-
-### Üzleti Logika és Felhasználói Útvonal
-- **Formatter**: Gombnyomásra a kód olvashatóvá válik.
-- **Auto-save**: Minden billentyűleütés után 2 másodperccel a kód mentődik lokálisan.
-- **Sharing**: A felhasználó generálhat egy publikus kódot ugyan úgy mint a kvízeknél. A community oldalon ugyan abba az input mezőbe lehessen beírni a kódírási környezet megosztási kódját (placeholder="6 karakteres kód..." ).
-
-### Frontend és UI/UX Tervezés
-- **Placement**: A Monaco editor feletti eszköztár (Toolbar).
-- **Sharing**: Egy "Megosztás" ikon, ami másolható linket generál és állítható hogy csak read only vagy szerkeszthető is legyen.
-- **Auto-save visszajelzés**: Apró "Mentve" felirat az editor sarkában.
-
-### Technikai Részletek
-- **Library**: `prettier` a frontend oldalon a formázáshoz.
-- **Auto-save**: `lodash.debounce` használata a felesleges API hívások vagy localStorage írások elkerülésére.
-- **Sharing**: Egy dedikált `/share/:token` útvonal, ahol a kód csak olvasható (ReadOnly) módban jelenik meg vagy Szerkesző módban.
-
 ---
 
 ## 9. Virtuális mentor karakter
@@ -47,6 +25,9 @@ Ne legyen a kódrészletekben // comment.
 A dashboardon a háttérben csíkok jelennek meg.
 Felhasználók által hozzáadott kódok ne jelenjenek meg a tananyagban.
 A válaszok kiértékelése nem elég gyors.
+playground white mode.
+karakterkészítö dark mode
+vissza gomb minden oldalra.
 
 szótárba:
 iterácio
