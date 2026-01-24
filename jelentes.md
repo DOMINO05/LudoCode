@@ -28,21 +28,8 @@ A válaszok kiértékelése nem elég gyors.
 playground white mode.
 karakterkészítö dark mode
 vissza gomb minden oldalra.
+statisztika iconok ésháttéfix.
+community publikus kvízek felirat levétele vagy códok fül hozzáadása    
 
 szótárba:
 iterácio
----
----
----
----
-
-## 10. Desktop élmény figyelmeztetés
-A kódolási élmény minőségének biztosítása.
-
-### Git Commit (Angolul)
-`feat: add desktop experience warning for mobile users on coding pages`
-
-### Frontend
-- **Logika**: `useEffect`-ben figyelni a `window.innerWidth` értéket.
-- **Küszöb**: 768px alatt.
-- **UI**: Egy sárga információs sáv a képernyő tetején: "A kódolási feladatokhoz billentyűzet és nagyobb képernyő javasolt." (X-el bezárható, session-ben elmentve).

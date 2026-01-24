@@ -15,7 +15,7 @@ import Editor from '@monaco-editor/react';
 const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:3000';
 
 export default function MistakeRecoveryPage() {
-  const { session, profile, refreshProfile, showBadgeNotification } = useOutletContext();
+  const { session, profile, refreshProfile, showBadgeNotification, showNotification } = useOutletContext();
   const { isDark } = useTheme();
   const navigate = useNavigate();
 
@@ -99,7 +99,7 @@ export default function MistakeRecoveryPage() {
       // Handle Debug Phase A locally
       if (question.qType === 'debug' && debugPhase === 'identify') {
           if (debugSelections.length === 0) {
-              alert("Kérlek válassz ki legalább egy elemet!");
+              showNotification('Kérlek válassz ki legalább egy elemet!', 'info');
               return;
           }
           
@@ -143,7 +143,7 @@ export default function MistakeRecoveryPage() {
       }
 
       if (submissionData === null || submissionData === '' || (Array.isArray(submissionData) && submissionData.length === 0)) {
-          alert("Please provide an answer first.");
+          showNotification('Kérlek adj meg egy választ előbb!', 'info');
           return;
       }
 
@@ -186,7 +186,7 @@ export default function MistakeRecoveryPage() {
 
       } catch (err) {
         console.error(err);
-        alert('Submission failed');
+        showNotification('Sikertelen beküldés', 'error');
       }
   };
 

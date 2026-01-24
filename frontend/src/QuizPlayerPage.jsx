@@ -10,7 +10,7 @@ import ConstructionComponent from './question-types/ConstructionComponent';
 const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:3000';
 
 export default function QuizPlayerPage() {
-  const { session, refreshProfile, showBadgeNotification } = useOutletContext();
+  const { session, refreshProfile, showBadgeNotification, showNotification } = useOutletContext();
   const { code: shareCode } = useParams();
   const navigate = useNavigate();
   
@@ -48,7 +48,7 @@ export default function QuizPlayerPage() {
         data.questions.sort((a, b) => a.orderIndex - b.orderIndex);
         setQuiz(data);
       } else {
-          alert('Kvíz nem található vagy nincs hozzáférésed.');
+          showNotification('Kvíz nem található vagy nincs hozzáférésed.', 'error');
           navigate('/dashboard');
       }
     } catch (err) {
@@ -72,7 +72,7 @@ export default function QuizPlayerPage() {
     }
 
     if (!submissionData && question.qType !== 'debug') {
-        alert('Kérlek adj meg egy választ!');
+        showNotification('Kérlek adj meg egy választ!', 'info');
         return;
     }
 

@@ -65,7 +65,7 @@ const QuestCard = ({ challenge, onCollect }) => {
 };
 
 export default function QuestsPage() {
-  const { session, refreshProfile } = useOutletContext();
+  const { session, refreshProfile, showNotification } = useOutletContext();
   const [challenges, setChallenges] = useState([]);
   const [loading, setLoading] = useState(true);
 
@@ -98,6 +98,7 @@ export default function QuestsPage() {
       if (res.ok) {
         await fetchChallenges();
         await refreshProfile();
+        showNotification('Jutalom begyűjtve!', 'success');
       }
     } catch (err) {
       console.error(err);

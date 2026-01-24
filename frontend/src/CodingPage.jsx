@@ -18,7 +18,7 @@ import Editor from '@monaco-editor/react';
 const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:3000';
 
 export default function CodingPage() {
-  const { session, profile, refreshProfile, showBadgeNotification } = useOutletContext();
+  const { session, profile, refreshProfile, showBadgeNotification, showNotification } = useOutletContext();
   const { isDark } = useTheme();
   const { currentLanguage } = useLanguage();
   const navigate = useNavigate();
@@ -30,6 +30,7 @@ export default function CodingPage() {
   // State
   const [question, setQuestion] = useState(null);
   const [loading, setLoading] = useState(true);
+  const [isChecking, setIsChecking] = useState(false);
   const [noQuestions, setNoQuestions] = useState(false);
   const [isCourseFinished, setIsCourseFinished] = useState(false);
 
@@ -122,7 +123,7 @@ export default function CodingPage() {
       
     } catch (err) {
       console.error(err);
-      alert('Could not load question. ' + err.message);
+      showNotification('Hiba a feladat betöltésekor: ' + err.message, 'error');
     } finally {
       setLoading(false);
     }
@@ -134,7 +135,7 @@ export default function CodingPage() {
       // Handle Debug Phase A locally first
       if (question.qType === 'debug' && debugPhase === 'identify') {
           if (debugSelections.length === 0) {
-              alert("Kérlek válassz ki legalább egy elemet!");
+              showNotification('Kérlek válassz ki legalább egy elemet!', 'info');
               return;
           }
           
@@ -186,10 +187,11 @@ export default function CodingPage() {
       }
 
       if (submissionData === null || submissionData === '' || (Array.isArray(submissionData) && submissionData.length === 0)) {
-          alert("Please provide an answer first.");
+          showNotification('Kérlek adj meg egy választ előbb!', 'info');
           return;
       }
 
+    setIsChecking(true);
     try {
         // console.log(`[Frontend] Submitting answer to ${API_URL}/questions/${question.id}/submit`);
         // console.log(`[Frontend] Submission data:`, { code: submissionData, streak: sessionStreak });
@@ -243,7 +245,9 @@ export default function CodingPage() {
 
       } catch (err) {
         console.error(err);
-        alert('Submission failed');
+        showNotification('Sikertelen beküldés', 'error');
+      } finally {
+        setIsChecking(false);
       }
   };
 
@@ -339,7 +343,12 @@ export default function CodingPage() {
       }
   };
 
-  if (loading) return <div className="flex justify-center items-center h-screen">Loading...</div>;
+  if (loading) return (
+    <div className="flex flex-col justify-center items-center h-screen bg-[#f7f7f7] dark:bg-slate-900">
+        <img src="/Poly/thinking.svg" alt="Gondolkodó Poly" className="w-48 h-48 animate-bounce" />
+        <div className="mt-4 text-xl font-bold text-blue-600 animate-pulse">Betöltés...</div>
+    </div>
+  );
 
   if (isCourseFinished) {
       return (
@@ -394,12 +403,20 @@ export default function CodingPage() {
         </div>
 
         {/* Main Content */}
-        <main className="flex-grow overflow-y-auto w-full">
+        <main className="flex-grow overflow-y-auto w-full relative">
             <div className="flex flex-col items-center justify-between p-4 max-w-md mx-auto w-full min-h-full">
                 <div className="w-full h-full flex flex-col">
                     {renderContent()}
                 </div>
             </div>
+
+            {/* Checking Overlay */}
+            {isChecking && (
+                <div className="absolute inset-0 bg-white/50 dark:bg-slate-900/50 backdrop-blur-sm z-20 flex flex-col items-center justify-center">
+                    <img src="/Poly/thinking.svg" alt="Gondolkodó Poly" className="w-40 h-40 animate-bounce" />
+                    <div className="mt-4 text-lg font-bold text-blue-600">Ellenőrzés...</div>
+                </div>
+            )}
         </main>
 
         {/* Footer */}

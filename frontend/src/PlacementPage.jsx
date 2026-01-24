@@ -11,7 +11,7 @@ import ConstructionComponent from './question-types/ConstructionComponent';
 const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:3000';
 
 export default function PlacementPage() {
-  const { session, profile, refreshProfile, showBadgeNotification } = useOutletContext();
+  const { session, profile, refreshProfile, showBadgeNotification, showNotification } = useOutletContext();
   const { currentLanguage } = useLanguage();
   const navigate = useNavigate();
   
@@ -64,7 +64,7 @@ export default function PlacementPage() {
     }
 
     if (!submissionData && question.qType !== 'debug') {
-        alert('Kérlek adj meg egy választ!');
+        showNotification('Kérlek adj meg egy választ!', 'info');
         return;
     }
 

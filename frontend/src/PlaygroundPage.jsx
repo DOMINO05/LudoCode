@@ -29,7 +29,7 @@ const DEFAULT_CODE = {
 };
 
 export default function PlaygroundPage() {
-  const { session, showBadgeNotification } = useOutletContext();
+  const { session, showBadgeNotification, showNotification } = useOutletContext();
   const navigate = useNavigate();
   const { token } = useParams();
   const [searchParams] = useSearchParams();
@@ -48,12 +48,23 @@ export default function PlaygroundPage() {
   const [shareEditableOption, setShareEditableOption] = useState(false); // Checkbox for sharing
   const [canEdit, setCanEdit] = useState(true); // Permission for current editor
   const [isLangOpen, setIsLangOpen] = useState(false);
+  const [showDesktopWarning, setShowDesktopWarning] = useState(false);
 
   const ignoreNextSave = useRef(false);
   const terminalRef = useRef(null);
   const xtermRef = useRef(null);
   const fitAddonRef = useRef(null);
   const socketRef = useRef(null);
+
+  // Desktop experience warning
+  useEffect(() => {
+    const isMobile = window.innerWidth < 1024;
+    const hasSeenWarning = sessionStorage.getItem('playground_desktop_warning_seen');
+    
+    if (isMobile && !hasSeenWarning) {
+      setShowDesktopWarning(true);
+    }
+  }, []);
 
   // Init Terminal
   useEffect(() => {
@@ -153,12 +164,12 @@ export default function PlaygroundPage() {
         setLanguage(data.language);
         setCanEdit(data.isEditable); // Set editor permission based on snippet data
       } else {
-        alert('Snippet not found or access denied!');
+        showNotification('Snippet nem található vagy nincs hozzáférésed!', 'error');
         navigate('/playground');
       }
     } catch (err) {
       console.error(err);
-      alert('Failed to load snippet');
+      showNotification('Hiba a snippet betöltésekor', 'error');
     }
   };
 
@@ -262,11 +273,11 @@ export default function PlaygroundPage() {
             setCode(data.formatted);
         } else {
             const err = await res.json().catch(() => ({}));
-            alert('Format failed: ' + (err.message || res.statusText));
+            showNotification('Formázás sikertelen: ' + (err.message || res.statusText), 'error');
         }
     } catch (err) {
       console.error('Format error:', err);
-      alert('Failed to format code: ' + err.message);
+      showNotification('Hiba a kód formázásakor: ' + err.message, 'error');
     }
   };
 
@@ -360,10 +371,10 @@ export default function PlaygroundPage() {
           setShowShareModal(true);
       } else {
           const errorData = await res.json().catch(() => ({}));
-          alert(`Failed to create share: ${errorData.message || res.statusText}`);
+          showNotification(`Sikertelen megosztás: ${errorData.message || res.statusText}`, 'error');
       }
     } catch (err) {
-      alert('Error sharing: ' + err.message);
+      showNotification('Hiba a megosztás során: ' + err.message, 'error');
     }
   };
 
@@ -577,7 +588,7 @@ export default function PlaygroundPage() {
                       <button 
                         onClick={() => {
                             navigator.clipboard.writeText(shareCode);
-                            alert('Kód másolva!');
+                            showNotification('Kód a vágólapra másolva!', 'success');
                         }}
                         className="flex-1 bg-slate-200 dark:bg-slate-700 py-3 rounded-xl font-bold hover:bg-slate-300 dark:hover:bg-slate-600 transition"
                       >
@@ -594,6 +605,31 @@ export default function PlaygroundPage() {
                           Kész
                       </button>
                   </div>
+              </div>
+          </div>
+      )}
+
+      {/* Desktop Experience Warning Modal */}
+      {showDesktopWarning && (
+          <div className="fixed inset-0 bg-black/60 z-[100] flex items-center justify-center p-4 backdrop-blur-sm">
+              <div className="bg-white dark:bg-slate-800 rounded-3xl p-8 max-w-sm w-full shadow-2xl border-4 border-blue-500 animate-in zoom-in-95 duration-300">
+                  <div className="w-20 h-20 bg-blue-100 dark:bg-blue-900/30 rounded-2xl flex items-center justify-center mx-auto mb-6 text-4xl">
+                      💻
+                  </div>
+                  <h3 className="text-2xl font-black mb-2 text-center">Asztali Nézet Ajánlott</h3>
+                  <p className="text-slate-500 dark:text-slate-400 mb-8 text-center leading-relaxed">
+                      A Playground használata asztali gépen javasolt a kódolási élmény és a terminál kezelése miatt.
+                  </p>
+                  
+                  <button 
+                    onClick={() => {
+                        setShowDesktopWarning(false);
+                        sessionStorage.setItem('playground_desktop_warning_seen', 'true');
+                    }}
+                    className="w-full bg-blue-500 text-white py-4 rounded-2xl font-bold hover:bg-blue-600 transition shadow-lg shadow-blue-500/30 hover:scale-[1.02] active:scale-95 duration-200"
+                  >
+                      Megértettem
+                  </button>
               </div>
           </div>
       )}

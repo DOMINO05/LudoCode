@@ -5,7 +5,7 @@ import QuestionSearchModal from './components/QuestionSearchModal';
 const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:3000';
 
 export default function QuizEditorPage() {
-  const { session } = useOutletContext();
+  const { session, showNotification } = useOutletContext();
   const { id } = useParams();
   const navigate = useNavigate();
   const [quiz, setQuiz] = useState(null);
@@ -100,7 +100,7 @@ export default function QuizEditorPage() {
         setIsSearchOpen(false);
       } else {
         const error = await res.json();
-        alert(error.message || 'Failed to add question');
+        showNotification(error.message || 'Hiba a kérdés hozzáadásakor', 'error');
       }
     } catch (err) {
       console.error('Failed to add question', err);

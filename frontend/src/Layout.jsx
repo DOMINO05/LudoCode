@@ -26,6 +26,7 @@ const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:3000';
 export default function Layout({ session }) {
   const [profile, setProfile] = useState(null);
   const [badgeNotification, setBadgeNotification] = useState(null);
+  const [notification, setNotification] = useState(null);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const navigate = useNavigate();
   const { isDark, toggleTheme } = useTheme();
@@ -60,6 +61,11 @@ export default function Layout({ session }) {
       console.log('Showing badge notification:', badge);
       setBadgeNotification(badge);
       setTimeout(() => setBadgeNotification(null), 5000);
+  };
+
+  const showNotification = (message, type = 'info') => {
+      setNotification({ message, type });
+      setTimeout(() => setNotification(null), 4000);
   };
 
   const location = useLocation();
@@ -193,7 +199,7 @@ export default function Layout({ session }) {
           
           {/* Badge Notification Overlay (Top Center - Fixed) */}
           {badgeNotification && (
-              <div className="fixed left-1/2 top-6 transform -translate-x-1/2 z-[9999] pointer-events-none w-full max-w-sm flex justify-center transition-all duration-500">
+              <div className="fixed left-1/2 top-6 transform -translate-x-1/2 z-[9999] pointer-events-none w-full max-w-sm flex justify-center transition-all duration-500 animate-in fade-in slide-in-from-top-4">
                 <div className="bg-yellow-100 dark:bg-yellow-900/95 border-2 border-yellow-400 text-yellow-800 dark:text-yellow-100 px-6 py-3 rounded-xl shadow-2xl flex items-center gap-4 backdrop-blur-sm">
                     <div className="text-3xl filter drop-shadow-md">{badgeNotification.iconPath || '🏆'}</div>
                     <div>
@@ -204,6 +210,25 @@ export default function Layout({ session }) {
               </div>
           )}
 
+          {/* Global Notification Toast */}
+          {notification && (
+              <div className="fixed left-1/2 bottom-24 md:bottom-10 transform -translate-x-1/2 z-[10000] pointer-events-none w-full max-w-md px-4 flex justify-center transition-all duration-500 animate-in fade-in slide-in-from-bottom-4">
+                  <div className={`
+                      px-6 py-4 rounded-2xl shadow-2xl flex items-center gap-4 backdrop-blur-md border-2
+                      ${notification.type === 'error' ? 'bg-red-500/90 border-red-400 text-white' : 
+                        notification.type === 'success' ? 'bg-green-500/90 border-green-400 text-white' : 
+                        'bg-slate-800/90 border-slate-700 text-white'}
+                  `}>
+                      <div className="text-xl">
+                          {notification.type === 'error' ? '🚫' : notification.type === 'success' ? '✅' : 'ℹ️'}
+                      </div>
+                      <div className="font-bold text-sm leading-tight">
+                          {notification.message}
+                      </div>
+                  </div>
+              </div>
+          )}
+
           <div className="flex-1 overflow-y-auto">
             <Outlet context={{ 
               session, 
@@ -211,6 +236,7 @@ export default function Layout({ session }) {
               refreshProfile: fetchProfile, 
               handleLogout, 
               showBadgeNotification,
+              showNotification,
               languages,
               currentLanguage,
               changeLanguage

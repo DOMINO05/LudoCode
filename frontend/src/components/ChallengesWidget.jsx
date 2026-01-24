@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 
 const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:3000';
 
-export default function ChallengesWidget({ session, refreshProfile }) {
+export default function ChallengesWidget({ session, refreshProfile, showNotification }) {
   const [challenges, setChallenges] = useState([]);
   const [loading, setLoading] = useState(true);
   const [activeTab, setActiveTab] = useState('DAILY');
@@ -37,8 +37,9 @@ export default function ChallengesWidget({ session, refreshProfile }) {
         // Refresh challenges and profile (XP/Gems)
         await fetchChallenges();
         await refreshProfile();
+        if (showNotification) showNotification('Jutalom begyűjtve!', 'success');
       } else {
-          alert("Hiba a begyűjtéskor");
+          if (showNotification) showNotification('Hiba a begyűjtéskor', 'error');
       }
     } catch (err) {
       console.error(err);
