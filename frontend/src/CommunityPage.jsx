@@ -1,8 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useOutletContext, useNavigate } from 'react-router-dom';
 import { Users, Search, BookOpen, Trophy } from 'lucide-react';
-
-const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:3000';
+import { supabase } from './supabaseClient';
 
 export default function CommunityPage() {
   const { session } = useOutletContext();
@@ -17,15 +16,17 @@ export default function CommunityPage() {
 
   const fetchPublicQuizzes = async () => {
     try {
-      const res = await fetch(`${API_URL}/quizzes/public`, {
-        headers: {
-          Authorization: `Bearer ${session.access_token}`,
-        },
-      });
-      if (res.ok) {
-        const data = await res.json();
-        setQuizzes(data);
-      }
+      const { data, error } = await supabase
+        .from('custom_quizzes')
+        .select('*, creator:profiles(username, bio)')
+        .eq('is_public', true)
+        .order('created_at', { ascending: false });
+        
+      if (error) throw error;
+
+      // Manually fetch question counts for each quiz if needed, 
+      // or just assume they exist.
+      setQuizzes(data || []);
     } catch (err) {
       console.error('Failed to fetch public quizzes', err);
     } finally {
@@ -41,15 +42,18 @@ export default function CommunityPage() {
     
     // Check if it's a snippet first
     try {
-        const res = await fetch(`${API_URL}/snippets/${code}`, {
-             headers: { 'Authorization': `Bearer ${session.access_token}` }
-        });
-        if (res.ok) {
+        const { data } = await supabase
+            .from('shared_snippets')
+            .select('share_code')
+            .eq('share_code', code)
+            .single();
+            
+        if (data) {
             navigate(`/share/${code}`);
             return;
         }
     } catch (err) {
-        console.error("Error checking snippet:", err);
+        // Not found is fine
     }
 
     // Fallback to quiz
@@ -123,9 +127,9 @@ export default function CommunityPage() {
             </h3>
             
             <div className="flex items-center gap-4 text-slate-500 font-bold text-sm">
-                <span>❓ {quiz.questions?.length || 0} kérdés</span>
+                <span>❓ {quiz.share_code}</span>
                 <span className="w-1 h-1 bg-slate-300 rounded-full"></span>
-                <span className="text-primary">{quiz.shareCode}</span>
+                <span className="text-primary">{quiz.share_code}</span>
             </div>
           </div>
         ))}

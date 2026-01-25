@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useOutletContext, useParams, useNavigate } from 'react-router-dom';
-
-const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:3000';
+import { supabase } from './supabaseClient';
 
 export default function QuizResultsPage() {
   const { session } = useOutletContext();
@@ -16,14 +15,24 @@ export default function QuizResultsPage() {
 
   const fetchResults = async () => {
     try {
-      const res = await fetch(`${API_URL}/quizzes/${id}/results`, {
-        headers: {
-          Authorization: `Bearer ${session.access_token}`,
-        },
-      });
-      if (res.ok) {
-        const data = await res.json();
-        setResults(data);
+      const { data, error } = await supabase
+        .from('quiz_submissions')
+        .select(`
+            *,
+            user:profiles(username)
+        `)
+        .eq('quiz_id', id)
+        .order('completed_at', { ascending: false });
+
+      if (error) throw error;
+      
+      if (data) {
+        setResults(data.map(r => ({
+            ...r,
+            maxScore: r.max_score,
+            completedAt: r.completed_at,
+            startedAt: r.started_at
+        })));
       }
     } catch (err) {
       console.error('Failed to fetch results', err);

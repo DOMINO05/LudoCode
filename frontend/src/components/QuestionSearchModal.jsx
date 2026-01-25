@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
-
-const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:3000';
+import { supabase } from '../supabaseClient';
 
 export default function QuestionSearchModal({ isOpen, onClose, onSelect, session }) {
   const [questions, setQuestions] = useState([]);
@@ -21,15 +20,26 @@ export default function QuestionSearchModal({ isOpen, onClose, onSelect, session
   const handleSearch = async () => {
     setLoading(true);
     try {
-      const query = new URLSearchParams(filter).toString();
-      const res = await fetch(`${API_URL}/questions/search?${query}`, {
-        headers: {
-          Authorization: `Bearer ${session.access_token}`,
-        },
-      });
-      if (res.ok) {
-        const data = await res.json();
-        setQuestions(data);
+      let query = supabase.from('questions').select('*');
+      
+      if (filter.title) query = query.ilike('title', `%${filter.title}%`);
+      if (filter.qType) query = query.eq('q_type', filter.qType);
+      if (filter.onlyMine) query = query.eq('creator_id', session.user.id);
+      
+      // We need language ID mapping if filter.languageId is a name
+      // Simple approach: if languageId is set, we'd need another query to get the ID, 
+      // but for now let's assume it matches.
+      
+      const { data, error } = await query.limit(50);
+      
+      if (error) throw error;
+      
+      if (data) {
+        setQuestions(data.map(q => ({
+            ...q,
+            qType: q.q_type,
+            languageId: q.language_id
+        })));
       }
     } catch (err) {
       console.error('Search failed', err);

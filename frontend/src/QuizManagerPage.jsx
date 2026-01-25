@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useOutletContext, useNavigate } from 'react-router-dom';
-
-const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:3000';
+import { supabase } from './supabaseClient';
 
 export default function QuizManagerPage() {
   const { session } = useOutletContext();
@@ -17,14 +16,23 @@ export default function QuizManagerPage() {
 
   const fetchQuizzes = async () => {
     try {
-      const res = await fetch(`${API_URL}/quizzes/my-quizzes`, {
-        headers: {
-          Authorization: `Bearer ${session.access_token}`,
-        },
-      });
-      if (res.ok) {
-        const data = await res.json();
-        setQuizzes(data);
+      const { data, error } = await supabase
+        .from('quizzes')
+        .select(`
+            *,
+            questions:quiz_questions(id)
+        `)
+        .eq('creator_id', session.user.id)
+        .order('created_at', { ascending: false });
+
+      if (error) throw error;
+      
+      if (data) {
+        setQuizzes(data.map(q => ({
+            ...q,
+            isPublic: q.is_public,
+            shareCode: q.share_code
+        })));
       }
     } catch (err) {
       console.error('Failed to fetch quizzes', err);
@@ -38,17 +46,27 @@ export default function QuizManagerPage() {
     if (!newQuizTitle.trim()) return;
 
     try {
-      const res = await fetch(`${API_URL}/quizzes`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          Authorization: `Bearer ${session.access_token}`,
-        },
-        body: JSON.stringify({ title: newQuizTitle }),
-      });
+      const shareCode = Math.random().toString(36).substring(2, 8).toUpperCase();
+      const { data, error } = await supabase
+        .from('quizzes')
+        .insert({
+            title: newQuizTitle,
+            creator_id: session.user.id,
+            share_code: shareCode,
+            is_public: false
+        })
+        .select()
+        .single();
 
-      if (res.ok) {
-        const newQuiz = await res.json();
+      if (error) throw error;
+
+      if (data) {
+        const newQuiz = {
+            ...data,
+            isPublic: data.is_public,
+            shareCode: data.share_code,
+            questions: []
+        };
         setQuizzes([newQuiz, ...quizzes]);
         setNewQuizTitle('');
         setIsCreating(false);
@@ -60,19 +78,16 @@ export default function QuizManagerPage() {
   };
 
   const handleDeleteQuiz = async (id) => {
-    if (!window.confirm('Are you sure you want to delete this quiz?')) return;
+    if (!window.confirm('Biztosan törölni szeretnéd ezt a kvízt?')) return;
 
     try {
-      const res = await fetch(`${API_URL}/quizzes/${id}`, {
-        method: 'DELETE',
-        headers: {
-          Authorization: `Bearer ${session.access_token}`,
-        },
-      });
+      const { error } = await supabase
+        .from('quizzes')
+        .delete()
+        .eq('id', id);
 
-      if (res.ok) {
-        setQuizzes(quizzes.filter((q) => q.id !== id));
-      }
+      if (error) throw error;
+      setQuizzes(quizzes.filter((q) => q.id !== id));
     } catch (err) {
       console.error('Failed to delete quiz', err);
     }

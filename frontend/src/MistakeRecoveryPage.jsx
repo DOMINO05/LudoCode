@@ -1,6 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import { useOutletContext, useNavigate } from 'react-router-dom';
 import { useTheme } from './ThemeContext';
+import { supabase } from './supabaseClient';
+import { PISTON_API_URL } from './config';
+// import { validateTestCases } from './utils/codeRunner';
 
 // Import New Question Components
 import TheoryComponent from './question-types/TheoryComponent';
@@ -11,8 +14,6 @@ import DebugComponent from './question-types/DebugComponent';
 import ConstructionComponent from './question-types/ConstructionComponent';
 
 import Editor from '@monaco-editor/react';
-
-const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:3000';
 
 export default function MistakeRecoveryPage() {
   const { session, profile, refreshProfile, showBadgeNotification, showNotification } = useOutletContext();
@@ -57,21 +58,14 @@ export default function MistakeRecoveryPage() {
     setDebugSelections([]);
 
     try {
-      const res = await fetch(`${API_URL}/questions/mistake-recovery`, {
-        headers: { 'Authorization': `Bearer ${session.access_token}` }
-      });
+      const { data, error } = await supabase.rpc('get_mistake_recovery_question');
 
-      if (!res.ok) {
-          if (res.status === 404) {
-              setQuestion(null);
-              setIsFinished(true);
-              setMessage("Nincs több javítandó feladat!");
-              return;
-          }
-          throw new Error('Failed to fetch mistake');
+      if (error) {
+          console.error(error);
+          setIsFinished(true);
+          setMessage("Nincs több javítandó feladat!");
+          return;
       }
-      
-      const data = await res.json();
       
       if (data && data.question) {
           setSubmissionId(data.id);
@@ -148,29 +142,84 @@ export default function MistakeRecoveryPage() {
       }
 
     try {
-        const res = await fetch(`${API_URL}/questions/resolve/${submissionId}`, {
-            method: 'POST',
-            headers: {
-            'Content-Type': 'application/json',
-            'Authorization': `Bearer ${session.access_token}`
-            },
-            body: JSON.stringify({ code: submissionData })
+        let isCorrect = false;
+        let output = '';
+        const content = question.content;
+
+        if (question.qType === 'coding' || question.qType === 'construction') {
+            // Piston API call simplified for Mistake Recovery too
+            const language = (question.language?.name || 'python').toLowerCase();
+            const payload = {
+                language: language,
+                version: language === 'python' ? '3.10.0' : '*',
+                files: [{ name: 'main', content: submissionData }]
+            };
+            
+            const response = await fetch(PISTON_API_URL + "/execute", {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(payload)
+            });
+            const pData = await response.json();
+            isCorrect = pData.run && pData.run.code === 0;
+            output = pData.run ? (pData.run.stdout || pData.run.stderr) : "Execution failed";
+        } else if (question.qType === 'parsons') {
+            const correctOrder = content.correct_order;
+            const submittedOrder = JSON.parse(submissionData);
+            isCorrect = JSON.stringify(correctOrder) === JSON.stringify(submittedOrder);
+            output = isCorrect ? 'Sikeres futtatás' : 'Hibás sorrend';
+        } else if (question.qType === 'debug') {
+            const expectedFullCode = (content.buggy_code || '').replace(content.error_location || '', content.correct_code || '');
+            isCorrect = submissionData.trim() === expectedFullCode.trim();
+            output = isCorrect ? 'Sikeres javítás' : 'Még mindig hibás a kód';
+        } else {
+            let correctAnswer = content.correct_answer;
+            if (typeof correctAnswer === 'number' && content.options) {
+                correctAnswer = content.options[correctAnswer];
+            }
+            isCorrect = String(submissionData).trim() === String(correctAnswer).trim();
+            output = isCorrect ? 'Helyes válasz' : 'Helytelen válasz';
+        }
+
+        const { data, error } = await supabase.rpc('resolve_mistake', {
+            p_submission_id: submissionId,
+            p_is_correct_now: isCorrect
         });
+
+        if (error) throw error;
         
-        const data = await res.json();
+        let ai_explanation = null;
+        if (!isCorrect) {
+            try {
+                const { data: aiData, error: aiError } = await supabase.functions.invoke('ai-explanation', {
+                    body: {
+                        questionTitle: question.title,
+                        questionDescription: question.description,
+                        correctAnswer: content.correct_answer || content.correct_code || content.correct_order,
+                        userAnswer: submissionData,
+                        language: question.language?.name || 'python'
+                    }
+                });
+                if (!aiError && aiData) {
+                    ai_explanation = aiData.explanation;
+                }
+            } catch (err) {
+                console.error('AI explanation failed', err);
+            }
+        }
         
         // Map response to match CodingPage result structure for feedback display
         const feedbackResult = {
-             isCorrect: data.success,
-             output: data.message,
-             ai_explanation: !data.success ? "Próbáld újra a megoldást!" : null,
-             explanation: data.output // backend returns output if incorrect
+             isCorrect: isCorrect,
+             output: isCorrect ? 'Feladat sikeresen javítva!' : 'Még mindig nem pontos a megoldás. Próbáld újra!',
+             ai_explanation: ai_explanation || (!isCorrect ? "Próbáld újra a megoldást!" : null),
+             explanation: output 
         };
         
         setResult(feedbackResult);
         setShowFeedback(true);
 
-        if (data.success) {
+        if (isCorrect) {
              await refreshProfile();
              
              // Check if Sanity is full or close to full

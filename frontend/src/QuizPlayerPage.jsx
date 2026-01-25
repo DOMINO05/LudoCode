@@ -1,13 +1,14 @@
 import React, { useState, useEffect } from 'react';
 import { useOutletContext, useParams, useNavigate } from 'react-router-dom';
+import { supabase } from './supabaseClient';
+import { PISTON_API_URL } from './config';
+// import { validateTestCases } from './utils/codeRunner';
 import TheoryComponent from './question-types/TheoryComponent';
 import PredictionComponent from './question-types/PredictionComponent';
 import FillBlankComponent from './question-types/FillBlankComponent';
 import ParsonsComponent from './question-types/ParsonsComponent';
 import DebugComponent from './question-types/DebugComponent';
 import ConstructionComponent from './question-types/ConstructionComponent';
-
-const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:3000';
 
 export default function QuizPlayerPage() {
   const { session, refreshProfile, showBadgeNotification, showNotification } = useOutletContext();
@@ -37,20 +38,37 @@ export default function QuizPlayerPage() {
 
   const fetchQuiz = async () => {
     try {
-      const res = await fetch(`${API_URL}/quizzes/code/${shareCode}`, {
-        headers: {
-          Authorization: `Bearer ${session.access_token}`,
-        },
-      });
-      if (res.ok) {
-        const data = await res.json();
-        // Sort questions initially
-        data.questions.sort((a, b) => a.orderIndex - b.orderIndex);
-        setQuiz(data);
-      } else {
+      const { data, error } = await supabase
+        .from('quizzes')
+        .select(`
+            *,
+            questions:quiz_questions(
+                *,
+                question:questions(*)
+            )
+        `)
+        .eq('share_code', shareCode)
+        .single();
+
+      if (error || !data) {
           showNotification('Kvíz nem található vagy nincs hozzáférésed.', 'error');
           navigate('/dashboard');
+          return;
       }
+
+      // Sort questions initially
+      data.questions.sort((a, b) => a.order_index - b.order_index);
+      
+      // Remap field names if needed
+      const mappedQuiz = {
+          ...data,
+          questions: data.questions.map(q => ({
+              ...q,
+              orderIndex: q.order_index
+          }))
+      };
+      
+      setQuiz(mappedQuiz);
     } catch (err) {
       console.error('Failed to fetch quiz', err);
     } finally {
@@ -78,16 +96,86 @@ export default function QuizPlayerPage() {
 
     setSubmitting(true);
     try {
-      const res = await fetch(`${API_URL}/questions/${question.id}/submit`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          Authorization: `Bearer ${session.access_token}`,
-        },
-        body: JSON.stringify({ code: submissionData }),
+      let isCorrect = false;
+      let output = '';
+      const content = question.content;
+
+      if (question.qType === 'coding' || question.qType === 'construction') {
+          // Piston API call
+          const language = (question.language?.name || 'python').toLowerCase();
+          const payload = {
+              language: language,
+              version: language === 'python' ? '3.10.0' : '*',
+              files: [{ name: 'main', content: submissionData }]
+          };
+          
+          const response = await fetch(PISTON_API_URL + "/execute", {
+              method: 'POST',
+              headers: { 'Content-Type': 'application/json' },
+              body: JSON.stringify(payload)
+          });
+          const pData = await response.json();
+          isCorrect = pData.run && pData.run.code === 0;
+          output = pData.run ? (pData.run.stdout || pData.run.stderr) : "Execution failed";
+      } else if (question.qType === 'parsons') {
+          const correctOrder = content.correct_order;
+          const submittedOrder = JSON.parse(submissionData);
+          isCorrect = JSON.stringify(correctOrder) === JSON.stringify(submittedOrder);
+          output = isCorrect ? 'Sikeres futtatás' : 'Hibás sorrend';
+      } else if (question.qType === 'debug') {
+          const expectedFullCode = (content.buggy_code || '').replace(content.error_location || '', content.correct_code || '');
+          isCorrect = submissionData.trim() === expectedFullCode.trim();
+          output = isCorrect ? 'Sikeres javítás' : 'Még mindig hibás a kód';
+      } else {
+          let correctAnswer = content.correct_answer;
+          if (typeof correctAnswer === 'number' && content.options) {
+              correctAnswer = content.options[correctAnswer];
+          }
+          isCorrect = String(submissionData).trim() === String(correctAnswer).trim();
+          output = isCorrect ? 'Helyes válasz' : 'Helytelen válasz';
+      }
+
+      const { data, error } = await supabase.rpc('complete_submission', {
+          p_question_id: question.id,
+          p_is_correct: isCorrect,
+          p_submitted_answer: submissionData,
+          p_execution_time_ms: 0,
+          p_streak: 0
       });
-      const data = await res.json();
-      setResult(data);
+
+      if (error) throw error;
+
+      let ai_explanation = null;
+      if (!isCorrect) {
+          try {
+              const { data: aiData, error: aiError } = await supabase.functions.invoke('ai-explanation', {
+                  body: {
+                      questionTitle: question.title,
+                      questionDescription: question.description,
+                      correctAnswer: content.correct_answer || content.correct_code || content.correct_order,
+                      userAnswer: submissionData,
+                      language: question.language?.name || 'python'
+                  }
+              });
+              if (!aiError && aiData) {
+                  ai_explanation = aiData.explanation;
+              }
+          } catch (err) {
+              console.error('AI explanation failed', err);
+          }
+      }
+
+      const resultData = {
+          ...data,
+          isCorrect,
+          output,
+          explanation: content.explanation,
+          correct_answer: content.correct_answer || content.correct_code || content.correct_order,
+          hint: question.hint,
+          ai_explanation
+      };
+
+      setResult(resultData);
       setShowFeedback(true);
 
       if (data.newBadges && data.newBadges.length > 0 && showBadgeNotification) {
@@ -135,21 +223,15 @@ export default function QuizPlayerPage() {
 
       // Submit final attempt to quiz results
       try {
-        const res = await fetch(`${API_URL}/quizzes/${quiz.id}/attempt`, {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-            Authorization: `Bearer ${session.access_token}`,
-          },
-          body: JSON.stringify({
-            score: score + (result?.isCorrect ? 0 : 0), // Score is already updated in handleCheck
-            maxScore: quiz.questions.length,
-          }),
+        const { data, error } = await supabase.rpc('complete_quiz_attempt', {
+            p_quiz_id: quiz.id,
+            p_score: score,
+            p_max_score: quiz.questions.length
         });
 
-        if (res.ok) {
-            const data = await res.json();
-            
+        if (error) throw error;
+
+        if (data) {
             // Show notifications for new badges
             if (data.newBadges && data.newBadges.length > 0 && showBadgeNotification) {
                 data.newBadges.forEach((badge, index) => {

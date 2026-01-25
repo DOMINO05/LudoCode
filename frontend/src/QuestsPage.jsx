@@ -1,8 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useOutletContext } from 'react-router-dom';
+import { supabase } from './supabaseClient';
 import { Zap, Clock, Shield, CheckCircle2 } from 'lucide-react';
-
-const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:3000';
 
 const ProgressBar = ({ value, max, color = "bg-yellow-400", height = "h-4" }) => {
   const percentage = Math.min(100, Math.max(0, (value / max) * 100));
@@ -75,13 +74,23 @@ export default function QuestsPage() {
 
   const fetchChallenges = async () => {
     try {
-      const res = await fetch(`${API_URL}/challenges/my-active`, {
-        headers: { 'Authorization': `Bearer ${session.access_token}` }
-      });
-      if (res.ok) {
-        const data = await res.json();
-        setChallenges(data);
-      }
+      const { data, error } = await supabase.rpc('get_active_challenges');
+      if (error) throw error;
+      
+      // Map snake_case to camelCase
+      const mappedData = data.map(c => ({
+          ...c,
+          actionType: c.action_type,
+          goalValue: c.goal_value,
+          currentValue: c.current_value,
+          rewardXp: c.reward_xp,
+          rewardGems: c.reward_gems,
+          isCompleted: c.is_completed,
+          isClaimed: c.is_claimed,
+          expiresAt: c.expires_at
+      }));
+
+      setChallenges(mappedData);
     } catch (err) {
       console.error(err);
     } finally {
@@ -91,11 +100,13 @@ export default function QuestsPage() {
 
   const handleCollect = async (id) => {
     try {
-      const res = await fetch(`${API_URL}/challenges/claim/${id}`, {
-        method: 'POST',
-        headers: { 'Authorization': `Bearer ${session.access_token}` }
+      const { data, error } = await supabase.rpc('claim_challenge_reward', {
+          p_user_challenge_id: id
       });
-      if (res.ok) {
+      
+      if (error) throw error;
+
+      if (data && data.success) {
         await fetchChallenges();
         await refreshProfile();
         showNotification('Jutalom begyűjtve!', 'success');

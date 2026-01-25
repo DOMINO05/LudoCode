@@ -1,12 +1,11 @@
 import React, { useState, useEffect } from 'react';
+import { supabase } from '../supabaseClient';
 import ConstructionComponent from '../question-types/ConstructionComponent';
 import TheoryComponent from '../question-types/TheoryComponent';
 import PredictionComponent from '../question-types/PredictionComponent';
 import FillBlankComponent from '../question-types/FillBlankComponent';
 import ParsonsComponent from '../question-types/ParsonsComponent';
 import DebugComponent from '../question-types/DebugComponent';
-
-const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:3000';
 
 export default function MistakeRecovery({ session, onResolved, onCancel }) {
     const [submission, setSubmission] = useState(null);
@@ -23,17 +22,13 @@ export default function MistakeRecovery({ session, onResolved, onCancel }) {
 
     const fetchMistake = async () => {
         try {
-            const res = await fetch(`${API_URL}/questions/mistake-recovery`, {
-                headers: { 'Authorization': `Bearer ${session.access_token}` }
-            });
-            if (res.ok) {
-                const data = await res.json();
-                if (data && data.question && data.question.content) {
-                    setSubmission(data);
-                    if (data.question.content.initial_code) setCode(data.question.content.initial_code);
-                } else {
-                    setMessage({ type: 'error', text: 'Hibás adat érkezett a szervertől.' });
-                }
+            const { data, error } = await supabase.rpc('get_oldest_unresolved_mistake');
+            
+            if (error) throw error;
+
+            if (data && data.question && data.question.content) {
+                setSubmission(data);
+                if (data.question.content.initial_code) setCode(data.question.content.initial_code);
             } else {
                 setMessage({ type: 'error', text: 'Nincs több javítandó feladat!' });
             }
@@ -47,28 +42,41 @@ export default function MistakeRecovery({ session, onResolved, onCancel }) {
 
     const handleResolve = async () => {
         setSubmitting(true);
+        const { question } = submission;
+        let isCorrect = false;
+        
         let submissionData = code;
-        if (submission.question.qType === 'theory' || submission.question.qType === 'predict_output') {
+        if (question.qType === 'theory' || question.qType === 'predict_output') {
             submissionData = selectedOption;
-        } else if (submission.question.qType === 'parsons') {
+        } else if (question.qType === 'parsons') {
             submissionData = JSON.stringify(parsonsSolution.map(b => b.id));
         }
 
+        // Validate locally
+        if (question.qType === 'parsons') {
+            isCorrect = JSON.stringify(question.content.correct_order) === submissionData;
+        } else if (question.qType === 'debug') {
+            const expected = (question.content.buggy_code || '').replace(question.content.error_location || '', question.content.correct_code || '');
+            isCorrect = code.trim() === expected.trim();
+        } else {
+            let correct = question.content.correct_answer;
+            if (typeof correct === 'number' && question.content.options) correct = question.content.options[correct];
+            isCorrect = String(submissionData).trim() === String(correct).trim();
+        }
+
         try {
-            const res = await fetch(`${API_URL}/questions/resolve/${submission.id}`, {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                    'Authorization': `Bearer ${session.access_token}`
-                },
-                body: JSON.stringify({ code: submissionData })
+            const { data, error } = await supabase.rpc('resolve_mistake', {
+                p_submission_id: submission.id,
+                p_is_correct_now: isCorrect
             });
-            const data = await res.json();
+            
+            if (error) throw error;
+
             if (data.success) {
-                setMessage({ type: 'success', text: data.message });
-                setTimeout(() => onResolved(data.newSanity), 2000);
+                setMessage({ type: 'success', text: 'Feladat sikeresen javítva!' });
+                setTimeout(() => onResolved(data.new_sanity), 2000);
             } else {
-                setMessage({ type: 'error', text: data.message });
+                setMessage({ type: 'error', text: 'Még mindig nem pontos a megoldás. Próbáld újra!' });
             }
         } catch (err) {
             console.error(err);

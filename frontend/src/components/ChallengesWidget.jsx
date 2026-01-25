@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
-
-const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:3000';
+import { supabase } from '../supabaseClient';
 
 export default function ChallengesWidget({ session, refreshProfile, showNotification }) {
   const [challenges, setChallenges] = useState([]);
@@ -13,13 +12,22 @@ export default function ChallengesWidget({ session, refreshProfile, showNotifica
 
   const fetchChallenges = async () => {
     try {
-      const res = await fetch(`${API_URL}/challenges/my-active`, {
-        headers: { 'Authorization': `Bearer ${session.access_token}` }
-      });
-      if (res.ok) {
-        const data = await res.json();
-        setChallenges(data);
-      }
+      const { data, error } = await supabase.rpc('get_active_challenges');
+      if (error) throw error;
+      
+      // Map snake_case to camelCase
+      const mappedData = (data || []).map(ch => ({
+          ...ch,
+          actionType: ch.action_type,
+          goalValue: ch.goal_value,
+          currentValue: ch.current_value,
+          rewardXp: ch.reward_xp,
+          rewardGems: ch.reward_gems,
+          isCompleted: ch.is_completed,
+          isClaimed: ch.is_claimed
+      }));
+
+      setChallenges(mappedData);
     } catch (err) {
       console.error(err);
     } finally {
@@ -29,11 +37,13 @@ export default function ChallengesWidget({ session, refreshProfile, showNotifica
 
   const handleClaim = async (id) => {
     try {
-      const res = await fetch(`${API_URL}/challenges/claim/${id}`, {
-        method: 'POST',
-        headers: { 'Authorization': `Bearer ${session.access_token}` }
+      const { data, error } = await supabase.rpc('claim_challenge_reward', {
+          p_user_challenge_id: id
       });
-      if (res.ok) {
+      
+      if (error) throw error;
+
+      if (data && data.success) {
         // Refresh challenges and profile (XP/Gems)
         await fetchChallenges();
         await refreshProfile();

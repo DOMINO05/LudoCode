@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { LineChart, Line, BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from 'recharts';
-
-const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:3000';
+import { supabase } from '../supabaseClient';
 
 const ProgressChart = ({ session }) => {
     const [stats, setStats] = useState(null);
@@ -10,13 +9,10 @@ const ProgressChart = ({ session }) => {
     useEffect(() => {
         const fetchStats = async () => {
             try {
-                const res = await fetch(`${API_URL}/users/stats`, {
-                    headers: {
-                        'Authorization': `Bearer ${session.access_token}`
-                    }
-                });
-                if (res.ok) {
-                    const data = await res.json();
+                const { data, error } = await supabase.rpc('get_user_stats');
+                
+                if (error) throw error;
+                if (data) {
                     setStats(data);
                 }
             } catch (err) {

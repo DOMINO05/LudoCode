@@ -25,8 +25,6 @@ Ne legyen a kódrészletekben // comment.
 A dashboardon a háttérben csíkok jelennek meg.
 Felhasználók által hozzáadott kódok ne jelenjenek meg a tananyagban.
 A válaszok kiértékelése nem elég gyors.
-playground white mode.
-karakterkészítö dark mode
 vissza gomb minden oldalra.
 statisztika iconok ésháttéfix.
 community publikus kvízek felirat levétele vagy códok fül hozzáadása    

@@ -1,8 +1,7 @@
 import React, { createContext, useState, useContext, useEffect } from 'react';
+import { supabase } from './supabaseClient';
 
 const LanguageContext = createContext();
-
-const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:3000';
 
 export const LanguageProvider = ({ children }) => {
   const [languages, setLanguages] = useState([]);
@@ -15,15 +14,25 @@ export const LanguageProvider = ({ children }) => {
 
   const fetchLanguages = async () => {
     try {
-      const res = await fetch(`${API_URL}/languages`);
-      if (res.ok) {
-        const data = await res.json();
-        setLanguages(data);
+      const { data, error } = await supabase
+        .from('languages')
+        .select('*');
+        
+      if (error) throw error;
+
+      if (data) {
+        // Map snake_case to camelCase
+        const mappedData = data.map(l => ({
+            ...l,
+            displayName: l.display_name
+        }));
+
+        setLanguages(mappedData);
         // Default to Python or first available
-        if (data.length > 0) {
+        if (mappedData.length > 0) {
             const stored = localStorage.getItem('selectedLanguageId');
-            const found = data.find(l => l.id === stored);
-            setCurrentLanguage(found || data.find(l => l.name === 'python') || data[0]);
+            const found = mappedData.find(l => l.id === stored);
+            setCurrentLanguage(found || mappedData.find(l => l.name === 'python') || mappedData[0]);
         }
       }
     } catch (err) {

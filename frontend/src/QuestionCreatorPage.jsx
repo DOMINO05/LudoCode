@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import { useOutletContext, useParams, useNavigate } from 'react-router-dom';
-
-const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:3000';
+import { supabase } from './supabaseClient';
 
 export default function QuestionCreatorPage() {
   const { session } = useOutletContext();
@@ -23,18 +22,20 @@ export default function QuestionCreatorPage() {
 
   const fetchQuestion = async () => {
     try {
-      const res = await fetch(`${API_URL}/questions/${questionId}`, {
-        headers: {
-          Authorization: `Bearer ${session.access_token}`,
-        },
-      });
-      if (res.ok) {
-        const q = await res.json();
-        setQType(q.qType);
-        setTitle(q.title);
-        setDescription(q.description);
-        setLanguageId(q.languageId);
-        setContent(q.content);
+      const { data, error } = await supabase
+        .from('questions')
+        .select('*')
+        .eq('id', questionId)
+        .single();
+
+      if (error) throw error;
+      
+      if (data) {
+        setQType(data.q_type);
+        setTitle(data.title);
+        setDescription(data.description);
+        setLanguageId(data.language_id);
+        setContent(data.content);
       }
     } catch (err) {
       console.error('Failed to fetch question', err);
@@ -48,44 +49,48 @@ export default function QuestionCreatorPage() {
     setLoading(true);
 
     try {
-      const url = questionId ? `${API_URL}/questions/${questionId}` : `${API_URL}/questions`;
-      const method = questionId ? 'PATCH' : 'POST';
+      const questionPayload = {
+        title: title || `Saját kérdés - ${new Date().toLocaleDateString()}`,
+        description,
+        q_type: qType,
+        language_id: languageId,
+        content,
+        creator_id: session.user.id
+      };
 
-      const qRes = await fetch(url, {
-        method,
-        headers: {
-          'Content-Type': 'application/json',
-          Authorization: `Bearer ${session.access_token}`,
-        },
-        body: JSON.stringify({
-          title: title || `Saját kérdés - ${new Date().toLocaleDateString()}`,
-          description,
-          qType,
-          languageId,
-          content,
-        }),
-      });
-
-      if (qRes.ok) {
-        const question = await qRes.json();
-        
-        if (!questionId) {
-            // 2. Add to quiz only if it's a new question
-            await fetch(`${API_URL}/quizzes/${quizId}/questions`, {
-              method: 'POST',
-              headers: {
-                'Content-Type': 'application/json',
-                Authorization: `Bearer ${session.access_token}`,
-              },
-              body: JSON.stringify({
-                questionId: question.id,
-                orderIndex: 999,
-              }),
-            });
-        }
-
-        navigate(`/quizzes/edit/${quizId}`);
+      let question;
+      if (questionId) {
+          const { data, error } = await supabase
+            .from('questions')
+            .update(questionPayload)
+            .eq('id', questionId)
+            .select()
+            .single();
+          if (error) throw error;
+          question = data;
+      } else {
+          const { data, error } = await supabase
+            .from('questions')
+            .insert(questionPayload)
+            .select()
+            .single();
+          if (error) throw error;
+          question = data;
       }
+
+      if (question && !questionId) {
+          // 2. Add to quiz only if it's a new question
+          const { error: quizError } = await supabase
+            .from('quiz_questions')
+            .insert({
+                quiz_id: quizId,
+                question_id: question.id,
+                order_index: 999
+            });
+          if (quizError) throw quizError;
+      }
+
+      navigate(`/quizzes/edit/${quizId}`);
     } catch (err) {
       console.error('Failed to save question', err);
     } finally {

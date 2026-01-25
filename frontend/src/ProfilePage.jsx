@@ -1,8 +1,45 @@
 import React, { useState, useEffect } from 'react';
 import { useOutletContext, useNavigate } from 'react-router-dom';
+import { supabase } from './supabaseClient';
+import { User, FileText, Award, LogOut, Save, X } from 'lucide-react';
 import AvatarEditor from './AvatarEditor';
 
-const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:3000';
+const Button = ({ children, variant = 'primary', className = '', onClick, disabled, loading }) => {
+    const baseStyle = "font-bold py-3 px-6 rounded-2xl transition-all active:translate-y-[4px] active:border-b-0 border-b-4 uppercase tracking-wider text-sm flex items-center justify-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed disabled:transform-none";
+    
+    const variants = {
+      primary: "bg-blue-500 hover:bg-blue-400 text-white border-blue-700",
+      secondary: "bg-green-500 hover:bg-green-400 text-white border-green-700",
+      danger: "bg-red-500 hover:bg-red-400 text-white border-red-700",
+      outline: "bg-white dark:bg-slate-800 text-slate-500 border-slate-300 dark:border-slate-700 hover:bg-slate-50 dark:hover:bg-slate-700",
+    };
+  
+    return (
+      <button 
+        onClick={onClick}
+        disabled={disabled || loading}
+        className={`${baseStyle} ${variants[variant]} ${className}`}
+      >
+        {loading ? (
+            <div className="w-5 h-5 border-2 border-white/30 border-t-white rounded-full animate-spin" />
+        ) : children}
+      </button>
+    );
+};
+
+const Card = ({ children, className = '', title, icon }) => (
+    <div className={`bg-white dark:bg-slate-900 border-2 border-slate-200 dark:border-slate-700 rounded-3xl p-6 ${className}`}>
+        {title && (
+            <div className="flex items-center gap-3 mb-6 border-b-2 border-slate-100 dark:border-slate-800 pb-4">
+                <div className="p-2 bg-blue-500/10 text-blue-500 rounded-xl">
+                    {icon}
+                </div>
+                <h2 className="text-xl font-black text-slate-700 dark:text-slate-200 uppercase tracking-wide">{title}</h2>
+            </div>
+        )}
+        {children}
+    </div>
+);
 
 export default function ProfilePage() {
     const { session, profile, refreshProfile, handleLogout } = useOutletContext();
@@ -29,13 +66,13 @@ export default function ProfilePage() {
 
     const fetchInventory = async () => {
         try {
-            const res = await fetch(`${API_URL}/shop/inventory`, {
-                headers: { 'Authorization': `Bearer ${session.access_token}` }
-            });
-            if (res.ok) {
-                const data = await res.json();
-                setInventory(data);
-            }
+            const { data, error } = await supabase
+                .from('user_inventory')
+                .select('*, item:shop_items(*)')
+                .eq('user_id', session.user.id);
+                
+            if (error) throw error;
+            setInventory(data);
         } catch (err) {
             console.error("Failed to fetch inventory", err);
         }
@@ -50,18 +87,16 @@ export default function ProfilePage() {
             if (newSeq.includes('ludo') || newSeq.includes('konami')) {
                 // Trigger Easter Egg
                 try {
-                    const res = await fetch(`${API_URL}/users/easter-egg`, {
-                        method: 'POST',
-                        headers: {
-                            'Content-Type': 'application/json',
-                            'Authorization': `Bearer ${session.access_token}`
-                        },
-                        body: JSON.stringify({ code: newSeq.includes('ludo') ? 'ludo' : 'konami' })
+                    const { data, error } = await supabase.rpc('check_easter_egg', {
+                        p_code: newSeq.includes('ludo') ? 'ludo' : 'konami'
                     });
-                    const data = await res.json();
-                    if (data.success) {
+                    
+                    if (error) throw error;
+
+                    if (data && data.success) {
                         setMessage({ type: 'success', text: `Easter Egg Found! ${data.message}` });
                         setKeySequence(''); // Reset
+                        refreshProfile();
                     }
                 } catch (err) {
                     console.error('Easter egg failed', err);
@@ -77,23 +112,16 @@ export default function ProfilePage() {
         setLoading(true);
         setMessage(null);
         try {
-            const res = await fetch(`${API_URL}/users/profile`, {
-                method: 'PATCH',
-                headers: {
-                    'Content-Type': 'application/json',
-                    'Authorization': `Bearer ${session.access_token}`
-                },
-                body: JSON.stringify({
+            const { error } = await supabase
+                .from('profiles')
+                .update({
                     username: username,
                     bio: bio,
                     avatar_config: avatarConfig
                 })
-            });
+                .eq('id', session.user.id);
 
-            if (!res.ok) {
-                const errorData = await res.json();
-                throw new Error(errorData.message || 'Failed to update profile');
-            }
+            if (error) throw error;
 
             await refreshProfile();
             setMessage({ type: 'success', text: 'Profile updated successfully!' });
@@ -106,166 +134,129 @@ export default function ProfilePage() {
         }
     };
 
-    if (!profile) return <div>Loading...</div>;
+    if (!profile) return (
+        <div className="min-h-screen flex items-center justify-center text-slate-500 animate-pulse font-bold uppercase tracking-widest">
+            Betöltés...
+        </div>
+    );
 
     return (
-        <div style={{ maxWidth: '800px', margin: '0 auto', padding: '40px 20px', color: 'var(--text-color)' }}>
-            <h1 style={{ textAlign: 'center', marginBottom: '40px' }}>Edit Profile</h1>
+        <div className="max-w-4xl mx-auto p-4 md:p-8 pb-32 space-y-8 animate-in slide-in-from-bottom-4 fade-in duration-500">
+            
+            {/* Header Area */}
+            <div className="text-center md:text-left flex flex-col md:flex-row items-center justify-between gap-6">
+                <div>
+                    <h1 className="text-3xl md:text-4xl font-black text-slate-800 dark:text-slate-100 uppercase tracking-tighter italic">Profil Szerkesztése</h1>
+                    <p className="text-slate-500 dark:text-slate-400 font-bold">Alakítsd saját képedre a fiókodat!</p>
+                </div>
+                {/* Desktop Buttons */}
+                <div className="hidden md:flex gap-3">
+                    <Button variant="outline" onClick={() => navigate('/dashboard')}>
+                        <X size={20} />
+                        Mégsem
+                    </Button>
+                    <Button variant="secondary" onClick={handleSave} loading={loading}>
+                        <Save size={20} />
+                        Mentés
+                    </Button>
+                </div>
+            </div>
+
+            {/* Sticky Mobile Footer for Actions (Hidden on desktop) */}
+            <div className="fixed bottom-0 left-0 right-0 bg-white/80 dark:bg-slate-900/80 backdrop-blur-lg border-t-2 border-slate-200 dark:border-slate-700 p-4 z-50 md:hidden flex gap-3">
+                <Button variant="outline" className="flex-1" onClick={() => navigate('/dashboard')}>
+                    Mégsem
+                </Button>
+                <Button variant="secondary" className="flex-1" onClick={handleSave} loading={loading}>
+                    Mentés
+                </Button>
+            </div>
 
             {message && (
-                <div style={{
-                    padding: '15px',
-                    marginBottom: '20px',
-                    borderRadius: '5px',
-                    backgroundColor: message.type === 'success' ? 'rgba(76, 175, 80, 0.2)' : 'rgba(211, 47, 47, 0.2)',
-                    color: message.type === 'success' ? 'var(--success-color)' : 'var(--error-color)',
-                    border: `1px solid ${message.type === 'success' ? 'var(--success-color)' : 'var(--error-color)'}`,
-                    textAlign: 'center'
-                }}>
+                <div className={`
+                    p-4 rounded-2xl border-2 font-bold text-center animate-in zoom-in duration-300
+                    ${message.type === 'success' 
+                        ? 'bg-green-100 border-green-200 text-green-600 dark:bg-green-900/30 dark:border-green-800' 
+                        : 'bg-red-100 border-red-200 text-red-600 dark:bg-red-900/30 dark:border-red-800'}
+                `}>
                     {message.text}
                 </div>
             )}
 
-            <div className="card" style={{ marginBottom: '40px' }}>
-                <div style={{ marginBottom: '20px' }}>
-                    <label style={{ display: 'block', marginBottom: '10px', fontSize: '18px' }}>Username</label>
-                    <input 
-                        type="text" 
-                        value={username} 
-                        onChange={(e) => setUsername(e.target.value)}
-                        style={{ width: '100%', boxSizing: 'border-box' }}
-                    />
-                </div>
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 items-start">
+                
+                {/* Left Column: Editor */}
+                <div className="space-y-8">
+                    <Card title="Alapvető adatok" icon={<User size={24} />}>
+                        <div className="space-y-6">
+                            <div className="space-y-2">
+                                <label className="text-sm font-black text-slate-500 dark:text-slate-400 uppercase tracking-widest ml-1">Felhasználónév</label>
+                                <input 
+                                    type="text" 
+                                    value={username} 
+                                    onChange={(e) => setUsername(e.target.value)}
+                                    className="w-full bg-slate-50 dark:bg-slate-800 border-2 border-slate-200 dark:border-slate-700 rounded-2xl px-4 py-3 font-bold text-slate-700 dark:text-slate-200 focus:border-blue-500 outline-none transition-colors shadow-inner"
+                                    placeholder="Add meg a neved..."
+                                />
+                            </div>
 
-                {profile.userBadges && profile.userBadges.length > 0 && (
-                    <div style={{ marginBottom: '30px' }}>
-                        <label style={{ display: 'block', marginBottom: '15px', fontSize: '18px', fontWeight: '800', color: 'var(--primary-color)', textTransform: 'uppercase', letterSpacing: '1px' }}>
-                            Jelvények & Kitüntetések
-                        </label>
-                        <div style={{ 
-                            display: 'grid', 
-                            gridTemplateColumns: 'repeat(auto-fill, minmax(100px, 1fr))', 
-                            gap: '15px' 
-                        }}>
-                            {profile.userBadges.map((ub) => (
-                                <div 
-                                    key={ub.badgeId} 
-                                    title={ub.badge.description} 
-                                    className="badge-card"
-                                    style={{
-                                        display: 'flex',
-                                        flexDirection: 'column',
-                                        alignItems: 'center',
-                                        justifyContent: 'center',
-                                        padding: '15px 10px',
-                                        backgroundColor: 'rgba(var(--primary-rgb), 0.05)',
-                                        borderRadius: '20px',
-                                        border: '2px solid rgba(var(--primary-rgb), 0.1)',
-                                        transition: 'all 0.3s ease',
-                                        cursor: 'help',
-                                        position: 'relative',
-                                        overflow: 'hidden'
-                                    }}
-                                >
-                                    <div style={{ 
-                                        fontSize: '32px', 
-                                        marginBottom: '8px',
-                                        filter: 'drop-shadow(0 4px 6px rgba(0,0,0,0.1))'
-                                    }}>
-                                        {ub.badge.iconPath}
-                                    </div>
-                                    <span style={{ 
-                                        fontSize: '11px', 
-                                        fontWeight: '900', 
-                                        textAlign: 'center',
-                                        lineHeight: '1.2',
-                                        color: 'var(--text-color)',
-                                        textTransform: 'uppercase'
-                                    }}>
-                                        {ub.badge.name}
-                                    </span>
-                                    {/* Subtle shine effect */}
-                                    <div style={{
-                                        position: 'absolute',
-                                        top: '-50%',
-                                        left: '-50%',
-                                        width: '200%',
-                                        height: '200%',
-                                        background: 'linear-gradient(45deg, transparent, rgba(255,255,255,0.1), transparent)',
-                                        transform: 'rotate(45deg)',
-                                        pointerEvents: 'none'
-                                    }}></div>
-                                </div>
-                            ))}
+                            <div className="space-y-2">
+                                <label className="text-sm font-black text-slate-500 dark:text-slate-400 uppercase tracking-widest ml-1 flex justify-between">
+                                    <span>Bemutatkozás</span>
+                                    <span className={bio.length > 160 ? 'text-red-500' : ''}>{bio.length}/160</span>
+                                </label>
+                                <textarea 
+                                    value={bio} 
+                                    onChange={(e) => setBio(e.target.value)}
+                                    placeholder="Mesélj magadról a többieknek..."
+                                    rows={4}
+                                    className="w-full bg-slate-50 dark:bg-slate-800 border-2 border-slate-200 dark:border-slate-700 rounded-2xl px-4 py-3 font-bold text-slate-700 dark:text-slate-200 focus:border-blue-500 outline-none transition-colors shadow-inner resize-none"
+                                />
+                            </div>
                         </div>
-                    </div>
-                )}
+                    </Card>
 
-                <div style={{ marginBottom: '20px' }}>
-                    <label style={{ display: 'block', marginBottom: '10px', fontSize: '18px' }}>
-                        Bio
-                        <span style={{ float: 'right', fontSize: '14px', color: bio.length > 160 ? 'var(--error-color)' : 'var(--text-color)', opacity: 0.7 }}>
-                            {bio.length}/160
-                        </span>
-                    </label>
-                    <textarea 
-                        value={bio} 
-                        onChange={(e) => setBio(e.target.value)}
-                        placeholder="Mesélj magadról..."
-                        rows={3}
-                        style={{ 
-                            width: '100%', 
-                            boxSizing: 'border-box', 
-                            padding: '10px', 
-                            borderRadius: '8px',
-                            border: '1px solid var(--card-border)',
-                            backgroundColor: 'var(--bg-color)',
-                            color: 'var(--text-color)',
-                            resize: 'none'
-                        }}
-                    />
+                    {profile.userBadges && profile.userBadges.length > 0 && (
+                        <Card title="Jelvények" icon={<Award size={24} />}>
+                            <div className="grid grid-cols-3 sm:grid-cols-4 gap-4">
+                                {profile.userBadges.map((ub) => (
+                                    <div 
+                                        key={ub.badgeId} 
+                                        title={ub.badge.description} 
+                                        className="group relative flex flex-col items-center p-3 bg-slate-50 dark:bg-slate-800 rounded-2xl border-2 border-slate-100 dark:border-slate-700 hover:border-blue-500 transition-all cursor-help"
+                                    >
+                                        <div className="text-4xl mb-2 transform group-hover:scale-110 transition-transform">{ub.badge.iconPath}</div>
+                                        <span className="text-[10px] font-black text-center text-slate-600 dark:text-slate-300 uppercase tracking-tighter leading-none">{ub.badge.name}</span>
+                                    </div>
+                                ))}
+                            </div>
+                        </Card>
+                    )}
                 </div>
 
-                {/* 
-                {profile.badges && profile.badges.length > 0 && (
-                    ...
-                )} 
-                */}
-
-                <div style={{ marginBottom: '20px' }}>
-                    <label style={{ display: 'block', marginBottom: '20px', fontSize: '18px' }}>Customize Avatar</label>
-                    <AvatarEditor 
-                        config={avatarConfig} 
-                        onChange={setAvatarConfig} 
-                        inventory={inventory}
-                    />
+                {/* Right Column: Avatar Editor */}
+                <div className="lg:sticky lg:top-8">
+                    <Card title="Avatar testreszabása" icon={<FileText size={24} />}>
+                        <AvatarEditor 
+                            config={avatarConfig} 
+                            onChange={setAvatarConfig} 
+                            inventory={inventory}
+                        />
+                    </Card>
                 </div>
 
-                <div style={{ display: 'flex', gap: '20px', justifyContent: 'center', marginTop: '30px' }}>
-                    <button 
-                        onClick={() => navigate('/dashboard')}
-                        className="btn btn-outline"
-                    >
-                        Cancel
-                    </button>
-                    <button 
-                        onClick={handleSave}
-                        disabled={loading}
-                        className="btn btn-primary"
-                        style={{ opacity: loading ? 0.7 : 1 }}
-                    >
-                        {loading ? 'Saving...' : 'Save Changes'}
-                    </button>
-                </div>
             </div>
 
-            <div style={{ textAlign: 'center', marginTop: '40px', borderTop: '1px solid #ccc', paddingTop: '20px' }}>
-                 <button 
-                    onClick={handleLogout} 
-                    className="bg-red-500 hover:bg-red-600 text-white px-6 py-3 rounded-lg font-bold transition-colors"
+            {/* Logout at the very bottom */}
+            <div className="pt-12 border-t-2 border-slate-100 dark:border-slate-800 flex justify-center">
+                <Button 
+                    variant="danger" 
+                    onClick={handleLogout}
+                    className="w-full md:w-auto min-w-[200px]"
                 >
-                    Logout
-                </button>
+                    <LogOut size={20} />
+                    Kijelentkezés
+                </Button>
             </div>
         </div>
     );

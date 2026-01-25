@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useOutletContext, useNavigate } from 'react-router-dom';
+import { supabase } from './supabaseClient';
 import { useLanguage } from './LanguageContext';
 import TheoryComponent from './question-types/TheoryComponent';
 import PredictionComponent from './question-types/PredictionComponent';
@@ -38,13 +39,22 @@ export default function PlacementPage() {
   const fetchQuestions = async () => {
     if (!currentLanguage) return;
     try {
-      const res = await fetch(`${API_URL}/questions/placement?languageId=${currentLanguage.id}`, {
-        headers: { Authorization: `Bearer ${session.access_token}` },
+      const { data, error } = await supabase.rpc('get_placement_questions', {
+          p_language_id: currentLanguage.id
       });
-      if (res.ok) {
-        const data = await res.json();
-        setQuestions(data);
-      }
+      if (error) throw error;
+      
+      const mappedData = data.map(q => ({
+          ...q,
+          qType: q.q_type,
+          languageId: q.language_id,
+          difficultyBeta: q.difficulty_beta,
+          difficultyDisplay: q.difficulty_display,
+          discriminationAlpha: q.discrimination_alpha,
+          createdAt: q.created_at
+      }));
+
+      setQuestions(mappedData);
     } catch (err) {
       console.error(err);
     } finally {
@@ -70,19 +80,29 @@ export default function PlacementPage() {
 
     setSubmitting(true);
     try {
-      const res = await fetch(`${API_URL}/questions/${question.id}/submit`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          Authorization: `Bearer ${session.access_token}`,
-        },
-        body: JSON.stringify({ code: submissionData, isPlacement: true }),
+      // Local validation for placement
+      let isCorrect = false;
+      const content = question.content;
+      
+      if (question.qType === 'parsons') {
+          isCorrect = JSON.stringify(content.correct_order) === submissionData;
+      } else if (question.qType === 'debug') {
+          const expected = (content.buggy_code || '').replace(content.error_location || '', content.correct_code || '');
+          isCorrect = code.trim() === expected.trim();
+      } else {
+          let correct = content.correct_answer;
+          if (typeof correct === 'number' && content.options) correct = content.options[correct];
+          isCorrect = String(submissionData).trim() === String(correct).trim();
+      }
+
+      setResult({
+          isCorrect,
+          explanation: content.explanation,
+          correct_answer: content.correct_answer || content.correct_code || content.correct_order
       });
-      const data = await res.json();
-      setResult(data);
       setShowFeedback(true);
 
-      if (data.isCorrect) setScore(s => s + 1);
+      if (isCorrect) setScore(s => s + 1);
     } catch (err) {
       console.error(err);
     } finally {
@@ -115,14 +135,11 @@ export default function PlacementPage() {
       
       newProficiency = Math.max(-3.0, Math.min(3.0, newProficiency));
 
-      await fetch(`${API_URL}/users/complete-placement`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          Authorization: `Bearer ${session.access_token}`,
-        },
-        body: JSON.stringify({ proficiency: newProficiency }),
+      const { data, error } = await supabase.rpc('complete_placement', {
+          p_proficiency: newProficiency
       });
+      
+      if (error) throw error;
       
       setIsFinished(true);
       await refreshProfile();

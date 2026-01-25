@@ -1,8 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useOutletContext, useParams, useNavigate } from 'react-router-dom';
 import QuestionSearchModal from './components/QuestionSearchModal';
-
-const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:3000';
+import { supabase } from './supabaseClient';
 
 export default function QuizEditorPage() {
   const { session, showNotification } = useOutletContext();
@@ -20,16 +19,35 @@ export default function QuizEditorPage() {
 
   const fetchQuiz = async () => {
     try {
-      const res = await fetch(`${API_URL}/quizzes/${id}`, {
-        headers: {
-          Authorization: `Bearer ${session.access_token}`,
-        },
-      });
-      if (res.ok) {
-        const data = await res.json();
-        setQuiz(data);
-        setTitle(data.title);
-        setIsPublic(data.isPublic);
+      const { data, error } = await supabase
+        .from('quizzes')
+        .select(`
+            *,
+            questions:quiz_questions(
+                *,
+                question:questions(*)
+            )
+        `)
+        .eq('id', id)
+        .single();
+
+      if (error) throw error;
+      
+      if (data) {
+        // Remap fields from snake_case
+        const mappedData = {
+            ...data,
+            isPublic: data.is_public,
+            shareCode: data.share_code,
+            questions: data.questions.map(q => ({
+                ...q,
+                questionId: q.question_id,
+                orderIndex: q.order_index
+            }))
+        };
+        setQuiz(mappedData);
+        setTitle(mappedData.title);
+        setIsPublic(mappedData.isPublic);
       }
     } catch (err) {
       console.error('Failed to fetch quiz', err);
@@ -38,19 +56,17 @@ export default function QuizEditorPage() {
     }
   };
 
-  const handleUpdateQuiz = async () => {
+  const handleUpdateQuiz = async (overrides = {}) => {
+    const updatedTitle = overrides.title !== undefined ? overrides.title : title;
+    const updatedIsPublic = overrides.isPublic !== undefined ? overrides.isPublic : isPublic;
+    
     try {
-      const res = await fetch(`${API_URL}/quizzes/${id}`, {
-        method: 'PATCH',
-        headers: {
-          'Content-Type': 'application/json',
-          Authorization: `Bearer ${session.access_token}`,
-        },
-        body: JSON.stringify({ title, isPublic }),
-      });
-      if (res.ok) {
-        // Updated
-      }
+      const { error } = await supabase
+        .from('quizzes')
+        .update({ title: updatedTitle, is_public: updatedIsPublic })
+        .eq('id', id);
+        
+      if (error) throw error;
     } catch (err) {
       console.error('Failed to update quiz', err);
     }
@@ -58,18 +74,17 @@ export default function QuizEditorPage() {
 
   const handleRemoveQuestion = async (questionId) => {
     try {
-      const res = await fetch(`${API_URL}/quizzes/${id}/questions/${questionId}`, {
-        method: 'DELETE',
-        headers: {
-          Authorization: `Bearer ${session.access_token}`,
-        },
+      const { error } = await supabase
+        .from('quiz_questions')
+        .delete()
+        .match({ quiz_id: id, question_id: questionId });
+
+      if (error) throw error;
+      
+      setQuiz({
+        ...quiz,
+        questions: quiz.questions.filter((q) => q.questionId !== questionId),
       });
-      if (res.ok) {
-        setQuiz({
-          ...quiz,
-          questions: quiz.questions.filter((q) => q.questionId !== questionId),
-        });
-      }
     } catch (err) {
       console.error('Failed to remove question', err);
     }
@@ -77,33 +92,34 @@ export default function QuizEditorPage() {
 
   const handleAddExistingQuestion = async (question) => {
     try {
-      const res = await fetch(`${API_URL}/quizzes/${id}/questions`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          Authorization: `Bearer ${session.access_token}`,
-        },
-        body: JSON.stringify({
-          questionId: question.id,
-          orderIndex: quiz.questions?.length || 0,
-        }),
-      });
+      const { data, error } = await supabase
+        .from('quiz_questions')
+        .insert({
+          quiz_id: id,
+          question_id: question.id,
+          order_index: quiz.questions?.length || 0,
+        })
+        .select()
+        .single();
 
-      if (res.ok) {
-        const newQQ = await res.json();
-        // Since we need the full question object for display
-        newQQ.question = question;
+      if (error) throw error;
+
+      if (data) {
+        const newQQ = {
+            ...data,
+            questionId: data.question_id,
+            orderIndex: data.order_index,
+            question: question
+        };
         setQuiz({
           ...quiz,
           questions: [...(quiz.questions || []), newQQ],
         });
         setIsSearchOpen(false);
-      } else {
-        const error = await res.json();
-        showNotification(error.message || 'Hiba a kérdés hozzáadásakor', 'error');
       }
     } catch (err) {
       console.error('Failed to add question', err);
+      showNotification('Hiba a kérdés hozzáadásakor', 'error');
     }
   };
 

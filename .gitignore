@@ -13,3 +13,17 @@ build/
 .env
 .env.local
 .env.*.local
+
+# cline settings
+.clinerules
+
+#Docs
+CONTEXT.md
+jelentes.md
+Functions.md
+SQL_Readme.md
+quiz.md
+
+# Database Schema (Optional to keep in git)
+# migrations
+# schema.sql

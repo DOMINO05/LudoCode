@@ -14,8 +14,7 @@ import {
 import BonusModal from './components/BonusModal';
 import ProgressChart from './components/ProgressChart';
 import SanityWarningModal from './components/SanityWarningModal';
-
-const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:3000';
+import { supabase } from './supabaseClient';
 
 // --- Új Segédkomponensek (Duolingo Style) ---
 
@@ -96,19 +95,14 @@ export default function Dashboard() {
   useEffect(() => {
     const claimDailyBonus = async () => {
       try {
-        const res = await fetch(`${API_URL}/users/daily-claim`, {
-          method: 'POST',
-          headers: {
-            'Authorization': `Bearer ${session.access_token}`
-          }
-        });
-        if (res.ok) {
-          const data = await res.json();
-          if (data.claimed) {
-            setBonusData({ message: data.message, bonus: data.bonus, quote: data.quote });
-            setShowBonus(true);
-            refreshProfile(); // Update XP in TopBar and Dashboard
-          }
+        const { data, error } = await supabase.rpc('claim_daily_bonus');
+        
+        if (error) throw error;
+
+        if (data && data.claimed) {
+          setBonusData({ message: data.message, bonus: data.bonus, quote: data.quote });
+          setShowBonus(true);
+          refreshProfile(); // Update XP in TopBar and Dashboard
         }
       } catch (error) {
         console.error('Error claiming daily bonus:', error);

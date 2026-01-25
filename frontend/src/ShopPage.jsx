@@ -1,8 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useOutletContext } from 'react-router-dom';
+import { supabase } from './supabaseClient';
 import Avatar from './Avatar';
-
-const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:3000';
 
 export default function ShopPage() {
     const { session, profile, refreshProfile } = useOutletContext();
@@ -16,11 +15,16 @@ export default function ShopPage() {
 
     const fetchItems = async () => {
         try {
-            const res = await fetch(`${API_URL}/shop/items`);
-            if (res.ok) {
-                const data = await res.json();
-                setItems(data);
-            }
+            const { data, error } = await supabase.rpc('get_shop_items');
+            if (error) throw error;
+            
+            // Map cost_gems to costGems if component expects it
+            const mappedData = data.map(item => ({
+                ...item,
+                costGems: item.cost_gems
+            }));
+
+            setItems(mappedData);
         } catch (err) {
             console.error("Failed to fetch shop items", err);
         } finally {
@@ -28,26 +32,26 @@ export default function ShopPage() {
         }
     };
 
-    const handleBuy = async (itemId) => {
+    const handleBuy = async (item) => {
         setMessage(null);
         try {
-            const res = await fetch(`${API_URL}/shop/buy/${itemId}`, {
-                method: 'POST',
-                headers: {
-                    'Authorization': `Bearer ${session.access_token}`
-                }
+            const { data, error } = await supabase.rpc('buy_shop_item', {
+                p_item_id: item.id,
+                p_expected_cost: item.costGems,
+                p_metadata: item.metadata
             });
             
-            if (res.ok) {
+            if (error) throw error;
+
+            if (data && data.success) {
                 setMessage({ type: 'success', text: 'Item purchased!' });
                 refreshProfile();
             } else {
-                const err = await res.json();
-                setMessage({ type: 'error', text: err.message || 'Failed to buy item' });
+                setMessage({ type: 'error', text: 'Failed to buy item' });
             }
         } catch (err) {
             console.error("Buy failed", err);
-            setMessage({ type: 'error', text: 'Network error' });
+            setMessage({ type: 'error', text: err.message || 'Network error' });
         }
     };
 
@@ -99,7 +103,7 @@ export default function ShopPage() {
                             <div style={{ padding: '15px', width: '100%', marginTop: 'auto', borderTop: '1px solid #eee' }} className="dark:border-slate-700">
                                 <button 
                                     className="btn btn-primary"
-                                    onClick={() => handleBuy(item.id)}
+                                    onClick={() => handleBuy(item)}
                                     disabled={profile.gems < item.costGems}
                                     style={{ 
                                         width: '100%', 

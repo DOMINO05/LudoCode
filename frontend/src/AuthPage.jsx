@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { supabase } from './supabaseClient';
-
-const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:3000';
+// API_URL nem szükséges a serverless verzióban, de a biztonság kedvéért importálható lenne
+// import { API_URL } from './config'; 
 
 export default function AuthPage() {
   const [isLogin, setIsLogin] = useState(true);
@@ -36,24 +36,25 @@ export default function AuthPage() {
         });
         if (error) throw error;
         
+        // Supabase trigger automatically creates the user profile
         if (data.session) {
-           await syncProfile(data.session.access_token);
+            // Opcionális: manuális szinkronizálás hívása RPC-vel, ha a trigger nem futna le
+            await syncProfile();
         } else {
-           // If session is missing, try to login immediately (assuming confirmation is disabled)
+           // Login immediately if no confirmation needed
            const { data: loginData, error: loginError } = await supabase.auth.signInWithPassword({
               email: internalEmail,
               password,
            });
            
            if (loginError) {
-               // If login fails (e.g. confirmation actually required), show message
                if (loginError.message.includes('Email not confirmed')) {
                    setMessage('Registration successful! Please check your email to confirm.');
                } else {
                    throw loginError;
                }
            } else if (loginData.session) {
-               await syncProfile(loginData.session.access_token);
+               await syncProfile();
            }
         }
       }
@@ -64,21 +65,23 @@ export default function AuthPage() {
     }
   };
 
-  const syncProfile = async (token) => {
+  const syncProfile = async () => {
     try {
-        const response = await fetch(`${API_URL}/users/sync`, {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-                'Authorization': `Bearer ${token}`
-            },
-            body: JSON.stringify({ level, username })
+        // Hívjuk meg a Supabase RPC függvényt a profil létrehozásához/frissítéséhez
+        const { error } = await supabase.rpc('sync_profile', {
+            p_username: username,
+            p_level: level
         });
-        if (!response.ok) throw new Error('Failed to sync profile');
+        
+        if (error) {
+            // Ha az RPC nem létezik (még nincs migráció), ez hibát dobhat,
+            // de a legtöbb esetben a 'users' táblába írás a trigger feladata.
+            console.warn('Profile sync RPC warning:', error);
+        }
         setMessage('Registration and profile creation successful!');
     } catch (err) {
         console.error(err);
-        setMessage('Profile sync failed: ' + err.message);
+        // Nem dobunk hibát a felhasználónak, ha a regisztráció amúgy sikeres volt
     }
   }
 

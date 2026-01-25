@@ -1,8 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { LineChart, Line, BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from 'recharts';
 import Avatar from '../Avatar';
-
-const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:3000';
+import { supabase } from '../supabaseClient';
 
 const UserProfileModal = ({ userId, session, onClose }) => {
     const [profile, setProfile] = useState(null);
@@ -17,14 +16,11 @@ const UserProfileModal = ({ userId, session, onClose }) => {
     const fetchProfile = async () => {
         setLoading(true);
         try {
-            const res = await fetch(`${API_URL}/users/public-profile/${userId}`, {
-                headers: { 'Authorization': `Bearer ${session.access_token}` }
-            });
-            if (res.ok) {
-                const data = await res.json();
+            const { data, error } = await supabase.rpc('get_public_profile', { p_user_id: userId });
+            
+            if (error) throw error;
+            if (data) {
                 setProfile(data);
-            } else {
-                console.error("Failed to fetch profile");
             }
         } catch (err) {
             console.error("Failed to fetch profile", err);
@@ -35,13 +31,13 @@ const UserProfileModal = ({ userId, session, onClose }) => {
 
     const handleFollow = async () => {
         try {
-            const res = await fetch(`${API_URL}/users/follow/${userId}`, {
-                method: 'POST',
-                headers: { 'Authorization': `Bearer ${session.access_token}` }
+            const { error } = await supabase.from('friendship').insert({
+                user_id: session.user.id,
+                friend_id: userId
             });
-            if (res.ok) {
-                setProfile(prev => ({ ...prev, isFollowing: true, followersCount: (prev.followersCount || 0) + 1 }));
-            }
+            
+            if (error) throw error;
+            setProfile(prev => ({ ...prev, isFollowing: true, followersCount: (prev.followersCount || 0) + 1 }));
         } catch (err) {
             console.error('Follow failed', err);
         }
@@ -49,13 +45,13 @@ const UserProfileModal = ({ userId, session, onClose }) => {
 
     const handleUnfollow = async () => {
         try {
-            const res = await fetch(`${API_URL}/users/follow/${userId}`, {
-                method: 'DELETE',
-                headers: { 'Authorization': `Bearer ${session.access_token}` }
+            const { error } = await supabase.from('friendship').delete().match({
+                user_id: session.user.id,
+                friend_id: userId
             });
-            if (res.ok) {
-                setProfile(prev => ({ ...prev, isFollowing: false, followersCount: Math.max(0, (prev.followersCount || 0) - 1) }));
-            }
+            
+            if (error) throw error;
+            setProfile(prev => ({ ...prev, isFollowing: false, followersCount: Math.max(0, (prev.followersCount || 0) - 1) }));
         } catch (err) {
             console.error('Unfollow failed', err);
         }

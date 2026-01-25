@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react';
+import { supabase } from '../supabaseClient';
 import UserProfileModal from './UserProfileModal';
-
-const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:3000';
 
 const Leaderboard = ({ session, currentUserId }) => {
     const [users, setUsers] = useState([]);
@@ -20,13 +19,31 @@ const Leaderboard = ({ session, currentUserId }) => {
     const fetchLeaderboard = async () => {
         setLoading(true);
         try {
-            const res = await fetch(`${API_URL}/users/leaderboard?type=${tab}`, {
-                headers: {
-                    'Authorization': `Bearer ${session.access_token}`
-                }
-            });
-            if (res.ok) {
-                const data = await res.json();
+            if (tab === 'global') {
+                const { data, error } = await supabase
+                    .from('profiles')
+                    .select('id, username, xp, global_proficiency, current_streak')
+                    .order('xp', { ascending: false })
+                    .limit(20);
+                if (error) throw error;
+                setUsers(data);
+            } else {
+                // Fetch friends
+                const { data: followings, error: fError } = await supabase
+                    .from('friendship')
+                    .select('following_id')
+                    .eq('follower_id', session.user.id);
+                if (fError) throw fError;
+
+                const ids = (followings || []).map(f => f.following_id);
+                ids.push(session.user.id);
+
+                const { data, error } = await supabase
+                    .from('profiles')
+                    .select('id, username, xp, global_proficiency, current_streak')
+                    .in('id', ids)
+                    .order('xp', { ascending: false });
+                if (error) throw error;
                 setUsers(data);
             }
         } catch (err) {
@@ -46,13 +63,13 @@ const Leaderboard = ({ session, currentUserId }) => {
         setIsSearching(true);
         setLoading(true);
         try {
-            const res = await fetch(`${API_URL}/users/search?q=${encodeURIComponent(searchQuery)}`, {
-                headers: { 'Authorization': `Bearer ${session.access_token}` }
-            });
-            if (res.ok) {
-                const data = await res.json();
-                setUsers(data);
-            }
+            const { data, error } = await supabase
+                .from('profiles')
+                .select('id, username, xp, global_proficiency, avatar_config')
+                .ilike('username', `%${searchQuery}%`)
+                .limit(10);
+            if (error) throw error;
+            setUsers(data);
         } catch (err) {
             console.error("Search failed", err);
         } finally {
@@ -68,13 +85,11 @@ const Leaderboard = ({ session, currentUserId }) => {
     // Kept for potential future use or if we add callbacks from modal
     const handleFollow = async (userId) => {
         try {
-            const res = await fetch(`${API_URL}/users/follow/${userId}`, {
-                method: 'POST',
-                headers: { 'Authorization': `Bearer ${session.access_token}` }
-            });
-            if (res.ok) {
-                setUsers(users.map(u => u.id === userId ? { ...u, isFollowing: true } : u));
-            }
+            const { error } = await supabase
+                .from('friendship')
+                .insert({ follower_id: session.user.id, following_id: userId });
+            if (error) throw error;
+            setUsers(users.map(u => u.id === userId ? { ...u, isFollowing: true } : u));
         } catch (err) {
             console.error('Follow failed', err);
         }
@@ -82,16 +97,16 @@ const Leaderboard = ({ session, currentUserId }) => {
 
     const handleUnfollow = async (userId) => {
         try {
-            const res = await fetch(`${API_URL}/users/follow/${userId}`, {
-                method: 'DELETE',
-                headers: { 'Authorization': `Bearer ${session.access_token}` }
-            });
-            if (res.ok) {
-                if (tab === 'friends' && !isSearching) {
-                    setUsers(users.filter(u => u.id !== userId));
-                } else {
-                    setUsers(users.map(u => u.id === userId ? { ...u, isFollowing: false } : u));
-                }
+            const { error } = await supabase
+                .from('friendship')
+                .delete()
+                .eq('follower_id', session.user.id)
+                .eq('following_id', userId);
+            if (error) throw error;
+            if (tab === 'friends' && !isSearching) {
+                setUsers(users.filter(u => u.id !== userId));
+            } else {
+                setUsers(users.map(u => u.id === userId ? { ...u, isFollowing: false } : u));
             }
         } catch (err) {
             console.error('Unfollow failed', err);

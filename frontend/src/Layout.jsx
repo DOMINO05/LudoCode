@@ -21,8 +21,6 @@ import { DictionaryProvider } from './DictionaryContext';
 import Avatar from './Avatar';
 import PlacementIntro from './components/PlacementIntro';
 
-const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:3000';
-
 export default function Layout({ session }) {
   const [profile, setProfile] = useState(null);
   const [badgeNotification, setBadgeNotification] = useState(null);
@@ -38,15 +36,31 @@ export default function Layout({ session }) {
 
   const fetchProfile = async () => {
     try {
-        const res = await fetch(`${API_URL}/users/profile`, {
-            headers: {
-                'Authorization': `Bearer ${session.access_token}`
-            }
-        });
-        if (res.ok) {
-            const data = await res.json();
-            setProfile(data);
-        }
+        const { data, error } = await supabase
+            .from('profiles')
+            .select('*, lastQuote:quotes(*)')
+            .eq('id', session.user.id)
+            .single();
+            
+        if (error) throw error;
+        
+        // Map snake_case from DB to camelCase for component expectations if needed
+        // But Layout uses profile.avatarConfig and profile.hasCompletedPlacement
+        // and my migration used snake_case for the columns.
+        // Actually, Layout.jsx uses: profile?.avatarConfig and profile?.hasCompletedPlacement
+        // So I should map them.
+        
+        const mappedData = {
+            ...data,
+            avatarConfig: data.avatar_config,
+            hasCompletedPlacement: data.has_completed_placement,
+            sanityPoints: data.sanity_points,
+            currentStreak: data.current_streak,
+            globalProficiency: data.global_proficiency,
+            maxCombo: data.max_combo
+        };
+
+        setProfile(mappedData);
     } catch (err) {
         console.error('Failed to fetch profile', err);
     }

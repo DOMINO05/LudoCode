@@ -1,8 +1,7 @@
 import React, { createContext, useContext, useState, useEffect } from 'react';
+import { supabase } from './supabaseClient';
 
 const DictionaryContext = createContext();
-
-const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:3000';
 
 export const DictionaryProvider = ({ children, session }) => {
     const [dictionary, setDictionary] = useState([]);
@@ -16,14 +15,13 @@ export const DictionaryProvider = ({ children, session }) => {
             }
             
             try {
-                const res = await fetch(`${API_URL}/dictionary`, {
-                    headers: { 'Authorization': `Bearer ${session.access_token}` }
-                });
-                if (res.ok) {
-                    const data = await res.json();
+                const { data, error } = await supabase
+                    .from('dictionary')
+                    .select('*');
+                    
+                if (error) throw error;
+                if (data) {
                     setDictionary(data);
-                } else {
-                    console.error('Failed to fetch dictionary');
                 }
             } catch (err) {
                 console.error('Error fetching dictionary:', err);

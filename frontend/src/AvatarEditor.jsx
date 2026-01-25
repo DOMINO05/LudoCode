@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { Smile, Eye, User, Sparkles, ChevronLeft, ChevronRight, RefreshCw, Star } from 'lucide-react';
 import Avatar from './Avatar';
+import { useTheme } from './ThemeContext';
 
 // --- KONFIGURÁCIÓ ÉS ADATOK (PIXEL-ART STÍLUS) ---
 
@@ -52,7 +53,9 @@ const INITIAL_DEFAULTS = {
 
 export default function AvatarEditor({ config, onChange, inventory = [] }) {
   const [activeTab, setActiveTab] = useState('hair');
-  const darkMode = false; 
+  const { isDark: darkMode } = useTheme();
+
+  const primaryColor = "#58cc02"; // Duolingo Green
 
   // Local state for immediate feedback, synced with parent
   const [localConfig, setLocalConfig] = useState(() => ({
@@ -140,21 +143,19 @@ export default function AvatarEditor({ config, onChange, inventory = [] }) {
   const currentCategory = CATEGORIES.find(c => c.id === activeTab);
 
   return (
-    <div className={`font-sans flex justify-center transition-colors duration-300 ${darkMode ? 'bg-slate-900 text-white' : 'bg-gray-100 text-slate-700'}`}>
+    <div className={`font-sans transition-colors duration-300 ${darkMode ? 'text-white' : 'text-slate-700'}`}>
       
-      <div className={`w-full max-w-md flex flex-col shadow-2xl relative overflow-hidden transition-colors duration-300 ${darkMode ? 'bg-slate-800 border-slate-700' : 'bg-white'}`} style={{ minHeight: '600px', borderRadius: '20px' }}>
+      <div className={`w-full flex flex-col relative overflow-hidden transition-colors duration-300 ${darkMode ? 'bg-slate-900' : 'bg-white'}`} style={{ minHeight: '500px' }}>
         
-        {/* Fejléc eltávolítva */}
-
         {/* Fő Tartalom */}
         <main className="flex-1 flex flex-col">
           
           {/* Avatar Megjelenítő + Swipe Zóna */}
           <div 
-            className={`flex-1 relative flex items-center justify-center overflow-hidden select-none ${darkMode ? 'bg-slate-900/50' : 'bg-gray-50'}`}
+            className={`relative flex items-center justify-center overflow-hidden select-none rounded-3xl border-2 ${darkMode ? 'bg-slate-800 border-slate-700' : 'bg-slate-50 border-slate-200'}`}
             onTouchStart={handleTouchStart}
             onTouchEnd={handleTouchEnd}
-            style={{ minHeight: '300px' }}
+            style={{ minHeight: '280px' }}
           >
             
             {/* Navigációs Nyilak */}
@@ -162,13 +163,13 @@ export default function AvatarEditor({ config, onChange, inventory = [] }) {
               <>
                 <button 
                    onClick={() => changeValue(currentCategory.swipeParam, 'prev')}
-                   className="absolute left-2 z-30 p-2 bg-black/20 hover:bg-black/40 text-white rounded-full backdrop-blur-sm transition-all"
+                   className="absolute left-4 z-30 p-3 bg-white dark:bg-slate-700 border-b-4 border-slate-200 dark:border-slate-900 active:border-b-0 active:translate-y-[2px] text-slate-500 dark:text-slate-200 rounded-2xl shadow-sm transition-all"
                 >
                   <ChevronLeft size={24} />
                 </button>
                 <button 
                    onClick={() => changeValue(currentCategory.swipeParam, 'next')}
-                   className="absolute right-2 z-30 p-2 bg-black/20 hover:bg-black/40 text-white rounded-full backdrop-blur-sm transition-all"
+                   className="absolute right-4 z-30 p-3 bg-white dark:bg-slate-700 border-b-4 border-slate-200 dark:border-slate-900 active:border-b-0 active:translate-y-[2px] text-slate-500 dark:text-slate-200 rounded-2xl shadow-sm transition-all"
                 >
                   <ChevronRight size={24} />
                 </button>
@@ -176,59 +177,63 @@ export default function AvatarEditor({ config, onChange, inventory = [] }) {
             )}
 
             {/* Középső (Aktuális) Avatar */}
-            <div className="relative z-10 w-64 h-64 sm:w-80 sm:h-80 transition-all duration-300 transform hover:scale-105">
+            <div className="relative z-10 w-48 h-48 sm:w-64 sm:h-64 transition-all duration-300 transform hover:scale-105 filter drop-shadow-xl">
                <Avatar config={localConfig} size="100%" />
             </div>
             
             {/* Instrukció overlay */}
             {currentCategory?.swipeParam && (
-               <div className={`absolute bottom-4 text-xs font-bold uppercase tracking-widest opacity-60 ${darkMode ? 'text-white' : 'text-slate-400'}`}>
-                 Húzz balra/jobbra
+               <div className={`absolute bottom-4 px-4 py-1 rounded-full bg-black/5 dark:bg-white/5 text-[10px] font-black uppercase tracking-widest ${darkMode ? 'text-slate-400' : 'text-slate-400'}`}>
+                 Húzz balra vagy jobbra
                </div>
             )}
           </div>
 
           {/* Alsó Vezérlőpanel */}
-          <div className={`pb-8 pt-4 px-4 rounded-t-3xl -mt-6 z-20 border-t-2 ${darkMode ? 'bg-slate-800 border-slate-700' : 'bg-white border-gray-100 shadow-[0_-10px_40px_rgba(0,0,0,0.05)]'}`}>
+          <div className="py-6 space-y-6">
              
              {/* Kategória Tabok */}
-             <div className="flex justify-between mb-6 overflow-x-auto no-scrollbar">
+             <div className="flex gap-2 overflow-x-auto no-scrollbar pb-2">
                {CATEGORIES.map((cat) => (
                  <button
                    key={cat.id}
                    onClick={() => setActiveTab(cat.id)}
                    className={`
-                     flex flex-col items-center gap-1 p-2 min-w-[60px] rounded-xl transition-all
+                     flex flex-col items-center gap-1 p-2 min-w-[70px] rounded-2xl border-2 transition-all active:translate-y-[2px]
                      ${activeTab === cat.id 
-                       ? (darkMode ? 'text-[#58cc02]' : 'text-[#58cc02] scale-110 font-bold') 
-                       : (darkMode ? 'text-slate-500 hover:text-slate-300' : 'text-slate-400 hover:text-slate-600')}
+                       ? 'bg-blue-500 border-blue-600 text-white' 
+                       : (darkMode ? 'bg-slate-800 border-slate-700 text-slate-400' : 'bg-white border-slate-200 text-slate-500 hover:bg-slate-50')}
                    `}
                  >
-                   <div className={`p-3 rounded-2xl ${activeTab === cat.id ? 'bg-[#58cc02]/20' : 'bg-transparent'}`}>
-                     {cat.icon}
+                   <div className="mb-1">
+                     {React.cloneElement(cat.icon, { size: 24 })}
                    </div>
-                   <span className="text-xs">{cat.label}</span>
+                   <span className="text-[10px] font-black uppercase tracking-tighter">{cat.label}</span>
                  </button>
                ))}
              </div>
 
              {/* Tartalom: Színválasztó vagy Extrák */}
-             <div className="min-h-[100px]">
+             <div className={`p-4 rounded-3xl border-2 ${darkMode ? 'bg-slate-800/50 border-slate-700' : 'bg-slate-50 border-slate-100'}`}>
                 {activeTab === 'extras' ? (
-                    <div className="grid grid-cols-3 gap-2 max-h-[200px] overflow-y-auto">
+                    <div className="grid grid-cols-2 sm:grid-cols-3 gap-3 max-h-[200px] overflow-y-auto pr-2 custom-scrollbar">
                         {inventory.filter(i => ['hat', 'accessory', 'theme', 'avatar_frame'].includes(i.item.category)).length === 0 && (
-                            <p className="col-span-3 text-center text-sm text-gray-500">Nincsenek megvásárolt, viselhető tárgyaid.</p>
+                            <p className="col-span-full text-center py-8 text-sm font-bold text-slate-400 uppercase tracking-widest">Nincsenek viselhető tárgyaid</p>
                         )}
                         {inventory.filter(i => ['hat', 'accessory', 'theme', 'avatar_frame'].includes(i.item.category)).map(invItem => {
                             const dicebear = invItem.item.metadata?.dicebear || {};
-                            // Determine if active
                             const isActive = Object.keys(dicebear).length > 0 && Object.keys(dicebear).every(key => localConfig[key] === dicebear[key]);
                             
                             return (
                                 <button
                                     key={invItem.id}
                                     onClick={() => toggleItem(invItem)}
-                                    className={`p-2 rounded-lg border-2 text-xs font-bold truncate ${isActive ? 'border-[#58cc02] bg-[#58cc02]/10' : 'border-gray-200'}`}
+                                    className={`
+                                        p-3 rounded-2xl border-2 text-[10px] font-black uppercase tracking-tighter transition-all active:translate-y-[2px]
+                                        ${isActive 
+                                            ? 'bg-green-500 border-green-600 text-white shadow-lg' 
+                                            : (darkMode ? 'bg-slate-700 border-slate-600 text-slate-300' : 'bg-white border-slate-200 text-slate-600')}
+                                    `}
                                 >
                                     {invItem.item.name}
                                 </button>
@@ -236,30 +241,34 @@ export default function AvatarEditor({ config, onChange, inventory = [] }) {
                         })}
                     </div>
                 ) : currentCategory?.colorParam ? (
-                  <div className="flex flex-col gap-2 animate-in fade-in slide-in-from-bottom-4 duration-300">
-                    <h3 className={`text-xs font-bold uppercase tracking-widest mb-1 ${darkMode ? 'text-slate-400' : 'text-slate-400'}`}>
-                      {currentCategory.label} Színe
-                    </h3>
-                    <div className="flex gap-3 overflow-x-auto pb-2 no-scrollbar px-1">
+                  <div className="animate-in fade-in slide-in-from-bottom-2 duration-300">
+                    <div className="flex gap-3 overflow-x-auto py-2 no-scrollbar px-1">
                       {OPTIONS[currentCategory.colorParam].map((color) => (
                         <button
                           key={color}
                           onClick={() => updateConfig({ ...localConfig, [currentCategory.colorParam]: color })}
                           className={`
-                            flex-shrink-0 w-12 h-12 rounded-full border-4 transition-transform active:scale-90
+                            flex-shrink-0 w-12 h-12 rounded-2xl border-4 transition-all active:scale-95 active:translate-y-[2px]
                             ${localConfig[currentCategory.colorParam] === color 
-                              ? 'border-[#58cc02] scale-110 shadow-lg' 
-                              : `border-transparent hover:scale-105 ${darkMode ? 'shadow-none' : 'shadow-sm'}`}
+                              ? 'border-blue-500 scale-110 shadow-lg' 
+                              : `border-white dark:border-slate-700 hover:scale-105 shadow-sm`}
                           `}
-                          style={{ backgroundColor: color === 'transparent' ? '#fff' : `#${color}`, backgroundImage: color === 'transparent' ? 'linear-gradient(45deg, #ccc 25%, transparent 25%), linear-gradient(-45deg, #ccc 25%, transparent 25%), linear-gradient(45deg, transparent 75%, #ccc 75%), linear-gradient(-45deg, transparent 75%, #ccc 75%)' : 'none' }}
+                          style={{ 
+                            backgroundColor: color === 'transparent' ? '#fff' : `#${color}`, 
+                            backgroundImage: color === 'transparent' ? 'linear-gradient(45deg, #eee 25%, transparent 25%), linear-gradient(-45deg, #eee 25%, transparent 25%), linear-gradient(45deg, transparent 75%, #eee 75%), linear-gradient(-45deg, transparent 75%, #eee 75%)' : 'none',
+                            backgroundSize: color === 'transparent' ? '10px 10px' : 'auto'
+                          }}
                           aria-label={`Színválasztás: #${color}`}
                         />
                       ))}
                     </div>
                   </div>
                 ) : (
-                  <div className={`text-center py-4 text-sm ${darkMode ? 'text-slate-500' : 'text-slate-400'}`}>
-                    Ennél az opciónál nincs választható szín.<br/>Használd a fenti területet a formák váltásához!
+                  <div className="text-center py-6">
+                    <p className="text-xs font-black text-slate-400 uppercase tracking-widest leading-relaxed">
+                      Ennél az opciónál nincs választható szín.<br/>
+                      <span className="text-blue-500">Húzz az avataron az alakításhoz!</span>
+                    </p>
                   </div>
                 )}
              </div>

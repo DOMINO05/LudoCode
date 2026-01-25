@@ -2,13 +2,13 @@ import React, { useState, useEffect, useCallback, useRef } from 'react';
 import { useOutletContext, useParams, useNavigate, useSearchParams } from 'react-router-dom';
 import { ChevronDown, CheckCircle2, CloudUpload, CloudCheck, Loader2 } from 'lucide-react';
 import Editor from '@monaco-editor/react';
+import { useTheme } from './ThemeContext';
 import { debounce } from 'lodash';
 import { Terminal } from 'xterm';
 import { FitAddon } from 'xterm-addon-fit';
 import 'xterm/css/xterm.css';
-import io from 'socket.io-client';
-
-const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:3000';
+import { supabase } from './supabaseClient';
+import { PISTON_API_URL } from './config';
 
 const LANGUAGES = [
   { id: 'python', name: 'Python' },
@@ -30,6 +30,7 @@ const DEFAULT_CODE = {
 
 export default function PlaygroundPage() {
   const { session, showBadgeNotification, showNotification } = useOutletContext();
+  const { isDark } = useTheme();
   const navigate = useNavigate();
   const { token } = useParams();
   const [searchParams] = useSearchParams();
@@ -68,7 +69,6 @@ export default function PlaygroundPage() {
 
   // Init Terminal
   useEffect(() => {
-      // Cleanup previous terminal if any (though useEffect runs once)
       if (xtermRef.current) {
           xtermRef.current.dispose();
       }
@@ -78,8 +78,10 @@ export default function PlaygroundPage() {
           fontFamily: 'monospace',
           fontSize: 14,
           theme: {
-              background: '#0f172a', // slate-900
-              foreground: '#e2e8f0', // slate-200
+              background: isDark ? '#0f172a' : '#ffffff',
+              foreground: isDark ? '#e2e8f0' : '#334155',
+              cursor: isDark ? '#ffffff' : '#000000',
+              selectionBackground: isDark ? '#334155' : '#cbd5e1'
           }
       });
       
@@ -90,26 +92,9 @@ export default function PlaygroundPage() {
       if (terminalRef.current) {
           term.open(terminalRef.current);
           fitAddon.fit();
-          term.focus();
       }
 
       xtermRef.current = term;
-
-      // Handle input
-      term.onData((data) => {
-          if (socketRef.current?.connected) {
-              // console.log('Sending terminal input:', JSON.stringify(data));
-              socketRef.current.emit('input', data);
-          } else {
-              console.warn('Terminal input ignored: Socket not connected');
-          }
-      });
-      
-      term.onResize((size) => {
-          if (socketRef.current && socketRef.current.connected) {
-              socketRef.current.emit('resize', size);
-          }
-      });
 
       const handleResize = () => {
           if (fitAddonRef.current) {
@@ -121,9 +106,20 @@ export default function PlaygroundPage() {
       return () => {
           window.removeEventListener('resize', handleResize);
           term.dispose();
-          if (socketRef.current) socketRef.current.disconnect();
       };
   }, []);
+
+  // Sync terminal theme with isDark
+  useEffect(() => {
+      if (xtermRef.current) {
+          xtermRef.current.options.theme = {
+              background: isDark ? '#0f172a' : '#ffffff',
+              foreground: isDark ? '#e2e8f0' : '#334155',
+              cursor: isDark ? '#ffffff' : '#000000',
+              selectionBackground: isDark ? '#334155' : '#cbd5e1'
+          };
+      }
+  }, [isDark]);
 
   // Load code logic
   useEffect(() => {
@@ -148,65 +144,52 @@ export default function PlaygroundPage() {
 
   const loadSharedSnippet = async (shareCode) => {
     try {
-      // Safe header construction
-      const headers = { 'Content-Type': 'application/json' };
-      if (session?.access_token) {
-        headers['Authorization'] = `Bearer ${session.access_token}`;
+      const { data, error } = await supabase
+        .from('shared_snippets')
+        .select('*')
+        .eq('share_code', shareCode)
+        .single();
+
+      if (error || !data) {
+        showNotification('Snippet nem található!', 'error');
+        navigate('/playground');
+        return;
       }
 
-      const res = await fetch(`${API_URL}/snippets/${shareCode}`, {
-        headers
-      });
-      if (res.ok) {
-        const data = await res.json();
-        ignoreNextSave.current = true; // Don't trigger auto-save on load
-        setCode(data.code);
-        setLanguage(data.language);
-        setCanEdit(data.isEditable); // Set editor permission based on snippet data
-      } else {
-        showNotification('Snippet nem található vagy nincs hozzáférésed!', 'error');
-        navigate('/playground');
-      }
+      ignoreNextSave.current = true;
+      setCode(data.code);
+      setLanguage(data.language);
+      setCanEdit(data.is_editable || data.creator_id === session?.user?.id);
     } catch (err) {
       console.error(err);
       showNotification('Hiba a snippet betöltésekor', 'error');
     }
   };
 
-  // Polling for updates
+  // Realtime updates using Supabase
   useEffect(() => {
     if (!token) return;
 
-    const interval = setInterval(async () => {
-        // Only poll if we are not currently saving (avoid overwriting local changes)
-        if (isSaving) return;
+    const channel = supabase
+      .channel(`snippet-${token}`)
+      .on('postgres_changes', { 
+          event: 'UPDATE', 
+          schema: 'public', 
+          table: 'shared_snippets',
+          filter: `share_code=eq.${token}`
+      }, (payload) => {
+          if (payload.new && payload.new.code !== code && !isSaving) {
+              ignoreNextSave.current = true;
+              setCode(payload.new.code);
+              setLanguage(payload.new.language);
+          }
+      })
+      .subscribe();
 
-        try {
-            const headers = { 'Content-Type': 'application/json' };
-            if (session?.access_token) {
-                headers['Authorization'] = `Bearer ${session.access_token}`;
-            }
-
-            const res = await fetch(`${API_URL}/snippets/${token}`, { headers });
-            if (res.ok) {
-                const data = await res.json();
-                // Only update if content changed
-                if (data.code !== code) {
-                    ignoreNextSave.current = true; // Remote update, don't trigger save
-                    setCode(data.code);
-                    // Optionally update language too
-                    if (data.language !== language) {
-                        setLanguage(data.language);
-                    }
-                }
-            }
-        } catch (err) {
-            console.error("Polling error:", err);
-        }
-    }, 5000); // Poll every 5 seconds
-
-    return () => clearInterval(interval);
-  }, [token, isSaving, code, language, session]);
+    return () => {
+        supabase.removeChannel(channel);
+    };
+  }, [token, code, isSaving]);
 
   // Auto-save logic
   const debouncedSave = useCallback(
@@ -217,23 +200,14 @@ export default function PlaygroundPage() {
          setLastSaved(new Date());
          setIsSaving(false);
       } else if (canEdit) {
-         // Save to server
          try {
-             const headers = { 'Content-Type': 'application/json' };
-             if (session?.access_token) {
-                 headers['Authorization'] = `Bearer ${session.access_token}`;
-             }
+             const { error } = await supabase
+                .from('shared_snippets')
+                .update({ code: newCode, language: newLang })
+                .eq('share_code', token);
 
-             const res = await fetch(`${API_URL}/snippets/${token}`, {
-                 method: 'PATCH',
-                 headers,
-                 body: JSON.stringify({ code: newCode, language: newLang })
-             });
-
-             if (res.ok) {
+             if (!error) {
                  setLastSaved(new Date());
-             } else {
-                 console.error("Failed to save snippet");
              }
          } catch (err) {
              console.error("Save error:", err);
@@ -241,10 +215,10 @@ export default function PlaygroundPage() {
              setIsSaving(false);
          }
       } else {
-          setIsSaving(false); // If can't edit, just reset saving state
+          setIsSaving(false);
       }
     }, 2000),
-    [token, canEdit, session]
+    [token, canEdit]
   );
 
   useEffect(() => {
@@ -260,25 +234,8 @@ export default function PlaygroundPage() {
 
 
   const handleFormat = async () => {
-    try {
-        const res = await fetch(`${API_URL}/snippets/format`, {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ language, code })
-        });
-        
-        if (res.ok) {
-            const data = await res.json();
-            ignoreNextSave.current = false; // It's a user action, so we want to save it
-            setCode(data.formatted);
-        } else {
-            const err = await res.json().catch(() => ({}));
-            showNotification('Formázás sikertelen: ' + (err.message || res.statusText), 'error');
-        }
-    } catch (err) {
-      console.error('Format error:', err);
-      showNotification('Hiba a kód formázásakor: ' + err.message, 'error');
-    }
+    // Formatting disabled in serverless for now or use a client-side library
+    showNotification('Formázás jelenleg nem elérhető szerver nélkül.', 'info');
   };
 
   const handleRun = async () => {
@@ -287,46 +244,40 @@ export default function PlaygroundPage() {
     if (!term) return;
     
     term.reset();
-    term.write('\x1b[32m▶ Futás...\x1b[0m\r\n');
+    term.write('\x1b[32m▶ Futás (Piston API)...\x1b[0m\r\n');
 
-    if (socketRef.current) {
-        socketRef.current.disconnect();
+    try {
+        const payload = {
+            language: language === 'javascript' ? 'js' : language,
+            version: '*',
+            files: [{ name: 'main', content: code }]
+        };
+        
+        const response = await fetch(PISTON_API_URL + "/execute", {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(payload)
+        });
+        
+        const data = await response.json();
+        
+        if (data.run) {
+            if (data.run.stdout) term.write(data.run.stdout.replace(/\n/g, '\r\n'));
+            if (data.run.stderr) term.write('\x1b[31m' + data.run.stderr.replace(/\n/g, '\r\n') + '\x1b[0m');
+            term.write(`\r\n\x1b[90m--------------------------------\x1b[0m\r\n`);
+            term.write(`\x1b[33mProgram befejeződött (kód: ${data.run.code})\x1b[0m\r\n`);
+        } else {
+            term.write('\x1b[31mHiba a futtatás során.\x1b[0m\r\n');
+        }
+    } catch (err) {
+        term.write('\x1b[31mHálózati hiba a Piston API-hoz.\x1b[0m\r\n');
+    } finally {
+        setIsRunning(false);
     }
-
-    const socket = io(API_URL);
-    socketRef.current = socket;
-
-    socket.on('connect', () => {
-        socket.emit('run', { language, code });
-    });
-
-    socket.on('output', (data) => {
-        term.write(data);
-    });
-
-    socket.on('exit', (code) => {
-        term.write(`\r\n\x1b[90m--------------------------------\x1b[0m\r\n`);
-        term.write(`\x1b[33mProgram befejeződött (kód: ${code})\x1b[0m\r\n`);
-        setIsRunning(false);
-    });
-
-    socket.on('error', (err) => {
-        term.write(`\r\n\x1b[31mHiba történt a csatlakozás során.\x1b[0m\r\n`);
-        setIsRunning(false);
-    });
-
-    socket.on('disconnect', () => {
-        setIsRunning(false);
-    });
   };
 
   const handleStop = () => {
-      if (socketRef.current) {
-          socketRef.current.disconnect();
-      }
-      if (xtermRef.current) {
-          xtermRef.current.write(`\r\n\x1b[31m▶ Futás megszakítva.\x1b[0m\r\n`);
-      }
+      // Piston is not interactive in this simple impl, so stop does nothing
       setIsRunning(false);
   };
 
@@ -350,28 +301,25 @@ export default function PlaygroundPage() {
 
   const createShare = async () => {
     try {
-      const headers = { 
-          'Content-Type': 'application/json'
-      };
-      // Explicitly check for session token to avoid "Bearer undefined"
-      if (session?.access_token) {
-          headers['Authorization'] = `Bearer ${session.access_token}`;
-      }
-
-      const res = await fetch(`${API_URL}/snippets/share`, {
-        method: 'POST',
-        headers: headers,
-        body: JSON.stringify({ language, code, isEditable: shareEditableOption })
-      });
+      const shareCode = Math.random().toString(36).substring(2, 8).toUpperCase();
+      const { data, error } = await supabase
+        .from('shared_snippets')
+        .insert({
+            share_code: shareCode,
+            language,
+            code,
+            is_editable: shareEditableOption,
+            creator_id: session?.user?.id
+        })
+        .select()
+        .single();
       
-      if (res.ok) {
-          const data = await res.json();
-          setShareCode(data.shareCode);
+      if (!error) {
+          setShareCode(shareCode);
           setShowShareOptions(false);
           setShowShareModal(true);
       } else {
-          const errorData = await res.json().catch(() => ({}));
-          showNotification(`Sikertelen megosztás: ${errorData.message || res.statusText}`, 'error');
+          showNotification(`Sikertelen megosztás: ${error.message}`, 'error');
       }
     } catch (err) {
       showNotification('Hiba a megosztás során: ' + err.message, 'error');
@@ -493,7 +441,7 @@ export default function PlaygroundPage() {
                   language={language === 'sql' ? 'sql' : language === 'cpp' ? 'cpp' : language} 
                   value={code}
                   onChange={(val) => setCode(val)}
-                  theme="vs-dark"
+                  theme={isDark ? "vs-dark" : "light"}
                   options={{
                       minimap: { enabled: false },
                       fontSize: 14,
@@ -506,20 +454,20 @@ export default function PlaygroundPage() {
           </div>
 
           {/* Output / Terminal */}
-          <div className="h-1/3 md:h-full md:w-1/2 bg-slate-900 p-0 overflow-hidden flex flex-col relative border-t md:border-t-0 md:border-l border-slate-700">
-              <div className="flex items-center justify-between p-2 border-b border-slate-700 absolute top-0 left-0 right-0 z-10 bg-slate-900/90">
+          <div className="h-1/3 md:h-full md:w-1/2 bg-white dark:bg-slate-900 p-0 overflow-hidden flex flex-col relative border-t md:border-t-0 md:border-l border-slate-200 dark:border-slate-700">
+              <div className="flex items-center justify-between p-2 border-b border-slate-200 dark:border-slate-700 absolute top-0 left-0 right-0 z-10 bg-white/90 dark:bg-slate-900/90">
                   <div className="flex items-center gap-2">
-                      <span className="uppercase text-xs font-bold tracking-widest text-slate-400">Eredmény / Terminál</span>
+                      <span className="uppercase text-xs font-bold tracking-widest text-slate-500 dark:text-slate-400">Eredmény / Terminál</span>
                       <div className="group relative">
-                          <span className="cursor-help text-slate-500 text-[10px] border border-slate-600 rounded-full w-4 h-4 flex items-center justify-center">?</span>
-                          <div className="pointer-events-none absolute left-0 top-6 w-64 p-2 bg-slate-800 text-slate-200 text-[10px] rounded shadow-xl opacity-0 group-hover:opacity-100 transition-opacity z-50 border border-slate-700">
+                          <span className="cursor-help text-slate-400 dark:text-slate-500 text-[10px] border border-slate-300 dark:border-slate-600 rounded-full w-4 h-4 flex items-center justify-center">?</span>
+                          <div className="pointer-events-none absolute left-0 top-6 w-64 p-2 bg-white dark:bg-slate-800 text-slate-700 dark:text-slate-200 text-[10px] rounded shadow-xl opacity-0 group-hover:opacity-100 transition-opacity z-50 border border-slate-200 dark:border-slate-700">
                               Az interaktív bevitel (pl. neved beírása) akkor érhető el, ha az adott nyelv telepítve van a szerveren. A weboldalon minden támogatott nyelvhez biztosítjuk a teljes interaktív környezetet.
                           </div>
                       </div>
                   </div>
                   <button 
                     onClick={handleClearTerminal}
-                    className="text-[10px] bg-slate-800 hover:bg-slate-700 text-slate-400 px-2 py-1 rounded transition-colors uppercase font-bold"
+                    className="text-[10px] bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 text-slate-600 dark:text-slate-400 px-2 py-1 rounded transition-colors uppercase font-bold border border-slate-200 dark:border-slate-700"
                   >
                     Törlés
                   </button>

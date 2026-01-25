@@ -1,22 +1,15 @@
 import React from 'react';
 import { supabase } from '../supabaseClient';
 
-const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:3000';
-
 export default function PlacementIntro({ session, onStart, onSkip }) {
   const handleSkip = async () => {
     try {
-      const res = await fetch(`${API_URL}/users/complete-placement`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          Authorization: `Bearer ${session.access_token}`,
-        },
-        body: JSON.stringify({ proficiency: undefined }), // Keep existing
+      const { error } = await supabase.rpc('complete_placement', {
+          p_proficiency: null
       });
-      if (res.ok) {
-        onSkip();
-      }
+      
+      if (error) throw error;
+      onSkip();
     } catch (err) {
       console.error('Failed to skip placement', err);
     }

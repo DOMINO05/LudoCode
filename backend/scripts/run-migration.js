@@ -13,10 +13,10 @@ async function runMigration() {
     await client.connect();
     console.log('Connected to database.');
 
-    const sqlPath = path.join(__dirname, '..', '..', 'migrations', '009_shared_snippets.sql');
+    const sqlPath = path.join(__dirname, '..', '..', 'migrations', '023_mistakes_rpc.sql');
     const sql = fs.readFileSync(sqlPath, 'utf8');
 
-    console.log('Running migration: 009_shared_snippets.sql');
+    console.log('Running migration: 023_mistakes_rpc.sql');
     await client.query(sql);
     console.log('Migration completed successfully.');
 
