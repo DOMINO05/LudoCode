@@ -1,8 +1,8 @@
 import React from 'react';
 
 const SanityWarningModal = ({ onClose, onRecover }) => (
-  <div className="fixed inset-0 bg-black/60 backdrop-blur-md flex items-center justify-center z-[110] animate-fade-in p-4">
-    <div className="bg-surface-light dark:bg-surface-dark p-8 md:p-12 rounded-3xl max-w-md w-full text-center border-2 border-blue-500 shadow-[0_0_30px_rgba(59,130,246,0.3)] animate-pop relative overflow-hidden">
+  <div className="fixed top-0 left-0 w-full h-[100dvh] bg-black/60 backdrop-blur-md flex items-center justify-center z-[9999] animate-fade-in p-4">
+    <div className="bg-surface-light dark:bg-surface-dark p-8 md:p-12 rounded-3xl max-w-md w-full text-center border-2 border-blue-500 shadow-[0_0_30px_rgba(59,130,246,0.3)] animate-pop relative overflow-y-auto max-h-[90vh]">
       {/* Background decoration */}
       <div className="absolute -top-10 -right-10 w-32 h-32 bg-blue-500/10 rounded-full blur-3xl"></div>
       <div className="absolute -bottom-10 -left-10 w-32 h-32 bg-primary/10 rounded-full blur-3xl"></div>

@@ -16,8 +16,8 @@ export default function PlacementIntro({ session, onStart, onSkip }) {
   };
 
   return (
-    <div className="fixed inset-0 z-[200] bg-slate-900/90 backdrop-blur-md flex items-center justify-center p-4">
-      <div className="bg-surface-light dark:bg-surface-dark max-w-lg w-full rounded-3xl shadow-2xl overflow-hidden relative animate-pop">
+    <div className="fixed top-0 left-0 w-full h-[100dvh] z-[9999] bg-slate-900/90 backdrop-blur-md flex items-center justify-center p-4">
+      <div className="bg-surface-light dark:bg-surface-dark max-w-lg w-full rounded-3xl shadow-2xl overflow-y-auto max-h-[90vh] relative animate-pop">
         {/* Skip button */}
         <button 
           onClick={handleSkip}

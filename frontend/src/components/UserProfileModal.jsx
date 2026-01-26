@@ -60,9 +60,9 @@ const UserProfileModal = ({ userId, session, onClose }) => {
     if (!userId) return null;
 
     return (
-        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm animate-fade-in" onClick={onClose}>
+        <div className="fixed top-0 left-0 w-full h-[100dvh] z-[9999] flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm animate-fade-in" onClick={onClose}>
             <div 
-                className="bg-surface-light dark:bg-surface-dark w-full max-w-4xl max-h-[90vh] rounded-3xl shadow-2xl overflow-hidden flex flex-col animate-scale-in"
+                className="bg-surface-light dark:bg-surface-dark w-full max-w-4xl max-h-[90vh] rounded-3xl shadow-2xl overflow-y-auto flex flex-col animate-scale-in"
                 onClick={e => e.stopPropagation()}
             >
                 {/* Header */}

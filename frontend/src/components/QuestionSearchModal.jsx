@@ -51,8 +51,8 @@ export default function QuestionSearchModal({ isOpen, onClose, onSelect, session
   if (!isOpen) return null;
 
   return (
-    <div className="fixed inset-0 bg-black/60 backdrop-blur-sm flex items-center justify-center z-[100] p-4">
-      <div className="bg-surface-light dark:bg-surface-dark w-full max-w-4xl max-h-[90vh] rounded-3xl shadow-2xl overflow-hidden flex flex-col border border-slate-200 dark:border-slate-700">
+    <div className="fixed top-0 left-0 w-full h-[100dvh] z-[9999] bg-black/60 backdrop-blur-sm flex items-center justify-center p-4">
+      <div className="bg-surface-light dark:bg-surface-dark w-full max-w-4xl max-h-[90vh] rounded-3xl shadow-2xl overflow-y-auto flex flex-col border border-slate-200 dark:border-slate-700">
         <div className="p-6 border-b border-slate-100 dark:border-slate-800 flex justify-between items-center">
           <h2 className="text-2xl font-black">Kérdések Hozzáadása</h2>
           <button onClick={onClose} className="text-2xl hover:scale-110 transition-transform">✕</button>

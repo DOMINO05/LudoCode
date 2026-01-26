@@ -465,12 +465,20 @@ export default function PlaygroundPage() {
                           </div>
                       </div>
                   </div>
-                  <button 
-                    onClick={handleClearTerminal}
-                    className="text-[10px] bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 text-slate-600 dark:text-slate-400 px-2 py-1 rounded transition-colors uppercase font-bold border border-slate-200 dark:border-slate-700"
-                  >
-                    Törlés
-                  </button>
+                  <div className="flex items-center gap-2">
+                      <div className="hidden lg:block text-[10px] text-amber-600 dark:text-amber-400 font-bold bg-amber-50 dark:bg-amber-900/20 px-2 py-1 rounded border border-amber-100 dark:border-amber-800/30">
+                          ⚠️ Az interaktív bevitel (pl. input()) jelenleg nem támogatott.
+                      </div>
+                      <button 
+                        onClick={handleClearTerminal}
+                        className="text-[10px] bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 text-slate-600 dark:text-slate-400 px-2 py-1 rounded transition-colors uppercase font-bold border border-slate-200 dark:border-slate-700"
+                      >
+                        Törlés
+                      </button>
+                  </div>
+              </div>
+              <div className="lg:hidden bg-amber-50 dark:bg-amber-900/20 p-2 text-[10px] text-amber-600 dark:text-amber-400 font-bold border-b border-amber-100 dark:border-amber-800/30 text-center">
+                  ⚠️ Interaktív bevitel (pl. input()) nem támogatott.
               </div>
               <div 
                 ref={terminalRef} 

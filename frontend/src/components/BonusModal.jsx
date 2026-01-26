@@ -1,8 +1,8 @@
 import React from 'react';
 
 const BonusModal = ({ onClose, message, bonus, quote }) => (
-  <div className="fixed inset-0 bg-black/50 backdrop-blur-sm flex items-center justify-center z-50 animate-fade-in">
-    <div className="bg-surface-light dark:bg-surface-dark p-10 rounded-2xl max-w-md w-[90%] text-center border-2 border-secondary shadow-[0_0_20px_rgba(255,215,0,0.5)] animate-pop relative">
+  <div className="fixed top-0 left-0 w-full h-[100dvh] bg-black/50 backdrop-blur-sm flex items-center justify-center z-[9999] animate-fade-in">
+    <div className="bg-surface-light dark:bg-surface-dark p-10 rounded-2xl max-w-md w-[90%] text-center border-2 border-secondary shadow-[0_0_20px_rgba(255,215,0,0.5)] animate-pop relative overflow-y-auto max-h-[90vh]">
       <div className="text-6xl mb-5">🎁</div>
       <h2 className="text-secondary text-3xl font-bold mb-2">Napi Bónusz!</h2>
       <p className="text-xl mb-4 text-slate-700 dark:text-slate-300">
