@@ -9,16 +9,36 @@ export default function QuestionCreatorPage() {
   const [qType, setQType] = useState('theory');
   const [title, setTitle] = useState('');
   const [description, setDescription] = useState('');
-  const [languageId, setLanguageId] = useState('python');
+  const [languageId, setLanguageId] = useState('');
+  const [languages, setLanguages] = useState([]);
   const [content, setContent] = useState({});
   const [loading, setLoading] = useState(false);
-  const [initialLoading, setInitialLoading] = useState(!!questionId);
+  const [initialLoading, setInitialLoading] = useState(true);
 
   React.useEffect(() => {
-    if (questionId) {
-      fetchQuestion();
-    }
+    const init = async () => {
+        await fetchLanguages();
+        if (questionId) {
+            await fetchQuestion();
+        }
+        setInitialLoading(false);
+    };
+    init();
   }, [questionId]);
+
+  const fetchLanguages = async () => {
+      try {
+          const { data, error } = await supabase.from('languages').select('*');
+          if (!error && data) {
+              setLanguages(data);
+              if (!languageId && data.length > 0) {
+                  setLanguageId(data[0].id);
+              }
+          }
+      } catch (err) {
+          console.error("Failed to fetch languages", err);
+      }
+  };
 
   const fetchQuestion = async () => {
     try {
@@ -402,8 +422,11 @@ export default function QuestionCreatorPage() {
                     onChange={(e) => setLanguageId(e.target.value)}
                     className="w-full p-3 rounded-xl bg-slate-100 dark:bg-slate-700 outline-none font-bold"
                 >
-                    <option value="python">Python</option>
-                    <option value="java">Java</option>
+                    {languages.map(lang => (
+                        <option key={lang.id} value={lang.id}>
+                            {lang.display_name || lang.name}
+                        </option>
+                    ))}
                 </select>
             </div>
           </div>
