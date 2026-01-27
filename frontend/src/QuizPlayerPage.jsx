@@ -31,6 +31,7 @@ export default function QuizPlayerPage() {
   const [result, setResult] = useState(null);
   const [showFeedback, setShowFeedback] = useState(false);
   const [isAiLoading, setIsAiLoading] = useState(false);
+  const [showStaticHint, setShowStaticHint] = useState(false);
   const [submitting, setSubmitting] = useState(false);
 
   useEffect(() => {
@@ -100,6 +101,7 @@ export default function QuizPlayerPage() {
       let isCorrect = false;
       let output = '';
       const content = question.content;
+      setShowStaticHint(false);
 
       if (question.qType === 'coding' || question.qType === 'construction') {
           // Piston API call
@@ -159,9 +161,13 @@ export default function QuizPlayerPage() {
       setResult(resultData);
       setShowFeedback(true);
 
-      // AI Explanation Stream
+      // AI Explanation Stream with Timeout Fallback
       if (!isCorrect) {
           setIsAiLoading(true);
+          const hintTimer = setTimeout(() => {
+              setShowStaticHint(true);
+          }, 3000);
+
           try {
               const response = await fetch(`${import.meta.env.VITE_SUPABASE_URL}/functions/v1/ai-explanation`, {
                   method: 'POST',
@@ -187,12 +193,19 @@ export default function QuizPlayerPage() {
                       const { done, value } = await reader.read();
                       if (done) break;
                       const chunk = decoder.decode(value, { stream: true });
+                      if (chunk) {
+                          clearTimeout(hintTimer);
+                          setShowStaticHint(false);
+                      }
                       fullText += chunk;
                       setResult(prev => ({ ...prev, ai_explanation: fullText }));
                   }
+              } else {
+                  setShowStaticHint(true);
               }
           } catch (err) {
               console.error('AI explanation streaming failed', err);
+              setShowStaticHint(true);
           } finally {
               setIsAiLoading(false);
           }
@@ -378,9 +391,11 @@ export default function QuizPlayerPage() {
                         <div className="text-4xl">{result.isCorrect ? '🎉' : '💡'}</div>
                         <div className="flex-1">
                             <div className="font-black text-xl mb-1">{result.isCorrect ? 'Helyes!' : 'Sajnos nem...'}</div>
-                            <div className="text-sm opacity-80 font-medium">
-                                {result.isCorrect ? 'Szép munka, csak így tovább!' : (result.output || 'Próbáld újra a következőnél!')}
-                            </div>
+                            {(result.isCorrect || showStaticHint) && (
+                                <div className="text-sm opacity-80 font-medium animate-in fade-in duration-500">
+                                    {result.isCorrect ? 'Szép munka, csak így tovább!' : (result.output || 'Próbáld újra a következőnél!')}
+                                </div>
+                            )}
                         </div>
                     </div>
 

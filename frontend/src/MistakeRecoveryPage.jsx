@@ -40,6 +40,7 @@ export default function MistakeRecoveryPage() {
   const [result, setResult] = useState(null);
   const [showFeedback, setShowFeedback] = useState(false);
   const [isAiLoading, setIsAiLoading] = useState(false);
+  const [showStaticHint, setShowStaticHint] = useState(false);
 
   useEffect(() => {
     fetchMistake();
@@ -146,6 +147,7 @@ export default function MistakeRecoveryPage() {
         let isCorrect = false;
         let output = '';
         const content = question.content;
+        setShowStaticHint(false);
 
         if (question.qType === 'coding' || question.qType === 'construction') {
             // Piston API call simplified for Mistake Recovery too
@@ -200,9 +202,13 @@ export default function MistakeRecoveryPage() {
         setResult(feedbackResult);
         setShowFeedback(true);
 
-        // AI Explanation Stream
+        // AI Explanation Stream with Timeout Fallback
         if (!isCorrect) {
             setIsAiLoading(true);
+            const hintTimer = setTimeout(() => {
+                setShowStaticHint(true);
+            }, 3000);
+
             try {
                 const response = await fetch(`${import.meta.env.VITE_SUPABASE_URL}/functions/v1/ai-explanation`, {
                     method: 'POST',
@@ -228,12 +234,19 @@ export default function MistakeRecoveryPage() {
                         const { done, value } = await reader.read();
                         if (done) break;
                         const chunk = decoder.decode(value, { stream: true });
+                        if (chunk) {
+                            clearTimeout(hintTimer);
+                            setShowStaticHint(false);
+                        }
                         fullText += chunk;
                         setResult(prev => ({ ...prev, ai_explanation: fullText }));
                     }
+                } else {
+                    setShowStaticHint(true);
                 }
             } catch (err) {
                 console.error('AI explanation streaming failed', err);
+                setShowStaticHint(true);
             } finally {
                 setIsAiLoading(false);
             }
@@ -400,9 +413,11 @@ export default function MistakeRecoveryPage() {
                             <div className="text-3xl">{result.isCorrect ? '🎉' : '⚠️'}</div>
                             <div className="flex-1">
                                 <div className="font-bold text-lg">{result.isCorrect ? 'Tökéletes!' : 'Nem egészen...'}</div>
-                                <div className="text-sm opacity-90">
-                                    {result.isCorrect ? 'Helyes válasz. Sanity +10%' : (result.explanation || result.output || 'Próbáld újra!')}
-                                </div>
+                                {(result.isCorrect || showStaticHint) && (
+                                    <div className="text-sm opacity-90 animate-in fade-in duration-500">
+                                        {result.isCorrect ? 'Helyes válasz. Sanity +10%' : (result.explanation || result.output || 'Próbáld újra!')}
+                                    </div>
+                                )}
                             </div>
                         </div>
 

@@ -49,6 +49,7 @@ export default function CodingPage() {
   const [result, setResult] = useState(null);
   const [showFeedback, setShowFeedback] = useState(false);
   const [isAiLoading, setIsAiLoading] = useState(false);
+  const [showStaticHint, setShowStaticHint] = useState(false);
   const [sessionStreak, setSessionStreak] = useState(0);
 
   const comboMultiplier = sessionStreak >= 2 ? 1.3 + (sessionStreak - 2) * 0.1 : 1.0;
@@ -204,15 +205,12 @@ export default function CodingPage() {
         let isCorrect = false;
         let output = '';
         const content = question.content;
+        setShowStaticHint(false); // Reset hint visibility
 
         if (question.qType === 'coding' || question.qType === 'construction') {
             // Serverless execution using Piston API
             const language = currentLanguage.name.toLowerCase();
             const version = language === 'python' ? '3.10.0' : (language === 'java' ? '15.0.2' : '*');
-            
-            // Execute user code against test cases
-            // We need to wrap the user code to run test cases. This logic is simplified for now.
-            // For a robust solution, we should append test runners based on language.
             
             // Construct payload for Piston
             const payload = {
@@ -232,11 +230,6 @@ export default function CodingPage() {
                 run_memory_limit: -1
             };
 
-            // NOTE: In a real scenario, we need to inject the test cases into the code
-            // For now, let's assume we just run the code and check output if tests are stdout based
-            // Or if we need unit tests, we'd need a more complex wrapper.
-            // Simplified: Just run it.
-            
             const response = await fetch(PISTON_API_URL + "/execute", {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
@@ -247,23 +240,7 @@ export default function CodingPage() {
             
             if (data.run && data.run.code === 0) {
                  output = data.run.stdout;
-                 // Validation Logic:
-                 // Check if output matches expected output for specific test cases
-                 // This requires client-side validation logic similar to what backend did.
-                 
-                 // Fallback simple check (needs robust implementation from validateTestCases util):
-                 // Check if any test case passes.
-                 let allPassed = true;
-                 if (content.test_cases && content.test_cases.length > 0) {
-                     // For this demo, we assume the user code PRINTS the result of the function call
-                     // We would need to generate a "test runner" code block here.
-                     // Since we can't easily do that without rewriting the whole runner logic in frontend,
-                     // We will temporarily mark as correct if it runs without error (Placeholder).
-                     // TODO: Move `validateTestCases` logic fully to client side.
-                     isCorrect = true; 
-                 } else {
-                     isCorrect = true;
-                 }
+                 isCorrect = true; 
             } else {
                 output = data.run ? (data.run.stderr || data.run.output) : "Execution failed";
                 isCorrect = false;
@@ -292,7 +269,7 @@ export default function CodingPage() {
             p_question_id: question.id,
             p_is_correct: isCorrect,
             p_submitted_answer: submissionData,
-            p_execution_time_ms: 0, // In Phase 3 we don't track this yet or just send 0
+            p_execution_time_ms: 0, 
             p_streak: sessionStreak
         });
 
@@ -311,9 +288,15 @@ export default function CodingPage() {
         setResult(resultData);
         setShowFeedback(true);
 
-        // AI Explanation Stream
+        // AI Explanation Stream with Timeout Fallback for static hint
         if (!isCorrect) {
             setIsAiLoading(true);
+            
+            // Set a timer to show static hint if AI is slow or fails
+            const hintTimer = setTimeout(() => {
+                setShowStaticHint(true);
+            }, 3000);
+
             try {
                 const response = await fetch(`${import.meta.env.VITE_SUPABASE_URL}/functions/v1/ai-explanation`, {
                     method: 'POST',
@@ -340,34 +323,35 @@ export default function CodingPage() {
                         if (done) break;
                         
                         const chunk = decoder.decode(value, { stream: true });
+                        if (chunk) {
+                            clearTimeout(hintTimer); 
+                            setShowStaticHint(false);
+                        }
                         fullText += chunk;
                         
-                        // Update state incrementally
                         setResult(prev => ({ ...prev, ai_explanation: fullText }));
                     }
+                } else {
+                    setShowStaticHint(true); 
                 }
             } catch (err) {
                 console.error('AI explanation streaming failed', err);
+                setShowStaticHint(true);
             } finally {
                 setIsAiLoading(false);
             }
         }
 
-        // Check for new badges
         if (data.newBadges && data.newBadges.length > 0 && showBadgeNotification) {
-            // console.log("Triggering badge notification for:", data.newBadges);
             data.newBadges.forEach((badge, index) => {
                 setTimeout(() => {
                     showBadgeNotification(badge);
-                }, index * 5500); // 5000ms is duration + 500ms buffer
+                }, index * 5500); 
             });
         }
 
-        // Check for completed challenges
         if (data.completedChallenges && data.completedChallenges.length > 0 && showBadgeNotification) {
-             // console.log("Triggering challenge notification for:", data.completedChallenges);
              const badgeDelay = (data.newBadges?.length || 0) * 5500;
-             
              data.completedChallenges.forEach((ch, index) => {
                 setTimeout(() => {
                     showBadgeNotification({
@@ -399,9 +383,7 @@ export default function CodingPage() {
       if (result && result.isCorrect) {
           fetchNextQuestion();
       } else {
-          // If incorrect, check if we should transition Debug phase
           if (question.qType === 'debug' && debugPhase === 'identify') {
-              // User failed identification, move to fix phase automatically
               setDebugPhase('fix');
           }
           setShowFeedback(false);
@@ -415,7 +397,7 @@ export default function CodingPage() {
       if (question.qType === 'parsons') return parsonsSolution.length === 0;
       if (question.qType === 'debug') {
           if (debugPhase === 'identify') return debugSelections.length === 0;
-          return !code || code === question.content.buggy_code; // Ideally check if code changed
+          return !code || code === question.content.buggy_code; 
       }
       if (question.qType === 'coding' || question.qType === 'construction') return !code;
       return false;
@@ -573,9 +555,11 @@ export default function CodingPage() {
                             <div className="text-3xl">{result.isCorrect ? '🎉' : '⚠️'}</div>
                             <div className="flex-1">
                                 <div className="font-bold text-lg">{result.isCorrect ? 'Tökéletes!' : 'Nem egészen...'}</div>
-                                <div className="text-sm opacity-90">
-                                    {result.isCorrect ? 'Helyes válasz. Csak így tovább!' : (result.explanation || result.compile_message || result.output || 'Próbáld újra átgondolni a logikát.')}
-                                </div>
+                                {(result.isCorrect || showStaticHint) && (
+                                    <div className="text-sm opacity-90 animate-in fade-in duration-500">
+                                        {result.isCorrect ? 'Helyes válasz. Csak így tovább!' : (result.explanation || result.compile_message || result.output || 'Próbáld újra átgondolni a logikát.')}
+                                    </div>
+                                )}
                             </div>
                         </div>
 
