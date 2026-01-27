@@ -30,6 +30,7 @@ export default function QuizPlayerPage() {
   // Feedback State
   const [result, setResult] = useState(null);
   const [showFeedback, setShowFeedback] = useState(false);
+  const [isAiLoading, setIsAiLoading] = useState(false);
   const [submitting, setSubmitting] = useState(false);
 
   useEffect(() => {
@@ -160,6 +161,7 @@ export default function QuizPlayerPage() {
 
       // AI Explanation Stream
       if (!isCorrect) {
+          setIsAiLoading(true);
           try {
               const response = await fetch(`${import.meta.env.VITE_SUPABASE_URL}/functions/v1/ai-explanation`, {
                   method: 'POST',
@@ -191,6 +193,8 @@ export default function QuizPlayerPage() {
               }
           } catch (err) {
               console.error('AI explanation streaming failed', err);
+          } finally {
+              setIsAiLoading(false);
           }
       }
 
@@ -369,14 +373,30 @@ export default function QuizPlayerPage() {
           {/* Footer / Feedback */}
           <div className="mt-8 pt-6 border-t border-slate-100 dark:border-slate-800 shrink-0">
             {showFeedback && result && (
-                <div className={`mb-6 p-6 rounded-3xl flex items-start gap-4 animate-in slide-in-from-bottom-4 duration-500 ${result.isCorrect ? 'bg-green-100 text-green-800 dark:bg-green-900/40 dark:text-green-100' : 'bg-red-100 text-red-800 dark:bg-red-900/40 dark:text-red-100'}`}>
-                    <div className="text-4xl">{result.isCorrect ? '🎉' : '💡'}</div>
-                    <div className="flex-1">
-                        <div className="font-black text-xl mb-1">{result.isCorrect ? 'Helyes!' : 'Sajnos nem...'}</div>
-                        <div className="text-sm opacity-80 font-medium">
-                            {result.isCorrect ? 'Szép munka, csak így tovább!' : (result.output || 'Próbáld újra a következőnél!')}
+                <div className={`mb-6 p-6 rounded-3xl flex flex-col gap-4 animate-in slide-in-from-bottom-4 duration-500 ${result.isCorrect ? 'bg-green-100 text-green-800 dark:bg-green-900/40 dark:text-green-100' : 'bg-red-100 text-red-800 dark:bg-red-900/40 dark:text-red-100'}`}>
+                    <div className="flex items-start gap-4">
+                        <div className="text-4xl">{result.isCorrect ? '🎉' : '💡'}</div>
+                        <div className="flex-1">
+                            <div className="font-black text-xl mb-1">{result.isCorrect ? 'Helyes!' : 'Sajnos nem...'}</div>
+                            <div className="text-sm opacity-80 font-medium">
+                                {result.isCorrect ? 'Szép munka, csak így tovább!' : (result.output || 'Próbáld újra a következőnél!')}
+                            </div>
                         </div>
                     </div>
+
+                    {/* AI Mentor Section */}
+                    {!result.isCorrect && (isAiLoading || result.ai_explanation) && (
+                        <div className="pt-4 border-t border-red-200 dark:border-red-800/50">
+                            <div className="text-xs font-black uppercase tracking-wider text-red-600/50 dark:text-red-400/50 mb-2 flex items-center gap-1">
+                                <span className={isAiLoading ? "animate-spin" : "animate-pulse"}>✨</span> AI Mentor
+                            </div>
+                            <div className="text-sm leading-relaxed font-medium">
+                                {result.ai_explanation}
+                                {isAiLoading && !result.ai_explanation && <span className="italic opacity-50">Gondolkodik...</span>}
+                                {isAiLoading && result.ai_explanation && <span className="inline-block w-1.5 h-4 ml-1 bg-red-400 animate-pulse align-middle"></span>}
+                            </div>
+                        </div>
+                    )}
                 </div>
             )}
 

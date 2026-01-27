@@ -48,6 +48,7 @@ export default function CodingPage() {
   // Result & Feedback
   const [result, setResult] = useState(null);
   const [showFeedback, setShowFeedback] = useState(false);
+  const [isAiLoading, setIsAiLoading] = useState(false);
   const [sessionStreak, setSessionStreak] = useState(0);
 
   const comboMultiplier = sessionStreak >= 2 ? 1.3 + (sessionStreak - 2) * 0.1 : 1.0;
@@ -312,6 +313,7 @@ export default function CodingPage() {
 
         // AI Explanation Stream
         if (!isCorrect) {
+            setIsAiLoading(true);
             try {
                 const response = await fetch(`${import.meta.env.VITE_SUPABASE_URL}/functions/v1/ai-explanation`, {
                     method: 'POST',
@@ -346,6 +348,8 @@ export default function CodingPage() {
                 }
             } catch (err) {
                 console.error('AI explanation streaming failed', err);
+            } finally {
+                setIsAiLoading(false);
             }
         }
 
@@ -564,25 +568,30 @@ export default function CodingPage() {
             <div className="max-w-md mx-auto w-full flex flex-col gap-4">
                 {/* Inline Feedback Area */}
                 {showFeedback && result && (
-                    <div className={`rounded-xl p-4 flex items-start gap-3 animate-in fade-in slide-in-from-bottom-2 ${result.isCorrect ? 'bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-100' : 'bg-red-100 text-red-800 dark:bg-red-900 dark:text-red-100'}`}>
-                        <div className="text-3xl">{result.isCorrect ? '🎉' : '⚠️'}</div>
-                        <div className="flex-1">
-                            <div className="font-bold text-lg">{result.isCorrect ? 'Tökéletes!' : 'Nem egészen...'}</div>
-                            {!result.isCorrect && result.ai_explanation ? (
-                                <div className="mt-1">
-                                    <div className="text-xs font-black uppercase tracking-wider text-red-600/50 dark:text-red-400/50 mb-1 flex items-center gap-1">
-                                        <span className="animate-pulse">✨</span> AI Mentor Magyarázata
-                                    </div>
-                                    <div className="text-sm leading-relaxed font-medium">
-                                        {result.ai_explanation}
-                                    </div>
-                                </div>
-                            ) : (
+                    <div className={`rounded-xl p-4 flex flex-col gap-3 animate-in fade-in slide-in-from-bottom-2 ${result.isCorrect ? 'bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-100' : 'bg-red-100 text-red-800 dark:bg-red-900 dark:text-red-100'}`}>
+                        <div className="flex items-start gap-3">
+                            <div className="text-3xl">{result.isCorrect ? '🎉' : '⚠️'}</div>
+                            <div className="flex-1">
+                                <div className="font-bold text-lg">{result.isCorrect ? 'Tökéletes!' : 'Nem egészen...'}</div>
                                 <div className="text-sm opacity-90">
                                     {result.isCorrect ? 'Helyes válasz. Csak így tovább!' : (result.explanation || result.compile_message || result.output || 'Próbáld újra átgondolni a logikát.')}
                                 </div>
-                            )}
+                            </div>
                         </div>
+
+                        {/* AI Section - Distinct from Hint */}
+                        {!result.isCorrect && (isAiLoading || result.ai_explanation) && (
+                            <div className="mt-2 pt-3 border-t border-red-200 dark:border-red-800/50">
+                                <div className="text-xs font-black uppercase tracking-wider text-red-600/50 dark:text-red-400/50 mb-2 flex items-center gap-1">
+                                    <span className={isAiLoading ? "animate-spin" : "animate-pulse"}>✨</span> AI Mentor
+                                </div>
+                                <div className="text-sm leading-relaxed font-medium">
+                                    {result.ai_explanation}
+                                    {isAiLoading && !result.ai_explanation && <span className="italic opacity-50">Gondolkodik...</span>}
+                                    {isAiLoading && result.ai_explanation && <span className="inline-block w-1.5 h-4 ml-1 bg-red-400 animate-pulse align-middle"></span>}
+                                </div>
+                            </div>
+                        )}
                     </div>
                 )}
                 
