@@ -46,7 +46,7 @@ export default function CommunityPage() {
             .from('shared_snippets')
             .select('share_code')
             .eq('share_code', code)
-            .single();
+            .maybeSingle();
             
         if (data) {
             navigate(`/share/${code}`);
