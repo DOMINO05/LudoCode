@@ -161,15 +161,7 @@ export default function QuizEditorPage() {
                 onClick={() => {
                     const newVal = !isPublic;
                     setIsPublic(newVal);
-                    // Force update immediately for toggle
-                    fetch(`${API_URL}/quizzes/${id}`, {
-                        method: 'PATCH',
-                        headers: {
-                          'Content-Type': 'application/json',
-                          Authorization: `Bearer ${session.access_token}`,
-                        },
-                        body: JSON.stringify({ title, isPublic: newVal }),
-                      });
+                    handleUpdateQuiz({ isPublic: newVal });
                 }}
                 className={`flex-1 py-2 px-4 rounded-xl font-bold transition-all ${
                   isPublic

@@ -66,7 +66,13 @@ export default function QuizPlayerPage() {
           ...data,
           questions: data.questions.map(q => ({
               ...q,
-              orderIndex: q.order_index
+              orderIndex: q.order_index,
+              question: {
+                  ...q.question,
+                  q_type: q.question.q_type, // Ensure it's there
+                  qType: q.question.q_type,   // Map for compatibility
+                  languageId: q.question.language_id
+              }
           }))
       };
       
@@ -83,15 +89,15 @@ export default function QuizPlayerPage() {
     const question = currentQQ.question;
     
     let submissionData = null;
-    if (question.qType === 'theory' || question.qType === 'predict_output') {
+    if (question.q_type === 'theory' || question.q_type === 'predict_output') {
       submissionData = selectedOption;
-    } else if (question.qType === 'parsons') {
+    } else if (question.q_type === 'parsons') {
       submissionData = JSON.stringify(parsonsSolution.map(b => b.id));
     } else {
       submissionData = code;
     }
 
-    if (!submissionData && question.qType !== 'debug') {
+    if (!submissionData && question.q_type !== 'debug') {
         showNotification('Kérlek adj meg egy választ!', 'info');
         return;
     }
@@ -103,7 +109,7 @@ export default function QuizPlayerPage() {
       const content = question.content;
       setShowStaticHint(false);
 
-      if (question.qType === 'coding' || question.qType === 'construction') {
+      if (question.q_type === 'coding' || question.q_type === 'construction') {
           // Piston API call
           const language = (question.language?.name || 'python').toLowerCase();
           const payload = {
@@ -120,12 +126,12 @@ export default function QuizPlayerPage() {
           const pData = await response.json();
           isCorrect = pData.run && pData.run.code === 0;
           output = pData.run ? (pData.run.stdout || pData.run.stderr) : "Execution failed";
-      } else if (question.qType === 'parsons') {
+      } else if (question.q_type === 'parsons') {
           const correctOrder = content.correct_order;
           const submittedOrder = JSON.parse(submissionData);
           isCorrect = JSON.stringify(correctOrder) === JSON.stringify(submittedOrder);
           output = isCorrect ? 'Sikeres futtatás' : 'Hibás sorrend';
-      } else if (question.qType === 'debug') {
+      } else if (question.q_type === 'debug') {
           const expectedFullCode = (content.buggy_code || '').replace(content.error_location || '', content.correct_code || '');
           isCorrect = submissionData.trim() === expectedFullCode.trim();
           output = isCorrect ? 'Sikeres javítás' : 'Még mindig hibás a kód';
@@ -335,7 +341,7 @@ export default function QuizPlayerPage() {
   const renderQuestion = () => {
     const question = currentQQ.question;
     
-    switch (question.qType) {
+    switch (question.q_type) {
       case 'theory': 
         return <TheoryComponent question={question} selectedAnswer={selectedOption} onSelect={setSelectedOption} />;
       case 'predict_output': 

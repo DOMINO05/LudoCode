@@ -17,7 +17,7 @@ export default function CommunityPage() {
   const fetchPublicQuizzes = async () => {
     try {
       const { data, error } = await supabase
-        .from('custom_quizzes')
+        .from('quizzes')
         .select('*, creator:profiles(username, bio)')
         .eq('is_public', true)
         .order('created_at', { ascending: false });

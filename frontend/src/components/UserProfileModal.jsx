@@ -32,8 +32,8 @@ const UserProfileModal = ({ userId, session, onClose }) => {
     const handleFollow = async () => {
         try {
             const { error } = await supabase.from('friendship').insert({
-                user_id: session.user.id,
-                friend_id: userId
+                follower_id: session.user.id,
+                following_id: userId
             });
             
             if (error) throw error;
@@ -46,8 +46,8 @@ const UserProfileModal = ({ userId, session, onClose }) => {
     const handleUnfollow = async () => {
         try {
             const { error } = await supabase.from('friendship').delete().match({
-                user_id: session.user.id,
-                friend_id: userId
+                follower_id: session.user.id,
+                following_id: userId
             });
             
             if (error) throw error;
