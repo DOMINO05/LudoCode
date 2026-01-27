@@ -145,26 +145,6 @@ export default function QuizPlayerPage() {
 
       if (error) throw error;
 
-      let ai_explanation = null;
-      if (!isCorrect) {
-          try {
-              const { data: aiData, error: aiError } = await supabase.functions.invoke('ai-explanation', {
-                  body: {
-                      questionTitle: question.title,
-                      questionDescription: question.description,
-                      correctAnswer: content.correct_answer || content.correct_code || content.correct_order,
-                      userAnswer: submissionData,
-                      language: question.language?.name || 'python'
-                  }
-              });
-              if (!aiError && aiData) {
-                  ai_explanation = aiData.explanation;
-              }
-          } catch (err) {
-              console.error('AI explanation failed', err);
-          }
-      }
-
       const resultData = {
           ...data,
           isCorrect,
@@ -172,11 +152,47 @@ export default function QuizPlayerPage() {
           explanation: content.explanation,
           correct_answer: content.correct_answer || content.correct_code || content.correct_order,
           hint: question.hint,
-          ai_explanation
+          ai_explanation: null
       };
 
       setResult(resultData);
       setShowFeedback(true);
+
+      // AI Explanation Stream
+      if (!isCorrect) {
+          try {
+              const response = await fetch(`${import.meta.env.VITE_SUPABASE_URL}/functions/v1/ai-explanation`, {
+                  method: 'POST',
+                  headers: {
+                      'Content-Type': 'application/json',
+                      'Authorization': `Bearer ${import.meta.env.VITE_SUPABASE_ANON_KEY}`
+                  },
+                  body: JSON.stringify({
+                      questionTitle: question.title,
+                      questionDescription: question.description,
+                      correctAnswer: content.correct_answer || content.correct_code || content.correct_order,
+                      userAnswer: submissionData,
+                      language: question.language?.name || 'python'
+                  })
+              });
+
+              if (response.ok && response.body) {
+                  const reader = response.body.getReader();
+                  const decoder = new TextDecoder();
+                  let fullText = '';
+
+                  while (true) {
+                      const { done, value } = await reader.read();
+                      if (done) break;
+                      const chunk = decoder.decode(value, { stream: true });
+                      fullText += chunk;
+                      setResult(prev => ({ ...prev, ai_explanation: fullText }));
+                  }
+              }
+          } catch (err) {
+              console.error('AI explanation streaming failed', err);
+          }
+      }
 
       if (data.newBadges && data.newBadges.length > 0 && showBadgeNotification) {
           data.newBadges.forEach((badge, index) => {

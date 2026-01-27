@@ -32,8 +32,9 @@ serve(async (req) => {
       Don't use complex jargon. Be encouraging.
     `;
 
+    // Call Gemini with streaming support
     const response = await fetch(
-      `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${GEMINI_API_KEY}`,
+      `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:streamGenerateContent?key=${GEMINI_API_KEY}`,
       {
         method: 'POST',
         headers: {
@@ -46,27 +47,74 @@ serve(async (req) => {
             },
           ],
           generationConfig: {
-            maxOutputTokens: 150,
+            maxOutputTokens: 200,
             temperature: 0.7,
           },
         }),
       }
     )
 
-    const data = await response.json()
-    const result = data?.candidates?.[0]?.content?.parts?.[0]?.text?.trim()
-
-    if (!result) {
-      throw new Error('AI returned an empty response')
+    if (!response.ok) {
+        const err = await response.text();
+        throw new Error(`Gemini API error: ${err}`);
     }
 
-    return new Response(
-      JSON.stringify({ explanation: result }),
-      { 
-        headers: { ...corsHeaders, 'Content-Type': 'application/json' },
-        status: 200 
-      }
-    )
+    // Set up a transform stream to extract text from Gemini's JSON chunks
+    const { readable, writable } = new TransformStream();
+    const writer = writable.getWriter();
+    const reader = response.body?.getReader();
+    const encoder = new TextEncoder();
+    const decoder = new TextDecoder();
+
+    (async () => {
+        let buffer = '';
+        try {
+            while (true) {
+                const { done, value } = await reader!.read();
+                if (done) break;
+                
+                buffer += decoder.decode(value, { stream: true });
+                
+                // Gemini sends a JSON array stream. We need to parse it part by part.
+                // Simplified approach: just look for the "text" fields in the chunks
+                const lines = buffer.split('\n');
+                buffer = lines.pop() || ''; // Keep the last incomplete line in buffer
+
+                for (const line of lines) {
+                    if (line.trim().startsWith('"text":')) {
+                        const match = line.match(/"text":\s*"(.*)"/);
+                        if (match && match[1]) {
+                            // Basic unescape for the JSON string
+                            const text = match[1].replace(/\\n/g, '\n').replace(/\\"/g, '"');
+                            await writer.write(encoder.encode(text));
+                        }
+                    } else if (line.includes('"text":')) {
+                        // Sometimes it's not at the start
+                        try {
+                            const json = JSON.parse('{' + line.trim().replace(/,$/, '') + '}');
+                            if (json.text) await writer.write(encoder.encode(json.text));
+                        } catch (e) {
+                            // If parsing fails, try regex fallback
+                            const match = line.match(/"text":\s*"(.*)"/);
+                            if (match && match[1]) {
+                                const text = match[1].replace(/\\n/g, '\n').replace(/\\"/g, '"');
+                                await writer.write(encoder.encode(text));
+                            }
+                        }
+                    }
+                }
+            }
+        } catch (e) {
+            console.error("Stream error:", e);
+        } finally {
+            writer.close();
+        }
+    })();
+
+    return new Response(readable, {
+      headers: { ...corsHeaders, 'Content-Type': 'text/event-stream' },
+      status: 200,
+    })
 
   } catch (error) {
     return new Response(

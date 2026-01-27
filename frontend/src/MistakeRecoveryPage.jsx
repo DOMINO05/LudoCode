@@ -188,36 +188,52 @@ export default function MistakeRecoveryPage() {
 
         if (error) throw error;
         
-        let ai_explanation = null;
-        if (!isCorrect) {
-            try {
-                const { data: aiData, error: aiError } = await supabase.functions.invoke('ai-explanation', {
-                    body: {
-                        questionTitle: question.title,
-                        questionDescription: question.description,
-                        correctAnswer: content.correct_answer || content.correct_code || content.correct_order,
-                        userAnswer: submissionData,
-                        language: question.language?.name || 'python'
-                    }
-                });
-                if (!aiError && aiData) {
-                    ai_explanation = aiData.explanation;
-                }
-            } catch (err) {
-                console.error('AI explanation failed', err);
-            }
-        }
-        
         // Map response to match CodingPage result structure for feedback display
         const feedbackResult = {
              isCorrect: isCorrect,
              output: isCorrect ? 'Feladat sikeresen javítva!' : 'Még mindig nem pontos a megoldás. Próbáld újra!',
-             ai_explanation: ai_explanation || (!isCorrect ? "Próbáld újra a megoldást!" : null),
+             ai_explanation: null,
              explanation: output 
         };
         
         setResult(feedbackResult);
         setShowFeedback(true);
+
+        // AI Explanation Stream
+        if (!isCorrect) {
+            try {
+                const response = await fetch(`${import.meta.env.VITE_SUPABASE_URL}/functions/v1/ai-explanation`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': `Bearer ${import.meta.env.VITE_SUPABASE_ANON_KEY}`
+                    },
+                    body: JSON.stringify({
+                        questionTitle: question.title,
+                        questionDescription: question.description,
+                        correctAnswer: content.correct_answer || content.correct_code || content.correct_order,
+                        userAnswer: submissionData,
+                        language: question.language?.name || 'python'
+                    })
+                });
+
+                if (response.ok && response.body) {
+                    const reader = response.body.getReader();
+                    const decoder = new TextDecoder();
+                    let fullText = '';
+
+                    while (true) {
+                        const { done, value } = await reader.read();
+                        if (done) break;
+                        const chunk = decoder.decode(value, { stream: true });
+                        fullText += chunk;
+                        setResult(prev => ({ ...prev, ai_explanation: fullText }));
+                    }
+                }
+            } catch (err) {
+                console.error('AI explanation streaming failed', err);
+            }
+        }
 
         if (isCorrect) {
              await refreshProfile();
