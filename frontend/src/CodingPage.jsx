@@ -298,7 +298,6 @@ export default function CodingPage() {
         if (error) throw error;
 
         let ai_explanation = null;
-        /* AI Explanation disabled until Edge Function is deployed
         if (!isCorrect) {
             try {
                 const { data: aiData, error: aiError } = await supabase.functions.invoke('ai-explanation', {
@@ -317,7 +316,6 @@ export default function CodingPage() {
                 console.error('AI explanation failed', err);
             }
         }
-        */
 
         const resultData = {
             ...data,
