@@ -71,9 +71,17 @@ export default function MistakeRecoveryPage() {
       
       if (data && data.question) {
           setSubmissionId(data.id);
-          setQuestion(data.question);
-          if (data.question.content && data.question.content.initial_code) {
-               setCode(data.question.content.initial_code);
+          
+          // Map snake_case to camelCase for component expectations
+          const mappedQuestion = {
+              ...data.question,
+              qType: data.question.q_type,
+              languageId: data.question.language_id
+          };
+          
+          setQuestion(mappedQuestion);
+          if (mappedQuestion.content && mappedQuestion.content.initial_code) {
+               setCode(mappedQuestion.content.initial_code);
           }
       } else {
           setIsFinished(true);
