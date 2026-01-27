@@ -32,7 +32,6 @@ serve(async (req) => {
       Don't use complex jargon. Be encouraging.
     `;
 
-    // Call Gemini with streaming support
     const response = await fetch(
       `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:streamGenerateContent?key=${GEMINI_API_KEY}`,
       {
@@ -59,7 +58,6 @@ serve(async (req) => {
         throw new Error(`Gemini API error: ${err}`);
     }
 
-    // Set up a transform stream to extract text from Gemini's JSON chunks
     const { readable, writable } = new TransformStream();
     const writer = writable.getWriter();
     const reader = response.body?.getReader();
@@ -75,31 +73,18 @@ serve(async (req) => {
                 
                 buffer += decoder.decode(value, { stream: true });
                 
-                // Gemini sends a JSON array stream. We need to parse it part by part.
-                // Simplified approach: just look for the "text" fields in the chunks
+                // Gemini sends a JSON array of chunks. We extract text fields.
+                // We send it as SSE data: chunks
                 const lines = buffer.split('\n');
-                buffer = lines.pop() || ''; // Keep the last incomplete line in buffer
+                buffer = lines.pop() || '';
 
                 for (const line of lines) {
-                    if (line.trim().startsWith('"text":')) {
+                    if (line.includes('"text":')) {
                         const match = line.match(/"text":\s*"(.*)"/);
                         if (match && match[1]) {
-                            // Basic unescape for the JSON string
                             const text = match[1].replace(/\\n/g, '\n').replace(/\\"/g, '"');
-                            await writer.write(encoder.encode(text));
-                        }
-                    } else if (line.includes('"text":')) {
-                        // Sometimes it's not at the start
-                        try {
-                            const json = JSON.parse('{' + line.trim().replace(/,$/, '') + '}');
-                            if (json.text) await writer.write(encoder.encode(json.text));
-                        } catch (e) {
-                            // If parsing fails, try regex fallback
-                            const match = line.match(/"text":\s*"(.*)"/);
-                            if (match && match[1]) {
-                                const text = match[1].replace(/\\n/g, '\n').replace(/\\"/g, '"');
-                                await writer.write(encoder.encode(text));
-                            }
+                            // Standard SSE format: data: <payload>\n\n
+                            await writer.write(encoder.encode(`data: ${JSON.stringify({ text })}\n\n`));
                         }
                     }
                 }

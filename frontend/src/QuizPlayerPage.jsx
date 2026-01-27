@@ -193,12 +193,20 @@ export default function QuizPlayerPage() {
                       const { done, value } = await reader.read();
                       if (done) break;
                       const chunk = decoder.decode(value, { stream: true });
-                      if (chunk) {
-                          clearTimeout(hintTimer);
-                          setShowStaticHint(false);
+                      const lines = chunk.split('\n');
+                      for (const line of lines) {
+                          if (line.startsWith('data: ')) {
+                              try {
+                                  const data = JSON.parse(line.substring(6));
+                                  if (data.text) {
+                                      clearTimeout(hintTimer);
+                                      setShowStaticHint(false);
+                                      fullText += data.text;
+                                      setResult(prev => ({ ...prev, ai_explanation: fullText }));
+                                  }
+                              } catch (e) {}
+                          }
                       }
-                      fullText += chunk;
-                      setResult(prev => ({ ...prev, ai_explanation: fullText }));
                   }
               } else {
                   setShowStaticHint(true);
