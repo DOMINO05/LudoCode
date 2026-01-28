@@ -8,24 +8,35 @@ export default function Avatar({ config, size = 100 }) {
         const params = new URLSearchParams();
         params.append('seed', seed);
         
-        // 1. Disable random paid items by default if NOT equipped
+        // DiceBear v9 Pixel Art specific mappings
+        // Disable random paid items by default if NOT equipped
         if (!config?.hat) params.append('hatProbability', '0');
         if (!config?.glasses) params.append('glassesProbability', '0');
         if (!config?.accessories) params.append('accessoriesProbability', '0');
 
-        // 2. Identity (Free)
-        if (config?.skinColor) params.append('skinColor', config.skinColor.replace('#', ''));
-        if (config?.hair) params.append('hair', config.hair);
-        if (config?.hairColor) params.append('hairColor', config.hairColor.replace('#', ''));
+        // Identity
+        // skinColor -> skin
+        if (config?.skinColor) {
+            params.append('skinColor', config.skinColor.replace('#', ''));
+        }
+        
+        // hair -> top
+        if (config?.hair) {
+            params.append('hair', config.hair);
+        }
+        
+        // hairColor -> hairColor
+        if (config?.hairColor) {
+            params.append('hairColor', config.hairColor.replace('#', ''));
+        }
+        
         if (config?.eyes) params.append('eyes', config.eyes);
         if (config?.mouth) params.append('mouth', config.mouth);
 
-        // 3. Status (Paid/Inventory)
-        
         // Clothing
         if (config?.clothing) {
             params.append('clothing', config.clothing);
-            if (config.clothingColor) params.append('clothingColor', config.clothingColor);
+            if (config.clothingColor) params.append('clothingColor', config.clothingColor.replace('#', ''));
         } else {
             params.append('clothing', 'variant01');
         }
@@ -34,7 +45,7 @@ export default function Avatar({ config, size = 100 }) {
         if (config?.hat) {
             params.append('hat', config.hat);
             params.append('hatProbability', '100');
-            if (config.hatColor) params.append('hatColor', config.hatColor);
+            if (config.hatColor) params.append('hatColor', config.hatColor.replace('#', ''));
         }
 
         // Glasses (Paid)
@@ -42,9 +53,9 @@ export default function Avatar({ config, size = 100 }) {
             params.append('glasses', config.glasses);
             params.append('glassesProbability', '100');
             if (config.glassesColor) {
-                params.append('glassesColor', config.glassesColor);
+                params.append('glassesColor', config.glassesColor.replace('#', ''));
             } else {
-                params.append('glassesColor', '000000'); // Default black
+                params.append('glassesColor', '000000');
             }
         }
 
@@ -52,14 +63,8 @@ export default function Avatar({ config, size = 100 }) {
         if (config?.accessories) {
             params.append('accessories', config.accessories); 
             params.append('accessoriesProbability', '100');
-            
             if (config.accessoriesColor) {
-                params.append('accessoriesColor', config.accessoriesColor);
-            } else {
-                // Default random metal
-                const seedSum = seed.split('').reduce((a,b) => a + b.charCodeAt(0), 0);
-                const metalColor = seedSum % 2 === 0 ? 'ffd700' : 'c0c0c0';
-                params.append('accessoriesColor', metalColor);
+                params.append('accessoriesColor', config.accessoriesColor.replace('#', ''));
             }
         }
 

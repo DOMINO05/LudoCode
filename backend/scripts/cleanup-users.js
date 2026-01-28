@@ -8,7 +8,7 @@ const supabase = createClient(
 
 async function cleanUsers() {
   const usernames = [
-    ''
+    'dasdasdasdss', 'dsarrewewe', 'nagymama', 'sadsadasd', 'tesiasdas', 'teszter555'
   ];
 
   console.log(`🗑️ Törlés megkezdése (${usernames.length} név)...`);
