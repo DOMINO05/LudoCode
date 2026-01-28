@@ -49,6 +49,7 @@ export class QuestionsService {
       let questions = await this.questionsRepository
         .createQueryBuilder('question')
         .where('question.languageId = :languageId', { languageId })
+        .andWhere('question.creatorId IS NULL')
         .andWhere('question.difficultyBeta BETWEEN :betaMin AND :betaMax', { betaMin, betaMax })
         .andWhere('question.qType != :codingType', { codingType: 'coding' })
         .orderBy('RANDOM()')
@@ -61,6 +62,7 @@ export class QuestionsService {
           let query = this.questionsRepository
             .createQueryBuilder('question')
             .where('question.languageId = :languageId', { languageId })
+            .andWhere('question.creatorId IS NULL')
             .andWhere('question.qType != :codingType', { codingType: 'coding' });
             
           if (excludeIds.length > 0) {
@@ -88,6 +90,7 @@ export class QuestionsService {
         let query = this.questionsRepository
             .createQueryBuilder('question')
             .where('question.languageId = :languageId', { languageId })
+            .andWhere('question.creatorId IS NULL')
             .andWhere('question.qType != :codingType', { codingType: 'coding' });
 
         if (excludeIds.length > 0) {
@@ -228,6 +231,7 @@ export class QuestionsService {
         .leftJoinAndSelect('question.language', 'language') // Load language relation?
         .leftJoin('question.questionConcepts', 'qc')
         .where('question.languageId = :languageId', { languageId }) // Use Property Name
+        .andWhere('question.creatorId IS NULL')
         .andWhere('question.difficultyBeta BETWEEN :min AND :max', {
           min: userTheta - range,
           max: userTheta + range,
@@ -293,6 +297,8 @@ export class QuestionsService {
     if (type) {
       query = query.where('question.qType = :type', { type });
     }
+
+    query = query.andWhere('question.creatorId IS NULL');
 
     if (languageIdentifier) {
       const languageId = await this.resolveLanguageId(languageIdentifier);

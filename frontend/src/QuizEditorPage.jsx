@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useOutletContext, useParams, useNavigate } from 'react-router-dom';
 import QuestionSearchModal from './components/QuestionSearchModal';
 import { supabase } from './supabaseClient';
+import BackButton from './components/BackButton';
 
 export default function QuizEditorPage() {
   const { session, showNotification } = useOutletContext();
@@ -129,12 +130,7 @@ export default function QuizEditorPage() {
   return (
     <div className="p-4 sm:p-8 max-w-4xl mx-auto">
       <div className="flex items-center gap-4 mb-8">
-        <button
-          onClick={() => navigate('/quizzes')}
-          className="p-2 hover:bg-slate-100 dark:hover:bg-slate-800 rounded-full transition-all"
-        >
-          ⬅️
-        </button>
+        <BackButton to="/quizzes" label="" />
         <h1 className="text-3xl font-extrabold">Kvíz Szerkesztése</h1>
       </div>
 

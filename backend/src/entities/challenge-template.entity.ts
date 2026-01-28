@@ -8,7 +8,7 @@ export class ChallengeTemplate {
   @Column({ type: 'enum', enum: ['DAILY', 'WEEKLY'] })
   period: 'DAILY' | 'WEEKLY';
 
-  @Column({ type: 'enum', enum: ['SOLVE_QUESTION', 'PLAY_QUIZ', 'CUSTOMIZE_AVATAR', 'RESOLVE_MISTAKE', 'STREAK', 'EARN_GEMS'] })
+  @Column({ name: 'action_type', type: 'enum', enum: ['SOLVE_QUESTION', 'PLAY_QUIZ', 'CUSTOMIZE_AVATAR', 'RESOLVE_MISTAKE', 'STREAK', 'EARN_GEMS'] })
   actionType: 'SOLVE_QUESTION' | 'PLAY_QUIZ' | 'CUSTOMIZE_AVATAR' | 'RESOLVE_MISTAKE' | 'STREAK' | 'EARN_GEMS';
 
   @Column({ name: 'goal_value', type: 'int' })

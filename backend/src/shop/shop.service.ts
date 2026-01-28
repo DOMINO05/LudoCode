@@ -5,7 +5,7 @@ import {
 } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
-import { ShopItem } from '../entities/shop-item.entity';
+import { ShopItem, ItemCategory } from '../entities/shop-item.entity';
 import { UserInventory } from '../entities/user-inventory.entity';
 import { Profile } from '../entities/profile.entity';
 
@@ -157,16 +157,37 @@ export class ShopService {
       throw new BadRequestException('Not enough gems');
     }
 
+    // Check if already owned
+    const existing = await this.inventoryRepository.findOne({
+      where: { userId, itemId },
+    });
+
+    if (existing) {
+      if (
+        item.category === ItemCategory.STREAK_FREEZE ||
+        item.category === ItemCategory.XP_BOOST
+      ) {
+        // Consumable: increment quantity
+        existing.quantity += 1;
+        profile.gems -= item.costGems;
+        await this.profileRepository.save(profile);
+        return this.inventoryRepository.save(existing);
+      } else {
+        // Durable: already owned
+        throw new BadRequestException('You already own this item');
+      }
+    }
+
     // Deduct gems
     profile.gems -= item.costGems;
     await this.profileRepository.save(profile);
 
-    // Always create new entry to store specific color metadata
+    // Create new entry
     const newItem = this.inventoryRepository.create({
       userId,
       itemId,
       quantity: 1,
-      metadata: item.metadata, // Store the specific color generated for today
+      metadata: item.metadata,
     });
     return this.inventoryRepository.save(newItem);
   }

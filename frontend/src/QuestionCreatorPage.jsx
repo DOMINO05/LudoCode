@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { useOutletContext, useParams, useNavigate } from 'react-router-dom';
 import { supabase } from './supabaseClient';
+import BackButton from './components/BackButton';
 
 export default function QuestionCreatorPage() {
   const { session } = useOutletContext();
@@ -377,12 +378,7 @@ export default function QuestionCreatorPage() {
   return (
     <div className="p-4 sm:p-8 max-w-2xl mx-auto">
       <div className="flex items-center gap-4 mb-8">
-        <button
-          onClick={() => navigate(`/quizzes/edit/${quizId}`)}
-          className="p-2 hover:bg-slate-100 dark:hover:bg-slate-800 rounded-full transition-all"
-        >
-          ⬅️
-        </button>
+        <BackButton to={`/quizzes/edit/${quizId}`} label="" />
         <h1 className="text-3xl font-extrabold">{questionId ? 'Kérdés Szerkesztése' : 'Új Kérdés'}</h1>
       </div>
 

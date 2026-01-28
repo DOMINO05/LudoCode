@@ -18,6 +18,7 @@
     "test:cov": "jest --coverage",
     "test:debug": "node --inspect-brk -r tsconfig-paths/register -r ts-node/register node_modules/.bin/jest --runInBand",
     "test:e2e": "jest --config ./test/jest-e2e.json",
+    "test:system": "node scripts/test-system.js",
     "seed:questions": "ts-node scripts/seed-questions.ts"
   },
   "dependencies": {
@@ -30,6 +31,7 @@
     "@nestjs/typeorm": "^11.0.0",
     "@nestjs/websockets": "^11.1.12",
     "@prettier/plugin-python": "^0.0.0-development",
+    "@supabase/supabase-js": "^2.93.1",
     "@types/passport-jwt": "^4.0.1",
     "axios": "^1.13.2",
     "clang-format": "^1.8.0",

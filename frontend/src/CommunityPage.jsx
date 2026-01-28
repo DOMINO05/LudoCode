@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useOutletContext, useNavigate } from 'react-router-dom';
 import { Users, Search, BookOpen, Trophy } from 'lucide-react';
+import BackButton from './components/BackButton';
 import { supabase } from './supabaseClient';
 
 export default function CommunityPage() {
@@ -64,6 +65,7 @@ export default function CommunityPage() {
 
   return (
     <div className="p-4 sm:p-8 max-w-6xl mx-auto animate-in fade-in duration-500">
+      <BackButton to="/dashboard" className="mb-6" />
       <div className="text-center mb-12">
         <div className="inline-block p-4 bg-blue-100 dark:bg-blue-900/30 rounded-full mb-4">
             <Users className="text-blue-500 w-12 h-12" />
@@ -92,19 +94,12 @@ export default function CommunityPage() {
         </form>
       </div>
 
-      <div className="flex items-center gap-3 mb-8 border-b-2 border-slate-100 dark:border-slate-800 pb-4">
-          <button 
-            className="px-6 py-2 bg-blue-500 text-white font-bold rounded-xl shadow-md border-b-4 border-blue-700 uppercase tracking-wider text-sm"
-          >
-            Publikus Kvízek
-          </button>
-      </div>
 
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-        {quizzes.filter(q => q.shareCode).map((quiz) => (
+        {quizzes.filter(q => q.share_code).map((quiz) => (
           <div
             key={quiz.id}
-            onClick={() => navigate(`/quiz/${quiz.shareCode}`)}
+            onClick={() => navigate(`/quiz/${quiz.share_code}`)}
             className="bg-surface-light dark:bg-surface-dark p-8 rounded-3xl shadow-md border border-slate-200 dark:border-slate-700 hover:shadow-2xl hover:-translate-y-2 transition-all cursor-pointer group"
           >
             <div className="flex justify-between items-start mb-6">
@@ -127,9 +122,11 @@ export default function CommunityPage() {
             </h3>
             
             <div className="flex items-center gap-4 text-slate-500 font-bold text-sm">
-                <span>❓ {quiz.share_code}</span>
+                <div className="px-3 py-1 bg-slate-100 dark:bg-slate-800 rounded-lg text-primary font-mono tracking-wider">
+                    {quiz.share_code}
+                </div>
                 <span className="w-1 h-1 bg-slate-300 rounded-full"></span>
-                <span className="text-primary">{quiz.share_code}</span>
+                <span className="text-slate-400">Kód</span>
             </div>
           </div>
         ))}

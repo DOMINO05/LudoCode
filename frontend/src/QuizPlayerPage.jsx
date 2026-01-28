@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { useOutletContext, useParams, useNavigate } from 'react-router-dom';
 import { supabase } from './supabaseClient';
 import { PISTON_API_URL } from './config';
@@ -21,6 +21,7 @@ export default function QuizPlayerPage() {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [isFinished, setIsFinished] = useState(false);
   const [score, setScore] = useState(0);
+  const scoreRef = useRef(0);
 
   // Answer State (Local for current question)
   const [code, setCode] = useState('');
@@ -244,8 +245,9 @@ export default function QuizPlayerPage() {
           });
       }
 
-      if (data.isCorrect) {
-          setScore(s => s + 1);
+      if (isCorrect) {
+          scoreRef.current += 1;
+          setScore(scoreRef.current);
       }
       refreshProfile();
     } catch (err) {
@@ -272,7 +274,7 @@ export default function QuizPlayerPage() {
       try {
         const { data, error } = await supabase.rpc('complete_quiz_attempt', {
             p_quiz_id: quiz.id,
-            p_score: score,
+            p_score: scoreRef.current,
             p_max_score: quiz.questions.length
         });
 

@@ -2,11 +2,12 @@ import React from 'react';
 import { useOutletContext } from 'react-router-dom';
 import { Trophy, BarChart3, Star, Flame, Gem, Heart } from 'lucide-react';
 import ProgressChart from './components/ProgressChart';
+import BackButton from './components/BackButton';
 
-const StatCard = ({ title, value, icon: Icon, color, subtext }) => (
+const StatCard = ({ title, value, icon: Icon, bgClass, textClass, subtext }) => (
   <div className="bg-white dark:bg-slate-900 border-2 border-slate-200 dark:border-slate-700 rounded-2xl p-6 flex flex-col items-center text-center shadow-sm">
-    <div className={`p-3 rounded-xl ${color} bg-opacity-10 mb-4`}>
-      <Icon className={color.replace('bg-', 'text-')} size={32} />
+    <div className={`p-3 rounded-xl ${bgClass} bg-opacity-10 mb-4`}>
+      <Icon className={textClass} size={32} />
     </div>
     <h3 className="text-slate-500 text-xs font-bold uppercase tracking-widest mb-1">{title}</h3>
     <div className="text-2xl font-black text-slate-800 dark:text-slate-100">{value}</div>
@@ -19,6 +20,7 @@ export default function StatsPage() {
 
   return (
     <div className="max-w-4xl mx-auto p-4 md:p-8 space-y-8 animate-in slide-in-from-bottom-2 fade-in duration-500">
+      <BackButton to="/dashboard" />
       <div className="text-center mb-8">
         <div className="inline-block p-4 bg-indigo-100 dark:bg-indigo-900/30 rounded-full mb-4">
             <BarChart3 className="text-indigo-500 w-12 h-12" />
@@ -33,28 +35,28 @@ export default function StatsPage() {
             title="Összes XP" 
             value={profile?.xp || 0} 
             icon={Star} 
-            color="bg-yellow-500" 
+            textClass="text-yellow-500" 
             subtext="Minden eddigi pont"
           />
           <StatCard 
             title="Széria" 
             value={`${profile?.currentStreak || 0} nap`} 
             icon={Flame} 
-            color="bg-orange-500" 
+            textClass="text-orange-500" 
             subtext="Aktivitás"
           />
           <StatCard 
             title="Drágakövek" 
             value={profile?.gems || 0} 
             icon={Gem} 
-            color="bg-blue-500" 
+            textClass="text-blue-500" 
             subtext="Vagyon"
           />
           <StatCard 
             title="Mentális Erő" 
             value={`${profile?.sanityPoints || 0}%`} 
             icon={Heart} 
-            color="bg-red-500" 
+            textClass="text-red-500" 
             subtext="Sanity"
           />
       </div>
@@ -64,7 +66,7 @@ export default function StatsPage() {
           <h3 className="text-xl font-bold text-slate-700 dark:text-slate-200 mb-6 flex items-center gap-2">
               <Trophy className="text-yellow-500" /> Napi XP Haladás
           </h3>
-          <div className="h-[400px]">
+          <div className="h-400px">
             <ProgressChart session={session} />
           </div>
       </div>

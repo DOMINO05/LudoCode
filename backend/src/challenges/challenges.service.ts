@@ -78,23 +78,26 @@ export class ChallengesService {
 
   async ensureWeeklyChallenges(userId: string) {
     const now = new Date();
+    // Create a copy to avoid mutating the original 'now'
+    const today = new Date(now.getFullYear(), now.getMonth(), now.getDate());
+    
     // Get start of week (Monday)
-    const day = now.getDay(); 
-    const diff = now.getDate() - day + (day == 0 ? -6 : 1); // adjust when day is sunday
-    const startOfWeek = new Date(now.setDate(diff));
-    startOfWeek.setHours(0,0,0,0);
+    const day = today.getDay(); 
+    const diff = today.getDate() - day + (day === 0 ? -6 : 1); 
+    const startOfWeek = new Date(today.setDate(diff));
+    startOfWeek.setHours(0, 0, 0, 0);
     
     const endOfWeek = new Date(startOfWeek);
     endOfWeek.setDate(endOfWeek.getDate() + 7);
 
-    const existing = await this.userChallengesRepository.count({
-      where: {
-        userId,
-        template: { period: 'WEEKLY' },
-        createdAt: MoreThanOrEqual(startOfWeek),
-      },
-      relations: ['template']
-    });
+    // Use QueryBuilder for more robust counting across relations
+    const existing = await this.userChallengesRepository
+      .createQueryBuilder('uc')
+      .innerJoin('uc.template', 't')
+      .where('uc.userId = :userId', { userId })
+      .andWhere('t.period = :period', { period: 'WEEKLY' })
+      .andWhere('uc.createdAt >= :startOfWeek', { startOfWeek })
+      .getCount();
 
     if (existing > 0) return;
 

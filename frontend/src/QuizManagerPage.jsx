@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useOutletContext, useNavigate } from 'react-router-dom';
 import { supabase } from './supabaseClient';
+import BackButton from './components/BackButton';
 
 export default function QuizManagerPage() {
   const { session } = useOutletContext();
@@ -97,6 +98,7 @@ export default function QuizManagerPage() {
 
   return (
     <div className="p-4 sm:p-8 max-w-6xl mx-auto">
+      <BackButton to="/dashboard" className="mb-6" />
       <div className="flex justify-between items-center mb-8">
         <h1 className="text-3xl font-extrabold tracking-tight">Saját Kvízek</h1>
         <button

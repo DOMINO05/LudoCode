@@ -1,5 +1,6 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
+import BackButton from './components/BackButton';
 
 export default function CoursesPage() {
     const navigate = useNavigate();
@@ -14,8 +15,9 @@ export default function CoursesPage() {
     ];
 
     return (
-        <div className="flex flex-col items-center min-h-full p-4 md:p-8 gap-8 max-w-7xl mx-auto w-full">
-            <h1 className="text-3xl md:text-4xl font-extrabold text-primary uppercase tracking-widest text-center mb-4">
+        <div className="flex flex-col items-start min-h-full p-4 md:p-8 gap-8 max-w-7xl mx-auto w-full">
+            <BackButton to="/dashboard" />
+            <h1 className="text-3xl md:text-4xl font-extrabold text-primary uppercase tracking-widest text-center mb-4 w-full">
                 Válassz Feladattípust
             </h1>
             

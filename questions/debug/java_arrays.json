@@ -6,7 +6,10 @@
         "q_type": "debug",
         "difficulty_rating": 600,
         "language": "java",
-        "concept": {"arrays": 1.0, "basics": 0.5},
+        "concept": {
+            "arrays": 1,
+            "basics": 0.5
+        },
         "content": {
             "buggy_code": "int[] numbers = (1, 2, 3, 4, 5);",
             "error_location": "(1, 2, 3, 4, 5)",
@@ -26,7 +29,10 @@
         "q_type": "debug",
         "difficulty_rating": 600,
         "language": "java",
-        "concept": {"arrays": 1.0, "basics": 0.5},
+        "concept": {
+            "arrays": 1,
+            "basics": 0.5
+        },
         "content": {
             "buggy_code": "int x = numbers(0);",
             "error_location": "numbers(0)",
@@ -46,7 +52,10 @@
         "q_type": "debug",
         "difficulty_rating": 650,
         "language": "java",
-        "concept": {"arrays": 1.0, "basics": 0.6},
+        "concept": {
+            "arrays": 1,
+            "basics": 0.6
+        },
         "content": {
             "buggy_code": "int[] data = new int(10);",
             "error_location": "new int(10)",
@@ -66,7 +75,10 @@
         "q_type": "debug",
         "difficulty_rating": 600,
         "language": "java",
-        "concept": {"arrays": 0.5, "basics": 1.0},
+        "concept": {
+            "arrays": 0.5,
+            "basics": 1
+        },
         "content": {
             "buggy_code": "double[] prices = {10.5, 20.0}",
             "error_location": "double[] prices = {10.5, 20.0}",
@@ -86,7 +98,10 @@
         "q_type": "debug",
         "difficulty_rating": 650,
         "language": "java",
-        "concept": {"arrays": 1.0, "basics": 0.8},
+        "concept": {
+            "arrays": 1,
+            "basics": 0.8
+        },
         "content": {
             "buggy_code": "string[] names = {\"Anna\", \"Bela\"};",
             "error_location": "string[]",
@@ -106,7 +121,10 @@
         "q_type": "debug",
         "difficulty_rating": 700,
         "language": "java",
-        "concept": {"arrays": 1.0, "basics": 0.6},
+        "concept": {
+            "arrays": 1,
+            "basics": 0.6
+        },
         "content": {
             "buggy_code": "int numbers = new int[5];",
             "error_location": "int numbers",
@@ -126,7 +144,10 @@
         "q_type": "debug",
         "difficulty_rating": 750,
         "language": "java",
-        "concept": {"arrays": 1.0, "basics": 0.7},
+        "concept": {
+            "arrays": 1,
+            "basics": 0.7
+        },
         "content": {
             "buggy_code": "char[] letters = {\"a\", \"b\", \"c\"};",
             "error_location": "{\"a\", \"b\", \"c\"}",
@@ -146,7 +167,10 @@
         "q_type": "debug",
         "difficulty_rating": 780,
         "language": "java",
-        "concept": {"arrays": 1.0, "basics": 0.8},
+        "concept": {
+            "arrays": 1,
+            "basics": 0.8
+        },
         "content": {
             "buggy_code": "int[] nums = {1, 2, \"3\"};",
             "error_location": "\"3\"",
@@ -166,7 +190,10 @@
         "q_type": "debug",
         "difficulty_rating": 850,
         "language": "java",
-        "concept": {"arrays": 1.0, "basics": 0.6},
+        "concept": {
+            "arrays": 1,
+            "basics": 0.6
+        },
         "content": {
             "buggy_code": "int size = arr.length();",
             "error_location": "arr.length()",
@@ -186,7 +213,10 @@
         "q_type": "debug",
         "difficulty_rating": 880,
         "language": "java",
-        "concept": {"arrays": 0.8, "basics": 0.8},
+        "concept": {
+            "arrays": 0.8,
+            "basics": 0.8
+        },
         "content": {
             "buggy_code": "int[] arr;\nSystem.out.println(arr[0]);",
             "error_location": "int[] arr;",
@@ -206,7 +236,10 @@
         "q_type": "debug",
         "difficulty_rating": 900,
         "language": "java",
-        "concept": {"arrays": 1.0, "basics": 0.5},
+        "concept": {
+            "arrays": 1,
+            "basics": 0.5
+        },
         "content": {
             "buggy_code": "int[] arr = new int[5];\narr[5] = 10;",
             "error_location": "arr[5]",
@@ -226,7 +259,10 @@
         "q_type": "debug",
         "difficulty_rating": 950,
         "language": "java",
-        "concept": {"arrays": 1.0, "oop": 0.6},
+        "concept": {
+            "arrays": 1,
+            "oop": 0.6
+        },
         "content": {
             "buggy_code": "int[] arr = null;\nSystem.out.println(arr.length);",
             "error_location": "int[] arr = null;",
@@ -246,7 +282,10 @@
         "q_type": "debug",
         "difficulty_rating": 820,
         "language": "java",
-        "concept": {"arrays": 1.0, "basics": 0.6},
+        "concept": {
+            "arrays": 1,
+            "basics": 0.6
+        },
         "content": {
             "buggy_code": "int[] arr = new int[];",
             "error_location": "new int[]",
@@ -266,7 +305,10 @@
         "q_type": "debug",
         "difficulty_rating": 920,
         "language": "java",
-        "concept": {"arrays": 1.0, "basics": 0.7},
+        "concept": {
+            "arrays": 1,
+            "basics": 0.7
+        },
         "content": {
             "buggy_code": "int[,] matrix = new int[3,3];",
             "error_location": "int[,] matrix = new int[3,3];",
@@ -286,7 +328,10 @@
         "q_type": "debug",
         "difficulty_rating": 980,
         "language": "java",
-        "concept": {"arrays": 1.0, "basics": 0.5},
+        "concept": {
+            "arrays": 1,
+            "basics": 0.5
+        },
         "content": {
             "buggy_code": "int[] arr = {1, 2};\nSystem.out.println(arr);",
             "error_location": "System.out.println(arr)",
@@ -306,7 +351,10 @@
         "q_type": "debug",
         "difficulty_rating": 960,
         "language": "java",
-        "concept": {"arrays": 1.0, "basics": 0.6},
+        "concept": {
+            "arrays": 1,
+            "basics": 0.6
+        },
         "content": {
             "buggy_code": "int[] arr = new int[3] {1, 2, 3};",
             "error_location": "new int[3] {1, 2, 3}",
@@ -326,7 +374,10 @@
         "q_type": "debug",
         "difficulty_rating": 1050,
         "language": "java",
-        "concept": {"arrays": 0.8, "loops": 1.0},
+        "concept": {
+            "arrays": 0.8,
+            "loops": 1
+        },
         "content": {
             "buggy_code": "for(int i=0; i <= arr.length; i++) {\n  System.out.println(arr[i]);\n}",
             "error_location": "i <= arr.length",
@@ -346,7 +397,10 @@
         "q_type": "debug",
         "difficulty_rating": 1100,
         "language": "java",
-        "concept": {"arrays": 1.0, "logic": 0.8},
+        "concept": {
+            "arrays": 1,
+            "logic": 0.8
+        },
         "content": {
             "buggy_code": "int[] a = {1}; int[] b = {1};\nif (a == b) { ... }",
             "error_location": "a == b",
@@ -366,7 +420,10 @@
         "q_type": "debug",
         "difficulty_rating": 1020,
         "language": "java",
-        "concept": {"arrays": 1.0, "basics": 0.5},
+        "concept": {
+            "arrays": 1,
+            "basics": 0.5
+        },
         "content": {
             "buggy_code": "int[] arr = new int[-5];",
             "error_location": "-5",
@@ -386,9 +443,12 @@
         "q_type": "debug",
         "difficulty_rating": 1150,
         "language": "java",
-        "concept": {"arrays": 0.7, "loops": 1.0},
+        "concept": {
+            "arrays": 0.7,
+            "loops": 1
+        },
         "content": {
-            "buggy_code": "for(int x : arr) {\n  x = 0; // Nem nullázza a tömb elemét\n}",
+            "buggy_code": "for(int x : arr) {\n  x = 0;\n}",
             "error_location": "for(int x : arr)",
             "correct_code": "for(int i=0; i<arr.length; i++)",
             "options": [
@@ -406,7 +466,10 @@
         "q_type": "debug",
         "difficulty_rating": 1120,
         "language": "java",
-        "concept": {"arrays": 0.8, "logic": 0.8},
+        "concept": {
+            "arrays": 0.8,
+            "logic": 0.8
+        },
         "content": {
             "buggy_code": "arr[i] = arr[j];\narr[j] = arr[i];",
             "error_location": "arr[j] = arr[i];",
@@ -426,7 +489,10 @@
         "q_type": "debug",
         "difficulty_rating": 1180,
         "language": "java",
-        "concept": {"arrays": 1.0, "basics": 0.6},
+        "concept": {
+            "arrays": 1,
+            "basics": 0.6
+        },
         "content": {
             "buggy_code": "int[][] m = new int[3][];\nm[0] = 1;",
             "error_location": "m[0] = 1",
@@ -446,9 +512,12 @@
         "q_type": "debug",
         "difficulty_rating": 1250,
         "language": "java",
-        "concept": {"arrays": 1.0, "oop": 0.7},
+        "concept": {
+            "arrays": 1,
+            "oop": 0.7
+        },
         "content": {
-            "buggy_code": "int[] b = a;\nb[0] = 99; // a[0] is változik",
+            "buggy_code": "int[] b = a;\nb[0] = 99;",
             "error_location": "int[] b = a",
             "correct_code": "int[] b = a.clone()",
             "options": [
@@ -466,7 +535,10 @@
         "q_type": "debug",
         "difficulty_rating": 1080,
         "language": "java",
-        "concept": {"arrays": 0.8, "loops": 1.0},
+        "concept": {
+            "arrays": 0.8,
+            "loops": 1
+        },
         "content": {
             "buggy_code": "for(int i=1; i<arr.length; i++) {\n  System.out.println(arr[i]);\n}",
             "error_location": "int i=1",
@@ -486,7 +558,10 @@
         "q_type": "debug",
         "difficulty_rating": 1220,
         "language": "java",
-        "concept": {"arrays": 1.0, "basics": 0.7},
+        "concept": {
+            "arrays": 1,
+            "basics": 0.7
+        },
         "content": {
             "buggy_code": "int[][] jag = new int[3][];\njag[0][0] = 5;",
             "error_location": "jag[0][0] = 5",
@@ -506,7 +581,10 @@
         "q_type": "debug",
         "difficulty_rating": 1300,
         "language": "java",
-        "concept": {"arrays": 1.0, "oop": 0.8},
+        "concept": {
+            "arrays": 1,
+            "oop": 0.8
+        },
         "content": {
             "buggy_code": "Object[] arr = new String[5];\narr[0] = 1;",
             "error_location": "arr[0] = 1",
@@ -526,7 +604,10 @@
         "q_type": "debug",
         "difficulty_rating": 1280,
         "language": "java",
-        "concept": {"arrays": 1.0, "functions": 0.7},
+        "concept": {
+            "arrays": 1,
+            "functions": 0.7
+        },
         "content": {
             "buggy_code": "int[] arr = {3, 1, 2};\nint idx = Arrays.binarySearch(arr, 1);",
             "error_location": "Arrays.binarySearch(arr, 1)",
@@ -546,7 +627,10 @@
         "q_type": "debug",
         "difficulty_rating": 1350,
         "language": "java",
-        "concept": {"arrays": 1.0, "loops": 1.0},
+        "concept": {
+            "arrays": 1,
+            "loops": 1
+        },
         "content": {
             "buggy_code": "for(int i=0; i<m.length; i++) \n  for(int j=0; j<m.length; j++) \n    print(m[i][j]);",
             "error_location": "j<m.length",
@@ -566,7 +650,10 @@
         "q_type": "debug",
         "difficulty_rating": 1320,
         "language": "java",
-        "concept": {"arrays": 0.8, "logic": 1.0},
+        "concept": {
+            "arrays": 0.8,
+            "logic": 1
+        },
         "content": {
             "buggy_code": "int max = 0;\nfor(int x : arr) if(x > max) max = x;",
             "error_location": "int max = 0",
@@ -586,11 +673,14 @@
         "q_type": "debug",
         "difficulty_rating": 1260,
         "language": "java",
-        "concept": {"arrays": 1.0, "oop": 0.5},
+        "concept": {
+            "arrays": 1,
+            "oop": 0.5
+        },
         "content": {
             "buggy_code": "int[] arr = {1, 2, 3};\narr.remove(1);",
             "error_location": "arr.remove(1)",
-            "correct_code": "// Nem lehet, új tömb kell",
+            "correct_code": "",
             "options": [
                 "Használj ArrayList-et",
                 "arr[1] = 0",
@@ -606,7 +696,10 @@
         "q_type": "debug",
         "difficulty_rating": 1380,
         "language": "java",
-        "concept": {"arrays": 0.8, "oop": 0.9},
+        "concept": {
+            "arrays": 0.8,
+            "oop": 0.9
+        },
         "content": {
             "buggy_code": "List<String> l = Arrays.asList(arr);\nl.add(\"New\");",
             "error_location": "l.add(\"New\")",
@@ -626,7 +719,10 @@
         "q_type": "debug",
         "difficulty_rating": 1240,
         "language": "java",
-        "concept": {"arrays": 1.0, "basics": 0.5},
+        "concept": {
+            "arrays": 1,
+            "basics": 0.5
+        },
         "content": {
             "buggy_code": "int[] arr = new int[0];\narr[0] = 5;",
             "error_location": "arr[0] = 5",
@@ -646,7 +742,10 @@
         "q_type": "debug",
         "difficulty_rating": 1450,
         "language": "java",
-        "concept": {"arrays": 0.7, "oop": 1.0},
+        "concept": {
+            "arrays": 0.7,
+            "oop": 1
+        },
         "content": {
             "buggy_code": "T[] arr = new T[10];",
             "error_location": "new T[10]",
@@ -666,9 +765,12 @@
         "q_type": "debug",
         "difficulty_rating": 1480,
         "language": "java",
-        "concept": {"arrays": 0.9, "logic": 0.9},
+        "concept": {
+            "arrays": 0.9,
+            "logic": 0.9
+        },
         "content": {
-            "buggy_code": "int nextIndex = (head + 1); // Ha eléri a végét, hiba",
+            "buggy_code": "int nextIndex = (head + 1);",
             "error_location": "head + 1",
             "correct_code": "(head + 1) % capacity",
             "options": [
@@ -686,7 +788,10 @@
         "q_type": "debug",
         "difficulty_rating": 1420,
         "language": "java",
-        "concept": {"arrays": 0.5, "loops": 1.0},
+        "concept": {
+            "arrays": 0.5,
+            "loops": 1
+        },
         "content": {
             "buggy_code": "for(int i=0; i<arr.length; i--) {\n  arr[i] = 0;\n}",
             "error_location": "i--",
@@ -706,7 +811,10 @@
         "q_type": "debug",
         "difficulty_rating": 1460,
         "language": "java",
-        "concept": {"arrays": 1.0, "basics": 0.6},
+        "concept": {
+            "arrays": 1,
+            "basics": 0.6
+        },
         "content": {
             "buggy_code": "int[][] m = {{1}}; \nSystem.out.println(Arrays.toString(m));",
             "error_location": "Arrays.toString(m)",
@@ -726,7 +834,10 @@
         "q_type": "debug",
         "difficulty_rating": 1440,
         "language": "java",
-        "concept": {"arrays": 1.0, "loops": 0.9},
+        "concept": {
+            "arrays": 1,
+            "loops": 0.9
+        },
         "content": {
             "buggy_code": "for(int i=0; i<arr.length; i++) {\n  arr[i] = arr[i+1];\n}",
             "error_location": "i<arr.length",
@@ -746,7 +857,10 @@
         "q_type": "debug",
         "difficulty_rating": 1410,
         "language": "java",
-        "concept": {"arrays": 0.7, "loops": 1.0},
+        "concept": {
+            "arrays": 0.7,
+            "loops": 1
+        },
         "content": {
             "buggy_code": "for(String s : array) {\n  s = \"Modified\";\n}",
             "error_location": "s = \"Modified\"",
@@ -766,9 +880,12 @@
         "q_type": "debug",
         "difficulty_rating": 1390,
         "language": "java",
-        "concept": {"arrays": 0.8, "basics": 0.7},
+        "concept": {
+            "arrays": 0.8,
+            "basics": 0.7
+        },
         "content": {
-            "buggy_code": "String[] parts = \"a,b,,\".split(\",\");\n// parts.length csak 2 lesz",
+            "buggy_code": "String[] parts = \"a,b,,\".split(\",\");",
             "error_location": ".split(\",\")",
             "correct_code": ".split(\",\", -1)",
             "options": [
@@ -786,9 +903,12 @@
         "q_type": "debug",
         "difficulty_rating": 1500,
         "language": "java",
-        "concept": {"arrays": 0.6, "oop": 1.0},
+        "concept": {
+            "arrays": 0.6,
+            "oop": 1
+        },
         "content": {
-            "buggy_code": "int[] counter = {0};\n// Thread 1 & 2: counter[0]++;",
+            "buggy_code": "int[] counter = {0};",
             "error_location": "counter[0]++",
             "correct_code": "AtomicInteger",
             "options": [

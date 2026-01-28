@@ -13,15 +13,31 @@ export class SnippetsService {
   ) {}
 
   async createSnippet(data: Partial<SharedSnippet>, user?: any): Promise<SharedSnippet> {
+    const creatorId = user ? (user.id || user.userId) : null;
+
+    // Check if the user already has a snippet with this title (e.g. "Playground")
+    if (creatorId && data.title) {
+      const existing = await this.snippetsRepository.findOne({
+        where: { creatorId, title: data.title },
+      });
+
+      if (existing) {
+        // Update existing snippet instead of creating a new one
+        existing.code = data.code;
+        existing.language = data.language;
+        existing.isEditable = data.isEditable ?? existing.isEditable;
+        return this.snippetsRepository.save(existing);
+      }
+    }
+
     const snippet = this.snippetsRepository.create({
       ...data,
-      creatorId: user ? user.userId : null,
+      creatorId,
     });
-    
+
     // We save first. The database trigger will generate the share_code.
-    // However, TypeORM doesn't automatically fetch trigger-generated values unless configured or reloaded.
     const saved = await this.snippetsRepository.save(snippet);
-    
+
     // Reload to get the share_code
     return this.snippetsRepository.findOne({ where: { id: saved.id } });
   }

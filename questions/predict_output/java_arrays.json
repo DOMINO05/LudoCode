@@ -7,7 +7,7 @@
         "difficulty_rating": 600,
         "language": "java",
         "concept": {
-            "arrays": 1.0,
+            "arrays": 1,
             "basics": 0.5
         },
         "content": {
@@ -30,7 +30,7 @@
         "difficulty_rating": 620,
         "language": "java",
         "concept": {
-            "arrays": 1.0,
+            "arrays": 1,
             "basics": 0.5
         },
         "content": {
@@ -53,7 +53,7 @@
         "difficulty_rating": 650,
         "language": "java",
         "concept": {
-            "arrays": 1.0,
+            "arrays": 1,
             "basics": 0.5
         },
         "content": {
@@ -76,7 +76,7 @@
         "difficulty_rating": 700,
         "language": "java",
         "concept": {
-            "arrays": 1.0,
+            "arrays": 1,
             "basics": 0.8
         },
         "content": {
@@ -99,7 +99,7 @@
         "difficulty_rating": 680,
         "language": "java",
         "concept": {
-            "arrays": 1.0,
+            "arrays": 1,
             "basics": 0.5
         },
         "content": {
@@ -122,7 +122,7 @@
         "difficulty_rating": 720,
         "language": "java",
         "concept": {
-            "arrays": 1.0,
+            "arrays": 1,
             "basics": 0.6
         },
         "content": {
@@ -145,7 +145,7 @@
         "difficulty_rating": 750,
         "language": "java",
         "concept": {
-            "arrays": 1.0,
+            "arrays": 1,
             "basics": 0.6
         },
         "content": {
@@ -168,7 +168,7 @@
         "difficulty_rating": 780,
         "language": "java",
         "concept": {
-            "arrays": 1.0,
+            "arrays": 1,
             "basics": 0.7
         },
         "content": {
@@ -307,7 +307,7 @@
         "difficulty_rating": 820,
         "language": "java",
         "concept": {
-            "arrays": 1.0,
+            "arrays": 1,
             "basics": 0.5
         },
         "content": {
@@ -353,7 +353,7 @@
         "difficulty_rating": 990,
         "language": "java",
         "concept": {
-            "arrays": 1.0,
+            "arrays": 1,
             "basics": 0.5
         },
         "content": {
@@ -470,7 +470,7 @@
         "difficulty_rating": 1120,
         "language": "java",
         "concept": {
-            "arrays": 1.0,
+            "arrays": 1,
             "basics": 0.6
         },
         "content": {
@@ -494,7 +494,7 @@
         "language": "java",
         "concept": {
             "arrays": 0.7,
-            "loops": 1.0
+            "loops": 1
         },
         "content": {
             "code_snippet": "int[] arr = {10, 20, 30};\nint i = 0;\nwhile(i < 2) {\n System.out.print(arr[i]);\n i++;\n}",
@@ -563,7 +563,7 @@
         "language": "java",
         "concept": {
             "arrays": 0.8,
-            "loops": 1.0
+            "loops": 1
         },
         "content": {
             "code_snippet": "int[][] grid = { {1,2}, {3,4} };\nint count = 0;\nfor(int i=0; i<grid.length; i++) {\n for(int j=0; j<grid[i].length; j++) {\n count++;\n }\n}\nSystem.out.print(count);",
@@ -632,7 +632,7 @@
         "difficulty_rating": 1350,
         "language": "java",
         "concept": {
-            "arrays": 1.0,
+            "arrays": 1,
             "logic": 0.8
         },
         "content": {
@@ -702,7 +702,7 @@
         "difficulty_rating": 1320,
         "language": "java",
         "concept": {
-            "arrays": 1.0,
+            "arrays": 1,
             "basics": 0.6
         },
         "content": {
@@ -751,10 +751,10 @@
         "concept": {
             "arrays": 0.6,
             "loops": 0.4,
-            "functions": 1.0
+            "functions": 1
         },
         "content": {
-            "code_snippet": "static void rec(int[] a, int i) {\n if(i >= a.length) return;\n System.out.print(a[i]);\n rec(a, i+1);\n}\n// main: int[] x={1,2}; rec(x, 0);",
+            "code_snippet": "static void rec(int[] a, int i) {\n if(i >= a.length) return;\n System.out.print(a[i]);\n rec(a, i+1);\n}",
             "options": [
                 "12",
                 "21",
@@ -797,7 +797,7 @@
         "difficulty_rating": 1500,
         "language": "java",
         "concept": {
-            "arrays": 1.0,
+            "arrays": 1,
             "basics": 0.8
         },
         "content": {
@@ -844,7 +844,7 @@
         "language": "java",
         "concept": {
             "arrays": 0.6,
-            "logic": 1.0
+            "logic": 1
         },
         "content": {
             "code_snippet": "int[] b = {5};\nb[0] = b[0] ^ b[0];\nSystem.out.print(b[0]);",
@@ -890,7 +890,7 @@
         "language": "java",
         "concept": {
             "arrays": 0.6,
-            "loops": 1.0
+            "loops": 1
         },
         "content": {
             "code_snippet": "int c = 0;\nfor(int i=0; i<3; i++) {\n for(int j=0; j<i; j++) c++;\n}\nSystem.out.print(c);",
@@ -912,7 +912,7 @@
         "difficulty_rating": 1410,
         "language": "java",
         "concept": {
-            "arrays": 1.0,
+            "arrays": 1,
             "oop": 0.8
         },
         "content": {

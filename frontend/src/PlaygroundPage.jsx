@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useCallback, useRef } from 'react';
 import { useOutletContext, useParams, useNavigate, useSearchParams } from 'react-router-dom';
 import { ChevronDown, CheckCircle2, CloudUpload, CloudCheck, Loader2 } from 'lucide-react';
+import BackButton from './components/BackButton';
 import Editor from '@monaco-editor/react';
 import { useTheme } from './ThemeContext';
 import { debounce } from 'lodash';
@@ -176,8 +177,9 @@ export default function PlaygroundPage() {
           event: 'UPDATE', 
           schema: 'public', 
           table: 'shared_snippets',
-          filter: `share_code=eq.${token}`
+          filter: `share_code=eq.${token.toUpperCase()}`
       }, (payload) => {
+          // Only update if it's not us saving and the code actually changed
           if (payload.new && payload.new.code !== code && !isSaving) {
               ignoreNextSave.current = true;
               setCode(payload.new.code);
@@ -301,27 +303,57 @@ export default function PlaygroundPage() {
 
   const createShare = async () => {
     try {
-      const shareCode = Math.random().toString(36).substring(2, 8).toUpperCase();
-      const { data, error } = await supabase
-        .from('shared_snippets')
-        .insert({
-            share_code: shareCode,
+      let finalShareCode = '';
+      const creatorId = session?.user?.id;
+
+      if (creatorId) {
+        // Check if user already has a "Playground" snippet
+        const { data: existing } = await supabase
+          .from('shared_snippets')
+          .select('share_code')
+          .eq('creator_id', creatorId)
+          .eq('title', 'Playground')
+          .maybeSingle();
+
+        if (existing) {
+          // Update existing
+          const { error: updateError } = await supabase
+            .from('shared_snippets')
+            .update({
+              language,
+              code,
+              is_editable: shareEditableOption
+            })
+            .eq('share_code', existing.share_code);
+
+          if (updateError) throw updateError;
+          finalShareCode = existing.share_code;
+        }
+      }
+
+      if (!finalShareCode) {
+        // Create new
+        const newCode = Math.random().toString(36).substring(2, 8).toUpperCase();
+        const { error: insertError } = await supabase
+          .from('shared_snippets')
+          .insert({
+            share_code: newCode,
             language,
             code,
+            title: 'Playground',
             is_editable: shareEditableOption,
-            creator_id: session?.user?.id
-        })
-        .select()
-        .single();
-      
-      if (!error) {
-          setShareCode(shareCode);
-          setShowShareOptions(false);
-          setShowShareModal(true);
-      } else {
-          showNotification(`Sikertelen megosztás: ${error.message}`, 'error');
+            creator_id: creatorId
+          });
+
+        if (insertError) throw insertError;
+        finalShareCode = newCode;
       }
+
+      setShareCode(finalShareCode);
+      setShowShareOptions(false);
+      setShowShareModal(true);
     } catch (err) {
+      console.error(err);
       showNotification('Hiba a megosztás során: ' + err.message, 'error');
     }
   };
@@ -331,7 +363,8 @@ export default function PlaygroundPage() {
       {/* Toolbar */}
       <div className="bg-white dark:bg-slate-800 border-b border-slate-200 dark:border-slate-700 p-4 flex items-center justify-between shadow-sm z-20">
         <div className="flex items-center gap-4">
-            <h1 className="font-black text-xl tracking-tight hidden sm:block">Playground</h1>
+            <BackButton to="/dashboard" label="" />
+            <h1 className="font-black text-xl tracking-tight hidden sm:block border-l-2 border-slate-100 dark:border-slate-700 pl-4 ml-2">Playground</h1>
             
             {/* Custom Language Dropdown */}
             <div className="relative">

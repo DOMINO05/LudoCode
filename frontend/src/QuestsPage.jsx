@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useOutletContext } from 'react-router-dom';
 import { supabase } from './supabaseClient';
 import { Zap, Clock, Shield, CheckCircle2 } from 'lucide-react';
+import BackButton from './components/BackButton';
 
 const ProgressBar = ({ value, max, color = "bg-yellow-400", height = "h-4" }) => {
   const percentage = Math.min(100, Math.max(0, (value / max) * 100));
@@ -77,17 +78,22 @@ export default function QuestsPage() {
       const { data, error } = await supabase.rpc('get_active_challenges');
       if (error) throw error;
       
-      // Map snake_case to camelCase
+      // Map return table column names (out_*) to camelCase
       const mappedData = data.map(c => ({
-          ...c,
-          actionType: c.action_type,
-          goalValue: c.goal_value,
-          currentValue: c.current_value,
-          rewardXp: c.reward_xp,
-          rewardGems: c.reward_gems,
-          isCompleted: c.is_completed,
-          isClaimed: c.is_claimed,
-          expiresAt: c.expires_at
+          id: c.out_id,
+          userId: c.out_user_id,
+          templateId: c.out_template_id,
+          actionType: c.out_action_type,
+          goalValue: c.out_goal_value,
+          currentValue: c.out_current_value,
+          rewardXp: c.out_reward_xp,
+          rewardGems: c.out_reward_gems,
+          description: c.out_description,
+          isCompleted: c.out_is_completed,
+          isClaimed: c.out_is_claimed,
+          createdAt: c.out_created_at,
+          expiresAt: c.out_expires_at,
+          period: c.out_period
       }));
 
       setChallenges(mappedData);
@@ -118,12 +124,13 @@ export default function QuestsPage() {
 
   if (loading) return <div className="p-8 text-center animate-pulse">Küldetések betöltése...</div>;
 
-  const dailyQuests = challenges.filter(c => c.template?.period === 'DAILY' || (!c.template && c.expiresAt)); // Approximation
-  const weeklyQuests = challenges.filter(c => c.template?.period === 'WEEKLY');
+  const dailyQuests = challenges.filter(c => c.period === 'DAILY');
+  const weeklyQuests = challenges.filter(c => c.period === 'WEEKLY');
 
   return (
     <div className="max-w-3xl mx-auto p-4 md:p-8 space-y-10 animate-in slide-in-from-bottom-2 fade-in duration-500">
-      
+       <BackButton to="/dashboard" />
+       
        {/* Banner */}
        <div className="bg-gradient-to-r from-purple-500 to-indigo-600 border-none rounded-2xl p-8 text-white shadow-lg flex items-center justify-between">
          <div>

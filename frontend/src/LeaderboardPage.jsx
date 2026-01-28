@@ -2,12 +2,14 @@ import React from 'react';
 import { useOutletContext } from 'react-router-dom';
 import { Trophy } from 'lucide-react';
 import Leaderboard from './components/Leaderboard';
+import BackButton from './components/BackButton';
 
 export default function LeaderboardPage() {
   const { session, profile } = useOutletContext();
 
   return (
     <div className="max-w-2xl mx-auto p-4 md:p-8 space-y-8 animate-in slide-in-from-bottom-2 fade-in duration-500">
+      <BackButton to="/dashboard" />
       <div className="text-center mb-8">
         <div className="inline-block p-4 bg-yellow-100 dark:bg-yellow-900/30 rounded-full mb-4">
             <Trophy className="text-yellow-500 w-12 h-12" />

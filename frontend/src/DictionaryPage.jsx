@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { useDictionary } from './DictionaryContext';
+import BackButton from './components/BackButton';
 
 export default function DictionaryPage() {
     const { dictionary, loading } = useDictionary();
@@ -26,6 +27,7 @@ export default function DictionaryPage() {
 
     return (
         <div className="max-w-4xl mx-auto p-6 pb-20">
+            <BackButton to="/dashboard" className="mb-6" />
             <h1 className="text-3xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-indigo-500 mb-2">Szakzsargon Szótár</h1>
             <p className="text-slate-500 dark:text-slate-400 mb-8">
                 Ismerd meg a legfontosabb programozási fogalmakat.

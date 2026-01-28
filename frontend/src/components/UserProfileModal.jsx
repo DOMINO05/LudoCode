@@ -114,7 +114,7 @@ const UserProfileModal = ({ userId, session, onClose }) => {
                                     {/* Stats Grid */}
                                     <div className="grid grid-cols-2 md:grid-cols-4 gap-4 w-full">
                                         <div className="bg-slate-50 dark:bg-slate-800/50 p-4 rounded-xl text-center border border-slate-200 dark:border-slate-700">
-                                            <div className="text-2xl font-black text-orange-500">🔥 {profile.currentStreak}</div>
+                                            <div className="text-2xl font-black text-orange-500">{profile.currentStreak}</div>
                                             <div className="text-xs uppercase font-bold text-slate-500">Streak</div>
                                         </div>
                                         <div className="bg-slate-50 dark:bg-slate-800/50 p-4 rounded-xl text-center border border-slate-200 dark:border-slate-700">
