@@ -1,12 +1,12 @@
 -- Fix get_active_challenges to include weekly challenges and return period
--- Fix ambiguous column references by using explicit aliases and unique return column names
+-- Fix ambiguous column references and use TEXT return types to avoid ENUM mismatch
 DROP FUNCTION IF EXISTS public.get_active_challenges();
 CREATE OR REPLACE FUNCTION public.get_active_challenges()
 RETURNS TABLE (
     out_id uuid,
     out_user_id uuid,
     out_template_id uuid,
-    out_action_type public.challenge_action,
+    out_action_type text,
     out_goal_value int,
     out_current_value int,
     out_reward_xp int,
@@ -16,7 +16,7 @@ RETURNS TABLE (
     out_is_claimed boolean,
     out_created_at timestamptz,
     out_expires_at timestamptz,
-    out_period public.challenge_period
+    out_period text
 ) AS $$
 DECLARE
     v_user_id uuid := auth.uid();
@@ -34,7 +34,7 @@ BEGIN
     SELECT count(*) INTO v_exists_daily FROM public.user_challenges uc
     WHERE uc.user_id = v_user_id 
       AND uc.expires_at > v_now 
-      AND uc.template_id IN (SELECT t.id FROM public.challenge_templates t WHERE t.period = 'DAILY');
+      AND uc.template_id IN (SELECT t.id FROM public.challenge_templates t WHERE t.period::text = 'DAILY');
 
     IF v_exists_daily = 0 THEN
         INSERT INTO public.user_challenges (user_id, template_id, action_type, goal_value, reward_xp, reward_gems, description, expires_at)
@@ -44,12 +44,12 @@ BEGIN
         FROM (
             SELECT *, row_number() OVER (ORDER BY id) as rn
             FROM public.challenge_templates
-            WHERE period = 'DAILY'
+            WHERE period::text = 'DAILY'
         ) t
         WHERE t.rn IN (
-            1 + (v_day_index * 3) % (SELECT count(*)::int FROM public.challenge_templates WHERE period = 'DAILY'),
-            1 + (v_day_index * 3 + 1) % (SELECT count(*)::int FROM public.challenge_templates WHERE period = 'DAILY'),
-            1 + (v_day_index * 3 + 2) % (SELECT count(*)::int FROM public.challenge_templates WHERE period = 'DAILY')
+            1 + (v_day_index * 3) % (SELECT count(*)::int FROM public.challenge_templates WHERE period::text = 'DAILY'),
+            1 + (v_day_index * 3 + 1) % (SELECT count(*)::int FROM public.challenge_templates WHERE period::text = 'DAILY'),
+            1 + (v_day_index * 3 + 2) % (SELECT count(*)::int FROM public.challenge_templates WHERE period::text = 'DAILY')
         );
     END IF;
 
@@ -57,7 +57,7 @@ BEGIN
     SELECT count(*) INTO v_exists_weekly FROM public.user_challenges uc
     WHERE uc.user_id = v_user_id 
       AND uc.expires_at > v_now 
-      AND uc.template_id IN (SELECT t.id FROM public.challenge_templates t WHERE t.period = 'WEEKLY');
+      AND uc.template_id IN (SELECT t.id FROM public.challenge_templates t WHERE t.period::text = 'WEEKLY');
 
     IF v_exists_weekly = 0 THEN
         INSERT INTO public.user_challenges (user_id, template_id, action_type, goal_value, reward_xp, reward_gems, description, expires_at)
@@ -67,20 +67,21 @@ BEGIN
         FROM (
             SELECT *, row_number() OVER (ORDER BY id) as rn
             FROM public.challenge_templates
-            WHERE period = 'WEEKLY'
+            WHERE period::text = 'WEEKLY'
         ) t
         WHERE t.rn IN (
-            1 + (v_week_index * 2) % (SELECT count(*)::int FROM public.challenge_templates WHERE period = 'WEEKLY'),
-            1 + (v_week_index * 2 + 1) % (SELECT count(*)::int FROM public.challenge_templates WHERE period = 'WEEKLY')
+            1 + (v_week_index * 2) % (SELECT count(*)::int FROM public.challenge_templates WHERE period::text = 'WEEKLY'),
+            1 + (v_week_index * 2 + 1) % (SELECT count(*)::int FROM public.challenge_templates WHERE period::text = 'WEEKLY')
         );
     END IF;
 
     RETURN QUERY 
     SELECT 
-        uc.id, uc.user_id, uc.template_id, uc.action_type, uc.goal_value, 
-        uc.current_value, uc.reward_xp, uc.reward_gems, uc.description, 
+        uc.id, uc.user_id, uc.template_id, 
+        uc.action_type::text, 
+        uc.goal_value, uc.current_value, uc.reward_xp, uc.reward_gems, uc.description, 
         uc.is_completed, uc.is_claimed, uc.created_at, uc.expires_at,
-        ct.period
+        ct.period::text
     FROM public.user_challenges uc
     LEFT JOIN public.challenge_templates ct ON uc.template_id = ct.id
     WHERE uc.user_id = v_user_id AND uc.expires_at > v_now

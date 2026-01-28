@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import { createPortal } from 'react-dom';
 import { useOutletContext, useNavigate } from 'react-router-dom';
 import { 
   Trophy, 
@@ -288,8 +289,8 @@ export default function Dashboard() {
         />
       )}
 
-      {showRecovery && (
-        <div className="fixed top-0 left-0 w-full h-[100dvh] bg-black/80 backdrop-blur-sm flex items-center justify-center z-[9999] p-4">
+      {showRecovery && createPortal(
+        <div className="fixed inset-0 w-full h-[100dvh] bg-black/80 backdrop-blur-sm flex items-center justify-center z-[9999] p-4">
             <div className="bg-surface-light dark:bg-surface-dark p-8 rounded-3xl shadow-2xl max-w-md w-full text-center border border-slate-200 dark:border-slate-700 animate-in fade-in zoom-in duration-300 overflow-y-auto max-h-[90vh]">
                 <div className="text-6xl mb-6">🧠</div>
                 <h2 className="text-2xl font-bold text-slate-800 dark:text-slate-100 mb-2">Sanity Helyreállítása</h2>
@@ -331,7 +332,8 @@ export default function Dashboard() {
                     </>
                 )}
             </div>
-        </div>
+        </div>,
+        document.body
       )}
 
       {showWarning && (

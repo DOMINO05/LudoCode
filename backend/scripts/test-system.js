@@ -44,7 +44,7 @@ async function runTests() {
       .from('profiles')
       .update({ 
           username: 'TesztElek_' + Math.floor(Math.random() * 1000), 
-          bio: 'Én egy AI által vezérelt tesztelő vagyok. ' + new Date().toLocaleTimeString(),
+          bio: 'Teszt leírás. ' + new Date().toLocaleTimeString(),
           avatar_config: { mood: 'happy', eyes: 'open' } 
       })
       .eq('id', userId);
@@ -113,7 +113,7 @@ async function runTests() {
     // 8. ADAPTÍV MOTOR & MINDEN TÍPUS BEKÜLDÉSE
     console.log('\n--- 🧠 Adaptív Motor & Beküldés (Minden típus) ---');
     const qTypes = ['theory', 'coding', 'debug', 'parsons', 'fill_in_blank', 'predict_output'];
-    const { data: lang } = await supabase.from('languages').select('*').eq('name', 'python').single();
+    const { data: lang } = await supabase.from('languages').select('*').eq('name', 'java').single();
     
     if (lang) {
         for (const type of qTypes) {
@@ -195,6 +195,35 @@ async function runTests() {
     console.log('\n--- 💊 Health & Recovery ---');
     const { data: recQ } = await supabase.rpc('get_mistake_recovery_question');
     console.log('✅ Recovery funkció ellenőrizve (Kérdés:', recQ ? recQ.title : 'Nincs aktuális hiba', ')');
+
+    // 13. ROTATION SIMULATION
+    console.log('\n--- 🔄 Küldetés Rotáció Szimuláció ---');
+    try {
+        console.log('Holnapi napi küldetések (szimulálva):');
+        const { data: tomorrow, error: tErr } = await supabase.rpc('debug_simulate_challenges', { p_days_offset: 1 });
+        if (tErr) throw tErr;
+        console.table(tomorrow.filter(q => q.out_period === 'DAILY').map(q => q.out_description_template));
+
+        console.log('Jövő heti heti küldetések (szimulálva):');
+        const { data: nextWeek, error: nwErr } = await supabase.rpc('debug_simulate_challenges', { p_days_offset: 7 });
+        if (nwErr) throw nwErr;
+        console.table(nextWeek.filter(q => q.out_period === 'WEEKLY').map(q => q.out_description_template));
+        console.log('✅ Rotációs logika sikeresen szimulálva.');
+    } catch (err) {
+        console.error('❌ Rotáció szimuláció hiba:', err.message);
+    }
+
+    // 14. CLEANUP (Takarítás)
+    console.log('\n--- 🧹 Takarítás ---');
+    if (quiz && quiz.id) {
+        const { error: delError } = await supabase
+            .from('quizzes')
+            .delete()
+            .eq('id', quiz.id);
+        
+        if (delError) console.error('❌ Teszt kvíz törlése hiba:', delError.message);
+        else console.log('✅ Teszt kvíz sikeresen törölve.');
+    }
 
     console.log('\n✨ MINDEN RENDSZERELEM ELLENŐRIZVE! ✨');
 
