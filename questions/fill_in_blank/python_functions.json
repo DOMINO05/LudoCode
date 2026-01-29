@@ -1,1 +1,112 @@
-[]
+[
+    {
+        "title": "Függvény definíció",
+        "description": "Melyik kulcsszóval definiálunk függvényt Pythonban?",
+        "hint": "A 'define' rövidítése.",
+        "q_type": "fill_in_blank",
+        "difficulty_rating": 600,
+        "language": "python",
+        "concept": {
+            "functions": 1.0
+        },
+        "content": {
+            "code_snippet": "{{BLANK}} my_function():\n    pass",
+            "correct_answer": "def",
+            "options": [
+                "def",
+                "function",
+                "func",
+                "define"
+            ],
+            "explanation": "A 'def' kulcsszó jelzi a függvénydefiníció kezdetét."
+        }
+    },
+    {
+        "title": "Érték visszaadása",
+        "description": "Melyik kulcsszóval térünk vissza egy értékkel a függvényből?",
+        "hint": "Visszatérés angolul.",
+        "q_type": "fill_in_blank",
+        "difficulty_rating": 650,
+        "language": "python",
+        "concept": {
+            "functions": 1.0
+        },
+        "content": {
+            "code_snippet": "def get_value():\n    {{BLANK}} 42",
+            "correct_answer": "return",
+            "options": [
+                "return",
+                "yield",
+                "back",
+                "give"
+            ],
+            "explanation": "A 'return' utasítás adja vissza az eredményt a hívónak."
+        }
+    },
+    {
+        "title": "Alapértelmezett paraméter",
+        "description": "Hogyan adunk alapértelmezett értéket egy paraméternek?",
+        "hint": "Értékadás a fejlécben.",
+        "q_type": "fill_in_blank",
+        "difficulty_rating": 750,
+        "language": "python",
+        "concept": {
+            "functions": 1.0
+        },
+        "content": {
+            "code_snippet": "def greet(name{{BLANK}}\"Vendég\"):",
+            "correct_answer": "=",
+            "options": [
+                "=",
+                ":",
+                "==",
+                "<-"
+            ],
+            "explanation": "A paraméter neve után tett '=' jellel adhatunk meg alapértelmezett értéket."
+        }
+    },
+    {
+        "title": "Névtelen függvény",
+        "description": "Melyik kulcsszóval hozunk létre névtelen (lambda) függvényt?",
+        "hint": "A görög ábécé egyik betűje.",
+        "q_type": "fill_in_blank",
+        "difficulty_rating": 850,
+        "language": "python",
+        "concept": {
+            "functions": 1.0
+        },
+        "content": {
+            "code_snippet": "square = {{BLANK}} x: x * x",
+            "correct_answer": "lambda",
+            "options": [
+                "lambda",
+                "anon",
+                "func",
+                "inline"
+            ],
+            "explanation": "A 'lambda' kulcsszóval tömör, egysoros függvényeket definiálhatunk."
+        }
+    },
+    {
+        "title": "Tetszőleges számú argumentum",
+        "description": "Milyen karakterrel jelezzük, hogy a függvény tetszőleges számú pozicionális argumentumot fogad?",
+        "hint": "Csillag.",
+        "q_type": "fill_in_blank",
+        "difficulty_rating": 900,
+        "language": "python",
+        "concept": {
+            "functions": 1.0
+        },
+        "content": {
+            "code_snippet": "def my_func({{BLANK}}args):",
+            "correct_answer": "*",
+            "options": [
+                "*",
+                "**",
+                "&",
+                "..."
+            ],
+            "explanation": "A '*' operátor a paraméter neve előtt 'becsomagolja' a többlet argumentumokat egy tuple-be."
+        }
+    }
+]

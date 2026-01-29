@@ -1,1 +1,130 @@
-[]
+[
+    {
+        "title": "Változó deklaráció",
+        "description": "Hozz létre egy 'age' nevű változót 25 értékkel!",
+        "hint": "Pythonban nem kell típust megadni.",
+        "q_type": "coding",
+        "difficulty_rating": 600,
+        "language": "python",
+        "concept": {
+            "basics": 1.0
+        },
+        "content": {
+            "initial_code": "def get_age():",
+            "test_cases": [
+                {
+                    "input": "",
+                    "expected_output": "25"
+                }
+            ],
+            "scaffolding_blocks": [
+                "age = 25",
+                "return age"
+            ],
+            "explanation": "Pythonban a változóknak egyszerűen nevet adunk és értéket rendelünk hozzájuk az = operátorral.",
+            "correct_answer": "def get_age():\n    age = 25\n    return age"
+        }
+    },
+    {
+        "title": "Összeadás",
+        "description": "Térj vissza két szám összegével!",
+        "hint": "Használd a + operátort.",
+        "q_type": "coding",
+        "difficulty_rating": 700,
+        "language": "python",
+        "concept": {
+            "basics": 1.0
+        },
+        "content": {
+            "initial_code": "def add(a, b):",
+            "test_cases": [
+                {
+                    "input": "5, 10",
+                    "expected_output": "15"
+                }
+            ],
+            "scaffolding_blocks": [
+                "return a + b"
+            ],
+            "explanation": "A Python egyszerű szintaxist biztosít az alapvető matematikai műveletekhez.",
+            "correct_answer": "def add(a, b):\n    return a + b"
+        }
+    },
+    {
+        "title": "F-string formázás",
+        "description": "Térj vissza a 'Hello, [name]!' üdvözléssel f-string használatával!",
+        "hint": "Használd az f\"... {name} ...\" formát.",
+        "q_type": "coding",
+        "difficulty_rating": 800,
+        "language": "python",
+        "concept": {
+            "basics": 1.0
+        },
+        "content": {
+            "initial_code": "def greet(name):",
+            "test_cases": [
+                {
+                    "input": "'Anna'",
+                    "expected_output": "'Hello, Anna!'"
+                }
+            ],
+            "scaffolding_blocks": [
+                "return f'Hello, {name}!'"
+            ],
+            "explanation": "Az f-stringek (formatted string literals) a legmodernebb és legolvashatóbb módot jelentik a stringek formázására Pythonban.",
+            "correct_answer": "def greet(name):\n    return f'Hello, {name}!'"
+        }
+    },
+    {
+        "title": "Lista elem elérése",
+        "description": "Térj vissza a lista első elemével!",
+        "hint": "Az indexelés 0-tól kezdődik.",
+        "q_type": "coding",
+        "difficulty_rating": 900,
+        "language": "python",
+        "concept": {
+            "basics": 1.0,
+            "arrays": 0.5
+        },
+        "content": {
+            "initial_code": "def first_element(lst):",
+            "test_cases": [
+                {
+                    "input": "[1, 2, 3]",
+                    "expected_output": "1"
+                }
+            ],
+            "scaffolding_blocks": [
+                "return lst[0]"
+            ],
+            "explanation": "A listák elemeit szögletes zárójelekkel és indexszel érhetjük el.",
+            "correct_answer": "def first_element(lst):\n    return lst[0]"
+        }
+    },
+    {
+        "title": "Többszörös értékadás",
+        "description": "Cseréld meg az 'a' és 'b' változók értékét egyetlen sorban!",
+        "hint": "Használd az a, b = b, a szintaxist.",
+        "q_type": "coding",
+        "difficulty_rating": 1000,
+        "language": "python",
+        "concept": {
+            "basics": 1.0
+        },
+        "content": {
+            "initial_code": "def swap(a, b):",
+            "test_cases": [
+                {
+                    "input": "1, 2",
+                    "expected_output": "(2, 1)"
+                }
+            ],
+            "scaffolding_blocks": [
+                "a, b = b, a",
+                "return a, b"
+            ],
+            "explanation": "A Python lehetővé teszi a változók értékének egyszerű megcserélését segédváltozó nélkül.",
+            "correct_answer": "def swap(a, b):\n    a, b = b, a\n    return a, b"
+        }
+    }
+]

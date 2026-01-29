@@ -1,1 +1,77 @@
-[]
+[
+    {
+        "title": "Logikai ÉS",
+        "description": "Mi lesz a kimenet?",
+        "hint": "Mindkét oldalnak igaznak kell lennie.",
+        "q_type": "predict_output",
+        "difficulty_rating": 600,
+        "language": "java",
+        "concept": {"logic": 1.0},
+        "content": {
+            "code_snippet": "boolean a = true;\nboolean b = false;\nSystem.out.print(a && b);",
+            "options": ["true", "false", "1", "0"],
+            "correct_answer": "false",
+            "explanation": "A logikai ÉS (&&) csak akkor true, ha mindkét operandus true."
+        }
+    },
+    {
+        "title": "Feltételes elágazás",
+        "description": "Mit ír ki a kód?",
+        "hint": "Csak az egyik ág fut le.",
+        "q_type": "predict_output",
+        "difficulty_rating": 650,
+        "language": "java",
+        "concept": {"logic": 1.0},
+        "content": {
+            "code_snippet": "int x = 10;\nif (x > 5) {\n  System.out.print(\"A\");\n} else {\n  System.out.print(\"B\");\n}",
+            "options": ["A", "B", "AB", "hiba"],
+            "correct_answer": "A",
+            "explanation": "Mivel 10 > 5 igaz, az if ága fut le."
+        }
+    },
+    {
+        "title": "Összetett feltétel",
+        "description": "Mi lesz a kimenet?",
+        "hint": "A műveleti sorrend számít (a tagadás erős).",
+        "q_type": "predict_output",
+        "difficulty_rating": 750,
+        "language": "java",
+        "concept": {"logic": 1.0},
+        "content": {
+            "code_snippet": "int n = 5;\nSystem.out.print(!(n > 10) || (n == 5));",
+            "options": ["true", "false", "null", "hiba"],
+            "correct_answer": "true",
+            "explanation": "!(5 > 10) -> !(false) -> true. Mivel az első rész true, a VAGY (||) eredménye is true lesz."
+        }
+    },
+    {
+        "title": "Rövidzár (Short-circuit)",
+        "description": "Mit ír ki a kód? (Figyeld a változó módosulását!)",
+        "hint": "A && második fele nem fut le, ha az első hamis.",
+        "q_type": "predict_output",
+        "difficulty_rating": 900,
+        "language": "java",
+        "concept": {"logic": 1.0, "basics": 0.5},
+        "content": {
+            "code_snippet": "int x = 0;\nboolean b = (false && (++x > 0));\nSystem.out.print(x);",
+            "options": ["0", "1", "true", "false"],
+            "correct_answer": "0",
+            "explanation": "A && operátor rövidzárként működik: ha a bal oldal false, a jobb oldalt (ahol az increment van) már ki sem értékeli."
+        }
+    },
+    {
+        "title": "Ternary operátor",
+        "description": "Mi lesz az eredmény?",
+        "hint": "Feltétel ? HaIgaz : HaHamis.",
+        "q_type": "predict_output",
+        "difficulty_rating": 850,
+        "language": "java",
+        "concept": {"logic": 1.0},
+        "content": {
+            "code_snippet": "int a = 5, b = 10;\nint res = (a > b) ? a : b;\nSystem.out.print(res);",
+            "options": ["5", "10", "true", "false"],
+            "correct_answer": "10",
+            "explanation": "Mivel 5 > 10 hamis, a kettőspont utáni érték (b) kerül a res változóba."
+        }
+    }
+]

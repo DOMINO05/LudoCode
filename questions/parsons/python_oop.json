@@ -1,1 +1,96 @@
-[]
+[
+    {
+        "title": "Egyszerű osztály",
+        "description": "Rendezze sorba a blokkokat egy Person osztály definíciójához!",
+        "hint": "Pythonban a törzs behúzása kötelező.",
+        "q_type": "parsons",
+        "difficulty_rating": 600,
+        "language": "python",
+        "concept": {"oop": 1.0},
+        "content": {
+            "blocks": [
+                {"id": 1, "text": "class Person:"},
+                {"id": 2, "text": "    def __init__(self, name):"},
+                {"id": 3, "text": "        self.name = name"}
+            ],
+            "correct_order": [1, 2, 3],
+            "explanation": "Az osztályt a 'class' kulcsszó vezeti be, majd jön a konstruktor (__init__)."
+        }
+    },
+    {
+        "title": "Metódus hívása",
+        "description": "Rendezze a blokkokat az objektum létrehozásához és a metódus hívásához!",
+        "hint": "Előbb a példányosítás, aztán a használat.",
+        "q_type": "parsons",
+        "difficulty_rating": 750,
+        "language": "python",
+        "concept": {"oop": 1.0},
+        "content": {
+            "blocks": [
+                {"id": 1, "text": "kutya = Dog(\"Bodri\")"},
+                {"id": 2, "text": "kutya.ugat()"},
+                {"id": 3, "text": "class Dog:"},
+                {"id": 4, "text": "    def ugat(self): print(\"Vau\")"}
+            ],
+            "correct_order": [3, 4, 1, 2],
+            "explanation": "Az osztálydefiníció után létrehozunk egy példányt, majd azon hívjuk meg a metódust."
+        }
+    },
+    {
+        "title": "Öröklődés",
+        "description": "Rendezze a blokkokat egy alosztály létrehozásához!",
+        "hint": "Az ősosztály nevét zárójelbe tesszük.",
+        "q_type": "parsons",
+        "difficulty_rating": 900,
+        "language": "python",
+        "concept": {"oop": 1.0},
+        "content": {
+            "blocks": [
+                {"id": 1, "text": "class Animal:"},
+                {"id": 2, "text": "    pass"},
+                {"id": 3, "text": "class Bird(Animal):"},
+                {"id": 4, "text": "    def fly(self):"},
+                {"id": 5, "text": "        print(\"Repül\")"}
+            ],
+            "correct_order": [1, 2, 3, 4, 5],
+            "explanation": "A Bird osztály az Animal osztályból származik, és egy új metódussal egészíti ki azt."
+        }
+    },
+    {
+        "title": "Property használata",
+        "description": "Rendezze sorba a blokkokat egy számított tulajdonsághoz!",
+        "hint": "Használja a @property dekorátort.",
+        "q_type": "parsons",
+        "difficulty_rating": 850,
+        "language": "python",
+        "concept": {"oop": 1.0, "functions": 0.5},
+        "content": {
+            "blocks": [
+                {"id": 1, "text": "class Square:"},
+                {"id": 2, "text": "    @property"},
+                {"id": 3, "text": "    def area(self):"},
+                {"id": 4, "text": "        return self.side * self.side"}
+            ],
+            "correct_order": [1, 2, 3, 4],
+            "explanation": "A dekorátor utáni metódust attribútumként tudjuk elérni."
+        }
+    },
+    {
+        "title": "Ősosztály hívása (super)",
+        "description": "Rendezze a blokkokat, hogy az alosztály meghívja az ősosztály konstruktorát!",
+        "hint": "Használja a super() függvényt.",
+        "q_type": "parsons",
+        "difficulty_rating": 800,
+        "language": "python",
+        "concept": {"oop": 1.0},
+        "content": {
+            "blocks": [
+                {"id": 1, "text": "def __init__(self, name, age):"},
+                {"id": 2, "text": "    super().__init__(name)"},
+                {"id": 3, "text": "    self.age = age"}
+            ],
+            "correct_order": [1, 2, 3],
+            "explanation": "A super() hívás gondoskodik az ősosztályban definiált adatok inicializálásáról."
+        }
+    }
+]

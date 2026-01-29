@@ -1,1 +1,77 @@
-[]
+[
+    {
+        "title": "Függvény visszatérés",
+        "description": "Mi lesz a kimenet?",
+        "hint": "A függvény visszaadja az értéket a hívónak.",
+        "q_type": "predict_output",
+        "difficulty_rating": 600,
+        "language": "python",
+        "concept": {"functions": 1.0},
+        "content": {
+            "code_snippet": "def get_num():\n    return 5\n\nprint(get_num() + 2)",
+            "options": ["5", "2", "7", "hiba"],
+            "correct_answer": "7",
+            "explanation": "A get_num() visszatér az 5-tel, amihez hozzáadunk 2-t."
+        }
+    },
+    {
+        "title": "Több visszatérési érték",
+        "description": "Mit ír ki a kód?",
+        "hint": "Pythonban a vesszővel elválasztott értékek tuple-t alkotnak.",
+        "q_type": "predict_output",
+        "difficulty_rating": 750,
+        "language": "python",
+        "concept": {"functions": 1.0, "basics": 0.5},
+        "content": {
+            "code_snippet": "def get_coords():\n    return 1, 2\n\nx, y = get_coords()\nprint(x)",
+            "options": ["1", "2", "(1, 2)", "hiba"],
+            "correct_answer": "1",
+            "explanation": "A függvény egy tuple-t ad vissza, amit a kicsomagolás (unpacking) során szétosztunk x és y között."
+        }
+    },
+    {
+        "title": "Alapértelmezett paraméterek",
+        "description": "Mi lesz a kimenet?",
+        "hint": "Ha nem adunk meg értéket, az alapértelmezett használatos.",
+        "q_type": "predict_output",
+        "difficulty_rating": 700,
+        "language": "python",
+        "concept": {"functions": 1.0},
+        "content": {
+            "code_snippet": "def say(msg=\"Helló\"):\n    print(msg)\n\nsay(\"Szia\")",
+            "options": ["Helló", "Szia", "HellóSzia", "hiba"],
+            "correct_answer": "Szia",
+            "explanation": "Mivel átadtunk egy argumentumot (\"Szia\"), az felülírja az alapértelmezett értéket."
+        }
+    },
+    {
+        "title": "Változó hatókör (Scope)",
+        "description": "Mit ír ki a program?",
+        "hint": "A függvényen belüli módosítás nem érinti a globális változót, ha nem használjuk a global kulcsszót.",
+        "q_type": "predict_output",
+        "difficulty_rating": 900,
+        "language": "python",
+        "concept": {"functions": 1.0, "basics": 0.6},
+        "content": {
+            "code_snippet": "x = 10\ndef change():\n    x = 5\n\nchange()\nprint(x)",
+            "options": ["10", "5", "15", "hiba"],
+            "correct_answer": "10",
+            "explanation": "A függvényen belül egy új, lokális x változó jön létre, a globális x értéke változatlan marad."
+        }
+    },
+    {
+        "title": "Lambda függvény hívása",
+        "description": "Mi lesz az eredmény?",
+        "hint": "A lambda egy névtelen függvény.",
+        "q_type": "predict_output",
+        "difficulty_rating": 850,
+        "language": "python",
+        "concept": {"functions": 1.0},
+        "content": {
+            "code_snippet": "f = lambda a, b: a * b\nprint(f(2, 3))",
+            "options": ["5", "6", "23", "hiba"],
+            "correct_answer": "6",
+            "explanation": "A lambda függvény összeszorozza a két paraméterét: 2 * 3 = 6."
+        }
+    }
+]

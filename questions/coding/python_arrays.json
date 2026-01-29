@@ -1,1 +1,134 @@
-[]
+[
+    {
+        "title": "Lista létrehozása",
+        "description": "Hozz létre egy listát 'numbers' néven, ami az 1, 2, 3 számokat tartalmazza!",
+        "hint": "Pythonban a listákat szögletes zárójellel [ ] hozzuk létre.",
+        "q_type": "coding",
+        "difficulty_rating": 600,
+        "language": "python",
+        "concept": {
+            "arrays": 1.0,
+            "basics": 0.5
+        },
+        "content": {
+            "initial_code": "def create_list():",
+            "test_cases": [
+                {
+                    "input": "",
+                    "expected_output": "[1, 2, 3]"
+                }
+            ],
+            "scaffolding_blocks": [
+                "numbers = [1, 2, 3]",
+                "return numbers"
+            ],
+            "explanation": "A Python listák dinamikus tömbök, amelyek bármilyen típusú adatot tárolhatnak.",
+            "correct_answer": "def create_list():\n    numbers = [1, 2, 3]\n    return numbers"
+        }
+    },
+    {
+        "title": "Elem hozzáadása",
+        "description": "Add hozzá a kapott 'x' értéket a lista végéhez!",
+        "hint": "Használd az append() metódust.",
+        "q_type": "coding",
+        "difficulty_rating": 700,
+        "language": "python",
+        "concept": {
+            "arrays": 1.0
+        },
+        "content": {
+            "initial_code": "def add_to_list(lst, x):",
+            "test_cases": [
+                {
+                    "input": "[1, 2], 3",
+                    "expected_output": "[1, 2, 3]"
+                }
+            ],
+            "scaffolding_blocks": [
+                "lst.append(x)",
+                "return lst"
+            ],
+            "explanation": "Az append() metódus a lista végére szúr be egy új elemet.",
+            "correct_answer": "def add_to_list(lst, x):\n    lst.append(x)\n    return lst"
+        }
+    },
+    {
+        "title": "Lista szeletelés (Slicing)",
+        "description": "Térj vissza a lista első három elemével!",
+        "hint": "Használd az lst[:3] szintaxist.",
+        "q_type": "coding",
+        "difficulty_rating": 800,
+        "language": "python",
+        "concept": {
+            "arrays": 1.0,
+            "basics": 0.6
+        },
+        "content": {
+            "initial_code": "def get_first_three(lst):",
+            "test_cases": [
+                {
+                    "input": "[1, 2, 3, 4, 5]",
+                    "expected_output": "[1, 2, 3]"
+                }
+            ],
+            "scaffolding_blocks": [
+                "return lst[:3]"
+            ],
+            "explanation": "A szeletelés (slicing) lehetővé teszi a lista egy részének egyszerű kinyerését.",
+            "correct_answer": "def get_first_three(lst):\n    return lst[:3]"
+        }
+    },
+    {
+        "title": "Elemek összege",
+        "description": "Számítsd ki a lista elemeinek összegét!",
+        "hint": "Használd a beépített sum() függvényt.",
+        "q_type": "coding",
+        "difficulty_rating": 900,
+        "language": "python",
+        "concept": {
+            "arrays": 1.0,
+            "basics": 0.5
+        },
+        "content": {
+            "initial_code": "def sum_list(lst):",
+            "test_cases": [
+                {
+                    "input": "[10, 20, 30]",
+                    "expected_output": "60"
+                }
+            ],
+            "scaffolding_blocks": [
+                "return sum(lst)"
+            ],
+            "explanation": "A Python számos beépített függvényt kínál a sorozatok kezelésére, ilyen a sum() is.",
+            "correct_answer": "def sum_list(lst):\n    return sum(lst)"
+        }
+    },
+    {
+        "title": "Lista rendezése",
+        "description": "Rendezd a kapott listát növekvő sorrendbe!",
+        "hint": "Használd a sort() metódust vagy a sorted() függvényt.",
+        "q_type": "coding",
+        "difficulty_rating": 1000,
+        "language": "python",
+        "concept": {
+            "arrays": 1.0,
+            "logic": 0.5
+        },
+        "content": {
+            "initial_code": "def sort_list(lst):",
+            "test_cases": [
+                {
+                    "input": "[3, 1, 2]",
+                    "expected_output": "[1, 2, 3]"
+                }
+            ],
+            "scaffolding_blocks": [
+                "lst.sort()",
+                "return lst"
+            ],
+            "explanation": "A sort() metódus helyben (in-place) rendezi a listát.",
+            "correct_answer": "def sort_list(lst):\n    lst.sort()\n    return lst"
+        }
+    }
+]

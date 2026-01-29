@@ -20,6 +20,7 @@ import { useLanguage } from './LanguageContext';
 import { DictionaryProvider } from './DictionaryContext';
 import Avatar from './Avatar';
 import PlacementIntro from './components/PlacementIntro';
+import { INITIAL_AVATAR_CONFIG } from './utils/avatarDefaults';
 
 export default function Layout({ session }) {
   const [profile, setProfile] = useState(null);
@@ -44,15 +45,15 @@ export default function Layout({ session }) {
             
         if (error) throw error;
         
-        // Map snake_case from DB to camelCase for component expectations if needed
-        // But Layout uses profile.avatarConfig and profile.hasCompletedPlacement
-        // and my migration used snake_case for the columns.
-        // Actually, Layout.jsx uses: profile?.avatarConfig and profile?.hasCompletedPlacement
-        // So I should map them.
-        
+        // Handle potentially empty or missing avatar_config
+        const dbAvatarConfig = data.avatar_config;
+        const avatarConfig = (dbAvatarConfig && Object.keys(dbAvatarConfig).length > 0)
+            ? dbAvatarConfig
+            : { ...INITIAL_AVATAR_CONFIG, seed: data.username || data.id };
+
         const mappedData = {
             ...data,
-            avatarConfig: data.avatar_config,
+            avatarConfig: avatarConfig,
             hasCompletedPlacement: data.has_completed_placement,
             sanityPoints: data.sanity_points,
             currentStreak: data.current_streak,
@@ -72,7 +73,6 @@ export default function Layout({ session }) {
   };
 
   const showBadgeNotification = (badge) => {
-      console.log('Showing badge notification:', badge);
       setBadgeNotification(badge);
       setTimeout(() => setBadgeNotification(null), 5000);
   };
@@ -137,7 +137,7 @@ export default function Layout({ session }) {
 
          <div className="flex items-center gap-3 p-2 rounded-xl hover:bg-slate-100 dark:hover:bg-slate-800 cursor-pointer" onClick={() => { navigate('/profile'); if(mobile) setIsMobileMenuOpen(false); }}>
             <div className="w-10 h-10 rounded-lg border-2 border-slate-300 dark:border-slate-600 overflow-hidden shrink-0">
-              <Avatar config={profile?.avatarConfig} size={40} />
+              {profile?.avatarConfig && <Avatar config={profile.avatarConfig} size={40} />}
             </div>
             <div className="flex flex-col overflow-hidden">
               <span className="font-bold text-slate-700 dark:text-slate-200 truncate">{profile?.username || 'Profil'}</span>
@@ -203,7 +203,7 @@ export default function Layout({ session }) {
                   {isDark ? <Sun size={20} /> : <Moon size={20} />}
                </button>
                <div className="w-8 h-8 rounded-lg border-2 border-slate-300 dark:border-slate-600 overflow-hidden" onClick={() => navigate('/profile')}>
-                  <Avatar config={profile?.avatarConfig} size={32} />
+                  {profile?.avatarConfig && <Avatar config={profile.avatarConfig} size={32} />}
                </div>
             </div>
         </div>
@@ -211,7 +211,7 @@ export default function Layout({ session }) {
         {/* --- KÖZÉPSŐ TARTALOM (Main Content) --- */}
         <main className="flex-1 flex flex-col pt-16 md:pt-0 pb-20 md:pb-0 overflow-hidden relative">
           
-          {/* Badge Notification Overlay (Top Center - Fixed) */}
+          {/* Badge Notification Overlay */}
           {badgeNotification && (
               <div className="fixed left-1/2 top-6 transform -translate-x-1/2 z-[9999] pointer-events-none w-full max-w-sm flex justify-center transition-all duration-500 animate-in fade-in slide-in-from-top-4">
                 <div className="bg-yellow-100 dark:bg-yellow-900/95 border-2 border-yellow-400 text-yellow-800 dark:text-yellow-100 px-6 py-3 rounded-xl shadow-2xl flex items-center gap-4 backdrop-blur-sm">

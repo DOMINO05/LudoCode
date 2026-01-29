@@ -1,1 +1,77 @@
-[]
+[
+    {
+        "title": "Range ciklus",
+        "description": "Mi lesz a kimenet?",
+        "hint": "A range(stop) 0-tól indul és stop-1-nél áll meg.",
+        "q_type": "predict_output",
+        "difficulty_rating": 600,
+        "language": "python",
+        "concept": {"loops": 1.0},
+        "content": {
+            "code_snippet": "for i in range(3):\n    print(i, end=\"\")",
+            "options": ["012", "0123", "123", "hiba"],
+            "correct_answer": "012",
+            "explanation": "A range(3) a 0, 1, 2 számokat generálja."
+        }
+    },
+    {
+        "title": "While és módosítás",
+        "description": "Mit ír ki a kód?",
+        "hint": "Figyeld az i értékének változását.",
+        "q_type": "predict_output",
+        "difficulty_rating": 650,
+        "language": "python",
+        "concept": {"loops": 1.0},
+        "content": {
+            "code_snippet": "i = 1\nwhile i < 4:\n    print(i, end=\"\")\n    i += 1",
+            "options": ["123", "1234", "0123", "hiba"],
+            "correct_answer": "123",
+            "explanation": "A ciklus 1, 2, 3 értékekkel fut le, amíg i kisebb mint 4."
+        }
+    },
+    {
+        "title": "Lista generálás (Comprehension)",
+        "description": "Mi lesz a lista tartalma?",
+        "hint": "Minden szám négyzete kerül a listába.",
+        "q_type": "predict_output",
+        "difficulty_rating": 750,
+        "language": "python",
+        "concept": {"loops": 1.0, "arrays": 0.8},
+        "content": {
+            "code_snippet": "lst = [x*2 for x in range(3)]\nprint(lst)",
+            "options": ["[0, 2, 4]", "[2, 4, 6]", "[0, 1, 2]", "hiba"],
+            "correct_answer": "[0, 2, 4]",
+            "explanation": "range(3) -> 0, 1, 2. Ezeket szorozzuk kettővel: 0, 2, 4."
+        }
+    },
+    {
+        "title": "Megszakítás (Break)",
+        "description": "Mit ír ki a program?",
+        "hint": "A break azonnal leállítja a ciklust.",
+        "q_type": "predict_output",
+        "difficulty_rating": 700,
+        "language": "python",
+        "concept": {"loops": 1.0, "logic": 0.5},
+        "content": {
+            "code_snippet": "for char in \"abcde\":\n    if char == \"c\":\n        break\n    print(char, end=\"\")",
+            "options": ["ab", "abc", "abcde", "hiba"],
+            "correct_answer": "ab",
+            "explanation": "Amikor a karakter 'c', a break kilép, így csak az 'a' és 'b' kerül kiírásra."
+        }
+    },
+    {
+        "title": "Egymásba ágyazott ciklus",
+        "description": "Mi lesz a kimenet?",
+        "hint": "A belső ciklus minden külső körben lefut.",
+        "q_type": "predict_output",
+        "difficulty_rating": 800,
+        "language": "python",
+        "concept": {"loops": 1.0},
+        "content": {
+            "code_snippet": "for i in range(2):\n    for j in range(2):\n        print(i, end=\"\")",
+            "options": ["0011", "0101", "01", "0000"],
+            "correct_answer": "0011",
+            "explanation": "i=0-nál j=0 és j=1 (kiírja: 00). i=1-nél j=0 és j=1 (kiírja: 11)."
+        }
+    }
+]

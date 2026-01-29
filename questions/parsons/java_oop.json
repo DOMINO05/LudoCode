@@ -1,1 +1,100 @@
-[]
+[
+    {
+        "title": "Egyszerű osztály",
+        "description": "Rendezze sorba a blokkokat egy Person osztály létrehozásához!",
+        "hint": "Osztálynév -> Kapcsos zárójel -> Mező.",
+        "q_type": "parsons",
+        "difficulty_rating": 600,
+        "language": "java",
+        "concept": {"oop": 1.0},
+        "content": {
+            "blocks": [
+                {"id": 1, "text": "public class Person {"},
+                {"id": 2, "text": "    String name;"},
+                {"id": 3, "text": "}"}
+            ],
+            "correct_order": [1, 2, 3],
+            "explanation": "Az osztály definíciója tartalmazza a mezőket és metódusokat a kapcsos zárójelek között."
+        }
+    },
+    {
+        "title": "Konstruktor használata",
+        "description": "Rendezze a blokkokat egy paraméteres konstruktorhoz!",
+        "hint": "A konstruktor neve megegyezik az osztályéval.",
+        "q_type": "parsons",
+        "difficulty_rating": 700,
+        "language": "java",
+        "concept": {"oop": 1.0},
+        "content": {
+            "blocks": [
+                {"id": 1, "text": "public class Car {"},
+                {"id": 2, "text": "    String model;"},
+                {"id": 3, "text": "    public Car(String model) {"},
+                {"id": 4, "text": "        this.model = model;"},
+                {"id": 5, "text": "    }"},
+                {"id": 6, "text": "}"}
+            ],
+            "correct_order": [1, 2, 3, 4, 5, 6],
+            "explanation": "A konstruktorban a 'this' kulcsszóval különböztetjük meg a mezőt a paramétertől."
+        }
+    },
+    {
+        "title": "Enkapszuláció (Getter/Setter)",
+        "description": "Rendezze sorba a blokkokat egy privát mező és a hozzá tartozó getter/setter metódusokhoz!",
+        "hint": "A mező legyen private, a metódusok public.",
+        "q_type": "parsons",
+        "difficulty_rating": 800,
+        "language": "java",
+        "concept": {"oop": 1.0, "functions": 0.5},
+        "content": {
+            "blocks": [
+                {"id": 1, "text": "private int age;"},
+                {"id": 2, "text": "public int getAge() { return age; }"},
+                {"id": 3, "text": "public void setAge(int age) { this.age = age; }"}
+            ],
+            "correct_order": [1, 2, 3],
+            "explanation": "A privát mezőket metódusokon keresztül érjük el és módosítjuk kívülről."
+        }
+    },
+    {
+        "title": "Öröklődés",
+        "description": "Rendezze a blokkokat egy származtatott osztály létrehozásához!",
+        "hint": "Használja az extends kulcsszót.",
+        "q_type": "parsons",
+        "difficulty_rating": 900,
+        "language": "java",
+        "concept": {"oop": 1.0},
+        "content": {
+            "blocks": [
+                {"id": 1, "text": "public class Dog extends Animal {"},
+                {"id": 2, "text": "    public void bark() {"},
+                {"id": 3, "text": "        System.out.println(\"Vau\");"},
+                {"id": 4, "text": "    }"},
+                {"id": 5, "text": "}"}
+            ],
+            "correct_order": [1, 2, 3, 4, 5],
+            "explanation": "A Dog osztály örökli az Animal minden nem privát tulajdonságát és kiegészíti saját metódussal."
+        }
+    },
+    {
+        "title": "Interfész megvalósítása",
+        "description": "Rendezze sorba a blokkokat egy interfész implementálásához!",
+        "hint": "Használja az implements kulcsszót és definiálja a metódust.",
+        "q_type": "parsons",
+        "difficulty_rating": 850,
+        "language": "java",
+        "concept": {"oop": 1.0},
+        "content": {
+            "blocks": [
+                {"id": 1, "text": "public class Circle implements Shape {"},
+                {"id": 2, "text": "    @Override"},
+                {"id": 3, "text": "    public void draw() {"},
+                {"id": 4, "text": "        System.out.println(\"Rajzolás\");"},
+                {"id": 5, "text": "    }"},
+                {"id": 6, "text": "}"}
+            ],
+            "correct_order": [1, 2, 3, 4, 5, 6],
+            "explanation": "Az interfész megvalósításakor kötelező definiálni az interfészben deklarált metódusokat."
+        }
+    }
+]

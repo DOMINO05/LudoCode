@@ -1,1 +1,77 @@
-[]
+[
+    {
+        "title": "Egyszerű kiíratás",
+        "description": "Mi lesz a kimenet?",
+        "hint": "A szám közvetlenül megjelenik.",
+        "q_type": "predict_output",
+        "difficulty_rating": 600,
+        "language": "java",
+        "concept": {"basics": 1.0},
+        "content": {
+            "code_snippet": "int x = 5;\nSystem.out.print(x);",
+            "options": ["5", "x", "0", "hiba"],
+            "correct_answer": "5",
+            "explanation": "A System.out.print() kiírja a változó aktuális értékét."
+        }
+    },
+    {
+        "title": "Alapműveletek",
+        "description": "Mi jelenik meg a konzolon?",
+        "hint": "Előbb a zárójel értékelődik ki.",
+        "q_type": "predict_output",
+        "difficulty_rating": 650,
+        "language": "java",
+        "concept": {"basics": 1.0},
+        "content": {
+            "code_snippet": "int a = 10;\nint b = 2;\nSystem.out.print(a / b + 3);",
+            "options": ["8", "5", "7", "10"],
+            "correct_answer": "8",
+            "explanation": "A műveleti sorrend alapján először az osztás fut le (10/2=5), majd hozzáadunk 3-at."
+        }
+    },
+    {
+        "title": "String összefűzés",
+        "description": "Mi lesz a kimenet?",
+        "hint": "A + jel szövegeket kapcsol össze.",
+        "q_type": "predict_output",
+        "difficulty_rating": 700,
+        "language": "java",
+        "concept": {"basics": 1.0},
+        "content": {
+            "code_snippet": "String s = \"Java\" + 17;\nSystem.out.print(s);",
+            "options": ["Java17", "Java 17", "Java", "hiba"],
+            "correct_answer": "Java17",
+            "explanation": "Ha egy Stringhez bármilyen értéket adunk hozzá, az eredmény String lesz."
+        }
+    },
+    {
+        "title": "Egészosztás",
+        "description": "Mit ír ki a kód?",
+        "hint": "Az int típusnál elveszik a maradék.",
+        "q_type": "predict_output",
+        "difficulty_rating": 800,
+        "language": "java",
+        "concept": {"basics": 1.0},
+        "content": {
+            "code_snippet": "int val = 7 / 2;\nSystem.out.print(val);",
+            "options": ["3", "3.5", "4", "0"],
+            "correct_answer": "3",
+            "explanation": "Mivel mindkét operandus egész szám, az eredmény is egész lesz (lefelé kerekítve)."
+        }
+    },
+    {
+        "title": "Típuskonverzió hatása",
+        "description": "Mi lesz a kimenet?",
+        "hint": "A castolás csak a közvetlen értéket érinti.",
+        "q_type": "predict_output",
+        "difficulty_rating": 850,
+        "language": "java",
+        "concept": {"basics": 1.0},
+        "content": {
+            "code_snippet": "double d = 5.8;\nint i = (int) d;\nSystem.out.print(i);",
+            "options": ["5", "6", "5.8", "0"],
+            "correct_answer": "5",
+            "explanation": "Az int-té való castolás levágja a tizedesjegyeket, nem kerekít."
+        }
+    }
+]

@@ -1,1 +1,112 @@
-[]
+[
+    {
+        "title": "Logikai ÉS",
+        "description": "Melyik kulcsszó jelenti a logikai ÉS műveletet?",
+        "hint": "Angol kötőszó.",
+        "q_type": "fill_in_blank",
+        "difficulty_rating": 600,
+        "language": "python",
+        "concept": {
+            "logic": 1.0
+        },
+        "content": {
+            "code_snippet": "if a > 0 {{BLANK}} b > 0:",
+            "correct_answer": "and",
+            "options": [
+                "and",
+                "&&",
+                "&",
+                "with"
+            ],
+            "explanation": "A Python a szöveges 'and' kulcsszót használja a logikai ÉS művelethez."
+        }
+    },
+    {
+        "title": "Logikai VAGY",
+        "description": "Melyik kulcsszó jelenti a logikai VAGY műveletet?",
+        "hint": "Angol kötőszó.",
+        "q_type": "fill_in_blank",
+        "difficulty_rating": 600,
+        "language": "python",
+        "concept": {
+            "logic": 1.0
+        },
+        "content": {
+            "code_snippet": "if a == 0 {{BLANK}} b == 0:",
+            "correct_answer": "or",
+            "options": [
+                "or",
+                "||",
+                "|",
+                "either"
+            ],
+            "explanation": "A Python a szöveges 'or' kulcsszót használja a logikai VAGY művelethez."
+        }
+    },
+    {
+        "title": "Logikai tagadás",
+        "description": "Melyik kulcsszóval fordíthatjuk meg egy logikai kifejezés értékét?",
+        "hint": "Nem angolul.",
+        "q_type": "fill_in_blank",
+        "difficulty_rating": 650,
+        "language": "python",
+        "concept": {
+            "logic": 1.0
+        },
+        "content": {
+            "code_snippet": "if {{BLANK}} found:",
+            "correct_answer": "not",
+            "options": [
+                "not",
+                "!",
+                "~",
+                "false"
+            ],
+            "explanation": "A 'not' kulcsszó a logikai tagadás operátora Pythonban."
+        }
+    },
+    {
+        "title": "Tartalmazás vizsgálat",
+        "description": "Melyik kulcsszóval ellenőrizzük, hogy egy elem benne van-e egy sorozatban?",
+        "hint": "Benne angolul.",
+        "q_type": "fill_in_blank",
+        "difficulty_rating": 700,
+        "language": "python",
+        "concept": {
+            "logic": 1.0
+        },
+        "content": {
+            "code_snippet": "if \"a\" {{BLANK}} \"alma\":",
+            "correct_answer": "in",
+            "options": [
+                "in",
+                "inside",
+                "has",
+                "contains"
+            ],
+            "explanation": "Az 'in' operátor True-t ad, ha az elem megtalálható a sorozatban (pl. stringben vagy listában)."
+        }
+    },
+    {
+        "title": "Azonosság vizsgálat",
+        "description": "Melyik kulcsszóval ellenőrizzük, hogy két változó ugyanarra az objektumra mutat-e?",
+        "hint": "Van/Létezik angolul.",
+        "q_type": "fill_in_blank",
+        "difficulty_rating": 800,
+        "language": "python",
+        "concept": {
+            "logic": 1.0
+        },
+        "content": {
+            "code_snippet": "if a {{BLANK}} None:",
+            "correct_answer": "is",
+            "options": [
+                "is",
+                "==",
+                "exists",
+                "be"
+            ],
+            "explanation": "Az 'is' operátor az objektum azonosságot (memóriacímet) ellenőrzi, nem az értékegyezést."
+        }
+    }
+]

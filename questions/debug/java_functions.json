@@ -1,1 +1,115 @@
-[]
+[
+    {
+        "title": "Hiányzó visszatérési típus",
+        "description": "Javítsd ki a függvény fejlécét, hogy egész számot adjon vissza!",
+        "hint": "A void helyett a megfelelő típust kell megadni.",
+        "q_type": "debug",
+        "difficulty_rating": 600,
+        "language": "java",
+        "concept": {
+            "functions": 1.0
+        },
+        "content": {
+            "buggy_code": "public void getSum(int a, int b) {\n  return a + b;\n}",
+            "error_location": "void",
+            "correct_code": "int",
+            "options": [
+                "int",
+                "double",
+                "String"
+            ],
+            "explanation": "Ha egy függvény értéket ad vissza, a fejlécben meg kell adni a visszatérési típust (pl. int)."
+        }
+    },
+    {
+        "title": "Rossz paraméter típus",
+        "description": "Javítsd ki a paraméter típusát, hogy szöveget fogadhasson!",
+        "hint": "A szövegek tárolására a String típus alkalmas.",
+        "q_type": "debug",
+        "difficulty_rating": 700,
+        "language": "java",
+        "concept": {
+            "functions": 1.0,
+            "basics": 0.5
+        },
+        "content": {
+            "buggy_code": "public void printName(int name) {\n  System.out.println(name);\n}",
+            "error_location": "int name",
+            "correct_code": "String name",
+            "options": [
+                "String name",
+                "char name",
+                "boolean name"
+            ],
+            "explanation": "Nevek és egyéb szöveges adatok átadásához a String osztályt kell használni."
+        }
+    },
+    {
+        "title": "Hiányzó return",
+        "description": "Miért jelez hibát a fordító ennél a függvénynél?",
+        "hint": "Minden kimeneti ágnak vissza kell adnia egy értéket.",
+        "q_type": "debug",
+        "difficulty_rating": 800,
+        "language": "java",
+        "concept": {
+            "functions": 1.0,
+            "logic": 0.5
+        },
+        "content": {
+            "buggy_code": "public int absolute(int n) {\n  if (n > 0) return n;\n  if (n < 0) return -n;\n}",
+            "error_location": "}",
+            "correct_code": "return 0; }",
+            "options": [
+                "return 0;",
+                "else return 0;",
+                "return;"
+            ],
+            "explanation": "Ha a függvénynek van visszatérési típusa, minden lehetséges futási ágon kötelező a 'return' utasítás (itt a 0 esete hiányzik)."
+        }
+    },
+    {
+        "title": "Statikus kontextus hiba",
+        "description": "Mi a hiba a main metódusból való híváskor?",
+        "hint": "Statikus metódusból csak statikus metódus hívható közvetlenül.",
+        "q_type": "debug",
+        "difficulty_rating": 900,
+        "language": "java",
+        "concept": {
+            "functions": 1.0
+        },
+        "content": {
+            "buggy_code": "public static void main(String[] args) {\n  sayHello();\n}\npublic void sayHello() {\n  System.out.println(\"Hello\");\n}",
+            "error_location": "public void sayHello()",
+            "correct_code": "public static void sayHello()",
+            "options": [
+                "public static void sayHello()",
+                "static String sayHello()",
+                "void sayHello()"
+            ],
+            "explanation": "A 'static' main metódus nem tudja közvetlenül meghívni a példány-szintű (nem static) metódusokat az osztályon belül."
+        }
+    },
+    {
+        "title": "Rekurzió hiba",
+        "description": "Javítsd ki a rekurzív függvényt, hogy ne fusson végtelen ciklusba!",
+        "hint": "Kell egy báziskritérium, ahol megáll a hívási lánc.",
+        "q_type": "debug",
+        "difficulty_rating": 1000,
+        "language": "java",
+        "concept": {
+            "functions": 1.0,
+            "logic": 0.8
+        },
+        "content": {
+            "buggy_code": "public int countdown(int n) {\n  return countdown(n - 1);\n}",
+            "error_location": "public int countdown(int n) {",
+            "correct_code": "if (n <= 0) return 0; return countdown(n - 1);",
+            "options": [
+                "if (n <= 0) return 0;",
+                "if (n == 0) break;",
+                "return n;"
+            ],
+            "explanation": "A rekurzív függvényeknél elengedhetetlen egy megállási feltétel (base case), különben StackOverflowError-t kapunk."
+        }
+    }
+]

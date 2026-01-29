@@ -1,1 +1,112 @@
-[]
+[
+    {
+        "title": "Hiányzó 'self' az __init__-ben",
+        "description": "Javítsd ki a konstruktort, hogy helyesen tárolja el a nevet!",
+        "hint": "Az attribútumok eléréséhez használd a self kulcsszót.",
+        "q_type": "debug",
+        "difficulty_rating": 600,
+        "language": "python",
+        "concept": {
+            "oop": 1.0
+        },
+        "content": {
+            "buggy_code": "class Person:\n    def __init__(self, name):\n        name = name",
+            "error_location": "name = name",
+            "correct_code": "self.name = name",
+            "options": [
+                "self.name = name",
+                "this.name = name",
+                "Person.name = name"
+            ],
+            "explanation": "Ahhoz, hogy egy érték az objektum példányához tartozzon (attribútum legyen), a self-en keresztül kell hozzárendelni."
+        }
+    },
+    {
+        "title": "Privát attribútum elérése",
+        "description": "Javítsd ki a hibát! Pythonban a dupla aláhúzással kezdődő neveket kívülről nem érjük el közvetlenül.",
+        "hint": "Használj getter metódust vagy property-t.",
+        "q_type": "debug",
+        "difficulty_rating": 700,
+        "language": "python",
+        "concept": {
+            "oop": 1.0
+        },
+        "content": {
+            "buggy_code": "acc = Account(100)\nprint(acc.__balance)",
+            "error_location": "acc.__balance",
+            "correct_code": "acc.get_balance()",
+            "options": [
+                "acc.get_balance()",
+                "acc._Account__balance",
+                "acc.balance"
+            ],
+            "explanation": "A __ (dupla aláhúzás) ún. name mangling-et okoz, ami megnehezíti a közvetlen hozzáférést. Helyette getter metódust érdemes használni."
+        }
+    },
+    {
+        "title": "Super() hívás hiba",
+        "description": "Javítsd ki a származtatott osztály konstruktorát, hogy meghívja az ősosztályét!",
+        "hint": "Használd a super() függvényt.",
+        "q_type": "debug",
+        "difficulty_rating": 800,
+        "language": "python",
+        "concept": {
+            "oop": 1.0
+        },
+        "content": {
+            "buggy_code": "class Student(Person):\n    def __init__(self, name, id):\n        self.id = id",
+            "error_location": "self.id = id",
+            "correct_code": "super().__init__(name)\n        self.id = id",
+            "options": [
+                "super().__init__(name)\n        self.id = id",
+                "Person.__init__(name)",
+                "super(name)"
+            ],
+            "explanation": "Alosztály létrehozásakor fontos, hogy az ősosztály attribútumai is inicializálódjanak a super().__init__(...) hívással."
+        }
+    },
+    {
+        "title": "Osztály vs Példány változó",
+        "description": "Javítsd ki a hibát! Minden kutyának saját neve kell legyen, ne osztozzanak rajta.",
+        "hint": "Helyezd az inicializálást az __init__-be.",
+        "q_type": "debug",
+        "difficulty_rating": 900,
+        "language": "python",
+        "concept": {
+            "oop": 1.0
+        },
+        "content": {
+            "buggy_code": "class Dog:\n    name = \"\"\n    def set_name(self, n):\n        Dog.name = n",
+            "error_location": "Dog.name = n",
+            "correct_code": "self.name = n",
+            "options": [
+                "self.name = n",
+                "name = n",
+                "this.name = n"
+            ],
+            "explanation": "Az osztály szintjén deklarált változók (class variables) közösek minden példány számára. Egyedi adatokhoz példányváltozó (self.name) kell."
+        }
+    },
+    {
+        "title": "Metódus felüldefiniálás",
+        "description": "Javítsd ki a metódus hívását az alosztályban!",
+        "hint": "Az alosztályban is szükség van a self paraméterre.",
+        "q_type": "debug",
+        "difficulty_rating": 850,
+        "language": "python",
+        "concept": {
+            "oop": 1.0
+        },
+        "content": {
+            "buggy_code": "class Bird:\n    def fly(self): print(\"Repül\")\n\nclass Penguin(Bird):\n    def fly(): print(\"Nem tud\")",
+            "error_location": "fly()",
+            "correct_code": "fly(self)",
+            "options": [
+                "fly(self)",
+                "fly(this)",
+                "static fly()"
+            ],
+            "explanation": "Amikor felüldefiniálunk (override) egy metódust, az továbbra is példánymetódus marad, így meg kell kapnia a self paramétert."
+        }
+    }
+]

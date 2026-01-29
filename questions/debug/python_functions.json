@@ -1,1 +1,115 @@
-[]
+[
+    {
+        "title": "Print vs Return",
+        "description": "Javítsd ki a függvényt, hogy a számított értéket visszaadja, ne csak kiírja!",
+        "hint": "A 'print' csak a konzolra ír, a 'return' adja át az értéket a hívónak.",
+        "q_type": "debug",
+        "difficulty_rating": 600,
+        "language": "python",
+        "concept": {
+            "functions": 1.0
+        },
+        "content": {
+            "buggy_code": "def get_sum(a, b):\n    print(a + b)",
+            "error_location": "print(a + b)",
+            "correct_code": "return a + b",
+            "options": [
+                "return a + b",
+                "yield a + b",
+                "result = a + b"
+            ],
+            "explanation": "Ahhoz, hogy egy függvény eredményét más műveletekben is használni tudjuk, 'return'-nel vissza kell adni azt."
+        }
+    },
+    {
+        "title": "Hiányzó 'self' paraméter",
+        "description": "Javítsd ki az osztály metódusát, hogy helyesen hivatkozzon a példányra!",
+        "hint": "Az osztály metódusainak első paramétere kötelezően a 'self'.",
+        "q_type": "debug",
+        "difficulty_rating": 700,
+        "language": "python",
+        "concept": {
+            "functions": 1.0,
+            "oop": 0.8
+        },
+        "content": {
+            "buggy_code": "class Dog:\n    def bark():\n        print(\"Woof!\")",
+            "error_location": "bark()",
+            "correct_code": "bark(self)",
+            "options": [
+                "bark(self)",
+                "bark(this)",
+                "static bark()"
+            ],
+            "explanation": "A Python példány-szintű metódusai (instance methods) első paraméterként automatikusan megkapják a példányt, amit konvencionálisan 'self'-nek nevezünk."
+        }
+    },
+    {
+        "title": "Lokális vs Globális változó",
+        "description": "Javítsd ki a kódot, hogy a függvényen belül módosítani lehessen a globális változót!",
+        "hint": "Használd a 'global' kulcsszót.",
+        "q_type": "debug",
+        "difficulty_rating": 900,
+        "language": "python",
+        "concept": {
+            "functions": 1.0,
+            "basics": 0.5
+        },
+        "content": {
+            "buggy_code": "count = 0\ndef increment():\n    count += 1",
+            "error_location": "count += 1",
+            "correct_code": "global count\n    count += 1",
+            "options": [
+                "global count\n    count += 1",
+                "this.count += 1",
+                "count = global count + 1"
+            ],
+            "explanation": "Pythonban ha egy függvényen belül értéket adunk egy változónak, az alapértelmezetten lokális lesz. Globális változó módosításához a 'global' deklaráció szükséges."
+        }
+    },
+    {
+        "title": "Paraméter sorrend",
+        "description": "Javítsd ki a függvény fejlécét! Az alapértelmezett paramétereknek hátul kell lenniük.",
+        "hint": "A nem kötelező paraméterek nem előzhetik meg a kötelezőket.",
+        "q_type": "debug",
+        "difficulty_rating": 800,
+        "language": "python",
+        "concept": {
+            "functions": 1.0
+        },
+        "content": {
+            "buggy_code": "def greet(msg=\"Hello\", name):",
+            "error_location": "msg=\"Hello\", name",
+            "correct_code": "name, msg=\"Hello\"",
+            "options": [
+                "name, msg=\"Hello\"",
+                "name=\"Guest\", msg",
+                "*args, msg=\"Hello\""
+            ],
+            "explanation": "A Python szintaktikai szabálya szerint a default értékkel rendelkező paraméterek csak a default érték nélküliek után állhatnak."
+        }
+    },
+    {
+        "title": "Mutable Default Argument",
+        "description": "Javítsd ki a függvényt, hogy minden híváskor egy friss listával induljon, ha nem kap paramétert!",
+        "hint": "Ne használj üres listát default értékként a fejlécben.",
+        "q_type": "debug",
+        "difficulty_rating": 1000,
+        "language": "python",
+        "concept": {
+            "functions": 1.0,
+            "arrays": 0.5
+        },
+        "content": {
+            "buggy_code": "def add_item(item, items=[]):\n    items.append(item)\n    return items",
+            "error_location": "items=[]",
+            "correct_code": "items=None",
+            "options": [
+                "items=None",
+                "items=list()",
+                "items=copy([])"
+            ],
+            "explanation": "A Pythonban a default paraméterek csak egyszer (a függvény definiálásakor) értékelődnek ki. Ha ez egy módosítható objektum (pl. lista), az megmarad a hívások között. Megoldás: items=None."
+        }
+    }
+]

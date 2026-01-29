@@ -1,1 +1,112 @@
-[]
+[
+    {
+        "title": "Túlindexelés",
+        "description": "Javítsd ki a kódot, hogy ne dobjon 'IndexError'-t!",
+        "hint": "A lista hossza 3, az utolsó index a 2.",
+        "q_type": "debug",
+        "difficulty_rating": 600,
+        "language": "python",
+        "concept": {
+            "arrays": 1.0
+        },
+        "content": {
+            "buggy_code": "my_list = [10, 20, 30]\nprint(my_list[3])",
+            "error_location": "my_list[3]",
+            "correct_code": "my_list[2]",
+            "options": [
+                "my_list[2]",
+                "my_list[0]",
+                "my_list[-1]"
+            ],
+            "explanation": "A Pythonban is 0-tól indul az indexelés, így egy 3 elemű lista érvényes indexei: 0, 1, 2."
+        }
+    },
+    {
+        "title": "Hibás szeletelés",
+        "description": "Javítsd ki a szeletelést, hogy az első két elemet kapjuk meg!",
+        "hint": "A szeletelés formátuma: [start:stop].",
+        "q_type": "debug",
+        "difficulty_rating": 700,
+        "language": "python",
+        "concept": {
+            "arrays": 1.0
+        },
+        "content": {
+            "buggy_code": "nums = [1, 2, 3, 4]\nfirst_two = nums[0, 2]",
+            "error_location": "nums[0, 2]",
+            "correct_code": "nums[0:2]",
+            "options": [
+                "nums[0:2]",
+                "nums[:2]",
+                "nums[0-2]"
+            ],
+            "explanation": "A szeleteléshez (slicing) kettőspontot (:) kell használni a szögletes zárójelek között, nem vesszőt."
+        }
+    },
+    {
+        "title": "Append vs Extend",
+        "description": "Javítsd ki a hibát! A cél az, hogy a listához adjuk a másik lista elemeit, ne magát a listát.",
+        "hint": "Az append egyetlen elemként adja hozzá a listát.",
+        "q_type": "debug",
+        "difficulty_rating": 800,
+        "language": "python",
+        "concept": {
+            "arrays": 1.0
+        },
+        "content": {
+            "buggy_code": "list1 = [1, 2]\nlist1.append([3, 4])",
+            "error_location": "append([3, 4])",
+            "correct_code": "extend([3, 4])",
+            "options": [
+                "extend([3, 4])",
+                "+= [3, 4]",
+                "insert(list1, [3, 4])"
+            ],
+            "explanation": "Az extend() metódus kicsomagolja a kapott sorozat elemeit és egyesével adja hozzá a listához."
+        }
+    },
+    {
+        "title": "Sort metódus hiba",
+        "description": "Javítsd ki a kódot! A sort() metódus helyben rendez és None-t ad vissza.",
+        "hint": "Ne rendeld hozzá a sort() eredményét változóhoz.",
+        "q_type": "debug",
+        "difficulty_rating": 900,
+        "language": "python",
+        "concept": {
+            "arrays": 1.0
+        },
+        "content": {
+            "buggy_code": "nums = [3, 1, 2]\nnums = nums.sort()",
+            "error_location": "nums = nums.sort()",
+            "correct_code": "nums.sort()",
+            "options": [
+                "nums.sort()",
+                "nums = sorted(nums)",
+                "nums.sorted()"
+            ],
+            "explanation": "A list.sort() metódus módosítja az eredeti listát, de visszatérési értéke nincs (None). Ha új listát akarsz, használd a sorted() függvényt."
+        }
+    },
+    {
+        "title": "Sekély másolat hiba",
+        "description": "Javítsd ki a hibát! A b módosítása ne érintse az a listát!",
+        "hint": "Használj valódi másolatot.",
+        "q_type": "debug",
+        "difficulty_rating": 1000,
+        "language": "python",
+        "concept": {
+            "arrays": 1.0
+        },
+        "content": {
+            "buggy_code": "a = [1, 2, 3]\nb = a\nb[0] = 99",
+            "error_location": "b = a",
+            "correct_code": "b = a.copy()",
+            "options": [
+                "b = a.copy()",
+                "b = a[:]",
+                "b = list(a)"
+            ],
+            "explanation": "A b = a csak egy új nevet ad ugyanannak a listának a memóriában. Független listához másolat készítése szükséges."
+        }
+    }
+]

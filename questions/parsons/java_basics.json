@@ -1,1 +1,94 @@
-[]
+[
+    {
+        "title": "Változó inicializálás és kiíratás",
+        "description": "Rendezze sorba a blokkokat, hogy létrehozzon egy változót, adjon neki értéket, majd írja ki!",
+        "hint": "Deklaráció -> Értékadás -> Használat.",
+        "q_type": "parsons",
+        "difficulty_rating": 600,
+        "language": "java",
+        "concept": {"basics": 1.0},
+        "content": {
+            "blocks": [
+                {"id": 1, "text": "int x;"},
+                {"id": 2, "text": "x = 10;"},
+                {"id": 3, "text": "System.out.println(x);"}
+            ],
+            "correct_order": [1, 2, 3],
+            "explanation": "Először deklaráljuk a típust, utána adunk értéket a változónak, végül felhasználjuk."
+        }
+    },
+    {
+        "title": "Összeadás és eredmény",
+        "description": "Adjon össze két számot és írja ki az eredményt!",
+        "hint": "Szükség van egy változóra az összeg tárolásához.",
+        "q_type": "parsons",
+        "difficulty_rating": 650,
+        "language": "java",
+        "concept": {"basics": 1.0},
+        "content": {
+            "blocks": [
+                {"id": 1, "text": "int a = 5;"},
+                {"id": 2, "text": "int b = 3;"},
+                {"id": 3, "text": "int sum = a + b;"},
+                {"id": 4, "text": "System.out.println(sum);"}
+            ],
+            "correct_order": [1, 2, 3, 4],
+            "explanation": "A bemeneti változók után kiszámoljuk az összeget, majd megjelenítjük azt."
+        }
+    },
+    {
+        "title": "String összefűzés",
+        "description": "Rendezze a blokkokat egy üdvözlő üzenet összeállításához!",
+        "hint": "Két string darabból építkezünk.",
+        "q_type": "parsons",
+        "difficulty_rating": 700,
+        "language": "java",
+        "concept": {"basics": 1.0},
+        "content": {
+            "blocks": [
+                {"id": 1, "text": "String name = \"Anna\";"},
+                {"id": 2, "text": "String msg = \"Szia \" + name;"},
+                {"id": 3, "text": "System.out.println(msg);"}
+            ],
+            "correct_order": [1, 2, 3],
+            "explanation": "A név megadása után fűzzük hozzá az üdvözléshez, végül kiírjuk a teljes mondatot."
+        }
+    },
+    {
+        "title": "Értékcsere (Swap)",
+        "description": "Cserélje meg két változó értékét egy segédváltozó segítségével!",
+        "hint": "Mentsük el az egyik értéket, mielőtt felülírnánk.",
+        "q_type": "parsons",
+        "difficulty_rating": 800,
+        "language": "java",
+        "concept": {"basics": 1.0},
+        "content": {
+            "blocks": [
+                {"id": 1, "text": "int temp = a;"},
+                {"id": 2, "text": "a = b;"},
+                {"id": 3, "text": "b = temp;"},
+                {"id": 4, "text": "int a = 1, b = 2;"}
+            ],
+            "correct_order": [4, 1, 2, 3],
+            "explanation": "A változók létrehozása után temp változóba mentjük 'a'-t, felülírjuk 'a'-t 'b'-vel, végül 'b' megkapja a temp értékét."
+        }
+    },
+    {
+        "title": "Explicit típuskonverzió",
+        "description": "Konvertáljon egy tizedes számot egésszé és írja ki!",
+        "hint": "Használja a (int) castolást.",
+        "q_type": "parsons",
+        "difficulty_rating": 900,
+        "language": "java",
+        "concept": {"basics": 1.0},
+        "content": {
+            "blocks": [
+                {"id": 1, "text": "double d = 9.99;"},
+                {"id": 2, "text": "int i = (int) d;"},
+                {"id": 3, "text": "System.out.println(i);"}
+            ],
+            "correct_order": [1, 2, 3],
+            "explanation": "A double értéket explicit castolással alakítjuk int-té, ami levágja a tizedesjegyeket."
+        }
+    }
+]

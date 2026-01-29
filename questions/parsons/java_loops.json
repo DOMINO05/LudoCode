@@ -1,1 +1,102 @@
-[]
+[
+    {
+        "title": "Egyszerű for ciklus",
+        "description": "Rendezze sorba a blokkokat, hogy a ciklus 0-tól 4-ig írja ki a számokat!",
+        "hint": "Init -> Feltétel -> Léptetés.",
+        "q_type": "parsons",
+        "difficulty_rating": 600,
+        "language": "java",
+        "concept": {"loops": 1.0},
+        "content": {
+            "blocks": [
+                {"id": 1, "text": "for (int i = 0; i < 5; i++) {"},
+                {"id": 2, "text": "    System.out.println(i);"},
+                {"id": 3, "text": "}"}
+            ],
+            "correct_order": [1, 2, 3],
+            "explanation": "A for ciklus fejlécében megadjuk a kezdőértéket, a leállási feltételt és a növekményt."
+        }
+    },
+    {
+        "title": "Egyszerű while ciklus",
+        "description": "Rendezze a blokkokat egy visszaszámláló while ciklushoz!",
+        "hint": "Ne felejtse el csökkenteni a változót a ciklusban.",
+        "q_type": "parsons",
+        "difficulty_rating": 600,
+        "language": "java",
+        "concept": {"loops": 1.0},
+        "content": {
+            "blocks": [
+                {"id": 1, "text": "int count = 3;"},
+                {"id": 2, "text": "while (count > 0) {"},
+                {"id": 3, "text": "    System.out.println(count);"},
+                {"id": 4, "text": "    count--;"},
+                {"id": 5, "text": "}"}
+            ],
+            "correct_order": [1, 2, 3, 4, 5],
+            "explanation": "A while ciklus előtt inicializálunk, majd a ciklusmagban módosítjuk a feltételben szereplő változót."
+        }
+    },
+    {
+        "title": "Összegzés ciklussal",
+        "description": "Számítsa ki a számok összegét 1-től 10-ig!",
+        "hint": "Az eredményt tároló változót a ciklus előtt le kell nullázni.",
+        "q_type": "parsons",
+        "difficulty_rating": 700,
+        "language": "java",
+        "concept": {"loops": 1.0, "basics": 0.5},
+        "content": {
+            "blocks": [
+                {"id": 1, "text": "int total = 0;"},
+                {"id": 2, "text": "for (int i = 1; i <= 10; i++) {"},
+                {"id": 3, "text": "    total += i;"},
+                {"id": 4, "text": "}"},
+                {"id": 5, "text": "System.out.println(total);"}
+            ],
+            "correct_order": [1, 2, 3, 4, 5],
+            "explanation": "Végigmegyünk a számokon 1-től 10-ig, és minden lépésben hozzáadjuk az aktuális értéket a 'total'-hoz."
+        }
+    },
+    {
+        "title": "Keresés megszakítással",
+        "description": "Hagyja abba a ciklust, ha megtalálta a keresett értéket!",
+        "hint": "Használja a break utasítást.",
+        "q_type": "parsons",
+        "difficulty_rating": 800,
+        "language": "java",
+        "concept": {"loops": 1.0, "logic": 0.6},
+        "content": {
+            "blocks": [
+                {"id": 1, "text": "for (int x : numbers) {"},
+                {"id": 2, "text": "    if (x == target) {"},
+                {"id": 3, "text": "        System.out.println(\"Megvan\");"},
+                {"id": 4, "text": "        break;"},
+                {"id": 5, "text": "    }"},
+                {"id": 6, "text": "}"}
+            ],
+            "correct_order": [1, 2, 3, 4, 5, 6],
+            "explanation": "A for-each ciklus minden elemet megvizsgál, de a break segítségével azonnal kiléphetünk, ha nincs szükség további keresésre."
+        }
+    },
+    {
+        "title": "Egymásba ágyazott ciklusok",
+        "description": "Rendezze a blokkokat egy 3x3-as csillag-négyzet kirajzolásához!",
+        "hint": "A külső ciklus a sorokat, a belső az oszlopokat kezeli.",
+        "q_type": "parsons",
+        "difficulty_rating": 900,
+        "language": "java",
+        "concept": {"loops": 1.0},
+        "content": {
+            "blocks": [
+                {"id": 1, "text": "for (int i = 0; i < 3; i++) {"},
+                {"id": 2, "text": "    for (int j = 0; j < 3; j++) {"},
+                {"id": 3, "text": "        System.out.print(\"*\");"},
+                {"id": 4, "text": "    }"},
+                {"id": 5, "text": "    System.out.println();"},
+                {"id": 6, "text": "}"}
+            ],
+            "correct_order": [1, 2, 3, 4, 5, 6],
+            "explanation": "A belső ciklus kirajzol egy sort, majd a külső ciklus végén sortörést végzünk, mielőtt a következő sort kezdenénk."
+        }
+    }
+]

@@ -1,1 +1,139 @@
-[]
+[
+    {
+        "title": "Négyzetre emelés",
+        "description": "Írj egy függvényt, ami visszaadja a kapott szám négyzetét!",
+        "hint": "Használd a ** 2 vagy a n * n kifejezést.",
+        "q_type": "coding",
+        "difficulty_rating": 600,
+        "language": "python",
+        "concept": {
+            "functions": 1.0,
+            "basics": 0.5
+        },
+        "content": {
+            "initial_code": "def square(n):",
+            "test_cases": [
+                {
+                    "input": "4",
+                    "expected_output": "16"
+                }
+            ],
+            "scaffolding_blocks": [
+                "return n ** 2"
+            ],
+            "explanation": "Pythonban a hatványozáshoz a ** operátort használjuk.",
+            "correct_answer": "def square(n):\n    return n ** 2"
+        }
+    },
+    {
+        "title": "Párosság vizsgálat",
+        "description": "Döntsd el a számról, hogy páros-e!",
+        "hint": "A modulo (%) operátor megadja az osztási maradékot.",
+        "q_type": "coding",
+        "difficulty_rating": 700,
+        "language": "python",
+        "concept": {
+            "functions": 1.0,
+            "logic": 0.5
+        },
+        "content": {
+            "initial_code": "def is_even(n):",
+            "test_cases": [
+                {
+                    "input": "10",
+                    "expected_output": "True"
+                },
+                {
+                    "input": "7",
+                    "expected_output": "False"
+                }
+            ],
+            "scaffolding_blocks": [
+                "return n % 2 == 0"
+            ],
+            "explanation": "Ha egy szám 2-vel vett osztási maradéka 0, akkor páros.",
+            "correct_answer": "def is_even(n):\n    return n % 2 == 0"
+        }
+    },
+    {
+        "title": "Alapértelmezett paraméter",
+        "description": "Készíts egy függvényt, ami üdvözli a felhasználót. Ha nem kap nevet, az alapértelmezett legyen 'Vendég'!",
+        "hint": "A paraméter listában adj értéket a változónak: name='Vendég'.",
+        "q_type": "coding",
+        "difficulty_rating": 800,
+        "language": "python",
+        "concept": {
+            "functions": 1.0
+        },
+        "content": {
+            "initial_code": "def greet(name='Vendég'):",
+            "test_cases": [
+                {
+                    "input": "'Anna'",
+                    "expected_output": "'Szia Anna!'"
+                },
+                {
+                    "input": "",
+                    "expected_output": "'Szia Vendég!'"
+                }
+            ],
+            "scaffolding_blocks": [
+                "return f'Szia {name}!'"
+            ],
+            "explanation": "A Python lehetővé teszi alapértelmezett értékek megadását a függvények paramétereinek.",
+            "correct_answer": "def greet(name='Vendég'):\n    return f'Szia {name}!'"
+        }
+    },
+    {
+        "title": "Lambda függvény",
+        "description": "Hozz létre egy lambda függvényt, ami megduplázza a kapott számot!",
+        "hint": "A szintaxis: lambda x: x * 2.",
+        "q_type": "coding",
+        "difficulty_rating": 900,
+        "language": "python",
+        "concept": {
+            "functions": 1.0,
+            "basics": 0.7
+        },
+        "content": {
+            "initial_code": "double = ",
+            "test_cases": [
+                {
+                    "input": "5",
+                    "expected_output": "10"
+                }
+            ],
+            "scaffolding_blocks": [
+                "lambda x: x * 2"
+            ],
+            "explanation": "A lambda függvények névtelen, egysoros függvények, amelyeket gyakran rövid műveletekre használunk.",
+            "correct_answer": "double = lambda x: x * 2"
+        }
+    },
+    {
+        "title": "Változó számú argumentum",
+        "description": "Írj egy függvényt, ami tetszőleges számú argumentumot kap, és visszaadja azok összegét!",
+        "hint": "Használd a *args paramétert.",
+        "q_type": "coding",
+        "difficulty_rating": 1000,
+        "language": "python",
+        "concept": {
+            "functions": 1.0,
+            "basics": 0.6
+        },
+        "content": {
+            "initial_code": "def sum_all(*args):",
+            "test_cases": [
+                {
+                    "input": "1, 2, 3, 4",
+                    "expected_output": "10"
+                }
+            ],
+            "scaffolding_blocks": [
+                "return sum(args)"
+            ],
+            "explanation": "A *args segítségével a függvény tetszőleges számú pozicionális argumentumot fogadhat el egy tuple-ként.",
+            "correct_answer": "def sum_all(*args):\n    return sum(args)"
+        }
+    }
+]

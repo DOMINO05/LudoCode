@@ -1,1 +1,112 @@
-[]
+[
+    {
+        "title": "Osztály deklaráció",
+        "description": "Melyik kulcsszóval hozunk létre új osztályt?",
+        "hint": "Osztály angolul.",
+        "q_type": "fill_in_blank",
+        "difficulty_rating": 600,
+        "language": "java",
+        "concept": {
+            "oop": 1.0
+        },
+        "content": {
+            "code_snippet": "public {{BLANK}} Student { ... }",
+            "correct_answer": "class",
+            "options": [
+                "class",
+                "object",
+                "struct",
+                "type"
+            ],
+            "explanation": "A 'class' kulcsszó jelöli az osztálydefiníció kezdetét."
+        }
+    },
+    {
+        "title": "Objektum létrehozás",
+        "description": "Melyik kulcsszóval példányosítunk egy objektumot?",
+        "hint": "Új angolul.",
+        "q_type": "fill_in_blank",
+        "difficulty_rating": 650,
+        "language": "java",
+        "concept": {
+            "oop": 1.0
+        },
+        "content": {
+            "code_snippet": "Person p = {{BLANK}} Person();",
+            "correct_answer": "new",
+            "options": [
+                "new",
+                "create",
+                "make",
+                "init"
+            ],
+            "explanation": "A 'new' kulcsszó foglal helyet a memóriában az új objektum számára és hívja meg a konstruktort."
+        }
+    },
+    {
+        "title": "Önreferencia",
+        "description": "Melyik kulcsszóval hivatkozunk az aktuális példány mezőire a konstruktorban?",
+        "hint": "Ez angolul.",
+        "q_type": "fill_in_blank",
+        "difficulty_rating": 700,
+        "language": "java",
+        "concept": {
+            "oop": 1.0
+        },
+        "content": {
+            "code_snippet": "{{BLANK}}.name = name;",
+            "correct_answer": "this",
+            "options": [
+                "this",
+                "self",
+                "me",
+                "object"
+            ],
+            "explanation": "A 'this' kulcsszó az aktuális objektumpéldányra mutat, segít megkülönböztetni a mezőt a paramétertől."
+        }
+    },
+    {
+        "title": "Öröklődés",
+        "description": "Melyik kulcsszóval jelezzük az öröklődést osztályok között?",
+        "hint": "Kiterjesztés angolul.",
+        "q_type": "fill_in_blank",
+        "difficulty_rating": 800,
+        "language": "java",
+        "concept": {
+            "oop": 1.0
+        },
+        "content": {
+            "code_snippet": "class Dog {{BLANK}} Animal { ... }",
+            "correct_answer": "extends",
+            "options": [
+                "extends",
+                "implements",
+                "inherits",
+                "from"
+            ],
+            "explanation": "Az 'extends' kulcsszóval hozzuk létre a szülő-gyerek kapcsolatot két osztály között."
+        }
+    },
+    {
+        "title": "Interfész megvalósítás",
+        "description": "Melyik kulcsszóval valósítunk meg egy interfészt?",
+        "hint": "Implementál angolul.",
+        "q_type": "fill_in_blank",
+        "difficulty_rating": 850,
+        "language": "java",
+        "concept": {
+            "oop": 1.0
+        },
+        "content": {
+            "code_snippet": "class Circle {{BLANK}} Drawable { ... }",
+            "correct_answer": "implements",
+            "options": [
+                "implements",
+                "extends",
+                "uses",
+                "provides"
+            ],
+            "explanation": "Az 'implements' kulcsszó jelzi, hogy az osztály vállalja az interfészben definiált metódusok megvalósítását."
+        }
+    }
+]

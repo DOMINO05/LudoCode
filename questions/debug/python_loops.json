@@ -1,1 +1,115 @@
-[]
+[
+    {
+        "title": "Végtelen ciklus",
+        "description": "Javítsd ki a ciklust, hogy ne fusson végtelen ideig!",
+        "hint": "A feltételnek egyszer hamissá kell válnia.",
+        "q_type": "debug",
+        "difficulty_rating": 600,
+        "language": "python",
+        "concept": {
+            "loops": 1.0
+        },
+        "content": {
+            "buggy_code": "i = 0\nwhile i < 10:\n    print(i)",
+            "error_location": "while i < 10:",
+            "correct_code": "while i < 10:\n    print(i)\n    i += 1",
+            "options": [
+                "i += 1 a ciklusban",
+                "i = 10",
+                "break"
+            ],
+            "explanation": "Ha nem növeljük a ciklusváltozót (i), a feltétel (i < 10) örökké igaz marad."
+        }
+    },
+    {
+        "title": "Hiányzó range()",
+        "description": "Javítsd ki a ciklust, hogy 0-tól 4-ig fusson!",
+        "hint": "Pythonban a számokon való iteráláshoz range() kell.",
+        "q_type": "debug",
+        "difficulty_rating": 650,
+        "language": "python",
+        "concept": {
+            "loops": 1.0
+        },
+        "content": {
+            "buggy_code": "for i in 5:\n    print(i)",
+            "error_location": "in 5",
+            "correct_code": "in range(5)",
+            "options": [
+                "in range(5)",
+                "in [5]",
+                "in \"5\""
+            ],
+            "explanation": "Az egész számok (int) nem iterálhatók közvetlenül. A range(n) függvény generál számsorozatot."
+        }
+    },
+    {
+        "title": "Lista módosítása iteráció közben",
+        "description": "Javítsd ki a hibát! Nem biztonságos törölni a listából, miközben végigmegyünk rajta.",
+        "hint": "Iterálj a lista másolatán.",
+        "q_type": "debug",
+        "difficulty_rating": 900,
+        "language": "python",
+        "concept": {
+            "loops": 1.0,
+            "arrays": 0.8
+        },
+        "content": {
+            "buggy_code": "for item in my_list:\n    if item < 0:\n        my_list.remove(item)",
+            "error_location": "item in my_list",
+            "correct_code": "item in my_list[:]",
+            "options": [
+                "item in my_list[:]",
+                "item in list(my_list)",
+                "while len(my_list) > 0"
+            ],
+            "explanation": "Ha törlünk az eredeti listából iteráció közben, az elemek indexei eltolódnak, és kimaradhatnak elemek. A szeletelő [:] másolatot készít."
+        }
+    },
+    {
+        "title": "Rossz behúzás (Break)",
+        "description": "Javítsd ki a behúzást, hogy a break csak akkor fusson le, ha megtaláltuk a keresett elemet!",
+        "hint": "A break az if-en belül kell legyen.",
+        "q_type": "debug",
+        "difficulty_rating": 800,
+        "language": "python",
+        "concept": {
+            "loops": 1.0,
+            "logic": 0.5
+        },
+        "content": {
+            "buggy_code": "for x in nums:\n    if x == target:\n        print(\"Megvan\")\n    break",
+            "error_location": "break",
+            "correct_code": "        break",
+            "options": [
+                "        break",
+                "    break",
+                "if x == target: break"
+            ],
+            "explanation": "Ha a break nincs behúzva az if blokkjába, akkor az első iteráció után mindenképpen kilép a ciklusból."
+        }
+    },
+    {
+        "title": "Continue hiba",
+        "description": "Javítsd ki a kódot, hogy a páratlan számokat ugorja át a ciklus!",
+        "hint": "A continue a ciklus következő iterációjára ugrik.",
+        "q_type": "debug",
+        "difficulty_rating": 750,
+        "language": "python",
+        "concept": {
+            "loops": 1.0,
+            "logic": 0.6
+        },
+        "content": {
+            "buggy_code": "for i in range(10):\n    if i % 2 == 0:\n        continue\n    print(i)",
+            "error_location": "if i % 2 == 0",
+            "correct_code": "if i % 2 != 0",
+            "options": [
+                "if i % 2 != 0",
+                "if i % 2 == 1",
+                "if not i % 2 == 0"
+            ],
+            "explanation": "A kód jelenleg a párosokat ugorja át (maradék 0). A páratlanok átugrásához != 0 vagy == 1 feltétel kell."
+        }
+    }
+]

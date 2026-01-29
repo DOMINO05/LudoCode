@@ -1,1 +1,92 @@
-[]
+[
+    {
+        "title": "Változó és kiíratás",
+        "description": "Rendezze sorba a blokkokat, hogy értéket adjon egy változónak és kiírja azt!",
+        "hint": "Pythonban nincs szükség típusdeklarációra.",
+        "q_type": "parsons",
+        "difficulty_rating": 600,
+        "language": "python",
+        "concept": {"basics": 1.0},
+        "content": {
+            "blocks": [
+                {"id": 1, "text": "x = 10"},
+                {"id": 2, "text": "print(x)"}
+            ],
+            "correct_order": [1, 2],
+            "explanation": "Előbb definiáljuk a változót, utána tudjuk kiíratni az értékét."
+        }
+    },
+    {
+        "title": "Műveletek végzése",
+        "description": "Adjon össze két számot és jelenítse meg az eredményt!",
+        "hint": "Használja a + operátort.",
+        "q_type": "parsons",
+        "difficulty_rating": 650,
+        "language": "python",
+        "concept": {"basics": 1.0},
+        "content": {
+            "blocks": [
+                {"id": 1, "text": "a = 5"},
+                {"id": 2, "text": "b = 3"},
+                {"id": 3, "text": "osszeg = a + b"},
+                {"id": 4, "text": "print(osszeg)"}
+            ],
+            "correct_order": [1, 2, 3, 4],
+            "explanation": "A bemeneti adatok után kiszámítjuk az összeget, majd a print függvénnyel megjelenítjük."
+        }
+    },
+    {
+        "title": "Értékcsere Python módra",
+        "description": "Cserélje meg két változó értékét egyetlen sorban!",
+        "hint": "Használja a tuple unpacking technikát.",
+        "q_type": "parsons",
+        "difficulty_rating": 800,
+        "language": "python",
+        "concept": {"basics": 1.0},
+        "content": {
+            "blocks": [
+                {"id": 1, "text": "x = 1"},
+                {"id": 2, "text": "y = 2"},
+                {"id": 3, "text": "x, y = y, x"},
+                {"id": 4, "text": "print(x, y)"}
+            ],
+            "correct_order": [1, 2, 3, 4],
+            "explanation": "Pythonban a változók értéke segédváltozó nélkül is megcserélhető az x, y = y, x szintaxissal."
+        }
+    },
+    {
+        "title": "String formázás (f-string)",
+        "description": "Rendezze a blokkokat egy névvel ellátott üdvözléshez!",
+        "hint": "Használjon f-stringet a változó beillesztéséhez.",
+        "q_type": "parsons",
+        "difficulty_rating": 750,
+        "language": "python",
+        "concept": {"basics": 1.0},
+        "content": {
+            "blocks": [
+                {"id": 1, "text": "nev = \"Péter\""},
+                {"id": 2, "text": "uzenet = f\"Szia {nev}!\""},
+                {"id": 3, "text": "print(uzenet)"}
+            ],
+            "correct_order": [1, 2, 3],
+            "explanation": "Az f-stringek segítségével {} jelek közé ágyazhatunk változókat a szövegen belül."
+        }
+    },
+    {
+        "title": "Bemenet kezelése",
+        "description": "Kérjen be egy nevet a felhasználótól és üdvözölje!",
+        "hint": "Használja az input() függvényt.",
+        "q_type": "parsons",
+        "difficulty_rating": 700,
+        "language": "python",
+        "concept": {"basics": 1.0},
+        "content": {
+            "blocks": [
+                {"id": 1, "text": "valasz = input(\"Neved: \")"},
+                {"id": 2, "text": "print(\"Szia \" + valasz)"}
+            ],
+            "correct_order": [1, 2],
+            "explanation": "Az input() beolvassa a felhasználó által begépelt szöveget, amit utána kiírhatunk."
+        }
+    }
+]

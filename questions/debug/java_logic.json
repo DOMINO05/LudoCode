@@ -1,1 +1,114 @@
-[]
+[
+    {
+        "title": "Értékadás vs Egyenlőség",
+        "description": "Javítsd ki a feltételt, hogy ne értékadás, hanem vizsgálat legyen!",
+        "hint": "Az összehasonlításhoz dupla egyenlőségjel kell.",
+        "q_type": "debug",
+        "difficulty_rating": 600,
+        "language": "java",
+        "concept": {
+            "logic": 1.0
+        },
+        "content": {
+            "buggy_code": "if (x = 10) {\n  System.out.println(\"X tíz\");\n}",
+            "error_location": "x = 10",
+            "correct_code": "x == 10",
+            "options": [
+                "x == 10",
+                "x := 10",
+                "x equals 10"
+            ],
+            "explanation": "Java-ban az = az értékadás operátora, a == pedig az egyenlőség vizsgálaté."
+        }
+    },
+    {
+        "title": "Logikai ÉS hiba",
+        "description": "Mi a hiba a feltétel összekapcsolásakor?",
+        "hint": "A logikai ÉS operátor a &&.",
+        "q_type": "debug",
+        "difficulty_rating": 700,
+        "language": "java",
+        "concept": {
+            "logic": 1.0
+        },
+        "content": {
+            "buggy_code": "if (isAdult AND hasTicket) {\n  enter();\n}",
+            "error_location": "AND",
+            "correct_code": "&&",
+            "options": [
+                "&&",
+                "&",
+                "and"
+            ],
+            "explanation": "A Java a C-stílusú logikai operátorokat használja: && (ÉS), || (VAGY)."
+        }
+    },
+    {
+        "title": "Zárójelezés hiánya",
+        "description": "Javítsd ki a kódot, hogy mindkét utasítás csak akkor fusson le, ha a feltétel igaz!",
+        "hint": "Használj kapcsos zárójeleket a blokk kijelöléséhez.",
+        "q_type": "debug",
+        "difficulty_rating": 650,
+        "language": "java",
+        "concept": {
+            "logic": 1.0,
+            "basics": 0.5
+        },
+        "content": {
+            "buggy_code": "if (isValid)\n  save();\n  log();",
+            "error_location": "if (isValid)\n  save();\n  log();",
+            "correct_code": "if (isValid) {\n  save();\n  log();\n}",
+            "options": [
+                "if (isValid) { save(); log(); }",
+                "if (isValid) save(), log();",
+                "if isValid: save(); log();"
+            ],
+            "explanation": "Kapcsos zárójelek nélkül csak a közvetlenül utána álló EGYETLEN utasítás tartozik az if-hez."
+        }
+    },
+    {
+        "title": "Precedencia hiba",
+        "description": "Javítsd ki a zárójelezést, hogy a tagadás a teljes feltételre vonatkozzon!",
+        "hint": "A ! operátor erősebben köt, mint az egyenlőség.",
+        "q_type": "debug",
+        "difficulty_rating": 800,
+        "language": "java",
+        "concept": {
+            "logic": 1.0
+        },
+        "content": {
+            "buggy_code": "if (!status == \"OK\") {\n  error();\n}",
+            "error_location": "!status == \"OK\"",
+            "correct_code": "!(status == \"OK\")",
+            "options": [
+                "!(status == \"OK\")",
+                "status != \"OK\"",
+                "not status == \"OK\""
+            ],
+            "explanation": "A !status először kiértékelődik logikai értékként, majd ezt hasonlítaná a stringhez. Zárójel kell az összehasonlítás köré."
+        }
+    },
+    {
+        "title": "String összehasonlítás",
+        "description": "Javítsd ki a kód hibáját a szövegek összehasonlításánál!",
+        "hint": "Objektumok tartalmát nem a == operátorral hasonlítjuk össze.",
+        "q_type": "debug",
+        "difficulty_rating": 900,
+        "language": "java",
+        "concept": {
+            "logic": 1.0,
+            "basics": 0.7
+        },
+        "content": {
+            "buggy_code": "if (name == \"Admin\") {\n  grantAccess();\n}",
+            "error_location": "name == \"Admin\"",
+            "correct_code": "name.equals(\"Admin\")",
+            "options": [
+                "name.equals(\"Admin\")",
+                "name === \"Admin\"",
+                "name.is(\"Admin\")"
+            ],
+            "explanation": "A String objektum, így a == csak a referenciát hasonlítja össze. Tartalmi egyezéshez az .equals() metódus kell."
+        }
+    }
+]

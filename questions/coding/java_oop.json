@@ -1,1 +1,137 @@
-[]
+[
+    {
+        "title": "Egyszerű osztály",
+        "description": "Hozz létre egy 'Person' osztályt egy String típusú 'name' mezővel!",
+        "hint": "Az osztálydefiníció a class kulcsszóval kezdődik.",
+        "q_type": "coding",
+        "difficulty_rating": 600,
+        "language": "java",
+        "concept": {
+            "oop": 1.0,
+            "basics": 0.5
+        },
+        "content": {
+            "initial_code": "// Hozd létre az osztályt itt",
+            "test_cases": [
+                {
+                    "input": "new Person().name = \"Teszt\"",
+                    "expected_output": "\"Teszt\""
+                }
+            ],
+            "scaffolding_blocks": [
+                "class Person {",
+                "  String name;",
+                "}"
+            ],
+            "explanation": "Az objektumorientált programozás alapja az osztály, amely adatokat (mezőket) és viselkedést (metódusokat) fog össze.",
+            "correct_answer": "class Person {\n  String name;\n}"
+        }
+    },
+    {
+        "title": "Konstruktor",
+        "description": "Egészítsd ki a 'Car' osztályt egy konstruktorral, amely beállítja a 'brand' mezőt!",
+        "hint": "A konstruktor neve megegyezik az osztály nevével, és nincs visszatérési típusa.",
+        "q_type": "coding",
+        "difficulty_rating": 700,
+        "language": "java",
+        "concept": {
+            "oop": 1.0
+        },
+        "content": {
+            "initial_code": "class Car {\n  String brand;\n  // Írd ide a konstruktort\n}",
+            "test_cases": [
+                {
+                    "input": "new Car(\"Toyota\").brand",
+                    "expected_output": "\"Toyota\""
+                }
+            ],
+            "scaffolding_blocks": [
+                "public Car(String brand) {",
+                "  this.brand = brand;",
+                "}"
+            ],
+            "explanation": "A konstruktor az objektum példányosításakor fut le, és gyakran a kezdőértékek beállítására szolgál.",
+            "correct_answer": "class Car {\n  String brand;\n  public Car(String brand) {\n    this.brand = brand;\n  }\n}"
+        }
+    },
+    {
+        "title": "Getter és Setter",
+        "description": "Készíts getter és setter metódust a privát 'level' mezőhöz!",
+        "hint": "A getter visszaadja az értéket, a setter pedig beállítja azt.",
+        "q_type": "coding",
+        "difficulty_rating": 800,
+        "language": "java",
+        "concept": {
+            "oop": 1.0,
+            "functions": 0.5
+        },
+        "content": {
+            "initial_code": "class Player {\n  private int level;\n  // Írd ide a metódusokat\n}",
+            "test_cases": [
+                {
+                    "input": "p.setLevel(10); p.getLevel();",
+                    "expected_output": "10"
+                }
+            ],
+            "scaffolding_blocks": [
+                "public int getLevel() { return level; }",
+                "public void setLevel(int level) { this.level = level; }"
+            ],
+            "explanation": "Az enkapszuláció (egységbezárás) elve szerint a mezőket priváttá tesszük, és ellenőrzött módon, metódusokon keresztül érjük el őket.",
+            "correct_answer": "class Player {\n  private int level;\n  public int getLevel() {\n    return level;\n  }\n  public void setLevel(int level) {\n    this.level = level;\n  }\n}"
+        }
+    },
+    {
+        "title": "Öröklődés",
+        "description": "Hozz létre egy 'Dog' osztályt, amely az 'Animal' osztályból öröklődik!",
+        "hint": "Használd az extends kulcsszót.",
+        "q_type": "coding",
+        "difficulty_rating": 900,
+        "language": "java",
+        "concept": {
+            "oop": 1.0
+        },
+        "content": {
+            "initial_code": "class Animal { void eat() {} }\n// Hozd létre a Dog osztályt itt",
+            "test_cases": [
+                {
+                    "input": "new Dog() instanceof Animal",
+                    "expected_output": "true"
+                }
+            ],
+            "scaffolding_blocks": [
+                "class Dog extends Animal {",
+                "}"
+            ],
+            "explanation": "Az öröklődés lehetővé teszi, hogy egy osztály átvegye egy másik osztály tulajdonságait és metódusait.",
+            "correct_answer": "class Animal { void eat() {} }\nclass Dog extends Animal {\n}"
+        }
+    },
+    {
+        "title": "Interfész megvalósítása",
+        "description": "Valósítsd meg a 'Drawable' interfész 'draw' metódusát a 'Circle' osztályban!",
+        "hint": "Használd az implements kulcsszót.",
+        "q_type": "coding",
+        "difficulty_rating": 1000,
+        "language": "java",
+        "concept": {
+            "oop": 1.0
+        },
+        "content": {
+            "initial_code": "interface Drawable { void draw(); }\nclass Circle // Egészítsd ki",
+            "test_cases": [
+                {
+                    "input": "new Circle() instanceof Drawable",
+                    "expected_output": "true"
+                }
+            ],
+            "scaffolding_blocks": [
+                "implements Drawable {",
+                "  public void draw() { System.out.println(\"Drawing Circle\"); }",
+                "}"
+            ],
+            "explanation": "Az interfészek egyfajta szerződést jelentenek: az osztálynak meg kell valósítania az interfészben előírt metódusokat.",
+            "correct_answer": "interface Drawable { void draw(); }\nclass Circle implements Drawable {\n  public void draw() {\n    System.out.println(\"Drawing Circle\");\n  }\n}"
+        }
+    }
+]

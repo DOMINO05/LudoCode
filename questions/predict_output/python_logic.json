@@ -1,1 +1,77 @@
-[]
+[
+    {
+        "title": "Alapvető logika",
+        "description": "Mi lesz a kimenet?",
+        "hint": "Az 'and' csak akkor True, ha mindkét oldal az.",
+        "q_type": "predict_output",
+        "difficulty_rating": 600,
+        "language": "python",
+        "concept": {"logic": 1.0},
+        "content": {
+            "code_snippet": "a = True\nb = False\nprint(a and b)",
+            "options": ["True", "False", "None", "hiba"],
+            "correct_answer": "False",
+            "explanation": "A logikai ÉS (and) művelet eredménye hamis, ha az egyik operandus hamis."
+        }
+    },
+    {
+        "title": "Tartalmazás vizsgálat",
+        "description": "Mit ír ki a kód?",
+        "hint": "Az 'in' operátor karakterláncokban is keres.",
+        "q_type": "predict_output",
+        "difficulty_rating": 650,
+        "language": "python",
+        "concept": {"logic": 1.0, "basics": 0.5},
+        "content": {
+            "code_snippet": "text = \"Python\"\nprint(\"y\" in text)",
+            "options": ["True", "False", "y", "hiba"],
+            "correct_answer": "True",
+            "explanation": "Az 'y' karakter szerepel a \"Python\" szóban, így az 'in' operátor True-t ad."
+        }
+    },
+    {
+        "title": "Azonosság vs Egyenlőség",
+        "description": "Mi lesz a kimenet?",
+        "hint": "A '==' az értéket nézi, az 'is' a memóriacímet.",
+        "q_type": "predict_output",
+        "difficulty_rating": 800,
+        "language": "python",
+        "concept": {"logic": 1.0, "arrays": 0.5},
+        "content": {
+            "code_snippet": "l1 = [1, 2]\nl2 = [1, 2]\nprint(l1 == l2, l1 is l2)",
+            "options": ["True True", "True False", "False True", "False False"],
+            "correct_answer": "True False",
+            "explanation": "A listák értéke megegyezik (True), de két külön objektumról van szó a memóriában (False)."
+        }
+    },
+    {
+        "title": "Láncolt összehasonlítás",
+        "description": "Mit ír ki a program?",
+        "hint": "Pythonban a matematikai jelöléshez hasonlóan lehet láncolni a relációkat.",
+        "q_type": "predict_output",
+        "difficulty_rating": 700,
+        "language": "python",
+        "concept": {"logic": 1.0},
+        "content": {
+            "code_snippet": "x = 5\nprint(0 < x < 10)",
+            "options": ["True", "False", "5", "hiba"],
+            "correct_answer": "True",
+            "explanation": "Az 5 valóban nagyobb, mint 0 és kisebb, mint 10. Ez ekvivalens az (0 < x and x < 10) kifejezéssel."
+        }
+    },
+    {
+        "title": "A 'all' függvény",
+        "description": "Mi lesz az eredmény?",
+        "hint": "Az 'all' akkor True, ha minden elem igaz.",
+        "q_type": "predict_output",
+        "difficulty_rating": 900,
+        "language": "python",
+        "concept": {"logic": 1.0, "arrays": 0.5},
+        "content": {
+            "code_snippet": "vals = [True, True, False]\nprint(all(vals))",
+            "options": ["True", "False", "None", "hiba"],
+            "correct_answer": "False",
+            "explanation": "Mivel a listában van egy False érték, az 'all()' függvény False-szal tér vissza."
+        }
+    }
+]

@@ -1,1 +1,93 @@
-[]
+[
+    {
+        "title": "Függvény definíció",
+        "description": "Rendezze sorba a blokkokat egy egyszerű üdvözlő függvény létrehozásához!",
+        "hint": "Definíció -> Törzs.",
+        "q_type": "parsons",
+        "difficulty_rating": 600,
+        "language": "python",
+        "concept": {"functions": 1.0},
+        "content": {
+            "blocks": [
+                {"id": 1, "text": "def koszon():"},
+                {"id": 2, "text": "    print(\"Szia!\")"}
+            ],
+            "correct_order": [1, 2],
+            "explanation": "A függvényt a 'def' kulcsszóval vezetjük be, a törzsét pedig kötelezően behúzzuk."
+        }
+    },
+    {
+        "title": "Visszatérési érték",
+        "description": "Rendezze a blokkokat egy számot négyzetre emelő függvényhez!",
+        "hint": "Használja a return kulcsszót.",
+        "q_type": "parsons",
+        "difficulty_rating": 650,
+        "language": "python",
+        "concept": {"functions": 1.0},
+        "content": {
+            "blocks": [
+                {"id": 1, "text": "def negyzet(n):"},
+                {"id": 2, "text": "    eredmeny = n * n"},
+                {"id": 3, "text": "    return eredmeny"}
+            ],
+            "correct_order": [1, 2, 3],
+            "explanation": "A számítás után az eredményt a return segítségével adjuk vissza a hívónak."
+        }
+    },
+    {
+        "title": "Függvény hívása",
+        "description": "Rendezze a blokkokat úgy, hogy definiál egy függvényt, majd meghívja és kiírja az eredményt!",
+        "hint": "A definíciónak meg kell előznie a hívást.",
+        "q_type": "parsons",
+        "difficulty_rating": 700,
+        "language": "python",
+        "concept": {"functions": 1.0, "basics": 0.5},
+        "content": {
+            "blocks": [
+                {"id": 1, "text": "def get_pi():"},
+                {"id": 2, "text": "    return 3.14"},
+                {"id": 3, "text": "val = get_pi()"},
+                {"id": 4, "text": "print(val)"}
+            ],
+            "correct_order": [1, 2, 3, 4],
+            "explanation": "Előbb léteznie kell a függvénynek, utána tudjuk elmenteni az eredményét változóba."
+        }
+    },
+    {
+        "title": "Lambda függvény",
+        "description": "Rendezze sorba a blokkokat egy névtelen függvény létrehozásához!",
+        "hint": "A lambda kulcsszóval indítunk.",
+        "q_type": "parsons",
+        "difficulty_rating": 800,
+        "language": "python",
+        "concept": {"functions": 1.0},
+        "content": {
+            "blocks": [
+                {"id": 1, "text": "duplaz = "},
+                {"id": 2, "text": "lambda x: "},
+                {"id": 3, "text": "x * 2"}
+            ],
+            "correct_order": [1, 2, 3],
+            "explanation": "A lambda függvények tömör formában teszik lehetővé egyszerű műveletek definiálását."
+        }
+    },
+    {
+        "title": "Rekurzív függvény",
+        "description": "Rendezze sorba a blokkokat egy rekurzív visszaszámláláshoz!",
+        "hint": "Kell egy megállási feltétel és az önmaga hívása.",
+        "q_type": "parsons",
+        "difficulty_rating": 900,
+        "language": "python",
+        "concept": {"functions": 1.0, "logic": 0.6},
+        "content": {
+            "blocks": [
+                {"id": 1, "text": "def szamol(n):"},
+                {"id": 2, "text": "    if n <= 0: return"},
+                {"id": 3, "text": "    print(n)"},
+                {"id": 4, "text": "    szamol(n - 1)"}
+            ],
+            "correct_order": [1, 2, 3, 4],
+            "explanation": "A függvény minden lépésben kiírja a számot, majd meghívja önmagát eggyel kisebb értékkel, amíg el nem éri a nullát."
+        }
+    }
+]

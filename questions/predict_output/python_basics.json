@@ -1,1 +1,77 @@
-[]
+[
+    {
+        "title": "Kiíratás alapjai",
+        "description": "Mi lesz a kimenet?",
+        "hint": "Pythonban a print alapértelmezetten sortörést tesz a végére, de itt csak egy hívás van.",
+        "q_type": "predict_output",
+        "difficulty_rating": 600,
+        "language": "python",
+        "concept": {"basics": 1.0},
+        "content": {
+            "code_snippet": "x = 10\nprint(x)",
+            "options": ["10", "x", "None", "hiba"],
+            "correct_answer": "10",
+            "explanation": "A print() függvény megjeleníti a változó értékét a konzolon."
+        }
+    },
+    {
+        "title": "Dinamikus típuskezelés",
+        "description": "Mit ír ki a kód?",
+        "hint": "A változó típusa és értéke bármikor megváltozhat.",
+        "q_type": "predict_output",
+        "difficulty_rating": 650,
+        "language": "python",
+        "concept": {"basics": 1.0},
+        "content": {
+            "code_snippet": "val = 5\nval = \"Öt\"\nprint(val)",
+            "options": ["5", "Öt", "5Öt", "hiba"],
+            "correct_answer": "Öt",
+            "explanation": "Pythonban a változók nem kötődnek fix típushoz, az utoljára kapott érték határozza meg a tartalmukat."
+        }
+    },
+    {
+        "title": "Osztás operátorok",
+        "description": "Mi lesz az eredmény?",
+        "hint": "A / operátor mindig lebegőpontos számot ad.",
+        "q_type": "predict_output",
+        "difficulty_rating": 700,
+        "language": "python",
+        "concept": {"basics": 1.0},
+        "content": {
+            "code_snippet": "print(10 / 4)",
+            "options": ["2", "2.5", "2.0", "hiba"],
+            "correct_answer": "2.5",
+            "explanation": "Python 3-ban a / operátor pontos (lebegőpontos) osztást végez."
+        }
+    },
+    {
+        "title": "F-string formázás",
+        "description": "Mit ír ki a program?",
+        "hint": "A kapcsos zárójelek közötti rész kiértékelődik.",
+        "q_type": "predict_output",
+        "difficulty_rating": 750,
+        "language": "python",
+        "concept": {"basics": 1.0},
+        "content": {
+            "code_snippet": "a = 2\nb = 3\nprint(f\"{a} + {b} = {a+b}\")",
+            "options": ["2 + 3 = 5", "a + b = 5", "5 = 5", "hiba"],
+            "correct_answer": "2 + 3 = 5",
+            "explanation": "Az f-string behelyettesíti a változók értékét és a kifejezések eredményét a szövegbe."
+        }
+    },
+    {
+        "title": "String indexelés",
+        "description": "Mi a kimenet?",
+        "hint": "Az indexelés 0-tól indul, a negatív index pedig hátulról számol.",
+        "q_type": "predict_output",
+        "difficulty_rating": 800,
+        "language": "python",
+        "concept": {"basics": 1.0},
+        "content": {
+            "code_snippet": "s = \"Python\"\nprint(s[0] + s[-1])",
+            "options": ["Pn", "Ph", "Py", "hiba"],
+            "correct_answer": "Pn",
+            "explanation": "s[0] a 'P', s[-1] pedig az utolsó karakter, vagyis az 'n'."
+        }
+    }
+]

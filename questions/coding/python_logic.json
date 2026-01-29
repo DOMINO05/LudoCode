@@ -1,1 +1,130 @@
-[]
+[
+    {
+        "title": "Logikai ÉS",
+        "description": "Térj vissza True-val, ha mindkét feltétel igaz!",
+        "hint": "Használd az 'and' kulcsszót.",
+        "q_type": "coding",
+        "difficulty_rating": 600,
+        "language": "python",
+        "concept": {
+            "logic": 1.0
+        },
+        "content": {
+            "initial_code": "def both_true(a, b):",
+            "test_cases": [
+                {
+                    "input": "True, True",
+                    "expected_output": "True"
+                }
+            ],
+            "scaffolding_blocks": [
+                "return a and b"
+            ],
+            "explanation": "Pythonban a logikai ÉS műveletre az 'and' kulcsszót használjuk.",
+            "correct_answer": "def both_true(a, b):\n    return a and b"
+        }
+    },
+    {
+        "title": "Tartalmazás vizsgálat",
+        "description": "Döntsd el az 'in' operátorral, hogy a 'char' szerepel-e a 'text' stringben!",
+        "hint": "Használd a 'char in text' kifejezést.",
+        "q_type": "coding",
+        "difficulty_rating": 700,
+        "language": "python",
+        "concept": {
+            "logic": 1.0,
+            "basics": 0.5
+        },
+        "content": {
+            "initial_code": "def contains(text, char):",
+            "test_cases": [
+                {
+                    "input": "'python', 'y'",
+                    "expected_output": "True"
+                }
+            ],
+            "scaffolding_blocks": [
+                "return char in text"
+            ],
+            "explanation": "Az 'in' operátor nagyon hatékony módja annak, hogy ellenőrizzük egy elem jelenlétét egy sorozatban.",
+            "correct_answer": "def contains(text, char):\n    return char in text"
+        }
+    },
+    {
+        "title": "Azonosság vs Egyenlőség",
+        "description": "Vizsgáld meg, hogy két változó ugyanarra az objektumra mutat-e!",
+        "hint": "Használd az 'is' operátort.",
+        "q_type": "coding",
+        "difficulty_rating": 800,
+        "language": "python",
+        "concept": {
+            "logic": 1.0,
+            "basics": 0.8
+        },
+        "content": {
+            "initial_code": "def is_same_object(a, b):",
+            "test_cases": [
+                {
+                    "input": "[], []",
+                    "expected_output": "False"
+                }
+            ],
+            "scaffolding_blocks": [
+                "return a is b"
+            ],
+            "explanation": "Az 'is' az objektum-azonosságot (memóriacím) ellenőrzi, míg a '==' az érték-egyenlőséget.",
+            "correct_answer": "def is_same_object(a, b):\n    return a is b"
+        }
+    },
+    {
+        "title": "Tagadás",
+        "description": "Térj vissza a logikai paraméter ellentettjével!",
+        "hint": "Használd a 'not' kulcsszót.",
+        "q_type": "coding",
+        "difficulty_rating": 650,
+        "language": "python",
+        "concept": {
+            "logic": 1.0
+        },
+        "content": {
+            "initial_code": "def negate(val):",
+            "test_cases": [
+                {
+                    "input": "True",
+                    "expected_output": "False"
+                }
+            ],
+            "scaffolding_blocks": [
+                "return not val"
+            ],
+            "explanation": "A 'not' operátor megfordítja a logikai értéket.",
+            "correct_answer": "def negate(val):\n    return not val"
+        }
+    },
+    {
+        "title": "Összetett feltétel (any)",
+        "description": "Döntsd el, hogy egy listában van-e legalább egy True érték az 'any' függvénnyel!",
+        "hint": "Használd az any(lst) hívást.",
+        "q_type": "coding",
+        "difficulty_rating": 1000,
+        "language": "python",
+        "concept": {
+            "logic": 1.0,
+            "arrays": 0.5
+        },
+        "content": {
+            "initial_code": "def has_true(lst):",
+            "test_cases": [
+                {
+                    "input": "[False, True, False]",
+                    "expected_output": "True"
+                }
+            ],
+            "scaffolding_blocks": [
+                "return any(lst)"
+            ],
+            "explanation": "Az 'any()' beépített függvény True-val tér vissza, ha a kapott iterálható objektum legalább egy eleme igaz.",
+            "correct_answer": "def has_true(lst):\n    return any(lst)"
+        }
+    }
+]

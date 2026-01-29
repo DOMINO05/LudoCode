@@ -1,1 +1,77 @@
-[]
+[
+    {
+        "title": "Egyszerű visszatérés",
+        "description": "Mi lesz a kimenet?",
+        "hint": "A függvény az elmentett értéket adja vissza.",
+        "q_type": "predict_output",
+        "difficulty_rating": 600,
+        "language": "java",
+        "concept": {"functions": 1.0},
+        "content": {
+            "code_snippet": "static int getVal() { return 10; }\npublic static void main(String[] args) {\n  System.out.print(getVal() + 5);\n}",
+            "options": ["10", "5", "15", "hiba"],
+            "correct_answer": "15",
+            "explanation": "A getVal() hívás helyére behelyettesítődik a 10, majd hozzáadunk 5-öt."
+        }
+    },
+    {
+        "title": "Paraméterátadás",
+        "description": "Mit ír ki a kód?",
+        "hint": "A paraméter értéke duplázódik.",
+        "q_type": "predict_output",
+        "difficulty_rating": 650,
+        "language": "java",
+        "concept": {"functions": 1.0},
+        "content": {
+            "code_snippet": "static int doubleIt(int n) { return n * 2; }\npublic static void main(String[] args) {\n  System.out.print(doubleIt(4));\n}",
+            "options": ["4", "8", "16", "2"],
+            "correct_answer": "8",
+            "explanation": "A 4-es értéket átadjuk a függvénynek, ami megszorozza kettővel."
+        }
+    },
+    {
+        "title": "Változó hatókör",
+        "description": "Mi lesz a kimenet?",
+        "hint": "A függvényen belüli módosítás csak a lokális másolatot érinti.",
+        "q_type": "predict_output",
+        "difficulty_rating": 800,
+        "language": "java",
+        "concept": {"functions": 1.0, "basics": 0.5},
+        "content": {
+            "code_snippet": "static void change(int x) { x = 100; }\npublic static void main(String[] args) {\n  int x = 5;\n  change(x);\n  System.out.print(x);\n}",
+            "options": ["5", "100", "0", "hiba"],
+            "correct_answer": "5",
+            "explanation": "Java-ban a primitív típusok átadása érték szerint történik (pass-by-value), így az eredeti változó nem módosul."
+        }
+    },
+    {
+        "title": "Rekurzió",
+        "description": "Mit ír ki a rekurzív hívás?",
+        "hint": "A függvény önmagát hívja meg.",
+        "q_type": "predict_output",
+        "difficulty_rating": 900,
+        "language": "java",
+        "concept": {"functions": 1.0, "logic": 0.5},
+        "content": {
+            "code_snippet": "static int sum(int n) {\n  if (n <= 1) return 1;\n  return n + sum(n - 1);\n}\npublic static void main(String[] args) {\n  System.out.print(sum(3));\n}",
+            "options": ["3", "6", "1", "hiba"],
+            "correct_answer": "6",
+            "explanation": "sum(3) = 3 + sum(2) = 3 + 2 + sum(1) = 3 + 2 + 1 = 6."
+        }
+    },
+    {
+        "title": "Túlterhelés (Overloading)",
+        "description": "Melyik metódus hívódik meg?",
+        "hint": "A Java a paraméterek típusa alapján dönt.",
+        "q_type": "predict_output",
+        "difficulty_rating": 850,
+        "language": "java",
+        "concept": {"functions": 1.0},
+        "content": {
+            "code_snippet": "static void f(int a) { System.out.print(\"i\"); }\nstatic void f(double a) { System.out.print(\"d\"); }\npublic static void main(String[] args) {\n  f(5.0);\n}",
+            "options": ["i", "d", "id", "hiba"],
+            "correct_answer": "d",
+            "explanation": "Mivel 5.0 egy double literál, a Java a double paramétert váró metódust választja."
+        }
+    }
+]

@@ -3,6 +3,7 @@ import { useOutletContext } from 'react-router-dom';
 import { supabase } from './supabaseClient';
 import Avatar from './Avatar';
 import BackButton from './components/BackButton';
+import { INITIAL_AVATAR_CONFIG } from './utils/avatarDefaults';
 
 export default function ShopPage() {
     const { session, profile, refreshProfile } = useOutletContext();
@@ -23,7 +24,7 @@ export default function ShopPage() {
             const mappedData = data.map(item => ({
                 ...item,
                 costGems: item.cost_gems,
-                isOwned: item.is_owned // Explicitly mapping is_owned
+                isOwned: item.is_owned
             }));
 
             setItems(mappedData);
@@ -48,7 +49,7 @@ export default function ShopPage() {
             if (data && data.success) {
                 setMessage({ type: 'success', text: 'Sikeres vásárlás!' });
                 refreshProfile();
-                fetchItems(); // Refresh list to update isOwned
+                fetchItems();
             } else {
                 setMessage({ type: 'error', text: 'Hiba történt a vásárlás során' });
             }
@@ -58,69 +59,107 @@ export default function ShopPage() {
         }
     };
 
-    if (loading) return <div>Loading Shop...</div>;
+    if (loading) return <div className="p-10 text-center animate-pulse text-slate-500">Bolt betöltése...</div>;
+
+    // Standardize avatar config access with default fallback
+    const rawConfig = profile?.avatarConfig || profile?.avatar_config;
+    const userAvatarConfig = (rawConfig && Object.keys(rawConfig).length > 0)
+        ? rawConfig
+        : { ...INITIAL_AVATAR_CONFIG, seed: profile?.username || 'user' };
 
     return (
-        
-        <div style={{ maxWidth: '1000px', margin: '0 auto', padding: '20px' }} className="text-slate-800 dark:text-slate-100">
+        <div className="max-w-6xl mx-auto p-6 md:p-10 text-slate-800 dark:text-slate-100">
             <BackButton to="/dashboard" />
-            <h1 style={{ textAlign: 'center', marginBottom: '30px', fontSize: '2em' }}>🛒 Shop</h1>
-            <div style={{ textAlign: 'center', marginBottom: '40px', fontSize: '1.2em' }}>
-                Your Gems: <span style={{ fontWeight: 'bold', color: '#9c27b0' }}>💎 {profile?.gems || 0}</span>
+            
+            <div className="text-center mb-12">
+                <div className="inline-block p-4 bg-purple-100 dark:bg-purple-900/30 rounded-full mb-4">
+                    <span className="text-4xl">🛒</span>
+                </div>
+                <h1 className="text-4xl font-black mb-4 uppercase tracking-tight">Bolt</h1>
+                <div className="flex items-center justify-center gap-3 bg-purple-500 text-white px-6 py-2 rounded-2xl w-fit mx-auto font-black shadow-lg">
+                    <span className="text-2xl">💎</span> {profile?.gems || 0} GEM
+                </div>
             </div>
 
             {message && (
-                <div style={{
-                    padding: '15px', marginBottom: '30px', borderRadius: '10px', textAlign: 'center',
-                    backgroundColor: message.type === 'success' ? '#e8f5e9' : '#ffebee',
-                    color: message.type === 'success' ? '#2e7d32' : '#c62828',
-                    border: `1px solid ${message.type === 'success' ? '#2e7d32' : '#c62828'}`
-                }}>
+                <div className={`
+                    p-4 rounded-2xl mb-8 text-center font-bold animate-in zoom-in-95 duration-300 border-2
+                    ${message.type === 'success' ? 'bg-green-100 border-green-500 text-green-700' : 'bg-red-100 border-red-500 text-red-700'}
+                `}>
                     {message.text}
                 </div>
             )}
 
-            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(220px, 1fr))', gap: '30px' }}>
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8">
                 {items.map(item => {
-                    const isCosmetic = ['hat', 'accessory', 'avatar_frame', 'theme'].includes(item.category);
+                    const isCosmetic = ['hat', 'accessory', 'avatar_frame', 'theme', 'clothing'].includes(item.category);
                     const isOwned = item.isOwned && !['streak_freeze', 'xp_boost'].includes(item.category);
-                    const previewConfig = isCosmetic && profile?.avatarConfig 
-                        ? { ...profile.avatarConfig, ...(item.metadata?.dicebear || {}) }
-                        : null;
+                    
+                    // PREVIEW LOGIC
+                    let previewConfig = null;
+                    if (isCosmetic) {
+                        previewConfig = { ...userAvatarConfig };
+                        
+                        if (item.category === 'avatar_frame') {
+                            previewConfig.frame = item.name;
+                        } else if (item.category === 'theme') {
+                            previewConfig.background = 'custom';
+                            previewConfig.backgroundColor = item.metadata?.color || 'transparent';
+                        } else {
+                            const dicebear = item.metadata?.dicebear || {};
+                            previewConfig = { ...previewConfig, ...dicebear };
+                        }
+                    }
 
                     return (
-                        <div key={item.id} className="card bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 shadow-md rounded-xl" style={{ padding: '0', display: 'flex', flexDirection: 'column', alignItems: 'center', overflow: 'hidden', height: '100%' }}>
+                        <div key={item.id} className="bg-white dark:bg-slate-800 border-2 border-slate-200 dark:border-slate-700 shadow-md rounded-3xl overflow-hidden flex flex-col hover:shadow-xl transition-all group relative">
                             
                             {isCosmetic ? (
-                                <div className="w-full aspect-square bg-slate-50 dark:bg-slate-700 flex justify-center items-center">
-                                    <Avatar config={previewConfig} size="80%" />
+                                <div className="w-full aspect-square bg-slate-50 dark:bg-slate-900/50 flex flex-col justify-center items-center relative p-6">
+                                    <div className="transform group-hover:scale-110 transition-transform duration-300">
+                                        <Avatar config={previewConfig} size={160} />
+                                    </div>
                                 </div>
                             ) : (
-                                <div style={{ padding: '30px', textAlign: 'center' }}>
-                                    <div style={{ fontSize: '50px', marginBottom: '15px' }}>
+                                <div className="w-full aspect-square bg-slate-50 dark:bg-slate-900/50 flex flex-col justify-center items-center p-10 text-center">
+                                    <div className="text-7xl mb-4 group-hover:scale-110 transition-transform duration-300">
                                         {item.category === 'streak_freeze' ? '❄️' : 
                                          item.category === 'xp_boost' ? '🚀' : '🎁'}
                                     </div>
-                                    <h3 style={{ margin: '0 0 10px 0' }}>{item.name}</h3>
-                                    <p className="text-slate-500 dark:text-slate-400 text-sm m-0">{item.metadata?.description || 'No description'}</p>
+                                    <h3 className="font-black text-xl mb-2">{item.name}</h3>
+                                    <p className="text-slate-500 text-sm">{item.metadata?.description || 'Nincs leírás'}</p>
                                 </div>
                             )}
 
-                            <div style={{ padding: '15px', width: '100%', marginTop: 'auto', borderTop: '1px solid #eee' }} className="dark:border-slate-700 text-center">
+                            <div className="p-6 bg-slate-50/50 dark:bg-slate-800/50 border-t border-slate-100 dark:border-slate-700 mt-auto">
+                                <div className="flex justify-between items-center mb-4">
+                                    <div className="flex flex-col">
+                                        <span className="text-[10px] font-bold text-slate-400 uppercase tracking-widest">{item.category}</span>
+                                        <div className="flex items-center gap-1 text-purple-500 font-black">
+                                            <span className="text-lg">💎</span> {item.costGems}
+                                        </div>
+                                    </div>
+                                    <div className="text-[10px] font-bold px-3 py-1 bg-slate-200 dark:bg-slate-700 rounded-full text-slate-500 uppercase">
+                                        {item.rarity || 'common'}
+                                    </div>
+                                </div>
+
                                 {isOwned ? (
-                                    <div className="w-full py-2 bg-slate-100 dark:bg-slate-700 text-slate-500 dark:text-slate-400 font-bold rounded-lg uppercase text-sm">
+                                    <div className="w-full py-3 bg-slate-200 dark:bg-slate-700 text-slate-500 dark:text-slate-400 font-bold rounded-2xl text-center uppercase text-xs tracking-wider">
                                         Megvásárolva
                                     </div>
                                 ) : (
                                     <button 
-                                        className="btn btn-primary w-full flex justify-center items-center gap-2"
                                         onClick={() => handleBuy(item)}
                                         disabled={profile.gems < item.costGems}
-                                        style={{ 
-                                            opacity: profile.gems < item.costGems ? 0.5 : 1
-                                        }}
+                                        className={`
+                                            w-full py-3 rounded-2xl font-black uppercase tracking-widest text-sm shadow-lg transition-all active:translate-y-1 active:shadow-none
+                                            ${profile.gems < item.costGems 
+                                                ? 'bg-slate-100 text-slate-400 cursor-not-allowed border-b-0' 
+                                                : 'bg-primary hover:bg-primary-dark text-white border-b-4 border-green-700'}
+                                        `}
                                     >
-                                        <span>💎</span> {item.costGems}
+                                        Vásárlás
                                     </button>
                                 )}
                             </div>

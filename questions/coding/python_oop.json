@@ -1,1 +1,140 @@
-[]
+[
+    {
+        "title": "Egyszerű osztály",
+        "description": "Hozz létre egy 'Person' osztályt, aminek van egy 'name' attribútuma!",
+        "hint": "Pythonban a class kulcsszót használjuk.",
+        "q_type": "coding",
+        "difficulty_rating": 600,
+        "language": "python",
+        "concept": {
+            "oop": 1.0,
+            "basics": 0.5
+        },
+        "content": {
+            "initial_code": "class Person:",
+            "test_cases": [
+                {
+                    "input": "p = Person(); p.name = 'Teszt'; p.name",
+                    "expected_output": "'Teszt'"
+                }
+            ],
+            "scaffolding_blocks": [
+                "class Person:",
+                "    def __init__(self):",
+                "        self.name = ''"
+            ],
+            "explanation": "A Pythonban az osztályok attribútumait általában az __init__ metódusban inicializáljuk.",
+            "correct_answer": "class Person:\n    def __init__(self):\n        self.name = ''"
+        }
+    },
+    {
+        "title": "Konstruktor (__init__)",
+        "description": "Készíts egy 'Car' osztályt, aminek a konstruktora beállítja a 'brand' és 'year' értékeket!",
+        "hint": "Az első paraméter mindig a 'self' legyen.",
+        "q_type": "coding",
+        "difficulty_rating": 700,
+        "language": "python",
+        "concept": {
+            "oop": 1.0
+        },
+        "content": {
+            "initial_code": "class Car:",
+            "test_cases": [
+                {
+                    "input": "c = Car('Ford', 2020); c.brand",
+                    "expected_output": "'Ford'"
+                }
+            ],
+            "scaffolding_blocks": [
+                "def __init__(self, brand, year):",
+                "    self.brand = brand",
+                "    self.year = year"
+            ],
+            "explanation": "Az __init__ metódus az objektum létrehozásakor automatikusan meghívódik.",
+            "correct_answer": "class Car:\n    def __init__(self, brand, year):\n        self.brand = brand\n        self.year = year"
+        }
+    },
+    {
+        "title": "Szöveges reprezentáció (__str__)",
+        "description": "Valósítsd meg a 'Book' osztály __str__ metódusát, ami 'Cím - Szerző' formátumban tér vissza!",
+        "hint": "A metódusnak stringgel kell visszatérnie.",
+        "q_type": "coding",
+        "difficulty_rating": 800,
+        "language": "python",
+        "concept": {
+            "oop": 1.0,
+            "basics": 0.5
+        },
+        "content": {
+            "initial_code": "class Book:\n    def __init__(self, title, author):\n        self.title = title\n        self.author = author",
+            "test_cases": [
+                {
+                    "input": "str(Book('Egri Csillagok', 'Gárdonyi'))",
+                    "expected_output": "'Egri Csillagok - Gárdonyi'"
+                }
+            ],
+            "scaffolding_blocks": [
+                "def __str__(self):",
+                "    return f'{self.title} - {self.author}'"
+            ],
+            "explanation": "A __str__ metódus határozza meg, mi történjen, ha az objektumot stringgé konvertáljuk (pl. print).",
+            "correct_answer": "class Book:\n    def __init__(self, title, author):\n        self.title = title\n        self.author = author\n    def __str__(self):\n        return f'{self.title} - {self.author}'"
+        }
+    },
+    {
+        "title": "Getter dekorátor (@property)",
+        "description": "Készíts egy 'Circle' osztályt, aminek a 'radius' mezője alapján a 'diameter' egy számított tulajdonság (property)!",
+        "hint": "Használd a @property dekorátort a metódus felett.",
+        "q_type": "coding",
+        "difficulty_rating": 900,
+        "language": "python",
+        "concept": {
+            "oop": 1.0,
+            "functions": 0.5
+        },
+        "content": {
+            "initial_code": "class Circle:",
+            "test_cases": [
+                {
+                    "input": "c = Circle(5); c.diameter",
+                    "expected_output": "10"
+                }
+            ],
+            "scaffolding_blocks": [
+                "@property",
+                "def diameter(self):",
+                "    return self.radius * 2"
+            ],
+            "explanation": "A @property dekorátorral a metódusokat úgy érhetjük el, mintha sima attribútumok lennének.",
+            "correct_answer": "class Circle:\n    def __init__(self, radius):\n        self.radius = radius\n    @property\n    def diameter(self):\n        return self.radius * 2"
+        }
+    },
+    {
+        "title": "Öröklődés",
+        "description": "Hozz létre egy 'ElectricCar' osztályt, ami a 'Car' osztályból öröklődik és van egy plusz 'battery' attribútuma!",
+        "hint": "A szintaxis: class SubClass(BaseClass):. Használd a super()-t!",
+        "q_type": "coding",
+        "difficulty_rating": 1000,
+        "language": "python",
+        "concept": {
+            "oop": 1.0
+        },
+        "content": {
+            "initial_code": "class Car:\n    def __init__(self, brand):\n        self.brand = brand",
+            "test_cases": [
+                {
+                    "input": "ec = ElectricCar('Tesla', 100); ec.brand",
+                    "expected_output": "'Tesla'"
+                }
+            ],
+            "scaffolding_blocks": [
+                "class ElectricCar(Car):",
+                "    def __init__(self, brand, battery):",
+                "        super().__init__(brand)",
+                "        self.battery = battery"
+            ],
+            "explanation": "Az öröklődés során a super() segítségével hívhatjuk meg az ősosztály metódusait.",
+            "correct_answer": "class Car:\n    def __init__(self, brand):\n        self.brand = brand\n\nclass ElectricCar(Car):\n    def __init__(self, brand, battery):\n        super().__init__(brand)\n        self.battery = battery"
+        }
+    }
+]

@@ -1,1 +1,93 @@
-[]
+[
+    {
+        "title": "Egyszerű range ciklus",
+        "description": "Rendezze sorba a blokkokat, hogy a ciklus 0-tól 2-ig írja ki a számokat!",
+        "hint": "Használja a range(3) függvényt.",
+        "q_type": "parsons",
+        "difficulty_rating": 600,
+        "language": "python",
+        "concept": {"loops": 1.0},
+        "content": {
+            "blocks": [
+                {"id": 1, "text": "for i in range(3):"},
+                {"id": 2, "text": "    print(i)"}
+            ],
+            "correct_order": [1, 2],
+            "explanation": "A range(3) a 0, 1, 2 sorozatot generálja a ciklushoz."
+        }
+    },
+    {
+        "title": "Visszaszámlálás while-lal",
+        "description": "Rendezze a blokkokat egy 3-tól induló visszaszámláláshoz!",
+        "hint": "Ne felejtse el csökkenteni az n értékét.",
+        "q_type": "parsons",
+        "difficulty_rating": 600,
+        "language": "python",
+        "concept": {"loops": 1.0},
+        "content": {
+            "blocks": [
+                {"id": 1, "text": "n = 3"},
+                {"id": 2, "text": "while n > 0:"},
+                {"id": 3, "text": "    print(n)"},
+                {"id": 4, "text": "    n -= 1"}
+            ],
+            "correct_order": [1, 2, 3, 4],
+            "explanation": "A ciklus előtt beállítjuk a kezdőértéket, a magban pedig módosítjuk azt, hogy a feltétel egyszer hamissá váljon."
+        }
+    },
+    {
+        "title": "Listaépítés (List Comprehension)",
+        "description": "Rendezze a blokkokat egy listát négyzetszámokkal feltöltő tömör formához!",
+        "hint": "[kifejezés for változó in sorozat]",
+        "q_type": "parsons",
+        "difficulty_rating": 800,
+        "language": "python",
+        "concept": {"loops": 1.0, "arrays": 0.8},
+        "content": {
+            "blocks": [
+                {"id": 1, "text": "negyzetek = ["},
+                {"id": 2, "text": "    x**2 "},
+                {"id": 3, "text": "    for x in range(5)"},
+                {"id": 4, "text": "]"}
+            ],
+            "correct_order": [1, 2, 3, 4],
+            "explanation": "A list comprehension egyetlen sorban teszi lehetővé lista generálását egy ciklus alapján."
+        }
+    },
+    {
+        "title": "Index és érték (Enumerate)",
+        "description": "Rendezze a blokkokat, hogy a ciklus kiírja a lista indexeit és értékeit is!",
+        "hint": "Használja az enumerate() függvényt.",
+        "q_type": "parsons",
+        "difficulty_rating": 850,
+        "language": "python",
+        "concept": {"loops": 1.0, "arrays": 0.5},
+        "content": {
+            "blocks": [
+                {"id": 1, "text": "items = ['a', 'b']"},
+                {"id": 2, "text": "for i, val in enumerate(items):"},
+                {"id": 3, "text": "    print(f\"{i}: {val}\")"}
+            ],
+            "correct_order": [1, 2, 3],
+            "explanation": "Az enumerate() párba állítja az indexeket a megfelelő elemekkel."
+        }
+    },
+    {
+        "title": "Egymásba ágyazott ciklus",
+        "description": "Rendezze a blokkokat egy egyszerű koordináta-pár listázáshoz!",
+        "hint": "Két egymásba ágyazott for ciklus kell.",
+        "q_type": "parsons",
+        "difficulty_rating": 900,
+        "language": "python",
+        "concept": {"loops": 1.0},
+        "content": {
+            "blocks": [
+                {"id": 1, "text": "for x in range(2):"},
+                {"id": 2, "text": "    for y in range(2):"},
+                {"id": 3, "text": "        print(x, y)"}
+            ],
+            "correct_order": [1, 2, 3],
+            "explanation": "A külső ciklus minden értékéhez a belső ciklus összes értéke lefut."
+        }
+    }
+]

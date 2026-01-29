@@ -1,1 +1,155 @@
-[]
+[
+    {
+        "title": "Számok összege",
+        "description": "Számítsd ki a számok összegét 1-től n-ig (n-et is beleértve)!",
+        "hint": "Használj egy for ciklust és egy összegző változót.",
+        "q_type": "coding",
+        "difficulty_rating": 700,
+        "language": "java",
+        "concept": {
+            "loops": 1.0,
+            "basics": 0.5
+        },
+        "content": {
+            "initial_code": "public int sum(int n) {",
+            "test_cases": [
+                {
+                    "input": "5",
+                    "expected_output": "15"
+                }
+            ],
+            "scaffolding_blocks": [
+                "int s = 0;",
+                "for (int i = 1; i <= n; i++) s += i;",
+                "return s;"
+            ],
+            "explanation": "A for ciklus alkalmas arra, hogy egy számsorozaton végigmenjünk és műveleteket végezzünk.",
+            "correct_answer": "public int sum(int n) {\n  int s = 0;\n  for (int i = 1; i <= n; i++) {\n    s += i;\n  }\n  return s;\n}"
+        }
+    },
+    {
+        "title": "Szorzótábla egy sora",
+        "description": "Generáld le a szorzótábla n-edik sorát 1-től 10-ig egy tömbben!",
+        "hint": "Hozz létre egy 10 elemű tömböt, és töltsd fel ciklussal.",
+        "q_type": "coding",
+        "difficulty_rating": 800,
+        "language": "java",
+        "concept": {
+            "loops": 1.0,
+            "arrays": 0.5
+        },
+        "content": {
+            "initial_code": "public int[] multTable(int n) {",
+            "test_cases": [
+                {
+                    "input": "5",
+                    "expected_output": "[5, 10, 15, 20, 25, 30, 35, 40, 45, 50]"
+                }
+            ],
+            "scaffolding_blocks": [
+                "int[] res = new int[10];",
+                "for (int i = 0; i < 10; i++) res[i] = n * (i + 1);",
+                "return res;"
+            ],
+            "explanation": "Ciklus segítségével könnyen feltölthetünk tömböket szisztematikus adatokkal.",
+            "correct_answer": "public int[] multTable(int n) {\n  int[] res = new int[10];\n  for (int i = 0; i < 10; i++) {\n    res[i] = n * (i + 1);\n  }\n  return res;\n}"
+        }
+    },
+    {
+        "title": "Hatványozás",
+        "description": "Számítsd ki 2 n-edik hatványát ciklus segítségével!",
+        "hint": "Indulj 1-től, és szorozd meg 2-vel n-szer.",
+        "q_type": "coding",
+        "difficulty_rating": 900,
+        "language": "java",
+        "concept": {
+            "loops": 1.0,
+            "basics": 0.6
+        },
+        "content": {
+            "initial_code": "public int powerOfTwo(int n) {",
+            "test_cases": [
+                {
+                    "input": "3",
+                    "expected_output": "8"
+                },
+                {
+                    "input": "0",
+                    "expected_output": "1"
+                }
+            ],
+            "scaffolding_blocks": [
+                "int res = 1;",
+                "for (int i = 0; i < n; i++) res *= 2;",
+                "return res;"
+            ],
+            "explanation": "A hatványozás ismételt szorzásként fogható fel, amit ciklussal valósíthatunk meg.",
+            "correct_answer": "public int powerOfTwo(int n) {\n  int res = 1;\n  for (int i = 0; i < n; i++) {\n    res *= 2;\n  }\n  return res;\n}"
+        }
+    },
+    {
+        "title": "Prímszám vizsgálat",
+        "description": "Döntsd el a számról, hogy prímszám-e!",
+        "hint": "Vizsgáld meg az osztókat 2-től a szám gyökéig.",
+        "q_type": "coding",
+        "difficulty_rating": 1000,
+        "language": "java",
+        "concept": {
+            "loops": 1.0,
+            "logic": 0.8
+        },
+        "content": {
+            "initial_code": "public boolean isPrime(int n) {",
+            "test_cases": [
+                {
+                    "input": "7",
+                    "expected_output": "true"
+                },
+                {
+                    "input": "10",
+                    "expected_output": "false"
+                }
+            ],
+            "scaffolding_blocks": [
+                "if (n < 2) return false;",
+                "for (int i = 2; i * i <= n; i++) {",
+                "  if (n % i == 0) return false;",
+                "}",
+                "return true;"
+            ],
+            "explanation": "A prímszámoknak csak 1 és önmaga az osztója. Ha találunk más osztót a ciklusban, nem prím.",
+            "correct_answer": "public boolean isPrime(int n) {\n  if (n < 2) return false;\n  for (int i = 2; i * i <= n; i++) {\n    if (n % i == 0) return false;\n  }\n  return true;\n}"
+        }
+    },
+    {
+        "title": "Számjegyek összege",
+        "description": "Számítsd ki a kapott pozitív egész szám számjegyeinek összegét!",
+        "hint": "Használd a modulo 10-et az utolsó jegyhez, és az osztást a léptetéshez.",
+        "q_type": "coding",
+        "difficulty_rating": 950,
+        "language": "java",
+        "concept": {
+            "loops": 1.0,
+            "basics": 0.7
+        },
+        "content": {
+            "initial_code": "public int digitSum(int n) {",
+            "test_cases": [
+                {
+                    "input": "123",
+                    "expected_output": "6"
+                }
+            ],
+            "scaffolding_blocks": [
+                "int sum = 0;",
+                "while (n > 0) {",
+                "  sum += n % 10;",
+                "  n /= 10;",
+                "}",
+                "return sum;"
+            ],
+            "explanation": "A while ciklus ideális, ha nem tudjuk pontosan hány lépés kell, de tudjuk a feltételt.",
+            "correct_answer": "public int digitSum(int n) {\n  int sum = 0;\n  while (n > 0) {\n    sum += n % 10;\n    n /= 10;\n  }\n  return sum;\n}"
+        }
+    }
+]

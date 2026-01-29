@@ -1,1 +1,139 @@
-[]
+[
+    {
+        "title": "Négyzetre emelés",
+        "description": "Írj egy függvényt, ami visszaadja a kapott szám négyzetét!",
+        "hint": "Szorozd meg a számot önmagával.",
+        "q_type": "coding",
+        "difficulty_rating": 600,
+        "language": "java",
+        "concept": {
+            "functions": 1.0,
+            "basics": 0.5
+        },
+        "content": {
+            "initial_code": "public int square(int n) {",
+            "test_cases": [
+                {
+                    "input": "4",
+                    "expected_output": "16"
+                }
+            ],
+            "scaffolding_blocks": [
+                "return n * n;"
+            ],
+            "explanation": "A négyzetre emelés alapművelete a számnak önmagával való szorzása.",
+            "correct_answer": "public int square(int n) {\n  return n * n;\n}"
+        }
+    },
+    {
+        "title": "Párosság vizsgálat",
+        "description": "Döntsd el a kapott számról, hogy páros-e!",
+        "hint": "Használd a modulo (%) operátort.",
+        "q_type": "coding",
+        "difficulty_rating": 700,
+        "language": "java",
+        "concept": {
+            "functions": 1.0,
+            "logic": 0.5
+        },
+        "content": {
+            "initial_code": "public boolean isEven(int n) {",
+            "test_cases": [
+                {
+                    "input": "10",
+                    "expected_output": "true"
+                },
+                {
+                    "input": "7",
+                    "expected_output": "false"
+                }
+            ],
+            "scaffolding_blocks": [
+                "return n % 2 == 0;"
+            ],
+            "explanation": "Egy szám akkor páros, ha 2-vel osztva a maradék 0.",
+            "correct_answer": "public boolean isEven(int n) {\n  return n % 2 == 0;\n}"
+        }
+    },
+    {
+        "title": "Maximum választás",
+        "description": "Térj vissza a két kapott szám közül a nagyobbal!",
+        "hint": "Használhatod az if-else szerkezetet vagy a Math.max-ot.",
+        "q_type": "coding",
+        "difficulty_rating": 800,
+        "language": "java",
+        "concept": {
+            "functions": 1.0,
+            "logic": 0.7
+        },
+        "content": {
+            "initial_code": "public int max(int a, int b) {",
+            "test_cases": [
+                {
+                    "input": "10, 20",
+                    "expected_output": "20"
+                }
+            ],
+            "scaffolding_blocks": [
+                "if (a > b) return a;",
+                "else return b;"
+            ],
+            "explanation": "A nagyobb számot egy egyszerű feltétellel kiválaszthatjuk.",
+            "correct_answer": "public int max(int a, int b) {\n  if (a > b) {\n    return a;\n  } else {\n    return b;\n  }\n}"
+        }
+    },
+    {
+        "title": "Faktoriális",
+        "description": "Számítsd ki a kapott n szám faktoriálisát! (n!)",
+        "hint": "Használj egy ciklust vagy rekurziót.",
+        "q_type": "coding",
+        "difficulty_rating": 1000,
+        "language": "java",
+        "concept": {
+            "functions": 1.0,
+            "loops": 0.8
+        },
+        "content": {
+            "initial_code": "public int factorial(int n) {",
+            "test_cases": [
+                {
+                    "input": "5",
+                    "expected_output": "120"
+                }
+            ],
+            "scaffolding_blocks": [
+                "int res = 1;",
+                "for (int i = 1; i <= n; i++) res *= i;",
+                "return res;"
+            ],
+            "explanation": "A faktoriális az 1-től n-ig tartó egész számok szorzata.",
+            "correct_answer": "public int factorial(int n) {\n  int res = 1;\n  for (int i = 1; i <= n; i++) {\n    res *= i;\n  }\n  return res;\n}"
+        }
+    },
+    {
+        "title": "Kör területe",
+        "description": "Számítsd ki a kör területét a megadott sugár (r) alapján!",
+        "hint": "Terület = r^2 * PI. Használd a Math.PI konstanst.",
+        "q_type": "coding",
+        "difficulty_rating": 900,
+        "language": "java",
+        "concept": {
+            "functions": 1.0,
+            "basics": 0.6
+        },
+        "content": {
+            "initial_code": "public double area(double r) {",
+            "test_cases": [
+                {
+                    "input": "2.0",
+                    "expected_output": "12.566370614359172"
+                }
+            ],
+            "scaffolding_blocks": [
+                "return r * r * Math.PI;"
+            ],
+            "explanation": "A kör területe a sugár négyzetének és a PI-nek a szorzata.",
+            "correct_answer": "public double area(double r) {\n  return r * r * Math.PI;\n}"
+        }
+    }
+]

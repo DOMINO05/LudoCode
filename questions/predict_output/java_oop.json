@@ -1,1 +1,77 @@
-[]
+[
+    {
+        "title": "Mező elérése",
+        "description": "Mi lesz a kimenet?",
+        "hint": "Az objektum létrejötte után a mező értéke lekérhető.",
+        "q_type": "predict_output",
+        "difficulty_rating": 600,
+        "language": "java",
+        "concept": {"oop": 1.0},
+        "content": {
+            "code_snippet": "class Person { String name = \"Anna\"; }\npublic static void main(String[] args) {\n  Person p = new Person();\n  System.out.print(p.name);\n}",
+            "options": ["Anna", "name", "null", "hiba"],
+            "correct_answer": "Anna",
+            "explanation": "A példányosítás után a Person objektum 'name' mezője a megadott kezdőértéket tartalmazza."
+        }
+    },
+    {
+        "title": "Konstruktor hatása",
+        "description": "Mit ír ki a program?",
+        "hint": "A konstruktor beállítja a mező értékét.",
+        "q_type": "predict_output",
+        "difficulty_rating": 650,
+        "language": "java",
+        "concept": {"oop": 1.0},
+        "content": {
+            "code_snippet": "class Car {\n  String brand;\n  Car(String b) { brand = b; }\n}\npublic static void main(String[] args) {\n  Car c = new Car(\"BMW\");\n  System.out.print(c.brand);\n}",
+            "options": ["BMW", "b", "brand", "null"],
+            "correct_answer": "BMW",
+            "explanation": "A konstruktornak átadott paraméter beíródik a brand mezőbe."
+        }
+    },
+    {
+        "title": "Metódus felüldefiniálás",
+        "description": "Mi lesz a kimenet?",
+        "hint": "Java-ban a futásidejű típus számít a metódushívásnál.",
+        "q_type": "predict_output",
+        "difficulty_rating": 800,
+        "language": "java",
+        "concept": {"oop": 1.0},
+        "content": {
+            "code_snippet": "class A { void f() { System.out.print(\"A\"); } }\nclass B extends A { void f() { System.out.print(\"B\"); } }\npublic static void main(String[] args) {\n  A obj = new B();\n  obj.f();\n}",
+            "options": ["A", "B", "AB", "hiba"],
+            "correct_answer": "B",
+            "explanation": "Mivel az objektum tényleges típusa B, a B-ben felüldefiniált metódus hívódik meg (polimorfizmus)."
+        }
+    },
+    {
+        "title": "Statikus változó",
+        "description": "Mit ír ki a kód?",
+        "hint": "A static változó közös minden példány között.",
+        "q_type": "predict_output",
+        "difficulty_rating": 850,
+        "language": "java",
+        "concept": {"oop": 1.0, "basics": 0.5},
+        "content": {
+            "code_snippet": "class Counter {\n  static int count = 0;\n  Counter() { count++; }\n}\npublic static void main(String[] args) {\n  new Counter();\n  new Counter();\n  System.out.print(Counter.count);\n}",
+            "options": ["0", "1", "2", "hiba"],
+            "correct_answer": "2",
+            "explanation": "Mivel két objektumot hoztunk létre, és a konstruktor növeli a közös (static) számlálót, az érték 2 lesz."
+        }
+    },
+    {
+        "title": "NullPointerException esete",
+        "description": "Mi történik a futás során?",
+        "hint": "A változó még nem mutat sehová.",
+        "q_type": "predict_output",
+        "difficulty_rating": 900,
+        "language": "java",
+        "concept": {"oop": 1.0},
+        "content": {
+            "code_snippet": "class MyClass { void test() { System.out.print(\"OK\"); } }\npublic static void main(String[] args) {\n  MyClass m = null;\n  try {\n    m.test();\n  } catch (NullPointerException e) {\n    System.out.print(\"ERROR\");\n  }\n}",
+            "options": ["OK", "ERROR", "null", "hiba"],
+            "correct_answer": "ERROR",
+            "explanation": "Mivel m értéke null, a metódus hívása NullPointerException-t dob, amit a catch ágban elkapunk."
+        }
+    }
+]

@@ -1,1 +1,77 @@
-[]
+[
+    {
+        "title": "Attribútum elérése",
+        "description": "Mi lesz a kimenet?",
+        "hint": "Az objektum példányosítása után az attribútum elérhető.",
+        "q_type": "predict_output",
+        "difficulty_rating": 600,
+        "language": "python",
+        "concept": {"oop": 1.0},
+        "content": {
+            "code_snippet": "class Person:\n    name = \"Anna\"\n\np = Person()\nprint(p.name)",
+            "options": ["Anna", "name", "None", "hiba"],
+            "correct_answer": "Anna",
+            "explanation": "A Person osztály példányán keresztül elérhető az osztályszinten definiált attribútum."
+        }
+    },
+    {
+        "title": "Konstruktor (__init__)",
+        "description": "Mit ír ki a program?",
+        "hint": "Az __init__ metódus beállítja a példány adatait.",
+        "q_type": "predict_output",
+        "difficulty_rating": 650,
+        "language": "python",
+        "concept": {"oop": 1.0},
+        "content": {
+            "code_snippet": "class Car:\n    def __init__(self, brand):\n        self.brand = brand\n\nc = Car(\"Audi\")\nprint(c.brand)",
+            "options": ["Audi", "brand", "self", "hiba"],
+            "correct_answer": "Audi",
+            "explanation": "A konstruktornak átadott \"Audi\" string elmentődik a példány brand attribútumába."
+        }
+    },
+    {
+        "title": "Metódus hívás (self)",
+        "description": "Mi lesz a kimenet?",
+        "hint": "A self a példányra utal.",
+        "q_type": "predict_output",
+        "difficulty_rating": 700,
+        "language": "python",
+        "concept": {"oop": 1.0},
+        "content": {
+            "code_snippet": "class Dog:\n    def speak(self):\n        return \"Vau\"\n\nd = Dog()\nprint(d.speak())",
+            "options": ["Vau", "speak", "Dog", "hiba"],
+            "correct_answer": "Vau",
+            "explanation": "A speak metódus a \"Vau\" stringet adja vissza, amit kiíratunk."
+        }
+    },
+    {
+        "title": "Öröklődés",
+        "description": "Mit ír ki a kód?",
+        "hint": "Az alosztály örökli a szülő metódusait.",
+        "q_type": "predict_output",
+        "difficulty_rating": 800,
+        "language": "python",
+        "concept": {"oop": 1.0},
+        "content": {
+            "code_snippet": "class Animal:\n    def move(self): print(\"Mozog\", end=\"\")\n\nclass Bird(Animal):\n    def move(self): \n        super().move()\n        print(\"Repül\", end=\"\")\n\nb = Bird()\nb.move()",
+            "options": ["MozogRepül", "Repül", "Mozog", "hiba"],
+            "correct_answer": "MozogRepül",
+            "explanation": "A super().move() meghívja az ősosztály metódusát, majd utána lefut az alosztály saját kódja is."
+        }
+    },
+    {
+        "title": "Property dekorátor",
+        "description": "Mi lesz az eredmény?",
+        "hint": "A property-t nem függvényként, hanem attribútumként hívjuk.",
+        "q_type": "predict_output",
+        "difficulty_rating": 850,
+        "language": "python",
+        "concept": {"oop": 1.0},
+        "content": {
+            "code_snippet": "class Square:\n    def __init__(self, a): self.a = a\n    @property\n    def area(self): return self.a * self.a\n\ns = Square(4)\nprint(s.area)",
+            "options": ["16", "4", "area", "hiba"],
+            "correct_answer": "16",
+            "explanation": "A @property dekorátor lehetővé teszi, hogy a metódust zárójelek nélkül, mezőként érjük el."
+        }
+    }
+]

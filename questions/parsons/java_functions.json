@@ -1,1 +1,98 @@
-[]
+[
+    {
+        "title": "Egyszerű metódus",
+        "description": "Rendezze sorba a blokkokat egy üzenetet kiíró metódus definiálásához!",
+        "hint": "Fejléc -> Nyitó zárójel -> Törzs -> Záró zárójel.",
+        "q_type": "parsons",
+        "difficulty_rating": 600,
+        "language": "java",
+        "concept": {"functions": 1.0},
+        "content": {
+            "blocks": [
+                {"id": 1, "text": "public void sayHi() {"},
+                {"id": 2, "text": "    System.out.println(\"Hi\");"},
+                {"id": 3, "text": "}"}
+            ],
+            "correct_order": [1, 2, 3],
+            "explanation": "A metódus definíciója a fejléccel kezdődik, amit a kapcsos zárójelek közötti törzs követ."
+        }
+    },
+    {
+        "title": "Paraméteres metódus",
+        "description": "Rendezze sorba a blokkokat egy számot négyzetre emelő metódushoz!",
+        "hint": "A típusoknak egyezniük kell a visszatérésnél is.",
+        "q_type": "parsons",
+        "difficulty_rating": 650,
+        "language": "java",
+        "concept": {"functions": 1.0},
+        "content": {
+            "blocks": [
+                {"id": 1, "text": "public int square(int n) {"},
+                {"id": 2, "text": "    int result = n * n;"},
+                {"id": 3, "text": "    return result;"},
+                {"id": 4, "text": "}"}
+            ],
+            "correct_order": [1, 2, 3, 4],
+            "explanation": "A bemeneti paramétert felhasználva kiszámoljuk az eredményt, majd a return utasítással adjuk vissza."
+        }
+    },
+    {
+        "title": "Metódus hívása és eredménye",
+        "description": "Rendezze a sorokat úgy, hogy meghív egy metódust és kiírja a visszakapott értéket!",
+        "hint": "Előbb a metódus hívása, aztán a kiíratás.",
+        "q_type": "parsons",
+        "difficulty_rating": 700,
+        "language": "java",
+        "concept": {"functions": 1.0, "basics": 0.5},
+        "content": {
+            "blocks": [
+                {"id": 1, "text": "int val = calculate();"},
+                {"id": 2, "text": "System.out.println(val);"},
+                {"id": 3, "text": "public int calculate() { return 42; }"}
+            ],
+            "correct_order": [3, 1, 2],
+            "explanation": "Definiáljuk a metódust, eltároljuk a hívás eredményét egy változóban, majd kiírjuk azt."
+        }
+    },
+    {
+        "title": "Több paraméter használata",
+        "description": "Készítsen metódust, amely két szám közül a nagyobbat adja vissza!",
+        "hint": "Használjon if-else szerkezetet a metóduson belül.",
+        "q_type": "parsons",
+        "difficulty_rating": 800,
+        "language": "java",
+        "concept": {"functions": 1.0, "logic": 0.6},
+        "content": {
+            "blocks": [
+                {"id": 1, "text": "public int max(int a, int b) {"},
+                {"id": 2, "text": "    if (a > b) {"},
+                {"id": 3, "text": "        return a;"},
+                {"id": 4, "text": "    } else {"},
+                {"id": 5, "text": "        return b;"},
+                {"id": 6, "text": "    }"},
+                {"id": 7, "text": "}"}
+            ],
+            "correct_order": [1, 2, 3, 4, 5, 6, 7],
+            "explanation": "A metódus megvizsgálja a két paramétert, és a feltételtől függően más-más értéket ad vissza."
+        }
+    },
+    {
+        "title": "Rekurzió alapjai",
+        "description": "Rendezze a blokkokat egy egyszerű rekurzív faktoriális számításhoz!",
+        "hint": "Mindig kell egy megállási feltétel.",
+        "q_type": "parsons",
+        "difficulty_rating": 900,
+        "language": "java",
+        "concept": {"functions": 1.0, "logic": 0.7},
+        "content": {
+            "blocks": [
+                {"id": 1, "text": "public int fact(int n) {"},
+                {"id": 2, "text": "    if (n <= 1) return 1;"},
+                {"id": 3, "text": "    return n * fact(n - 1);"},
+                {"id": 4, "text": "}"}
+            ],
+            "correct_order": [1, 2, 3, 4],
+            "explanation": "A rekurzív hívás előtt ellenőrizzük a báziskritériumot (n <= 1), hogy elkerüljük a végtelen hívási láncot."
+        }
+    }
+]

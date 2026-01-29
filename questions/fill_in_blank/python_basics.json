@@ -1,1 +1,112 @@
-[]
+[
+    {
+        "title": "Változó értékadás",
+        "description": "Milyen operátorral adunk értéket egy változónak?",
+        "hint": "Egyenlőségjel.",
+        "q_type": "fill_in_blank",
+        "difficulty_rating": 600,
+        "language": "python",
+        "concept": {
+            "basics": 1.0
+        },
+        "content": {
+            "code_snippet": "x {{BLANK}} 10",
+            "correct_answer": "=",
+            "options": [
+                "=",
+                "==",
+                ":=",
+                "->"
+            ],
+            "explanation": "Pythonban az '=' operátorral rendelünk értéket a változókhoz."
+        }
+    },
+    {
+        "title": "Kiíratás",
+        "description": "Melyik függvénnyel írhatunk szöveget a konzolra?",
+        "hint": "Nyomtatás angolul.",
+        "q_type": "fill_in_blank",
+        "difficulty_rating": 600,
+        "language": "python",
+        "concept": {
+            "basics": 1.0
+        },
+        "content": {
+            "code_snippet": "{{BLANK}}(\"Hello World\")",
+            "correct_answer": "print",
+            "options": [
+                "print",
+                "echo",
+                "log",
+                "write"
+            ],
+            "explanation": "A print() a leggyakrabban használt beépített függvény a kimenet megjelenítésére."
+        }
+    },
+    {
+        "title": "Formázott string",
+        "description": "Milyen betűvel kell kezdeni a stringet a változók behelyettesítéséhez?",
+        "hint": "Formatted rövidítése.",
+        "q_type": "fill_in_blank",
+        "difficulty_rating": 700,
+        "language": "python",
+        "concept": {
+            "basics": 1.0
+        },
+        "content": {
+            "code_snippet": "name = \"Peti\"\nmsg = {{BLANK}}\"Szia {name}\"",
+            "correct_answer": "f",
+            "options": [
+                "f",
+                "s",
+                "r",
+                "b"
+            ],
+            "explanation": "Az f-stringek lehetővé teszik változók beágyazását {} jelek közé."
+        }
+    },
+    {
+        "title": "Beolvasás",
+        "description": "Melyik függvénnyel kérhetünk be adatot a felhasználótól?",
+        "hint": "Bemenet angolul.",
+        "q_type": "fill_in_blank",
+        "difficulty_rating": 650,
+        "language": "python",
+        "concept": {
+            "basics": 1.0
+        },
+        "content": {
+            "code_snippet": "valasz = {{BLANK}}(\"Hogy hívnak? \")",
+            "correct_answer": "input",
+            "options": [
+                "input",
+                "read",
+                "get",
+                "ask"
+            ],
+            "explanation": "Az input() függvény beolvassa a felhasználó által begépelt szöveget."
+        }
+    },
+    {
+        "title": "Típuskonverzió",
+        "description": "Melyik függvénnyel alakíthatunk egy stringet egész számmá?",
+        "hint": "Integer rövidítése.",
+        "q_type": "fill_in_blank",
+        "difficulty_rating": 750,
+        "language": "python",
+        "concept": {
+            "basics": 1.0
+        },
+        "content": {
+            "code_snippet": "szam = {{BLANK}}(\"123\")",
+            "correct_answer": "int",
+            "options": [
+                "int",
+                "str",
+                "float",
+                "number"
+            ],
+            "explanation": "Az int() függvény megpróbálja egész számmá konvertálni a kapott értéket."
+        }
+    }
+]

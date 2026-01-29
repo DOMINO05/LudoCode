@@ -1,1 +1,115 @@
-[]
+[
+    {
+        "title": "Értékadás a feltételben",
+        "description": "Javítsd ki a kódot, hogy ne értékadás, hanem összehasonlítás legyen!",
+        "hint": "Pythonban az egyenlőség vizsgálat a == operátor.",
+        "q_type": "debug",
+        "difficulty_rating": 600,
+        "language": "python",
+        "concept": {
+            "logic": 1.0
+        },
+        "content": {
+            "buggy_code": "if x = 10:\n    print(\"Tíz\")",
+            "error_location": "x = 10",
+            "correct_code": "x == 10",
+            "options": [
+                "x == 10",
+                "x is 10",
+                "x === 10"
+            ],
+            "explanation": "Az = operátor értéket ad a változónak, a == operátor pedig összehasonlítja két oldal értékét."
+        }
+    },
+    {
+        "title": "Logikai operátorok",
+        "description": "Javítsd ki a feltételt! Pythonban nem a && operátort használjuk.",
+        "hint": "Használd az angol kötőszót.",
+        "q_type": "debug",
+        "difficulty_rating": 650,
+        "language": "python",
+        "concept": {
+            "logic": 1.0
+        },
+        "content": {
+            "buggy_code": "if a > 0 && b > 0:\n    print(\"Mindkettő pozitív\")",
+            "error_location": "&&",
+            "correct_code": "and",
+            "options": [
+                "and",
+                "&",
+                "AND"
+            ],
+            "explanation": "A Python a szöveges 'and', 'or', 'not' operátorokat használja a logikai műveletekhez."
+        }
+    },
+    {
+        "title": "Listák összehasonlítása",
+        "description": "Javítsd ki a kódot, hogy a listák tartalmát hasonlítsa össze, ne az azonosságukat!",
+        "hint": "Az 'is' az objektum azonosságot ellenőrzi.",
+        "q_type": "debug",
+        "difficulty_rating": 900,
+        "language": "python",
+        "concept": {
+            "logic": 1.0,
+            "arrays": 0.5
+        },
+        "content": {
+            "buggy_code": "list1 = [1, 2]\nlist2 = [1, 2]\nif list1 is list2:\n    print(\"Egyformák\")",
+            "error_location": "list1 is list2",
+            "correct_code": "list1 == list2",
+            "options": [
+                "list1 == list2",
+                "list1 equals list2",
+                "list1.compare(list2)"
+            ],
+            "explanation": "Bár a két lista tartalma megegyezik, az 'is' False-t ad, mert két külön objektumról van szó. Tartalmi egyezéshez == kell."
+        }
+    },
+    {
+        "title": "Tagadás sorrendje",
+        "description": "Javítsd ki a szintaxis hibát a tagadásnál!",
+        "hint": "A 'not' az 'in' operátor előtt vagy után állhat, de van egy megszokott forma.",
+        "q_type": "debug",
+        "difficulty_rating": 700,
+        "language": "python",
+        "concept": {
+            "logic": 1.0,
+            "basics": 0.5
+        },
+        "content": {
+            "buggy_code": "if x not in list:\n    pass",
+            "error_location": "x not in list",
+            "correct_code": "x not in my_list",
+            "options": [
+                "x not in my_list",
+                "not x in my_list",
+                "x !in my_list"
+            ],
+            "explanation": "A 'not in' egy beépített operátor Pythonban. A 'list' pedig egy foglalt típusnév, jobb kerülni változónévként."
+        }
+    },
+    {
+        "title": "Láncolt összehasonlítás hiba",
+        "description": "Javítsd ki a kódot, hogy helyesen vizsgálja meg, n a 0 és 100 között van-e!",
+        "hint": "Pythonban lehet láncolni az összehasonlításokat.",
+        "q_type": "debug",
+        "difficulty_rating": 800,
+        "language": "python",
+        "concept": {
+            "logic": 1.0,
+            "basics": 0.4
+        },
+        "content": {
+            "buggy_code": "if 0 < n and < 100:",
+            "error_location": "and < 100",
+            "correct_code": "< 100",
+            "options": [
+                "0 < n < 100",
+                "0 < n and n < 100",
+                "0 < n & n < 100"
+            ],
+            "explanation": "Pythonban a '0 < n < 100' egy érvényes és olvasható láncolt összehasonlítás. Az 'and < 100' önmagában hibás."
+        }
+    }
+]

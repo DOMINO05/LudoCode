@@ -3,74 +3,39 @@ import React, { useMemo } from 'react';
 export default function Avatar({ config, size = 100 }) {
     const { avatarUrl, containerStyle } = useMemo(() => {
         const style = 'pixel-art'; 
+        
+        // IMPORTANT: In v9, seed affects EVERYTHING. 
+        // If we want consistent base features, we must use a consistent seed.
         const seed = config?.seed || 'user';
         
         const params = new URLSearchParams();
         params.append('seed', seed);
         
-        // DiceBear v9 Pixel Art specific mappings
-        // Disable random paid items by default if NOT equipped
-        if (!config?.hat) params.append('hatProbability', '0');
-        if (!config?.glasses) params.append('glassesProbability', '0');
-        if (!config?.accessories) params.append('accessoriesProbability', '0');
+        // 1. Probabilities (Force 0 if not equipped, else 100)
+        params.append('hatProbability', config?.hat ? '100' : '0');
+        params.append('glassesProbability', config?.glasses ? '100' : '0');
+        params.append('accessoriesProbability', config?.accessories ? '100' : '0');
 
-        // Identity
-        // skinColor -> skin
-        if (config?.skinColor) {
-            params.append('skinColor', config.skinColor.replace('#', ''));
-        }
-        
-        // hair -> top
-        if (config?.hair) {
-            params.append('hair', config.hair);
-        }
-        
-        // hairColor -> hairColor
-        if (config?.hairColor) {
-            params.append('hairColor', config.hairColor.replace('#', ''));
-        }
-        
+        // 2. Identity (Colors must not have #)
+        if (config?.skinColor) params.append('skinColor', config.skinColor.replace('#', ''));
+        if (config?.hairColor) params.append('hairColor', config.hairColor.replace('#', ''));
+        if (config?.clothingColor) params.append('clothingColor', config.clothingColor.replace('#', ''));
+        if (config?.hatColor) params.append('hatColor', config.hatColor.replace('#', ''));
+        if (config?.glassesColor) params.append('glassesColor', config.glassesColor.replace('#', ''));
+        if (config?.accessoriesColor) params.append('accessoriesColor', config.accessoriesColor.replace('#', ''));
+
+        // 3. Components (v9 Pixel Art valid values)
+        if (config?.hair) params.append('hair', config.hair);
         if (config?.eyes) params.append('eyes', config.eyes);
         if (config?.mouth) params.append('mouth', config.mouth);
-
-        // Clothing
-        if (config?.clothing) {
-            params.append('clothing', config.clothing);
-            if (config.clothingColor) params.append('clothingColor', config.clothingColor.replace('#', ''));
-        } else {
-            params.append('clothing', 'variant01');
-        }
-
-        // Hat (Paid)
-        if (config?.hat) {
-            params.append('hat', config.hat);
-            params.append('hatProbability', '100');
-            if (config.hatColor) params.append('hatColor', config.hatColor.replace('#', ''));
-        }
-
-        // Glasses (Paid)
-        if (config?.glasses) {
-            params.append('glasses', config.glasses);
-            params.append('glassesProbability', '100');
-            if (config.glassesColor) {
-                params.append('glassesColor', config.glassesColor.replace('#', ''));
-            } else {
-                params.append('glassesColor', '000000');
-            }
-        }
-
-        // Accessories / Earrings (Paid)
-        if (config?.accessories) {
-            params.append('accessories', config.accessories); 
-            params.append('accessoriesProbability', '100');
-            if (config.accessoriesColor) {
-                params.append('accessoriesColor', config.accessoriesColor.replace('#', ''));
-            }
-        }
+        if (config?.clothing) params.append('clothing', config.clothing);
+        if (config?.hat) params.append('hat', config.hat);
+        if (config?.glasses) params.append('glasses', config.glasses);
+        if (config?.accessories) params.append('accessories', config.accessories);
 
         const url = `https://api.dicebear.com/9.x/${style}/svg?${params.toString()}`;
 
-        // Background
+        // Background handling
         let bgStyle = {};
         if (config?.background === 'gradient') {
             bgStyle = { background: 'linear-gradient(135deg, #6366f1 0%, #a855f7 100%)' };
@@ -104,9 +69,7 @@ export default function Avatar({ config, size = 100 }) {
                 className="w-full h-full object-cover"
                 loading="lazy"
                 style={{ imageRendering: 'pixelated' }}
-                onError={(e) => {
-                    // console.error("Avatar failed to load:", avatarUrl);
-                }}
+                onError={(e) => {}}
             />
         </div>
     );

@@ -1,1 +1,91 @@
-[]
+[
+    {
+        "title": "Lista létrehozása",
+        "description": "Rendezze sorba a blokkokat egy egyszerű lista létrehozásához és kiíratásához!",
+        "hint": "Pythonban a [ ] jeleket használjuk.",
+        "q_type": "parsons",
+        "difficulty_rating": 600,
+        "language": "python",
+        "concept": {"arrays": 1.0},
+        "content": {
+            "blocks": [
+                {"id": 1, "text": "szamok = [10, 20, 30]"},
+                {"id": 2, "text": "print(szamok)"}
+            ],
+            "correct_order": [1, 2],
+            "explanation": "Előbb létrehozzuk a listát a változóban, majd megjelenítjük a tartalmát."
+        }
+    },
+    {
+        "title": "Elem hozzáadása",
+        "description": "Rendezze a blokkokat, hogy egy új elemet adjon a lista végéhez!",
+        "hint": "Használja az append() metódust.",
+        "q_type": "parsons",
+        "difficulty_rating": 650,
+        "language": "python",
+        "concept": {"arrays": 1.0},
+        "content": {
+            "blocks": [
+                {"id": 1, "text": "gyumolcsok = [\"alma\"]"},
+                {"id": 2, "text": "gyumolcsok.append(\"banán\")"},
+                {"id": 3, "text": "print(gyumolcsok)"}
+            ],
+            "correct_order": [1, 2, 3],
+            "explanation": "A lista már létező objektumához fűzzük hozzá az új elemet."
+        }
+    },
+    {
+        "title": "Lista bejárása",
+        "description": "Rendezze sorba a blokkokat a lista elemeinek egyesével történő kiírásához!",
+        "hint": "Használjon for ciklust.",
+        "q_type": "parsons",
+        "difficulty_rating": 700,
+        "language": "python",
+        "concept": {"arrays": 1.0, "loops": 0.5},
+        "content": {
+            "blocks": [
+                {"id": 1, "text": "nevek = [\"Anna\", \"Béla\"]"},
+                {"id": 2, "text": "for nev in nevek:"},
+                {"id": 3, "text": "    print(nev)"}
+            ],
+            "correct_order": [1, 2, 3],
+            "explanation": "A for ciklus végighalad a lista összes elemén, és a ciklusváltozó (nev) minden körben felveszi a következő értéket."
+        }
+    },
+    {
+        "title": "Lista szeletelés (Slice)",
+        "description": "Rendezze a blokkokat, hogy kinyerje a lista első két elemét!",
+        "hint": "Használja a [:2] szintaxist.",
+        "q_type": "parsons",
+        "difficulty_rating": 800,
+        "language": "python",
+        "concept": {"arrays": 1.0, "basics": 0.5},
+        "content": {
+            "blocks": [
+                {"id": 1, "text": "adatok = [1, 2, 3, 4, 5]"},
+                {"id": 2, "text": "reszlet = adatok[:2]"},
+                {"id": 3, "text": "print(reszlet)"}
+            ],
+            "correct_order": [1, 2, 3],
+            "explanation": "A kettőspont operátorral egy tartományt emelhetünk ki a listából."
+        }
+    },
+    {
+        "title": "Lista rendezése",
+        "description": "Rendezze sorba a blokkokat a lista növekvő sorrendbe állításához!",
+        "hint": "Használja a sort() metódust.",
+        "q_type": "parsons",
+        "difficulty_rating": 850,
+        "language": "python",
+        "concept": {"arrays": 1.0, "logic": 0.4},
+        "content": {
+            "blocks": [
+                {"id": 1, "text": "szamok = [5, 2, 8, 1]"},
+                {"id": 2, "text": "szamok.sort()"},
+                {"id": 3, "text": "print(szamok)"}
+            ],
+            "correct_order": [1, 2, 3],
+            "explanation": "A sort() metódus helyben módosítja a lista sorrendjét."
+        }
+    }
+]

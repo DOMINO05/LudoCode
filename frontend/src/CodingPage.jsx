@@ -5,9 +5,7 @@ import { useLanguage } from './LanguageContext';
 import RichText from './components/RichText';
 import { supabase } from './supabaseClient';
 import { PISTON_API_URL } from './config';
-// import { validateTestCases } from './utils/codeRunner'; // REPLACED WITH CLIENT-SIDE LOGIC
 
-// Import New Question Components
 import TheoryComponent from './question-types/TheoryComponent';
 import PredictionComponent from './question-types/PredictionComponent';
 import FillBlankComponent from './question-types/FillBlankComponent';
@@ -15,10 +13,8 @@ import ParsonsComponent from './question-types/ParsonsComponent';
 import DebugComponent from './question-types/DebugComponent';
 import ConstructionComponent from './question-types/ConstructionComponent';
 
-// Fallback for types not yet fully implemented or standard 'coding'
 import Editor from '@monaco-editor/react';
 
-// API_URL removed for serverless
 export default function CodingPage() {
   const { session, profile, refreshProfile, showBadgeNotification, showNotification } = useOutletContext();
   const { isDark } = useTheme();
@@ -29,23 +25,19 @@ export default function CodingPage() {
   const mode = searchParams.get('mode');
   const type = searchParams.get('type');
 
-  // State
   const [question, setQuestion] = useState(null);
   const [loading, setLoading] = useState(true);
   const [isChecking, setIsChecking] = useState(false);
   const [noQuestions, setNoQuestions] = useState(false);
   const [isCourseFinished, setIsCourseFinished] = useState(false);
 
-  // Answers State
-  const [code, setCode] = useState(''); // For Coding, FillBlank, Debug, Construction
-  const [parsonsSolution, setParsonsSolution] = useState([]); // For Parsons
-  const [selectedOption, setSelectedOption] = useState(null); // For Theory, Prediction
+  const [code, setCode] = useState(''); 
+  const [parsonsSolution, setParsonsSolution] = useState([]); 
+  const [selectedOption, setSelectedOption] = useState(null); 
 
-  // Debug Specific State
-  const [debugPhase, setDebugPhase] = useState('identify'); // 'identify' | 'fix'
-  const [debugSelections, setDebugSelections] = useState([]); // Array of { lineIndex, tokenIndex, text }
+  const [debugPhase, setDebugPhase] = useState('identify'); 
+  const [debugSelections, setDebugSelections] = useState([]); 
 
-  // Result & Feedback
   const [result, setResult] = useState(null);
   const [showFeedback, setShowFeedback] = useState(false);
   const [isAiLoading, setIsAiLoading] = useState(false);
@@ -68,7 +60,6 @@ export default function CodingPage() {
     setNoQuestions(false);
     setIsCourseFinished(false);
     
-    // Reset answer states
     setCode('');
     setParsonsSolution([]);
     setSelectedOption(null);
@@ -80,16 +71,14 @@ export default function CodingPage() {
       let error = null;
 
       if (mode === 'dev') {
-          // Use simple random selection for dev mode
           const query = supabase.from('questions').select('*').eq('language_id', currentLanguage.id);
           if (type) query.eq('q_type', type);
-          const { data: qData, error: qError } = await query.order('id', { ascending: false }).limit(50); // Fetch some and pick random
+          const { data: qData, error: qError } = await query.order('id', { ascending: false }).limit(50);
           if (qData && qData.length > 0) {
               data = qData[Math.floor(Math.random() * qData.length)];
           }
           error = qError;
       } else {
-          // Use RPC for adaptive selection
           const { data: rpcData, error: rpcError } = await supabase.rpc('get_next_adaptive_question', {
               p_language_id: currentLanguage.id,
               p_type: type || null
@@ -110,7 +99,6 @@ export default function CodingPage() {
           return;
       }
 
-      // Map snake_case to camelCase for component expectations
       const mappedQuestion = {
           ...data,
           qType: data.q_type,
@@ -123,10 +111,7 @@ export default function CodingPage() {
 
       setQuestion(mappedQuestion);
       
-      // Initial Setup
-      if (mappedQuestion.qType === 'debug') {
-          // Debug initial setup if needed
-      } else if (mappedQuestion.content.initial_code) {
+      if (mappedQuestion.content.initial_code) {
           setCode(mappedQuestion.content.initial_code);
       }
       
@@ -141,14 +126,12 @@ export default function CodingPage() {
   const handleCheck = async () => {
       if (!question) return;
 
-      // Handle Debug Phase A locally first
       if (question.qType === 'debug' && debugPhase === 'identify') {
           if (debugSelections.length === 0) {
               showNotification('Kérlek válassz ki legalább egy elemet!', 'info');
               return;
           }
           
-          // Construct selected text from tokens, sorting them first to be safe
           const sortedSelections = [...debugSelections].sort((a, b) => {
               if (a.lineIndex !== b.lineIndex) return a.lineIndex - b.lineIndex;
               return a.tokenIndex - b.tokenIndex;
@@ -157,23 +140,16 @@ export default function CodingPage() {
           const selectedText = sortedSelections.map(s => s.text).join('');
           const errorLocation = question.content.error_location ? question.content.error_location.trim() : "";
           
-          // Compare ignoring whitespace to be more forgiving
           const normalizedSelected = selectedText.replace(/\s+/g, '');
           const normalizedError = errorLocation.replace(/\s+/g, '');
 
           if (normalizedSelected === normalizedError || normalizedError.includes(normalizedSelected)) {
-               // Correct Phase A
                setDebugPhase('fix');
-               
-               // If the user has already selected a fix (code is modified), proceed to submission immediately
-               // to avoid requiring a second click.
                if (code && question.content.buggy_code && code.trim() !== question.content.buggy_code.trim()) {
-                   // Fall through to submission logic below
                } else {
-                   return; // Wait for user to select a fix
+                   return;
                }
           } else {
-              // Incorrect Phase A
                setResult({ 
                    isCorrect: false, 
                    correct_answer: `A hiba itt található:\n${errorLocation}`, 
@@ -184,14 +160,12 @@ export default function CodingPage() {
           }
       }
 
-      // Prepare Submission
       let submissionData = null;
       if (question.qType === 'theory' || question.qType === 'predict_output') {
           submissionData = selectedOption;
       } else if (question.qType === 'parsons') {
           submissionData = JSON.stringify(parsonsSolution.map(b => b.id));
       } else {
-          // Coding, FillBlank, Construction, Debug (Fix Phase)
           submissionData = code;
       }
 
@@ -205,23 +179,16 @@ export default function CodingPage() {
         let isCorrect = false;
         let output = '';
         const content = question.content;
-        setShowStaticHint(false); // Reset hint visibility
+        setShowStaticHint(false);
 
         if (question.qType === 'coding' || question.qType === 'construction') {
-            // Serverless execution using Piston API
             const language = currentLanguage.name.toLowerCase();
             const version = language === 'python' ? '3.10.0' : (language === 'java' ? '15.0.2' : '*');
             
-            // Construct payload for Piston
             const payload = {
                 language: language,
                 version: version,
-                files: [
-                    {
-                        name: `main.${language === 'python' ? 'py' : 'java'}`,
-                        content: submissionData
-                    }
-                ],
+                files: [{ name: `main.${language === 'python' ? 'py' : 'java'}`, content: submissionData }],
                 stdin: "",
                 args: [],
                 compile_timeout: 10000,
@@ -256,7 +223,6 @@ export default function CodingPage() {
             isCorrect = submissionData.trim() === expectedFullCode.trim();
             output = isCorrect ? 'Sikeres javítás' : 'Még mindig hibás a kód';
         } else {
-            // Theory, Prediction, Fill In Blank
             let correctAnswer = content.correct_answer;
             if (typeof correctAnswer === 'number' && content.options) {
                 correctAnswer = content.options[correctAnswer];
@@ -288,14 +254,15 @@ export default function CodingPage() {
         setResult(resultData);
         setShowFeedback(true);
 
-        // AI Explanation Stream with Timeout Fallback for static hint
         if (!isCorrect) {
             setIsAiLoading(true);
             
-            // Set a timer to show static hint if AI is slow or fails
-            const hintTimer = setTimeout(() => {
+            const controller = new AbortController();
+            const timeoutId = setTimeout(() => {
+                controller.abort();
                 setShowStaticHint(true);
-            }, 3000);
+                setIsAiLoading(false);
+            }, 5000); 
 
             try {
                 const response = await fetch(`${import.meta.env.VITE_SUPABASE_URL}/functions/v1/ai-explanation`, {
@@ -310,42 +277,30 @@ export default function CodingPage() {
                         correctAnswer: content.correct_answer || content.correct_code || content.correct_order,
                         userAnswer: submissionData,
                         language: currentLanguage.name
-                    })
+                    }),
+                    signal: controller.signal
                 });
 
-                if (response.ok && response.body) {
-                    const reader = response.body.getReader();
-                    const decoder = new TextDecoder();
-                    let fullText = '';
+                clearTimeout(timeoutId);
 
-                    while (true) {
-                        const { done, value } = await reader.read();
-                        if (done) break;
-                        
-                        const chunk = decoder.decode(value, { stream: true });
-                        // Parse SSE format: data: {"text": "..."}
-                        const lines = chunk.split('\n');
-                        for (const line of lines) {
-                            if (line.startsWith('data: ')) {
-                                try {
-                                    const data = JSON.parse(line.substring(6));
-                                    if (data.text) {
-                                        clearTimeout(hintTimer);
-                                        setShowStaticHint(false);
-                                        fullText += data.text;
-                                        setResult(prev => ({ ...prev, ai_explanation: fullText }));
-                                    }
-                                } catch (e) {
-                                    // Incomplete JSON or other SSE line
-                                }
-                            }
-                        }
+                if (response.ok) {
+                    const aiData = await response.json();
+                    if (aiData.text) {
+                        setShowStaticHint(false);
+                        setResult(prev => ({ ...prev, ai_explanation: aiData.text }));
+                    } else {
+                        console.log("AI text was empty in response");
+                        setShowStaticHint(true);
                     }
                 } else {
+                    const errText = await response.text();
+                    console.error("AI Function non-ok response:", errText);
                     setShowStaticHint(true); 
                 }
             } catch (err) {
-                console.error('AI explanation streaming failed', err);
+                if (err.name !== 'AbortError') {
+                    console.error('AI explanation failed', err);
+                }
                 setShowStaticHint(true);
             } finally {
                 setIsAiLoading(false);
@@ -354,9 +309,7 @@ export default function CodingPage() {
 
         if (data.newBadges && data.newBadges.length > 0 && showBadgeNotification) {
             data.newBadges.forEach((badge, index) => {
-                setTimeout(() => {
-                    showBadgeNotification(badge);
-                }, index * 5500); 
+                setTimeout(() => { showBadgeNotification(badge); }, index * 5500); 
             });
         }
 
@@ -413,51 +366,23 @@ export default function CodingPage() {
       return false;
   };
 
-  // Render Logic
   const renderContent = () => {
-      if (!question) return null;
-      if (!question.content) {
-          return <div>Error: Question content missing</div>;
-      }
+      if (!question || !question.content) return null;
 
       switch (question.qType) {
           case 'theory':
-              return <TheoryComponent 
-                  question={question} 
-                  selectedAnswer={selectedOption} 
-                  onSelect={setSelectedOption} 
-              />;
+              return <TheoryComponent question={question} selectedAnswer={selectedOption} onSelect={setSelectedOption} />;
           case 'predict_output':
-              return <PredictionComponent 
-                  question={question} 
-                  selectedAnswer={selectedOption} 
-                  onSelect={setSelectedOption} 
-              />;
+              return <PredictionComponent question={question} selectedAnswer={selectedOption} onSelect={setSelectedOption} />;
           case 'fill_in_blank':
-              return <FillBlankComponent 
-                  question={question} 
-                  onCodeChange={setCode} 
-              />;
+              return <FillBlankComponent question={question} onCodeChange={setCode} />;
           case 'parsons':
-              return <ParsonsComponent 
-                  question={question} 
-                  onSolutionChange={setParsonsSolution} 
-              />;
+              return <ParsonsComponent question={question} onSolutionChange={setParsonsSolution} />;
           case 'debug':
-              return <DebugComponent 
-                  question={question} 
-                  onCodeChange={setCode} 
-                  debugPhase={debugPhase}
-                  selections={debugSelections}
-                  onSelect={setDebugSelections}
-                  checkResult={result}
-              />;
+              return <DebugComponent question={question} onCodeChange={setCode} debugPhase={debugPhase} selections={debugSelections} onSelect={setDebugSelections} checkResult={result} />;
           case 'coding':
           case 'construction': 
-              return <ConstructionComponent 
-                  question={question} 
-                  onCodeChange={setCode} 
-              />;
+              return <ConstructionComponent question={question} onCodeChange={setCode} />;
           default:
                return (
                   <div style={{ padding: '20px', display: 'flex', flexDirection: 'column', height: '100%' }}>
@@ -466,13 +391,7 @@ export default function CodingPage() {
                           <RichText content={question.description} />
                       </div>
                       <div style={{ flex: 1, border: '1px solid var(--card-border)', marginTop: '20px' }}>
-                        <Editor
-                            height="100%"
-                            defaultLanguage={question.language || 'python'}
-                            value={code}
-                            onChange={(val) => setCode(val)}
-                            theme={isDark ? "vs-dark" : "light"}
-                        />
+                        <Editor height="100%" defaultLanguage={question.language || 'python'} value={code} onChange={(val) => setCode(val)} theme={isDark ? "vs-dark" : "light"} />
                       </div>
                   </div>
               );
@@ -491,12 +410,8 @@ export default function CodingPage() {
           <div className="flex flex-col items-center justify-center h-screen text-center text-slate-700">
               <div className="text-6xl mb-5">🎓</div>
               <h1 className="text-green-500 text-3xl font-bold">Témakör Teljesítve!</h1>
-              <p className="text-lg max-w-xl mb-10 mt-4">
-                  Sikeresen megoldottad az összes feladatot ebben a témakörben.
-              </p>
-              <button onClick={() => navigate('/courses')} className="bg-blue-500 text-white font-bold py-3 px-8 rounded-full shadow-md hover:bg-blue-600 transition">
-                  Vissza a Tanuló Ösvényre
-              </button>
+              <p className="text-lg max-w-xl mb-10 mt-4">Sikeresen megoldottad az összes feladatot ebben a témakörben.</p>
+              <button onClick={() => navigate('/courses')} className="bg-blue-500 text-white font-bold py-3 px-8 rounded-full shadow-md hover:bg-blue-600 transition">Vissza a Tanuló Ösvényre</button>
           </div>
       );
   }
@@ -506,21 +421,14 @@ export default function CodingPage() {
           <div className="flex flex-col items-center justify-center h-screen text-center text-slate-700">
               <div className="text-6xl mb-5">🎉</div>
               <h1 className="text-green-500 text-3xl font-bold">Gratulálunk!</h1>
-              <p className="text-lg max-w-xl mb-10 mt-4">
-                  {mode === 'dev' 
-                      ? "Nincs ilyen típusú feladat az adatbázisban." 
-                      : "Jelenleg nincs több feladat a szintednek megfelelően."}
-              </p>
-              <button onClick={() => navigate(type ? '/courses' : '/dashboard')} className="bg-blue-500 text-white font-bold py-3 px-8 rounded-full shadow-md hover:bg-blue-600 transition">
-                  {type ? "Vissza a választóhoz" : "Vissza a Dashboardra"}
-              </button>
+              <p className="text-lg max-w-xl mb-10 mt-4">{mode === 'dev' ? "Nincs ilyen típusú feladat az adatbázisban." : "Jelenleg nincs több feladat a szintednek megfelelően."}</p>
+              <button onClick={() => navigate(type ? '/courses' : '/dashboard')} className="bg-blue-500 text-white font-bold py-3 px-8 rounded-full shadow-md hover:bg-blue-600 transition">{type ? "Vissza a választóhoz" : "Vissza a Dashboardra"}</button>
           </div>
       );
   }
 
   return (
     <div className="h-full flex flex-col text-slate-700 dark:text-slate-100 overflow-hidden font-nunito bg-[#f7f7f7] dark:bg-slate-900 transition-colors duration-300">
-        {/* Progress Bar Area */}
         <div className="px-4 pt-4 pb-2 shrink-0 max-w-md mx-auto w-full">
             <div className="flex items-center gap-4">
                 <span className="text-2xl cursor-pointer text-slate-400 hover:text-slate-600 dark:hover:text-slate-300 transition-colors" onClick={() => navigate(type ? '/courses' : '/dashboard')}>✕</span>
@@ -531,22 +439,17 @@ export default function CodingPage() {
             </div>
             {comboMultiplier > 1 && (
                 <div className="flex justify-center mt-2 animate-in slide-in-from-top-1 fade-in duration-300">
-                    <span className="bg-gradient-to-r from-orange-400 to-red-500 text-white font-bold py-1 px-4 rounded-full text-sm shadow-lg border border-orange-200 flex items-center gap-2">
-                        🔥 Combo: {comboMultiplier.toFixed(1)}x
-                    </span>
+                    <span className="bg-gradient-to-r from-orange-400 to-red-500 text-white font-bold py-1 px-4 rounded-full text-sm shadow-lg border border-orange-200 flex items-center gap-2">🔥 Combo: {comboMultiplier.toFixed(1)}x</span>
                 </div>
             )}
         </div>
 
-        {/* Main Content */}
         <main className="flex-grow overflow-y-auto w-full relative">
             <div className="flex flex-col items-center justify-between p-4 max-w-md mx-auto w-full min-h-full">
                 <div className="w-full h-full flex flex-col">
                     {renderContent()}
                 </div>
             </div>
-
-            {/* Checking Overlay */}
             {isChecking && (
                 <div className="absolute inset-0 bg-white/50 dark:bg-slate-900/50 backdrop-blur-sm z-20 flex flex-col items-center justify-center">
                     <img src="/Poly/thinking.svg" alt="Gondolkodó Poly" className="w-40 h-40 animate-bounce" />
@@ -555,10 +458,8 @@ export default function CodingPage() {
             )}
         </main>
 
-        {/* Footer */}
         <footer className="shrink-0 p-4 border-t bg-white dark:bg-slate-800 dark:border-slate-700 z-10 transition-colors duration-300">
             <div className="max-w-md mx-auto w-full flex flex-col gap-4">
-                {/* Inline Feedback Area */}
                 {showFeedback && result && (
                     <div className={`rounded-xl p-4 flex flex-col gap-3 animate-in fade-in slide-in-from-bottom-2 ${result.isCorrect ? 'bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-100' : 'bg-red-100 text-red-800 dark:bg-red-900 dark:text-red-100'}`}>
                         <div className="flex items-start gap-3">
@@ -572,8 +473,6 @@ export default function CodingPage() {
                                 )}
                             </div>
                         </div>
-
-                        {/* AI Section - Distinct from Hint */}
                         {!result.isCorrect && (isAiLoading || result.ai_explanation) && (
                             <div className="mt-2 pt-3 border-t border-red-200 dark:border-red-800/50">
                                 <div className="text-xs font-black uppercase tracking-wider text-red-600/50 dark:text-red-400/50 mb-2 flex items-center gap-1">
@@ -588,15 +487,10 @@ export default function CodingPage() {
                         )}
                     </div>
                 )}
-                
                 <button 
                     onClick={showFeedback ? handleNext : handleCheck}
                     disabled={!showFeedback && isCheckDisabled()}
-                    className={`w-full font-bold py-3 px-8 rounded-xl uppercase tracking-wider btn-shadow transition-colors ${
-                        showFeedback 
-                            ? (result?.isCorrect ? 'bg-green-600 text-white' : 'bg-red-500 text-white hover:bg-red-600')
-                            : (isCheckDisabled() ? 'bg-slate-200 text-slate-400 cursor-not-allowed dark:bg-slate-700 dark:text-slate-500' : 'bg-green-500 text-white hover:bg-green-600')
-                    }`}
+                    className={`w-full font-bold py-3 px-8 rounded-xl uppercase tracking-wider btn-shadow transition-colors ${showFeedback ? (result?.isCorrect ? 'bg-green-600 text-white' : 'bg-red-500 text-white hover:bg-red-600') : (isCheckDisabled() ? 'bg-slate-200 text-slate-400 cursor-not-allowed dark:bg-slate-700 dark:text-slate-500' : 'bg-green-500 text-white hover:bg-green-600')}`}
                 >
                     {showFeedback ? (result?.isCorrect ? 'TOVÁBB' : 'ÉRTEM') : 'ELLENŐRZÉS'}
                 </button>

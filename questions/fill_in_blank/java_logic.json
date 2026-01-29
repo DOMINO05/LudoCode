@@ -1,1 +1,112 @@
-[]
+[
+    {
+        "title": "Feltétel kulcsszó",
+        "description": "Melyik kulcsszóval kezdődik a feltételkezelés?",
+        "hint": "Ha angolul.",
+        "q_type": "fill_in_blank",
+        "difficulty_rating": 600,
+        "language": "java",
+        "concept": {
+            "logic": 1.0
+        },
+        "content": {
+            "code_snippet": "{{BLANK}} (x > 0) { ... }",
+            "correct_answer": "if",
+            "options": [
+                "if",
+                "when",
+                "case",
+                "check"
+            ],
+            "explanation": "Az 'if' kulcsszó utáni kerek zárójelbe írjuk a vizsgálandó logikai feltételt."
+        }
+    },
+    {
+        "title": "Logikai ÉS",
+        "description": "Melyik operátor jelenti a logikai ÉS műveletet?",
+        "hint": "Kétszer kell leírni ugyanazt a jelet.",
+        "q_type": "fill_in_blank",
+        "difficulty_rating": 600,
+        "language": "java",
+        "concept": {
+            "logic": 1.0
+        },
+        "content": {
+            "code_snippet": "if (a > 0 {{BLANK}} b > 0)",
+            "correct_answer": "&&",
+            "options": [
+                "&&",
+                "&",
+                "and",
+                "||"
+            ],
+            "explanation": "A '&&' operátor csak akkor ad igazat, ha mindkét oldala igaz (short-circuit AND)."
+        }
+    },
+    {
+        "title": "Logikai VAGY",
+        "description": "Melyik operátor jelenti a logikai VAGY műveletet?",
+        "hint": "Függőleges vonalak.",
+        "q_type": "fill_in_blank",
+        "difficulty_rating": 650,
+        "language": "java",
+        "concept": {
+            "logic": 1.0
+        },
+        "content": {
+            "code_snippet": "if (a == 0 {{BLANK}} b == 0)",
+            "correct_answer": "||",
+            "options": [
+                "||",
+                "|",
+                "or",
+                "&&"
+            ],
+            "explanation": "A '||' operátor igazat ad, ha legalább az egyik oldala igaz (short-circuit OR)."
+        }
+    },
+    {
+        "title": "Logikai Tagadás",
+        "description": "Melyik jel jelöli a logikai NEM (tagadás) műveletet?",
+        "hint": "Felkiáltójel.",
+        "q_type": "fill_in_blank",
+        "difficulty_rating": 700,
+        "language": "java",
+        "concept": {
+            "logic": 1.0
+        },
+        "content": {
+            "code_snippet": "if ({{BLANK}}isFull)",
+            "correct_answer": "!",
+            "options": [
+                "!",
+                "~",
+                "not",
+                "-"
+            ],
+            "explanation": "A '!' operátor megfordítja a logikai értékét: az igazból hamis lesz, a hamisból igaz."
+        }
+    },
+    {
+        "title": "Többágú elágazás",
+        "description": "Milyen kulcsszóval adhatunk meg újabb feltételt, ha az első nem teljesült?",
+        "hint": "Egyébként ha.",
+        "q_type": "fill_in_blank",
+        "difficulty_rating": 750,
+        "language": "java",
+        "concept": {
+            "logic": 1.0
+        },
+        "content": {
+            "code_snippet": "if (x > 0) { ... } {{BLANK}} if (x < 0) { ... }",
+            "correct_answer": "else",
+            "options": [
+                "else",
+                "elif",
+                "then",
+                "otherwise"
+            ],
+            "explanation": "Az 'else if' szerkezettel tetszőleges számú egymást kizáró feltételt vizsgálhatunk meg."
+        }
+    }
+]

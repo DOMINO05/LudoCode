@@ -1,1 +1,112 @@
-[]
+[
+    {
+        "title": "Hiányzó pontosvessző",
+        "description": "Javítsd ki a kódot, hogy leforduljon!",
+        "hint": "Minden utasítás végét le kell zárni.",
+        "q_type": "debug",
+        "difficulty_rating": 600,
+        "language": "java",
+        "concept": {
+            "basics": 1.0
+        },
+        "content": {
+            "buggy_code": "int x = 5",
+            "error_location": "int x = 5",
+            "correct_code": "int x = 5;",
+            "options": [
+                "int x = 5;",
+                "int x = 5:",
+                "int x = 5."
+            ],
+            "explanation": "Java-ban minden egyszerű utasítást pontosvesszővel (;) kell lezárni."
+        }
+    },
+    {
+        "title": "Típus hiba",
+        "description": "Javítsd ki a változó típusát, hogy tizedes számot is tárolhasson!",
+        "hint": "Az int csak egész számokat tárol.",
+        "q_type": "debug",
+        "difficulty_rating": 700,
+        "language": "java",
+        "concept": {
+            "basics": 1.0
+        },
+        "content": {
+            "buggy_code": "int price = 19.99;",
+            "error_location": "int",
+            "correct_code": "double",
+            "options": [
+                "double",
+                "float",
+                "String"
+            ],
+            "explanation": "Lebegőpontos számok (tizedes törtek) tárolására a double vagy float típus alkalmas."
+        }
+    },
+    {
+        "title": "Kis- és nagybetű érzékenység",
+        "description": "Miért nem ismeri fel a Java a System osztályt?",
+        "hint": "A Java különbséget tesz kis- és nagybetűk között.",
+        "q_type": "debug",
+        "difficulty_rating": 650,
+        "language": "java",
+        "concept": {
+            "basics": 1.0
+        },
+        "content": {
+            "buggy_code": "system.out.println(\"Hello\");",
+            "error_location": "system",
+            "correct_code": "System",
+            "options": [
+                "System",
+                "SYSTEM",
+                "out"
+            ],
+            "explanation": "A Java beépített osztályai (mint a System) nagybetűvel kezdődnek, és a nyelv Case-Sensitive."
+        }
+    },
+    {
+        "title": "Inicializálás hiánya",
+        "description": "Mi a hiba a kód futtatásakor?",
+        "hint": "A lokális változóknak értéket kell adni használat előtt.",
+        "q_type": "debug",
+        "difficulty_rating": 800,
+        "language": "java",
+        "concept": {
+            "basics": 1.0
+        },
+        "content": {
+            "buggy_code": "int count;\ncount = count + 1;",
+            "error_location": "count = count + 1;",
+            "correct_code": "int count = 0;\ncount = count + 1;",
+            "options": [
+                "int count = 0;",
+                "count = 1;",
+                "static int count;"
+            ],
+            "explanation": "A lokális változók nem kapnak automatikusan alapértelmezett értéket, így használat előtt kötelező inicializálni őket."
+        }
+    },
+    {
+        "title": "Konstans módosítás",
+        "description": "Javítsd ki a kódot, hogy ne dobjon fordítási hibát!",
+        "hint": "A final változók értéke nem változtatható.",
+        "q_type": "debug",
+        "difficulty_rating": 900,
+        "language": "java",
+        "concept": {
+            "basics": 1.0
+        },
+        "content": {
+            "buggy_code": "final int MAX = 100;\nMAX = 200;",
+            "error_location": "MAX = 200;",
+            "correct_code": "int MAX = 100;\nMAX = 200;",
+            "options": [
+                "int MAX = 100;",
+                "final int MAX = 200;",
+                "MAX == 200;"
+            ],
+            "explanation": "Ha egy változó értékét később módosítani akarjuk, nem deklarálhatjuk final-ként."
+        }
+    }
+]

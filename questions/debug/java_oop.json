@@ -1,1 +1,113 @@
-[]
+[
+    {
+        "title": "Privát mező elérése",
+        "description": "Javítsd ki a hibát, hogy az osztályon kívülről ne próbáljuk közvetlenül elérni a privát mezőt!",
+        "hint": "Használj getter metódust.",
+        "q_type": "debug",
+        "difficulty_rating": 600,
+        "language": "java",
+        "concept": {
+            "oop": 1.0
+        },
+        "content": {
+            "buggy_code": "Person p = new Person();\nSystem.out.println(p.secretName);",
+            "error_location": "p.secretName",
+            "correct_code": "p.getName()",
+            "options": [
+                "p.getName()",
+                "p.publicName",
+                "Person.secretName"
+            ],
+            "explanation": "A privát (private) mezők csak az adott osztályon belül érhetők el. Kívülről getter metódust kell használni."
+        }
+    },
+    {
+        "title": "Hibás konstruktor név",
+        "description": "Javítsd ki a konstruktort, hogy leforduljon!",
+        "hint": "A konstruktor neve meg kell egyezzen az osztály nevével.",
+        "q_type": "debug",
+        "difficulty_rating": 700,
+        "language": "java",
+        "concept": {
+            "oop": 1.0
+        },
+        "content": {
+            "buggy_code": "class Dog {\n  public Pet(String name) { ... }\n}",
+            "error_location": "Pet",
+            "correct_code": "Dog",
+            "options": [
+                "Dog",
+                "void Dog",
+                "new Dog"
+            ],
+            "explanation": "A konstruktor speciális metódus, amelynek a neve pontosan megegyezik az osztály nevével."
+        }
+    },
+    {
+        "title": "Super hívás hiánya",
+        "description": "Javítsd ki a konstruktort, hogy meghívja az ősosztály paraméteres konstruktorát!",
+        "hint": "Használd a super() kulcsszót.",
+        "q_type": "debug",
+        "difficulty_rating": 800,
+        "language": "java",
+        "concept": {
+            "oop": 1.0
+        },
+        "content": {
+            "buggy_code": "class Student extends Person {\n  public Student(String name) {\n    this.name = name;\n  }\n}",
+            "error_location": "this.name = name;",
+            "correct_code": "super(name);",
+            "options": [
+                "super(name);",
+                "Person(name);",
+                "super.name = name;"
+            ],
+            "explanation": "Az öröklődésnél a gyerekosztály konstruktorának meg kell hívnia az ősosztály megfelelő konstruktorát a super() segítségével."
+        }
+    },
+    {
+        "title": "Absztrakt osztály hiba",
+        "description": "Miért nem lehet példányosítani a Shape osztályt?",
+        "hint": "Absztrakt osztályból nem hozható létre közvetlen objektum.",
+        "q_type": "debug",
+        "difficulty_rating": 900,
+        "language": "java",
+        "concept": {
+            "oop": 1.0
+        },
+        "content": {
+            "buggy_code": "abstract class Shape { }\nShape s = new Shape();",
+            "error_location": "new Shape()",
+            "correct_code": "new Circle()",
+            "options": [
+                "new Circle()",
+                "new abstract Shape()",
+                "Shape s = null;"
+            ],
+            "explanation": "Az absztrakt osztályok sablonként szolgálnak, nem példányosíthatók. Csak a belőlük származó konkrét osztályokat lehet létrehozni."
+        }
+    },
+    {
+        "title": "Statikus mező elérése",
+        "description": "Javítsd ki a kódot, hogy helyesen hivatkozzon az osztály szintű változóra!",
+        "hint": "A statikus mezőket nem példányon keresztül szoktuk elérni.",
+        "q_type": "debug",
+        "difficulty_rating": 850,
+        "language": "java",
+        "concept": {
+            "oop": 1.0,
+            "basics": 0.5
+        },
+        "content": {
+            "buggy_code": "Counter c = new Counter();\nSystem.out.println(c.globalCount);",
+            "error_location": "c.globalCount",
+            "correct_code": "Counter.globalCount",
+            "options": [
+                "Counter.globalCount",
+                "globalCount",
+                "c->globalCount"
+            ],
+            "explanation": "Bár a példányon keresztüli elérés is működhet, a statikus (static) mezőkre az osztály nevével hivatkozunk helyesen."
+        }
+    }
+]

@@ -1,1 +1,112 @@
-[]
+[
+    {
+        "title": "Osztály deklaráció",
+        "description": "Melyik kulcsszóval definiálunk új osztályt Pythonban?",
+        "hint": "Osztály angolul.",
+        "q_type": "fill_in_blank",
+        "difficulty_rating": 600,
+        "language": "python",
+        "concept": {
+            "oop": 1.0
+        },
+        "content": {
+            "code_snippet": "{{BLANK}} Person:\n    pass",
+            "correct_answer": "class",
+            "options": [
+                "class",
+                "object",
+                "def",
+                "type"
+            ],
+            "explanation": "A 'class' kulcsszóval kezdődik az osztálydefiníció."
+        }
+    },
+    {
+        "title": "Konstruktor metódus",
+        "description": "Hogyan hívják a Python osztályok speciális inicializáló metódusát?",
+        "hint": "Aláhúzásokkal kezdődik és végződik.",
+        "q_type": "fill_in_blank",
+        "difficulty_rating": 750,
+        "language": "python",
+        "concept": {
+            "oop": 1.0
+        },
+        "content": {
+            "code_snippet": "def {{BLANK}}(self, name):",
+            "correct_answer": "__init__",
+            "options": [
+                "__init__",
+                "__new__",
+                "constructor",
+                "init"
+            ],
+            "explanation": "Az __init__ metódus felelős az objektum példányosításakor az attribútumok beállításáért."
+        }
+    },
+    {
+        "title": "Példány hivatkozás",
+        "description": "Melyik kulcsszó hivatkozik az osztály aktuális példányára a metódusokon belül?",
+        "hint": "Önmaga angolul.",
+        "q_type": "fill_in_blank",
+        "difficulty_rating": 700,
+        "language": "python",
+        "concept": {
+            "oop": 1.0
+        },
+        "content": {
+            "code_snippet": "def say_hi({{BLANK}}):\n    print(\"Hi\")",
+            "correct_answer": "self",
+            "options": [
+                "self",
+                "this",
+                "me",
+                "instance"
+            ],
+            "explanation": "A 'self' az első paramétere minden példánymetódusnak, ezen keresztül érjük el az objektum adatait."
+        }
+    },
+    {
+        "title": "Öröklődés",
+        "description": "Milyen karakterek közé írjuk az ősosztály nevét öröklődésnél?",
+        "hint": "Zárójel.",
+        "q_type": "fill_in_blank",
+        "difficulty_rating": 800,
+        "language": "python",
+        "concept": {
+            "oop": 1.0
+        },
+        "content": {
+            "code_snippet": "class Student{{BLANK}}Person):",
+            "correct_answer": "(",
+            "options": [
+                "(",
+                "[",
+                "{",
+                "<"
+            ],
+            "explanation": "Pythonban az öröklődést az osztálynév után tett zárójelekkel jelöljük: class Gyerek(Szulo)."
+        }
+    },
+    {
+        "title": "Szülő osztály hívása",
+        "description": "Melyik függvénnyel érhetjük el az ősosztály metódusait?",
+        "hint": "Szuper.",
+        "q_type": "fill_in_blank",
+        "difficulty_rating": 850,
+        "language": "python",
+        "concept": {
+            "oop": 1.0
+        },
+        "content": {
+            "code_snippet": "{{BLANK}}().__init__(name)",
+            "correct_answer": "super",
+            "options": [
+                "super",
+                "parent",
+                "base",
+                "this"
+            ],
+            "explanation": "A super() függvény visszaad egy ideiglenes objektumot az ősosztályból, lehetővé téve annak metódushívásait."
+        }
+    }
+]

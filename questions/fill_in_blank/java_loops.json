@@ -1,1 +1,113 @@
-[]
+[
+    {
+        "title": "Számlálós ciklus",
+        "description": "Melyik kulcsszóval indítjuk a fix lépésszámú ciklust?",
+        "hint": "Értékadás, feltétel és léptetés is megadható benne.",
+        "q_type": "fill_in_blank",
+        "difficulty_rating": 600,
+        "language": "java",
+        "concept": {
+            "loops": 1.0
+        },
+        "content": {
+            "code_snippet": "{{BLANK}} (int i = 0; i < 10; i++)",
+            "correct_answer": "for",
+            "options": [
+                "for",
+                "while",
+                "loop",
+                "each"
+            ],
+            "explanation": "A 'for' ciklus ideális, ha tudjuk, hányszor vagy meddig kell ismételni egy műveletsort."
+        }
+    },
+    {
+        "title": "Elöltesztelő ciklus",
+        "description": "Melyik kulcsszóval indítjuk a feltételhez kötött ciklust?",
+        "hint": "Amíg a feltétel igaz.",
+        "q_type": "fill_in_blank",
+        "difficulty_rating": 600,
+        "language": "java",
+        "concept": {
+            "loops": 1.0
+        },
+        "content": {
+            "code_snippet": "{{BLANK}} (condition) { ... }",
+            "correct_answer": "while",
+            "options": [
+                "while",
+                "until",
+                "during",
+                "for"
+            ],
+            "explanation": "A 'while' ciklus addig ismétli a magját, amíg a zárójelben lévő feltétel igaz."
+        }
+    },
+    {
+        "title": "Léptetés",
+        "description": "Milyen operátorral növeljük eggyel a ciklusváltozót a leggyakrabban?",
+        "hint": "Increment operátor.",
+        "q_type": "fill_in_blank",
+        "difficulty_rating": 650,
+        "language": "java",
+        "concept": {
+            "loops": 1.0,
+            "basics": 0.5
+        },
+        "content": {
+            "code_snippet": "for (int i = 0; i < 5; i{{BLANK}})",
+            "correct_answer": "++",
+            "options": [
+                "++",
+                "+1",
+                "+=",
+                "next"
+            ],
+            "explanation": "Az 'i++' az 'i = i + 1' rövidítése a Java-ban."
+        }
+    },
+    {
+        "title": "Ciklus megszakítása",
+        "description": "Melyik kulcsszóval léphetünk ki azonnal a ciklusból?",
+        "hint": "Törés angolul.",
+        "q_type": "fill_in_blank",
+        "difficulty_rating": 700,
+        "language": "java",
+        "concept": {
+            "loops": 1.0
+        },
+        "content": {
+            "code_snippet": "if (found) {{BLANK}};",
+            "correct_answer": "break",
+            "options": [
+                "break",
+                "exit",
+                "stop",
+                "return"
+            ],
+            "explanation": "A 'break' utasítás hatására a vezérlés kilép a legbelső ciklusból."
+        }
+    },
+    {
+        "title": "Iteráció átugrása",
+        "description": "Melyik kulcsszóval ugorhatunk a ciklus következő iterációjára?",
+        "hint": "Folytatás angolul.",
+        "q_type": "fill_in_blank",
+        "difficulty_rating": 750,
+        "language": "java",
+        "concept": {
+            "loops": 1.0
+        },
+        "content": {
+            "code_snippet": "if (skip) {{BLANK}};",
+            "correct_answer": "continue",
+            "options": [
+                "continue",
+                "skip",
+                "next",
+                "pass"
+            ],
+            "explanation": "A 'continue' utasítás átugorja a ciklusmag maradék részét és a következő körrel folytatja."
+        }
+    }
+]

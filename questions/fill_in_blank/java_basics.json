@@ -1,1 +1,113 @@
-[]
+[
+    {
+        "title": "Egész szám típus",
+        "description": "Melyik kulcsszóval deklarálunk egész számot Java-ban?",
+        "hint": "Az integer rövidítése.",
+        "q_type": "fill_in_blank",
+        "difficulty_rating": 600,
+        "language": "java",
+        "concept": {
+            "basics": 1.0
+        },
+        "content": {
+            "code_snippet": "{{BLANK}} count = 10;",
+            "correct_answer": "int",
+            "options": [
+                "int",
+                "integer",
+                "Number",
+                "num"
+            ],
+            "explanation": "Java-ban az 'int' a primitív típus az egész számok tárolására."
+        }
+    },
+    {
+        "title": "Utasítás lezárása",
+        "description": "Mi hiányzik az utasítás végéről?",
+        "hint": "Minden parancs végére kell.",
+        "q_type": "fill_in_blank",
+        "difficulty_rating": 650,
+        "language": "java",
+        "concept": {
+            "basics": 1.0
+        },
+        "content": {
+            "code_snippet": "double price = 19.99{{BLANK}}",
+            "correct_answer": ";",
+            "options": [
+                ";",
+                ":",
+                ".",
+                "!"
+            ],
+            "explanation": "A pontosvessző (;) jelzi a Java fordítónak az utasítás végét."
+        }
+    },
+    {
+        "title": "Tizedes szám típus",
+        "description": "Milyen típusú változó kell a tizedes törtek tárolásához?",
+        "hint": "Kétszeres pontosságú lebegőpontos szám.",
+        "q_type": "fill_in_blank",
+        "difficulty_rating": 700,
+        "language": "java",
+        "concept": {
+            "basics": 1.0
+        },
+        "content": {
+            "code_snippet": "{{BLANK}} pi = 3.1415;",
+            "correct_answer": "double",
+            "options": [
+                "double",
+                "float",
+                "int",
+                "decimal"
+            ],
+            "explanation": "A 'double' a leggyakrabban használt típus tizedes törtekhez Java-ban."
+        }
+    },
+    {
+        "title": "Logikai érték",
+        "description": "Melyik kulcsszó jelöli az 'igaz' értéket?",
+        "hint": "Logikai típus értéke.",
+        "q_type": "fill_in_blank",
+        "difficulty_rating": 750,
+        "language": "java",
+        "concept": {
+            "basics": 1.0,
+            "logic": 0.5
+        },
+        "content": {
+            "code_snippet": "boolean isReady = {{BLANK}};",
+            "correct_answer": "true",
+            "options": [
+                "true",
+                "False",
+                "1",
+                "yes"
+            ],
+            "explanation": "A boolean típusnak két lehetséges értéke van: true vagy false."
+        }
+    },
+    {
+        "title": "Konstans deklaráció",
+        "description": "Melyik kulcsszóval tesszük módosíthatatlanná a változót?",
+        "hint": "Végleges érték.",
+        "q_type": "fill_in_blank",
+        "difficulty_rating": 850,
+        "language": "java",
+        "concept": {
+            "basics": 1.0
+        },
+        "content": {
+            "code_snippet": "{{BLANK}} int DAYS_IN_WEEK = 7;",
+            "correct_answer": "final",
+            "options": [
+                "final",
+                "const",
+                "static",
+                "immutable"
+            ],
+            "explanation": "A 'final' kulcsszó megakadályozza, hogy a változó új értéket kaphasson a deklaráció után."
+        }
+    }
+]

@@ -1,1 +1,153 @@
-[]
+[
+    {
+        "title": "ÉS operátor",
+        "description": "Térj vissza true-val, ha mindkét paraméter (a és b) true!",
+        "hint": "Használd a && operátort.",
+        "q_type": "coding",
+        "difficulty_rating": 600,
+        "language": "java",
+        "concept": {
+            "logic": 1.0
+        },
+        "content": {
+            "initial_code": "public boolean and(boolean a, boolean b) {",
+            "test_cases": [
+                {
+                    "input": "true, true",
+                    "expected_output": "true"
+                },
+                {
+                    "input": "true, false",
+                    "expected_output": "false"
+                }
+            ],
+            "scaffolding_blocks": [
+                "return a && b;"
+            ],
+            "explanation": "A logikai ÉS (&&) operátor csak akkor ad true-t, ha minden feltétel teljesül.",
+            "correct_answer": "public boolean and(boolean a, boolean b) {\n  return a && b;\n}"
+        }
+    },
+    {
+        "title": "VAGY operátor",
+        "description": "Térj vissza true-val, ha legalább az egyik paraméter true!",
+        "hint": "Használd a || operátort.",
+        "q_type": "coding",
+        "difficulty_rating": 700,
+        "language": "java",
+        "concept": {
+            "logic": 1.0
+        },
+        "content": {
+            "initial_code": "public boolean or(boolean a, boolean b) {",
+            "test_cases": [
+                {
+                    "input": "false, true",
+                    "expected_output": "true"
+                },
+                {
+                    "input": "false, false",
+                    "expected_output": "false"
+                }
+            ],
+            "scaffolding_blocks": [
+                "return a || b;"
+            ],
+            "explanation": "A logikai VAGY (||) operátor true-t ad, ha legalább az egyik feltétel igaz.",
+            "correct_answer": "public boolean or(boolean a, boolean b) {\n  return a || b;\n}"
+        }
+    },
+    {
+        "title": "Tartomány vizsgálat",
+        "description": "Döntsd el, hogy a szám 10 és 20 között van-e (zárt intervallum)!",
+        "hint": "Használd a >= és <= operátorokat a &&-el összekötve.",
+        "q_type": "coding",
+        "difficulty_rating": 800,
+        "language": "java",
+        "concept": {
+            "logic": 1.0,
+            "basics": 0.5
+        },
+        "content": {
+            "initial_code": "public boolean inRange(int n) {",
+            "test_cases": [
+                {
+                    "input": "15",
+                    "expected_output": "true"
+                },
+                {
+                    "input": "25",
+                    "expected_output": "false"
+                }
+            ],
+            "scaffolding_blocks": [
+                "return n >= 10 && n <= 20;"
+            ],
+            "explanation": "Több feltétel együttes teljesülését a && operátorral vizsgálhatjuk.",
+            "correct_answer": "public boolean inRange(int n) {\n  return n >= 10 && n <= 20;\n}"
+        }
+    },
+    {
+        "title": "Szökőév",
+        "description": "Döntsd el a megadott évről, hogy szökőév-e! (4-gyel osztható, de 100-zal nem, kivéve ha 400-zal osztható)",
+        "hint": "Használd a modulo (%) és a logikai operátorokat.",
+        "q_type": "coding",
+        "difficulty_rating": 1000,
+        "language": "java",
+        "concept": {
+            "logic": 1.0,
+            "basics": 0.4
+        },
+        "content": {
+            "initial_code": "public boolean isLeapYear(int year) {",
+            "test_cases": [
+                {
+                    "input": "2000",
+                    "expected_output": "true"
+                },
+                {
+                    "input": "1900",
+                    "expected_output": "false"
+                }
+            ],
+            "scaffolding_blocks": [
+                "return (year % 4 == 0 && year % 100 != 0) || (year % 400 == 0);"
+            ],
+            "explanation": "A szökőév meghatározásához összetett logikai feltételre van szükség.",
+            "correct_answer": "public boolean isLeapYear(int year) {\n  return (year % 4 == 0 && year % 100 != 0) || (year % 400 == 0);\n}"
+        }
+    },
+    {
+        "title": "FizzBuzz egyszerűen",
+        "description": "Térj vissza 'Fizz'-el ha a szám osztható 3-mal, 'Buzz'-al ha 5-tel, és 'FizzBuzz'-al ha mindkettővel. Egyébként térj vissza a számmal stringként.",
+        "hint": "Az if-else if-else sorrendje fontos.",
+        "q_type": "coding",
+        "difficulty_rating": 900,
+        "language": "java",
+        "concept": {
+            "logic": 1.0,
+            "basics": 0.6
+        },
+        "content": {
+            "initial_code": "public String fizzBuzz(int n) {",
+            "test_cases": [
+                {
+                    "input": "15",
+                    "expected_output": "\"FizzBuzz\""
+                },
+                {
+                    "input": "3",
+                    "expected_output": "\"Fizz\""
+                }
+            ],
+            "scaffolding_blocks": [
+                "if (n % 15 == 0) return \"FizzBuzz\";",
+                "if (n % 3 == 0) return \"Fizz\";",
+                "if (n % 5 == 0) return \"Buzz\";",
+                "return String.valueOf(n);"
+            ],
+            "explanation": "A FizzBuzz egy klasszikus programozási feladat, amely a maradékos osztás és a feltételkezelés gyakorlására szolgál.",
+            "correct_answer": "public String fizzBuzz(int n) {\n  if (n % 15 == 0) {\n    return \"FizzBuzz\";\n  } else if (n % 3 == 0) {\n    return \"Fizz\";\n  } else if (n % 5 == 0) {\n    return \"Buzz\";\n  } else {\n    return String.valueOf(n);\n  }\n}"
+        }
+    }
+]

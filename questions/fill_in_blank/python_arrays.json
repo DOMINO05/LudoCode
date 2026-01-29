@@ -1,1 +1,113 @@
-[]
+[
+    {
+        "title": "Lista deklaráció",
+        "description": "Milyen karakterek közé írjuk a lista elemeit Pythonban?",
+        "hint": "Szögletes zárójel.",
+        "q_type": "fill_in_blank",
+        "difficulty_rating": 600,
+        "language": "python",
+        "concept": {
+            "arrays": 1.0
+        },
+        "content": {
+            "code_snippet": "my_list = {{BLANK}}1, 2, 3]",
+            "correct_answer": "[",
+            "options": [
+                "[",
+                "{",
+                "(",
+                "<"
+            ],
+            "explanation": "A Python listákat szögletes zárójelekkel [ ] hozzuk létre."
+        }
+    },
+    {
+        "title": "Elem hozzáadása",
+        "description": "Melyik metódussal adunk új elemet a lista végéhez?",
+        "hint": "Hozzáfűz angolul.",
+        "q_type": "fill_in_blank",
+        "difficulty_rating": 650,
+        "language": "python",
+        "concept": {
+            "arrays": 1.0
+        },
+        "content": {
+            "code_snippet": "my_list.{{BLANK}}(10)",
+            "correct_answer": "append",
+            "options": [
+                "append",
+                "add",
+                "insert",
+                "push"
+            ],
+            "explanation": "Az append() metódus a meglévő lista végére szúr be egy új értéket."
+        }
+    },
+    {
+        "title": "Lista hossza",
+        "description": "Melyik függvénnyel kérdezhetjük le a lista elemeinek számát?",
+        "hint": "A 'length' rövidítése.",
+        "q_type": "fill_in_blank",
+        "difficulty_rating": 600,
+        "language": "python",
+        "concept": {
+            "arrays": 1.0,
+            "basics": 0.5
+        },
+        "content": {
+            "code_snippet": "size = {{BLANK}}(my_list)",
+            "correct_answer": "len",
+            "options": [
+                "len",
+                "length",
+                "size",
+                "count"
+            ],
+            "explanation": "A beépített len() függvény visszaadja a sorozat (lista, string, stb.) hosszát."
+        }
+    },
+    {
+        "title": "Elem eltávolítása",
+        "description": "Melyik metódus távolítja el és adja vissza a lista utolsó elemét?",
+        "hint": "Kidurran angolul.",
+        "q_type": "fill_in_blank",
+        "difficulty_rating": 700,
+        "language": "python",
+        "concept": {
+            "arrays": 1.0
+        },
+        "content": {
+            "code_snippet": "last_item = my_list.{{BLANK}}()",
+            "correct_answer": "pop",
+            "options": [
+                "pop",
+                "remove",
+                "delete",
+                "clear"
+            ],
+            "explanation": "A pop() metódus alapértelmezetten az utolsó elemet veszi ki a listából."
+        }
+    },
+    {
+        "title": "Elemek megszámlálása",
+        "description": "Melyik metódus adja meg, hányszor szerepel egy adott érték a listában?",
+        "hint": "Számol angolul.",
+        "q_type": "fill_in_blank",
+        "difficulty_rating": 750,
+        "language": "python",
+        "concept": {
+            "arrays": 1.0
+        },
+        "content": {
+            "code_snippet": "db = my_list.{{BLANK}}(5)",
+            "correct_answer": "count",
+            "options": [
+                "count",
+                "sum",
+                "occurrences",
+                "find"
+            ],
+            "explanation": "A list.count(érték) metódus megszámolja a megadott érték előfordulásait."
+        }
+    }
+]

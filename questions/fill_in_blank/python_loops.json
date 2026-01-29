@@ -1,1 +1,112 @@
-[]
+[
+    {
+        "title": "Iteráló ciklus",
+        "description": "Melyik kulcsszóval indítjuk a sorozatokon végighaladó ciklust?",
+        "hint": "-nak/-nek angolul.",
+        "q_type": "fill_in_blank",
+        "difficulty_rating": 600,
+        "language": "python",
+        "concept": {
+            "loops": 1.0
+        },
+        "content": {
+            "code_snippet": "{{BLANK}} item in my_list:",
+            "correct_answer": "for",
+            "options": [
+                "for",
+                "foreach",
+                "while",
+                "loop"
+            ],
+            "explanation": "A 'for' ciklus Pythonban egy sorozat (pl. lista, string) elemein halad végig."
+        }
+    },
+    {
+        "title": "Feltételes ciklus",
+        "description": "Melyik kulcsszóval indítjuk a feltételtől függő ciklust?",
+        "hint": "Amíg angolul.",
+        "q_type": "fill_in_blank",
+        "difficulty_rating": 600,
+        "language": "python",
+        "concept": {
+            "loops": 1.0
+        },
+        "content": {
+            "code_snippet": "{{BLANK}} x < 10:",
+            "correct_answer": "while",
+            "options": [
+                "while",
+                "until",
+                "during",
+                "as"
+            ],
+            "explanation": "A 'while' ciklus addig fut, amíg a megadott feltétel True marad."
+        }
+    },
+    {
+        "title": "Számsorozat generálás",
+        "description": "Melyik függvénnyel generálunk számsorozatot a ciklushoz?",
+        "hint": "Tartomány angolul.",
+        "q_type": "fill_in_blank",
+        "difficulty_rating": 650,
+        "language": "python",
+        "concept": {
+            "loops": 1.0
+        },
+        "content": {
+            "code_snippet": "for i in {{BLANK}}(5):",
+            "correct_answer": "range",
+            "options": [
+                "range",
+                "list",
+                "series",
+                "sequence"
+            ],
+            "explanation": "A range() függvény egy számsorozatot hoz létre, gyakran használjuk ciklusokban az ismétlések számának vezérlésére."
+        }
+    },
+    {
+        "title": "Ciklus megszakítása",
+        "description": "Melyik kulcsszóval léphetünk ki azonnal a ciklusból?",
+        "hint": "Törés angolul.",
+        "q_type": "fill_in_blank",
+        "difficulty_rating": 700,
+        "language": "python",
+        "concept": {
+            "loops": 1.0
+        },
+        "content": {
+            "code_snippet": "if found:\n    {{BLANK}}",
+            "correct_answer": "break",
+            "options": [
+                "break",
+                "exit",
+                "stop",
+                "quit"
+            ],
+            "explanation": "A 'break' kulcsszó azonnal befejezi a legbelső futó ciklust."
+        }
+    },
+    {
+        "title": "Iteráció átugrása",
+        "description": "Melyik kulcsszóval ugorhatunk a ciklus következő iterációjára?",
+        "hint": "Folytatás angolul.",
+        "q_type": "fill_in_blank",
+        "difficulty_rating": 750,
+        "language": "python",
+        "concept": {
+            "loops": 1.0
+        },
+        "content": {
+            "code_snippet": "if skip:\n    {{BLANK}}",
+            "correct_answer": "continue",
+            "options": [
+                "continue",
+                "skip",
+                "pass",
+                "next"
+            ],
+            "explanation": "A 'continue' kulcsszó átugorja a ciklusmag aktuális futásának hátralévő részét."
+        }
+    }
+]

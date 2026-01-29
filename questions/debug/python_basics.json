@@ -1,1 +1,114 @@
-[]
+[
+    {
+        "title": "Behúzási hiba",
+        "description": "Javítsd ki a kód behúzását (indentation), hogy fusson!",
+        "hint": "Pythonban a blokkokat szóközökkel jelöljük.",
+        "q_type": "debug",
+        "difficulty_rating": 600,
+        "language": "python",
+        "concept": {
+            "basics": 1.0
+        },
+        "content": {
+            "buggy_code": "def say_hi():\nprint(\"Hi\")",
+            "error_location": "print(\"Hi\")",
+            "correct_code": "    print(\"Hi\")",
+            "options": [
+                "    print(\"Hi\")",
+                "  print(\"Hi\")",
+                "\tprint(\"Hi\")"
+            ],
+            "explanation": "A függvény törzsét kötelező behúzni (általában 4 szóköz)."
+        }
+    },
+    {
+        "title": "Hiányzó kettőspont",
+        "description": "Javítsd ki a szintaxis hibát a függvény fejlécében!",
+        "hint": "A definíciók és ciklusok végére kell egy írásjel.",
+        "q_type": "debug",
+        "difficulty_rating": 650,
+        "language": "python",
+        "concept": {
+            "basics": 1.0,
+            "functions": 0.5
+        },
+        "content": {
+            "buggy_code": "def my_func()",
+            "error_location": "def my_func()",
+            "correct_code": "def my_func():",
+            "options": [
+                "def my_func():",
+                "def my_func() {",
+                "function my_func():"
+            ],
+            "explanation": "Pythonban a függvények, ciklusok és feltételek fejlécét kettősponttal (:) zárjuk."
+        }
+    },
+    {
+        "title": "Típus hiba (String + Int)",
+        "description": "Javítsd ki a kódot, hogy össze lehessen fűzni a szöveget és a számot!",
+        "hint": "Konvertáld a számot stringgé.",
+        "q_type": "debug",
+        "difficulty_rating": 700,
+        "language": "python",
+        "concept": {
+            "basics": 1.0
+        },
+        "content": {
+            "buggy_code": "age = 25\nprint(\"Életkor: \" + age)",
+            "error_location": "age",
+            "correct_code": "str(age)",
+            "options": [
+                "str(age)",
+                "int(age)",
+                "f\"{age}\""
+            ],
+            "explanation": "Pythonban nem lehet közvetlenül összeadni egy stringet és egy számot. A számot str() függvénnyel stringgé kell alakítani."
+        }
+    },
+    {
+        "title": "Változónév hiba",
+        "description": "Miért nem találja a Python a 'result' változót?",
+        "hint": "Ellenőrizd a betűzést.",
+        "q_type": "debug",
+        "difficulty_rating": 800,
+        "language": "python",
+        "concept": {
+            "basics": 1.0
+        },
+        "content": {
+            "buggy_code": "resukt = 10\nprint(result)",
+            "error_location": "print(result)",
+            "correct_code": "print(resukt)",
+            "options": [
+                "print(resukt)",
+                "result = 10",
+                "print(\"result\")"
+            ],
+            "explanation": "A Python hibaüzenetet ad (NameError), ha olyan változóra hivatkozunk, amit még nem definiáltunk vagy elírtuk a nevét."
+        }
+    },
+    {
+        "title": "Nullával való osztás",
+        "description": "Javítsd ki a kódot, hogy ne dobjon hibát!",
+        "hint": "A nevező nem lehet nulla.",
+        "q_type": "debug",
+        "difficulty_rating": 750,
+        "language": "python",
+        "concept": {
+            "basics": 1.0,
+            "logic": 0.5
+        },
+        "content": {
+            "buggy_code": "x = 10 / 0",
+            "error_location": "10 / 0",
+            "correct_code": "10 / 2",
+            "options": [
+                "10 / 2",
+                "10 // 0",
+                "0 / 10"
+            ],
+            "explanation": "A matematikához hasonlóan a programozásban sem értelmezett a nullával való osztás (ZeroDivisionError)."
+        }
+    }
+]

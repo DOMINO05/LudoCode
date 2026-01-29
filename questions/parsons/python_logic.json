@@ -1,1 +1,102 @@
-[]
+[
+    {
+        "title": "Egyszerű feltétel",
+        "description": "Rendezze sorba a blokkokat egy alapvető if-else szerkezethez!",
+        "hint": "A kettőspont és a behúzás kulcsfontosságú.",
+        "q_type": "parsons",
+        "difficulty_rating": 600,
+        "language": "python",
+        "concept": {"logic": 1.0},
+        "content": {
+            "blocks": [
+                {"id": 1, "text": "if x > 0:"},
+                {"id": 2, "text": "    print(\"Pozitív\")"},
+                {"id": 3, "text": "else:"},
+                {"id": 4, "text": "    print(\"Nem pozitív\")"}
+            ],
+            "correct_order": [1, 2, 3, 4],
+            "explanation": "Pythonban a feltétel után kettőspont áll, a törzset pedig be kell húzni."
+        }
+    },
+    {
+        "title": "Többágú feltétel (elif)",
+        "description": "Rendezze a blokkokat, hogy a kód külön kezelje a különböző tartományokat!",
+        "hint": "Használja az elif kulcsszót.",
+        "q_type": "parsons",
+        "difficulty_rating": 700,
+        "language": "python",
+        "concept": {"logic": 1.0},
+        "content": {
+            "blocks": [
+                {"id": 1, "text": "if score >= 90:"},
+                {"id": 2, "text": "    print(\"Kiváló\")"},
+                {"id": 3, "text": "elif score >= 60:"},
+                {"id": 4, "text": "    print(\"Közepes\")"},
+                {"id": 5, "text": "else:"},
+                {"id": 6, "text": "    print(\"Gyenge\")"}
+            ],
+            "correct_order": [1, 2, 3, 4, 5, 6],
+            "explanation": "Az elif lehetővé teszi több feltétel egymás utáni vizsgálatát."
+        }
+    },
+    {
+        "title": "Összetett logikai feltétel",
+        "description": "Vizsgálja meg, hogy a felhasználó felnőtt-e és van-e jegye!",
+        "hint": "Használja az 'and' kulcsszót.",
+        "q_type": "parsons",
+        "difficulty_rating": 750,
+        "language": "python",
+        "concept": {"logic": 1.0},
+        "content": {
+            "blocks": [
+                {"id": 1, "text": "if age >= 18 and has_ticket:"},
+                {"id": 2, "text": "    print(\"Beléphet\")"},
+                {"id": 3, "text": "else:"},
+                {"id": 4, "text": "    print(\"Nem léphet be\")"}
+            ],
+            "correct_order": [1, 2, 3, 4],
+            "explanation": "Az 'and' operátorral több feltétel egyidejű teljesülését ellenőrizhetjük."
+        }
+    },
+    {
+        "title": "Egymásba ágyazott if",
+        "description": "Rendezze a blokkokat egy mélyebb logikai vizsgálathoz!",
+        "hint": "Figyeljen a dupla behúzásra!",
+        "q_type": "parsons",
+        "difficulty_rating": 800,
+        "language": "python",
+        "concept": {"logic": 1.0},
+        "content": {
+            "blocks": [
+                {"id": 1, "text": "if user_exists:"},
+                {"id": 2, "text": "    if password_correct:"},
+                {"id": 3, "text": "        print(\"Sikeres belépés\")"},
+                {"id": 4, "text": "    else:"},
+                {"id": 5, "text": "        print(\"Hibás jelszó\")"},
+                {"id": 6, "text": "else:"},
+                {"id": 7, "text": "    print(\"Nincs ilyen felhasználó\")"}
+            ],
+            "correct_order": [1, 2, 3, 4, 5, 6, 7],
+            "explanation": "Az egymásba ágyazott feltételek lehetővé teszik a hierarchikus döntéshozatalt."
+        }
+    },
+    {
+        "title": "Egy soros feltétel (Ternary)",
+        "description": "Rendezze a blokkokat a Python egysoros if-else szerkezetéhez!",
+        "hint": "Érték if feltétel else érték.",
+        "q_type": "parsons",
+        "difficulty_rating": 850,
+        "language": "python",
+        "concept": {"logic": 1.0, "basics": 0.5},
+        "content": {
+            "blocks": [
+                {"id": 1, "text": "status = "},
+                {"id": 2, "text": "\"Felnőtt\" if age >= 18 "},
+                {"id": 3, "text": "else \"Gyerek\""},
+                {"id": 4, "text": "print(status)"}
+            ],
+            "correct_order": [1, 2, 3, 4],
+            "explanation": "A Pythonban a ternary operátor formátuma: [ha_igaz] if [feltétel] else [ha_hamis]."
+        }
+    }
+]

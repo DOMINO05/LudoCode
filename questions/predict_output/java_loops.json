@@ -1,1 +1,77 @@
-[]
+[
+    {
+        "title": "For ciklus kiíratás",
+        "description": "Mi lesz a kimenet?",
+        "hint": "Figyelj a határokra és a print() metódusra.",
+        "q_type": "predict_output",
+        "difficulty_rating": 600,
+        "language": "java",
+        "concept": {"loops": 1.0},
+        "content": {
+            "code_snippet": "for (int i = 0; i < 3; i++) {\n  System.out.print(i);\n}",
+            "options": ["012", "0123", "123", "hiba"],
+            "correct_answer": "012",
+            "explanation": "A ciklus 0-tól indul, és amíg i < 3 (vagyis 0, 1, 2), kiírja az i értékét."
+        }
+    },
+    {
+        "title": "While ciklus és növelés",
+        "description": "Mit ír ki a kód?",
+        "hint": "Az i értéke a ciklusmag végén változik.",
+        "q_type": "predict_output",
+        "difficulty_rating": 650,
+        "language": "java",
+        "concept": {"loops": 1.0},
+        "content": {
+            "code_snippet": "int i = 1;\nwhile (i <= 3) {\n  System.out.print(i);\n  i++;\n}",
+            "options": ["123", "12", "012", "hiba"],
+            "correct_answer": "123",
+            "explanation": "A ciklus 1, 2, 3 értékekkel fut le, mert a feltétel i <= 3."
+        }
+    },
+    {
+        "title": "Continue utasítás",
+        "description": "Mi lesz a kimenet?",
+        "hint": "A continue átugorja a ciklusmag maradékát.",
+        "q_type": "predict_output",
+        "difficulty_rating": 750,
+        "language": "java",
+        "concept": {"loops": 1.0, "logic": 0.5},
+        "content": {
+            "code_snippet": "for (int i = 1; i <= 4; i++) {\n  if (i == 2) continue;\n  System.out.print(i);\n}",
+            "options": ["134", "1234", "124", "hiba"],
+            "correct_answer": "134",
+            "explanation": "Amikor i értéke 2, a continue miatt a kód átugorja a kiíratást és a következő körre lép."
+        }
+    },
+    {
+        "title": "Egymásba ágyazott ciklusok",
+        "description": "Hány csillagot ír ki a kód?",
+        "hint": "Külső ciklus hossza szorozva a belsőével.",
+        "q_type": "predict_output",
+        "difficulty_rating": 800,
+        "language": "java",
+        "concept": {"loops": 1.0},
+        "content": {
+            "code_snippet": "int count = 0;\nfor (int i = 0; i < 2; i++) {\n  for (int j = 0; j < 3; j++) {\n    count++;\n  }\n}\nSystem.out.print(count);",
+            "options": ["6", "5", "4", "9"],
+            "correct_answer": "6",
+            "explanation": "A külső ciklus 2-szer, a belső 3-szor fut le. 2 * 3 = 6."
+        }
+    },
+    {
+        "title": "Break a ciklusban",
+        "description": "Mi lesz a kimenet?",
+        "hint": "A break azonnal kilép a ciklusból.",
+        "q_type": "predict_output",
+        "difficulty_rating": 700,
+        "language": "java",
+        "concept": {"loops": 1.0, "logic": 0.5},
+        "content": {
+            "code_snippet": "for (int i = 1; i < 10; i++) {\n  if (i == 3) break;\n  System.out.print(i);\n}",
+            "options": ["12", "123", "1234", "3"],
+            "correct_answer": "12",
+            "explanation": "Amikor i eléri a 3-at, a break megállítja a ciklust, így a 3 és az utána lévő számok már nem íródnak ki."
+        }
+    }
+]

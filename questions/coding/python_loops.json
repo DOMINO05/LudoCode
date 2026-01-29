@@ -1,1 +1,139 @@
-[]
+[
+    {
+        "title": "Ciklus tartománnyal",
+        "description": "Számítsd ki a számok összegét 0-tól n-ig (n-et nem beleértve) a range() függvénnyel!",
+        "hint": "Használd a range(n) függvényt a ciklusban.",
+        "q_type": "coding",
+        "difficulty_rating": 600,
+        "language": "python",
+        "concept": {
+            "loops": 1.0,
+            "basics": 0.5
+        },
+        "content": {
+            "initial_code": "def sum_to_n(n):",
+            "test_cases": [
+                {
+                    "input": "5",
+                    "expected_output": "10"
+                }
+            ],
+            "scaffolding_blocks": [
+                "total = 0",
+                "for i in range(n):",
+                "    total += i",
+                "return total"
+            ],
+            "explanation": "A range(n) 0-tól n-1-ig generál számokat.",
+            "correct_answer": "def sum_to_n(n):\n    total = 0\n    for i in range(n):\n        total += i\n    return total"
+        }
+    },
+    {
+        "title": "While ciklus",
+        "description": "Felezd meg az n számot addig, amíg nagyobb mint 1. Számold meg, hány lépés kellett!",
+        "hint": "Használd a // operátort az egészosztáshoz.",
+        "q_type": "coding",
+        "difficulty_rating": 700,
+        "language": "python",
+        "concept": {
+            "loops": 1.0,
+            "basics": 0.5
+        },
+        "content": {
+            "initial_code": "def count_halves(n):",
+            "test_cases": [
+                {
+                    "input": "10",
+                    "expected_output": "3"
+                }
+            ],
+            "scaffolding_blocks": [
+                "count = 0",
+                "while n > 1:",
+                "    n //= 2",
+                "    count += 1",
+                "return count"
+            ],
+            "explanation": "A while ciklust akkor használjuk, ha a cikluslefutások száma egy feltételtől függ.",
+            "correct_answer": "def count_halves(n):\n    count = 0\n    while n > 1:\n        n //= 2\n        count += 1\n    return count"
+        }
+    },
+    {
+        "title": "List comprehension",
+        "description": "Hozz létre egy listát, ami tartalmazza a kapott számok négyzetét!",
+        "hint": "Használd a [x**2 for x in lst] szintaxist.",
+        "q_type": "coding",
+        "difficulty_rating": 800,
+        "language": "python",
+        "concept": {
+            "loops": 1.0,
+            "arrays": 0.8
+        },
+        "content": {
+            "initial_code": "def get_squares(numbers):",
+            "test_cases": [
+                {
+                    "input": "[1, 2, 3]",
+                    "expected_output": "[1, 4, 9]"
+                }
+            ],
+            "scaffolding_blocks": [
+                "return [x**2 for x in numbers]"
+            ],
+            "explanation": "A list comprehension egy tömör módja a listák létrehozásának Pythonban.",
+            "correct_answer": "def get_squares(numbers):\n    return [x**2 for x in numbers]"
+        }
+    },
+    {
+        "title": "Enumerate használata",
+        "description": "Térj vissza egy listával, ami a 'index: érték' formátumú stringeket tartalmazza!",
+        "hint": "Használd az enumerate(lst) függvényt.",
+        "q_type": "coding",
+        "difficulty_rating": 900,
+        "language": "python",
+        "concept": {
+            "loops": 1.0,
+            "basics": 0.6
+        },
+        "content": {
+            "initial_code": "def get_indexed_strings(lst):",
+            "test_cases": [
+                {
+                    "input": "['a', 'b']",
+                    "expected_output": "['0: a', '1: b']"
+                }
+            ],
+            "scaffolding_blocks": [
+                "return [f'{i}: {val}' for i, val in enumerate(lst)]"
+            ],
+            "explanation": "Az enumerate() visszaadja az elem indexét és értékét is a ciklusban.",
+            "correct_answer": "def get_indexed_strings(lst):\n    return [f'{i}: {val}' for i, val in enumerate(lst)]"
+        }
+    },
+    {
+        "title": "Zip operátor",
+        "description": "Párosítsd össze a neveket és korokat egy listába (tuple-ök listája)!",
+        "hint": "Használd a zip(names, ages) függvényt.",
+        "q_type": "coding",
+        "difficulty_rating": 1000,
+        "language": "python",
+        "concept": {
+            "loops": 0.8,
+            "arrays": 1.0
+        },
+        "content": {
+            "initial_code": "def combine(names, ages):",
+            "test_cases": [
+                {
+                    "input": "['Anna', 'Béla'], [20, 25]",
+                    "expected_output": "[('Anna', 20), ('Béla', 25)]"
+                }
+            ],
+            "scaffolding_blocks": [
+                "return list(zip(names, ages))"
+            ],
+            "explanation": "A zip() függvény párhuzamosan iterál végig több sorozaton.",
+            "correct_answer": "def combine(names, ages):\n    return list(zip(names, ages))"
+        }
+    }
+]

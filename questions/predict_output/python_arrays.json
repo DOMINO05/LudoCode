@@ -1,1 +1,77 @@
-[]
+[
+    {
+        "title": "Lista indexelés",
+        "description": "Mi lesz a kimenet?",
+        "hint": "Az indexelés 0-tól kezdődik.",
+        "q_type": "predict_output",
+        "difficulty_rating": 600,
+        "language": "python",
+        "concept": {"arrays": 1.0},
+        "content": {
+            "code_snippet": "lst = [10, 20, 30]\nprint(lst[1])",
+            "options": ["10", "20", "30", "hiba"],
+            "correct_answer": "20",
+            "explanation": "A lista 1-es indexű eleme a második elem, ami a 20."
+        }
+    },
+    {
+        "title": "Elem hozzáadása",
+        "description": "Mit ír ki a program?",
+        "hint": "Az append a lista végére szúr be.",
+        "q_type": "predict_output",
+        "difficulty_rating": 650,
+        "language": "python",
+        "concept": {"arrays": 1.0},
+        "content": {
+            "code_snippet": "lst = [1]\nlst.append(2)\nprint(lst)",
+            "options": ["[1, 2]", "[2, 1]", "[1]", "hiba"],
+            "correct_answer": "[1, 2]",
+            "explanation": "Az append(2) hívás után a lista tartalma [1, 2] lesz."
+        }
+    },
+    {
+        "title": "Szeletelés (Slicing)",
+        "description": "Mi lesz a kimenet?",
+        "hint": "A stop index eleme már nem kerül bele az eredménybe.",
+        "q_type": "predict_output",
+        "difficulty_rating": 800,
+        "language": "python",
+        "concept": {"arrays": 1.0},
+        "content": {
+            "code_snippet": "nums = [0, 1, 2, 3, 4]\nprint(nums[1:4])",
+            "options": ["[1, 2, 3]", "[1, 2, 3, 4]", "[0, 1, 2]", "hiba"],
+            "correct_answer": "[1, 2, 3]",
+            "explanation": "A nums[1:4] az 1, 2, 3 indexű elemeket adja vissza."
+        }
+    },
+    {
+        "title": "Listák összeadása",
+        "description": "Mit ír ki a kód?",
+        "hint": "A + operátor összefűzi a listákat.",
+        "q_type": "predict_output",
+        "difficulty_rating": 700,
+        "language": "python",
+        "concept": {"arrays": 1.0},
+        "content": {
+            "code_snippet": "a = [1, 2]\nb = [3]\nprint(a + b)",
+            "options": ["[1, 2, 3]", "[4, 5]", "[1, 2, [3]]", "hiba"],
+            "correct_answer": "[1, 2, 3]",
+            "explanation": "Listák esetén a + operátor konkatenációt (összefűzést) végez."
+        }
+    },
+    {
+        "title": "Elem kivétele (Pop)",
+        "description": "Mi lesz a kimenet?",
+        "hint": "A pop() eltávolítja és visszaadja az elemet.",
+        "q_type": "predict_output",
+        "difficulty_rating": 750,
+        "language": "python",
+        "concept": {"arrays": 1.0},
+        "content": {
+            "code_snippet": "lst = [\"a\", \"b\", \"c\"]\nitem = lst.pop(0)\nprint(item, lst)",
+            "options": ["a ['b', 'c']", "c ['a', 'b']", "a ['a', 'b', 'c']", "hiba"],
+            "correct_answer": "a ['b', 'c']",
+            "explanation": "A pop(0) kiveszi az első elemet ('a'), a maradék lista pedig ['b', 'c'] lesz."
+        }
+    }
+]

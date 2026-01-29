@@ -1,1 +1,114 @@
-[]
+[
+    {
+        "title": "Visszatérési típus",
+        "description": "Melyik kulcsszó jelzi, hogy a függvény nem ad vissza értéket?",
+        "hint": "Üresség angolul.",
+        "q_type": "fill_in_blank",
+        "difficulty_rating": 600,
+        "language": "java",
+        "concept": {
+            "functions": 1.0
+        },
+        "content": {
+            "code_snippet": "public {{BLANK}} printMessage() { ... }",
+            "correct_answer": "void",
+            "options": [
+                "void",
+                "null",
+                "empty",
+                "none"
+            ],
+            "explanation": "A 'void' kulcsszó jelöli a Java-ban, ha egy metódusnak nincs visszatérési értéke."
+        }
+    },
+    {
+        "title": "Érték visszaadása",
+        "description": "Melyik utasítással küldjük vissza az eredményt a hívónak?",
+        "hint": "Visszatérés angolul.",
+        "q_type": "fill_in_blank",
+        "difficulty_rating": 650,
+        "language": "java",
+        "concept": {
+            "functions": 1.0
+        },
+        "content": {
+            "code_snippet": "public int getFive() { {{BLANK}} 5; }",
+            "correct_answer": "return",
+            "options": [
+                "return",
+                "back",
+                "give",
+                "send"
+            ],
+            "explanation": "A 'return' utasítás megszakítja a metódus futását és visszaadja a megadott értéket."
+        }
+    },
+    {
+        "title": "Paraméter megadása",
+        "description": "Mi hiányzik a paraméter deklarációjából?",
+        "hint": "A típus kötelező minden paraméternél.",
+        "q_type": "fill_in_blank",
+        "difficulty_rating": 700,
+        "language": "java",
+        "concept": {
+            "functions": 1.0,
+            "basics": 0.5
+        },
+        "content": {
+            "code_snippet": "public void greet({{BLANK}} name) { ... }",
+            "correct_answer": "String",
+            "options": [
+                "String",
+                "text",
+                "Char",
+                "var"
+            ],
+            "explanation": "Java-ban minden paraméternek explicit módon meg kell adni a típusát (pl. String)."
+        }
+    },
+    {
+        "title": "Metódus hívása",
+        "description": "Melyik karakterek kellenek a metódus nevének végére a híváshoz?",
+        "hint": "Függvényhívás jele.",
+        "q_type": "fill_in_blank",
+        "difficulty_rating": 750,
+        "language": "java",
+        "concept": {
+            "functions": 1.0
+        },
+        "content": {
+            "code_snippet": "System.out.println{{BLANK}} \"Hello\" );",
+            "correct_answer": "(",
+            "options": [
+                "(",
+                "[",
+                "{",
+                "<"
+            ],
+            "explanation": "A metódushívásnál a paramétereket kerek zárójelek közé tesszük, még ha üres is a lista."
+        }
+    },
+    {
+        "title": "Osztály szintű metódus",
+        "description": "Melyik kulcsszóval deklarálunk olyan metódust, amihez nem kell példányosítani az osztályt?",
+        "hint": "Statikus.",
+        "q_type": "fill_in_blank",
+        "difficulty_rating": 800,
+        "language": "java",
+        "concept": {
+            "functions": 1.0,
+            "oop": 0.5
+        },
+        "content": {
+            "code_snippet": "public {{BLANK}} void main(String[] args)",
+            "correct_answer": "static",
+            "options": [
+                "static",
+                "final",
+                "public",
+                "const"
+            ],
+            "explanation": "A 'static' metódusok az osztályhoz tartoznak, nem pedig egy konkrét objektumhoz (példányhoz)."
+        }
+    }
+]

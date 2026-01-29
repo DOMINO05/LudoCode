@@ -1,1 +1,114 @@
-[]
+[
+    {
+        "title": "Végtelen ciklus",
+        "description": "Javítsd ki a ciklust, hogy ne fusson végtelen ideig!",
+        "hint": "Az i értékének növekednie kell, nem csökkennie.",
+        "q_type": "debug",
+        "difficulty_rating": 600,
+        "language": "java",
+        "concept": {
+            "loops": 1.0
+        },
+        "content": {
+            "buggy_code": "for (int i = 0; i < 10; i--) {\n  System.out.println(i);\n}",
+            "error_location": "i--",
+            "correct_code": "i++",
+            "options": [
+                "i++",
+                "i = 10",
+                "i + 1"
+            ],
+            "explanation": "Ha a ciklusváltozót csökkentjük, miközben azt várjuk, hogy elérjen egy felső határt, végtelen ciklust kapunk."
+        }
+    },
+    {
+        "title": "Off-by-one hiba",
+        "description": "Javítsd ki a ciklus feltételét, hogy pontosan 10-szer fusson le (0-tól 9-ig)!",
+        "hint": "A tömbökhöz hasonlóan itt is a < operátor a leggyakoribb.",
+        "q_type": "debug",
+        "difficulty_rating": 700,
+        "language": "java",
+        "concept": {
+            "loops": 1.0
+        },
+        "content": {
+            "buggy_code": "for (int i = 0; i <= 10; i++) {\n  // művelet\n}",
+            "error_location": "i <= 10",
+            "correct_code": "i < 10",
+            "options": [
+                "i < 10",
+                "i < 11",
+                "i == 10"
+            ],
+            "explanation": "Az i <= 10 feltétellel a ciklus 11-szer futna le (0, 1, ..., 10). A 10 alkalomhoz i < 10 kell."
+        }
+    },
+    {
+        "title": "Rossz kezdőérték",
+        "description": "Javítsd ki a ciklust, hogy 1-től 10-ig írja ki a számokat!",
+        "hint": "Az i változónak 1-ről kell indulnia.",
+        "q_type": "debug",
+        "difficulty_rating": 650,
+        "language": "java",
+        "concept": {
+            "loops": 1.0,
+            "basics": 0.5
+        },
+        "content": {
+            "buggy_code": "for (int i = 0; i < 10; i++) {\n  System.out.println(i + 1);\n}",
+            "error_location": "int i = 0; i < 10",
+            "correct_code": "int i = 1; i <= 10",
+            "options": [
+                "int i = 1; i <= 10",
+                "int i = 1; i < 10",
+                "int i = 0; i <= 10"
+            ],
+            "explanation": "Bár az eredeti kód is 1-től 10-ig ír ki, a feladat a ciklus határainak beállítását kérte."
+        }
+    },
+    {
+        "title": "Változó hatókör hiba",
+        "description": "Miért nem éri el a kód a 'sum' változót a ciklus után?",
+        "hint": "A ciklusban deklarált változók csak ott léteznek.",
+        "q_type": "debug",
+        "difficulty_rating": 800,
+        "language": "java",
+        "concept": {
+            "loops": 1.0,
+            "basics": 0.7
+        },
+        "content": {
+            "buggy_code": "for (int i = 0; i < 5; i++) {\n  int sum = 0;\n  sum += i;\n}\nSystem.out.println(sum);",
+            "error_location": "int sum = 0;",
+            "correct_code": "int sum = 0; for (int i = 0; i < 5; i++) {",
+            "options": [
+                "Deklaráld a ciklus előtt",
+                "Legyen static",
+                "Használj tömböt"
+            ],
+            "explanation": "Ahhoz, hogy egy változó értéke megmaradjon a ciklus után is, a ciklus blokkján kívül kell deklarálni."
+        }
+    },
+    {
+        "title": "Egymásba ágyazott ciklus hiba",
+        "description": "Javítsd ki a belső ciklust, hogy ne a külső ciklus változóját módosítsa!",
+        "hint": "Használj különböző nevet a ciklusváltozóknak (pl. i és j).",
+        "q_type": "debug",
+        "difficulty_rating": 900,
+        "language": "java",
+        "concept": {
+            "loops": 1.0
+        },
+        "content": {
+            "buggy_code": "for (int i = 0; i < 3; i++) {\n  for (int i = 0; i < 3; i++) {\n    System.out.print(\"*\");\n  }\n}",
+            "error_location": "int i = 0; i < 3; i++",
+            "correct_code": "int j = 0; j < 3; j++",
+            "options": [
+                "int j = 0; j < 3; j++",
+                "int k = 0; k < 3; k++",
+                "int x = 0; x < 3; x++"
+            ],
+            "explanation": "Egymásba ágyazott ciklusoknál minden szintnek saját, egyedi nevű ciklusváltozóra van szüksége."
+        }
+    }
+]

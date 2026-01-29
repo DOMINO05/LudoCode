@@ -1,1 +1,129 @@
-[]
+[
+    {
+        "title": "Változó deklaráció",
+        "description": "Hozz létre egy 'age' nevű egész szám (int) típusú változót, és adj neki 25 értéket!",
+        "hint": "Használd az int kulcsszót.",
+        "q_type": "coding",
+        "difficulty_rating": 600,
+        "language": "java",
+        "concept": {
+            "basics": 1.0
+        },
+        "content": {
+            "initial_code": "public int getAge() {",
+            "test_cases": [
+                {
+                    "input": "",
+                    "expected_output": "25"
+                }
+            ],
+            "scaffolding_blocks": [
+                "int age = 25;",
+                "return age;"
+            ],
+            "explanation": "Java-ban az egész számokat az 'int' kulcsszóval deklaráljuk.",
+            "correct_answer": "public int getAge() {\n  int age = 25;\n  return age;\n}"
+        }
+    },
+    {
+        "title": "Összeadás",
+        "description": "A függvény kap két egész számot (a és b). Térj vissza az összegükkel!",
+        "hint": "Használd a + operátort.",
+        "q_type": "coding",
+        "difficulty_rating": 700,
+        "language": "java",
+        "concept": {
+            "basics": 1.0
+        },
+        "content": {
+            "initial_code": "public int add(int a, int b) {",
+            "test_cases": [
+                {
+                    "input": "5, 10",
+                    "expected_output": "15"
+                }
+            ],
+            "scaffolding_blocks": [
+                "return a + b;"
+            ],
+            "explanation": "Két szám összeadásához a + operátort használjuk.",
+            "correct_answer": "public int add(int a, int b) {\n  return a + b;\n}"
+        }
+    },
+    {
+        "title": "String összefűzés",
+        "description": "A függvény kap egy nevet. Térj vissza a 'Hello ' + név üdvözléssel!",
+        "hint": "A Stringeket a + jellel fűzheted össze.",
+        "q_type": "coding",
+        "difficulty_rating": 800,
+        "language": "java",
+        "concept": {
+            "basics": 1.0
+        },
+        "content": {
+            "initial_code": "public String greet(String name) {",
+            "test_cases": [
+                {
+                    "input": "\"Anna\"",
+                    "expected_output": "\"Hello Anna\""
+                }
+            ],
+            "scaffolding_blocks": [
+                "return \"Hello \" + name;"
+            ],
+            "explanation": "A + operátor Stringek esetén összefűzést (concatenation) végez.",
+            "correct_answer": "public String greet(String name) {\n  return \"Hello \" + name;\n}"
+        }
+    },
+    {
+        "title": "Konstans használata",
+        "description": "Hozz létre egy 'PI' nevű konstanst 3.14 értékkel, és térj vissza vele!",
+        "hint": "Használd a final kulcsszót.",
+        "q_type": "coding",
+        "difficulty_rating": 900,
+        "language": "java",
+        "concept": {
+            "basics": 1.0
+        },
+        "content": {
+            "initial_code": "public double getPi() {",
+            "test_cases": [
+                {
+                    "input": "",
+                    "expected_output": "3.14"
+                }
+            ],
+            "scaffolding_blocks": [
+                "final double PI = 3.14;",
+                "return PI;"
+            ],
+            "explanation": "A 'final' kulcsszóval deklarálhatunk olyan változót, amelynek az értéke nem módosítható (konstans).",
+            "correct_answer": "public double getPi() {\n  final double PI = 3.14;\n  return PI;\n}"
+        }
+    },
+    {
+        "title": "Típuskonverzió",
+        "description": "Konvertáld a kapott double értéket int-té (csonkítás), és térj vissza vele!",
+        "hint": "Használj explicit cast-ot: (int).",
+        "q_type": "coding",
+        "difficulty_rating": 1000,
+        "language": "java",
+        "concept": {
+            "basics": 1.0
+        },
+        "content": {
+            "initial_code": "public int convert(double val) {",
+            "test_cases": [
+                {
+                    "input": "9.99",
+                    "expected_output": "9"
+                }
+            ],
+            "scaffolding_blocks": [
+                "return (int) val;"
+            ],
+            "explanation": "Nagyobb pontosságú típusból kisebbe való konvertáláskor explicit castolás szükséges, ami adatvesztéssel (pl. tizedesjegyek elhagyása) járhat.",
+            "correct_answer": "public int convert(double val) {\n  return (int) val;\n}"
+        }
+    }
+]
